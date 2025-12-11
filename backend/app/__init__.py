@@ -1,0 +1,3 @@
+"""
+TherapyBridge Backend Application
+"""

@@ -1,0 +1,267 @@
+# Audio Transcription Pipeline
+
+A comprehensive therapy session transcription system with speaker diarization, supporting both CPU and GPU acceleration.
+
+## Overview
+
+This pipeline processes therapy session audio to produce timestamped transcripts with speaker identification (Therapist vs Client). Two implementations are available:
+
+1. **CPU/API-based** (`src/pipeline.py`) - Uses OpenAI Whisper API, portable and cloud-ready
+2. **GPU-accelerated** (`src/pipeline_colab.py`) - Uses faster-whisper locally, optimized for Google Colab L4
+
+## Features
+
+- Audio preprocessing (silence trimming, normalization, format conversion)
+- High-quality transcription (Whisper large-v3)
+- Speaker diarization (pyannote 3.1)
+- Therapist/Client role identification
+- Performance monitoring with GPU utilization tracking
+- Chunking support for long audio files (>25MB/52 minutes)
+
+## Quick Start
+
+### CPU/API Version (Default)
+
+```bash
+cd audio-transcription-pipeline
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# Set up OpenAI API key
+echo "OPENAI_API_KEY=your_key_here" > .env
+
+# Run pipeline
+python tests/test_full_pipeline.py tests/samples/onemintestvid.mp3
+```
+
+### GPU Version (Provider-Agnostic)
+
+**NEW: Works on Vast.ai, RunPod, Lambda Labs, Paperspace, and Google Colab**
+
+Quick GPU setup (universal, works on any provider):
+
+```bash
+# Clone and setup
+git clone https://github.com/yourusername/audio-transcription-pipeline.git
+cd audio-transcription-pipeline
+bash scripts/setup_gpu.sh
+
+# Configure HuggingFace token
+echo "HF_TOKEN=your_token_here" >> .env
+
+# Process audio
+source venv/bin/activate
+python transcribe_gpu.py audio.mp3 --speakers 2
+```
+
+**Provider-specific quickstarts:**
+- **Vast.ai**: `bash scripts/setup_vastai.sh` (recommended: $0.20/hr)
+- **RunPod**: `bash scripts/setup_runpod.sh`
+- **Lambda Labs**: `bash scripts/setup_lambda.sh`
+- **Paperspace**: `bash scripts/setup_paperspace.sh`
+- **Google Colab**: See `README_GPU.md`
+
+**Docker deployment:**
+
+```bash
+# Build and run
+docker build -f docker/Dockerfile.gpu -t transcribe-gpu .
+docker run --gpus all -v $(pwd)/audio:/data transcribe-gpu /data/audio.mp3
+```
+
+**Full GPU documentation**: See [`README_GPU.md`](README_GPU.md) for complete provider setup guides, performance benchmarks, and troubleshooting.
+
+## Project Structure
+
+```
+audio-transcription-pipeline/
+├── src/
+│   ├── pipeline.py               # CPU/API-based pipeline
+│   ├── pipeline_gpu.py           # NEW: Provider-agnostic GPU pipeline
+│   ├── gpu_config.py             # NEW: Auto-detect GPU provider & optimize
+│   ├── gpu_audio_ops.py          # GPU-accelerated audio operations
+│   ├── pipeline_colab.py         # Legacy: Colab-specific GPU pipeline
+│   └── performance_logger.py     # Performance monitoring
+│
+├── docker/
+│   ├── Dockerfile.gpu            # NEW: Multi-stage GPU Docker image
+│   ├── docker-compose.yml        # NEW: Docker compose config
+│   └── .dockerignore             # Docker ignore patterns
+│
+├── scripts/
+│   ├── setup_gpu.sh              # NEW: Universal GPU setup
+│   ├── setup_vastai.sh           # NEW: Vast.ai specific setup
+│   ├── setup_runpod.sh           # NEW: RunPod specific setup
+│   ├── setup_lambda.sh           # NEW: Lambda Labs setup
+│   └── setup_paperspace.sh       # NEW: Paperspace setup
+│
+├── tests/
+│   ├── test_full_pipeline.py     # Complete pipeline test
+│   ├── samples/                  # Test audio files
+│   └── outputs/                  # Generated transcripts
+│
+├── transcribe_gpu.py             # NEW: GPU CLI entry point
+├── requirements.txt              # CPU/API dependencies
+├── requirements_gpu.txt          # NEW: GPU dependencies (all providers)
+├── README.md                     # This file
+└── README_GPU.md                 # NEW: Comprehensive GPU provider guide
+```
+
+## Implementation Details
+
+### CPU/API Pipeline (`src/pipeline.py`)
+
+**Components:**
+- `AudioPreprocessor`: Handles audio loading, silence trimming, normalization using pydub
+- `WhisperTranscriber`: Manages OpenAI API calls with automatic chunking for large files
+- `SpeakerDiarizer`: Implements pyannote speaker diarization with GPU support when available
+
+**Performance:**
+- Processing time: ~5-7 minutes for 23-minute session
+- API-dependent (requires internet connection)
+- Lower resource requirements
+
+### GPU Pipeline (`src/pipeline_colab.py`)
+
+**Components:**
+- `GPUAudioProcessor`: All audio operations on GPU (torch-based)
+- `ColabTranscriptionPipeline`: faster-whisper with int8 quantization
+- Integrated pyannote diarization on GPU
+
+**Performance:**
+- Processing speed: 10-15x real-time on L4 GPU
+- No API calls (fully local)
+- Requires 22+ GB VRAM for large-v3 model
+
+### Key Differences
+
+| Feature | CPU/API Version | GPU Version |
+|---------|----------------|-------------|
+| Transcription | OpenAI Whisper API | faster-whisper (local) |
+| Audio Processing | pydub (CPU) | torch (GPU) |
+| Speed | 5-7 min for 23 min audio | 1.5-2 min for 23 min audio |
+| Requirements | Internet, API key | GPU with 16+ GB VRAM |
+| Best For | Production, cloud deployment | Research, batch processing |
+
+## Performance Monitoring
+
+Both implementations include comprehensive performance logging:
+
+```python
+from src.performance_logger import PerformanceLogger
+
+logger = PerformanceLogger()
+with logger.track_stage("transcription"):
+    # Your transcription code here
+    pass
+
+# Get performance summary
+print(logger.get_summary())
+```
+
+Output includes:
+- Stage-by-stage timing breakdown
+- GPU utilization (when available)
+- Memory usage statistics
+- Processing throughput metrics
+
+## Output Format
+
+The pipeline generates JSON output with the following structure:
+
+```json
+{
+  "audio_duration": 123.45,
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 5.2,
+      "text": "Hello, how are you feeling today?",
+      "speaker": "Therapist"
+    },
+    {
+      "start": 5.5,
+      "end": 12.3,
+      "text": "I've been having a difficult week.",
+      "speaker": "Client"
+    }
+  ],
+  "metadata": {
+    "total_segments": 42,
+    "therapist_segments": 20,
+    "client_segments": 22,
+    "processing_time": 95.3
+  }
+}
+```
+
+## Dependencies
+
+### CPU/API Version (`requirements.txt`)
+- pydub - Audio processing
+- openai - Whisper API
+- pyannote.audio - Speaker diarization
+- python-dotenv - Environment variables
+
+### GPU Version (`requirements_colab.txt`)
+- torch, torchaudio - GPU operations
+- faster-whisper - Local Whisper inference
+- pyannote.audio - Speaker diarization
+- julius - GPU audio resampling
+- ctranslate2 - Optimized inference
+
+## Known Issues and Solutions
+
+### GPU Version
+
+1. **cuDNN Error with float16**
+   - Solution: Use `compute_type="int8"` instead
+
+2. **NumPy Compatibility**
+   - Solution: Use numpy==1.26.4
+
+3. **HuggingFace Token Required**
+   - Sign up at huggingface.co (free)
+   - Set `HF_TOKEN` environment variable
+
+### Both Versions
+
+1. **Unknown Speaker Labels**
+   - Occurs with poor audio quality
+   - Solution: Adjust VAD parameters or num_speakers
+
+2. **Memory Issues with Long Files**
+   - CPU version: Automatic chunking handles this
+   - GPU version: May need to reduce batch size
+
+## Testing
+
+Run the test suite:
+
+```bash
+# CPU version tests
+python tests/test_full_pipeline.py
+
+# GPU version tests (in Colab)
+python test_colab_gpu.py
+
+# Performance logging tests
+python tests/test_performance_logging.py
+```
+
+## Next Steps
+
+- [ ] Add real-time streaming support
+- [ ] Implement speaker embedding storage for consistent identification
+- [ ] Add support for multi-party conversations (>2 speakers)
+- [ ] Create web interface for easier usage
+- [ ] Add support for more audio formats
+
+## License
+
+Proprietary - TherapyBridge Project
+
+## Support
+
+For issues or questions, see the main project documentation in `Project MDs/TherapyBridge.md`

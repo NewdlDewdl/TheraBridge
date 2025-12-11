@@ -1,0 +1,32 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+*.egg-info/
+*.egg
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sync tools
+.stfolder/
+.sync-*
+
+# Note: Each subproject (audio-transcription-pipeline/, backend/)
+# has its own .gitignore for project-specific patterns
