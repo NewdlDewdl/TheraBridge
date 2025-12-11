@@ -55,22 +55,7 @@ source venv/bin/activate
 python transcribe_gpu.py audio.mp3 --speakers 2
 ```
 
-**Provider-specific quickstarts:**
-- **Vast.ai**: `bash scripts/setup_vastai.sh` (recommended: $0.20/hr)
-- **RunPod**: `bash scripts/setup_runpod.sh`
-- **Lambda Labs**: `bash scripts/setup_lambda.sh`
-- **Paperspace**: `bash scripts/setup_paperspace.sh`
-- **Google Colab**: See `README_GPU.md`
-
-**Docker deployment:**
-
-```bash
-# Build and run
-docker build -f docker/Dockerfile.gpu -t transcribe-gpu .
-docker run --gpus all -v $(pwd)/audio:/data transcribe-gpu /data/audio.mp3
-```
-
-**Full GPU documentation**: See [`README_GPU.md`](README_GPU.md) for complete provider setup guides, performance benchmarks, and troubleshooting.
+**Note:** `setup_gpu.sh` auto-detects your GPU provider (Vast.ai, RunPod, Lambda, Paperspace, Colab) and configures accordingly.
 
 ## Project Structure
 
@@ -84,28 +69,19 @@ audio-transcription-pipeline/
 │   ├── pipeline_colab.py         # Legacy: Colab-specific GPU pipeline
 │   └── performance_logger.py     # Performance monitoring
 │
-├── docker/
-│   ├── Dockerfile.gpu            # NEW: Multi-stage GPU Docker image
-│   ├── docker-compose.yml        # NEW: Docker compose config
-│   └── .dockerignore             # Docker ignore patterns
-│
 ├── scripts/
-│   ├── setup_gpu.sh              # NEW: Universal GPU setup
-│   ├── setup_vastai.sh           # NEW: Vast.ai specific setup
-│   ├── setup_runpod.sh           # NEW: RunPod specific setup
-│   ├── setup_lambda.sh           # NEW: Lambda Labs setup
-│   └── setup_paperspace.sh       # NEW: Paperspace setup
+│   ├── setup.sh                  # CPU setup
+│   ├── setup_colab.sh            # Google Colab setup
+│   └── setup_gpu.sh              # Universal GPU setup (auto-detects provider)
 │
 ├── tests/
 │   ├── test_full_pipeline.py     # Complete pipeline test
 │   ├── samples/                  # Test audio files
 │   └── outputs/                  # Generated transcripts
 │
-├── transcribe_gpu.py             # NEW: GPU CLI entry point
 ├── requirements.txt              # CPU/API dependencies
-├── requirements_gpu.txt          # NEW: GPU dependencies (all providers)
-├── README.md                     # This file
-└── README_GPU.md                 # NEW: Comprehensive GPU provider guide
+├── requirements_colab.txt        # Google Colab dependencies
+└── README.md                     # This file
 ```
 
 ## Implementation Details
