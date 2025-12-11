@@ -106,7 +106,7 @@ import time
 from google.colab import files
 
 # Configuration
-HF_TOKEN = "YOUR_HF_TOKEN_HERE"
+HF_TOKEN = "YOUR_HF_TOKEN_HERE"  # Get from huggingface.co/settings/tokens
 AUDIO_FILE = "/content/compressed-cbt-session.m4a"
 NUM_SPEAKERS = 2
 LANGUAGE = "en"
