@@ -70,17 +70,132 @@ Total: [N] agents across [W] waves
 Estimated: [X] min vs [Y] min sequential
 ```
 
-## STEP 3: Execute
+## STEP 3: Execute with Agent Pooling
 
-1. Initialize TodoWrite with all waves
-2. Launch Wave 1 agents (parallel Task calls in ONE message)
-3. Wait for completion
-4. Launch Wave 2 agents
-5. Repeat until done
+**🚨 CRITICAL: Use persistent agent pool with maximum reuse across waves.**
+
+### Agent Pool Strategy:
+
+1. **Analyze wave structure** - Determine pool size (max agents in any wave)
+2. **Output pool statistics** - Show reuse rate and overhead savings
+3. **Initialize TodoWrite** - Include pool information in wave descriptions
+4. **Execute waves** - Reuse agents from pool instead of creating new ones
+
+### Execution Steps:
+
+**Before Wave 1:**
+```
+🏊 AGENT POOL STRATEGY:
+├─ Pool size: [N] agents (based on largest wave)
+├─ Total waves: [W]
+├─ Total agent slots: [X] (sum across all waves)
+├─ Without pooling: [X] agents created
+├─ With pooling: [N] agents created (reuse [Y]%)
+└─ Overhead saved: [Z]s ♻️
+```
+
+**Wave 1 (Pool Initialization):**
+```
+🌊 WAVE 1: [Description]
+├─ Agents needed: [N]
+├─ Pool status: Creating fresh pool of [N] agents
+├─ Reused agents: 0 (first wave)
+└─ New agents: [N] 🆕
+
+[Launch N agents in parallel - ONE message with N Task calls]
+```
+
+**Wave 2+ (Reuse from Pool):**
+```
+🌊 WAVE [X]: [Description]
+├─ Agents needed: [M]
+├─ Pool status: [N] agents available
+├─ Reused agents: [M] ♻️ (from pool)
+└─ New agents: 0
+
+[Assign tasks to M agents from pool - reuse, no initialization]
+```
+
+**If wave needs MORE agents than pool capacity:**
+```
+🌊 WAVE [X]: [Description]
+├─ Agents needed: [P]
+├─ Pool capacity: [N] agents
+├─ Reused agents: [N] ♻️ (all from pool)
+├─ New agents: [P-N] 🆕 (expanding pool)
+└─ Pool expanded to: [P] agents
+
+[Reuse all N from pool + create P-N new agents]
+```
+
+### Key Rules:
+
+1. **Create pool once** - Based on maximum wave size
+2. **Reuse agents** - Don't create new agents if pool has capacity
+3. **Keep agents alive** - Don't destroy between waves
+4. **Expand only when needed** - If wave exceeds pool capacity
+5. **Track utilization** - Report which agents did multiple tasks
 
 ## STEP 4: Report Results
 
-Show what was accomplished.
+Show what was accomplished, including agent pool statistics.
+
+### Final Report Format:
+
+```
+✅ ORCHESTRATION COMPLETE
+
+📊 EXECUTION SUMMARY:
+├─ Task: [task description]
+├─ Total waves: [W]
+├─ Total tasks: [X]
+├─ Execution time: [Y] minutes
+└─ Sequential time: [Z] minutes (saved [Z-Y] minutes)
+
+📊 AGENT POOL STATISTICS:
+├─ Total agents created: [N]
+├─ Total tasks completed: [X]
+├─ Average tasks per agent: [X/N]
+├─ Agent utilization:
+│   ├─ Agent 1: [T1] tasks (Wave [list])
+│   ├─ Agent 2: [T2] tasks (Wave [list])
+│   └─ Agents [3-N]: [T] task(s) each
+├─ Reuse rate: [Y]% ([R] of [X] task slots reused agents)
+├─ Overhead saved: [Z]s (vs creating [X] fresh agents)
+└─ Pool efficiency: [E]% ✅
+
+RESULTS:
+[What was accomplished]
+```
+
+**Example:**
+```
+✅ ORCHESTRATION COMPLETE
+
+📊 EXECUTION SUMMARY:
+├─ Task: Consolidate security files into Project MDs/
+├─ Total waves: 3
+├─ Total tasks: 8
+├─ Execution time: 6 minutes
+└─ Sequential time: 16 minutes (saved 10 minutes)
+
+📊 AGENT POOL STATISTICS:
+├─ Total agents created: 6
+├─ Total tasks completed: 8
+├─ Average tasks per agent: 1.3
+├─ Agent utilization:
+│   ├─ Agent 1: 2 tasks (Wave 1, 2)
+│   ├─ Agent 2: 2 tasks (Wave 1, 3)
+│   └─ Agents 3-6: 1 task each (Wave 1 only)
+├─ Reuse rate: 25% (2 of 8 task slots reused agents)
+├─ Overhead saved: 0.6s (vs creating 8 fresh agents)
+└─ Pool efficiency: 83% ✅
+
+RESULTS:
+- Created Project MDs/Security-Report.md (40 KB, 1,519 lines)
+- Removed 6 scattered security files
+- All security documentation consolidated into single comprehensive report
+```
 
 ---
 

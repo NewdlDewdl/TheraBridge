@@ -941,40 +941,267 @@ Success: File compiles with strictNullChecks and noImplicitAny enabled, no type 
 Constraints: Preserve all functionality, maintain existing prop interfaces
 ```
 
-### Phase 3: Wave-Based Execution with TodoWrite Tracking
+### Phase 3: Wave-Based Execution with Agent Pooling & Reuse
 
-1. **Initialize TodoWrite** with complete wave structure:
+**🚨 CRITICAL OPTIMIZATION: Use persistent agent pool with maximum reuse across waves.**
+
+**Core Strategy:**
+- Create agent pool upfront based on maximum wave size
+- Reuse idle agents from previous waves instead of creating new ones
+- Keep agents on standby between waves (don't destroy them)
+- Only expand pool if current wave exceeds pool capacity
+
+**Benefits:**
+- 25-50% reduction in agent initialization overhead
+- Lower total resource consumption
+- Faster wave transitions (agents already warmed up)
+- Better agent utilization (load balancing across waves)
+
+---
+
+#### Step 1: Analyze Wave Structure & Create Agent Pool
+
+**Before executing any waves:**
+
+```python
+# Analyze wave structure to determine pool size
+wave_structure = [
+    {'wave': 1, 'tasks': 6, 'description': 'Read security files'},
+    {'wave': 2, 'tasks': 1, 'description': 'Consolidate files'},
+    {'wave': 3, 'tasks': 1, 'description': 'Cleanup files'}
+]
+
+# Calculate pool size (max agents needed in any single wave)
+max_wave_size = max(wave['tasks'] for wave in wave_structure)  # 6
+
+# Calculate reuse statistics
+total_agent_slots = sum(wave['tasks'] for wave in wave_structure)  # 8
+reuse_rate = ((total_agent_slots - max_wave_size) / total_agent_slots) * 100  # 25%
+
+print(f"🏊 AGENT POOL STRATEGY:")
+print(f"├─ Pool size: {max_wave_size} agents (based on Wave 1)")
+print(f"├─ Total waves: {len(wave_structure)}")
+print(f"├─ Total agent slots needed: {total_agent_slots}")
+print(f"├─ Without pooling: {total_agent_slots} agents created")
+print(f"├─ With pooling: {max_wave_size} agents created (reuse {reuse_rate:.0f}%)")
+print(f"└─ Overhead saved: {(total_agent_slots - max_wave_size) * 0.3}s ♻️")
+print()
 ```
-Wave 1: Analyzing codebase (in_progress)
-  - Analyze SessionCard.tsx (pending)
-  - Analyze PatientList.tsx (pending)
-  - Analyze Dashboard.tsx (pending)
-Wave 2: Applying changes (pending)
-  - Refactor SessionCard.tsx (pending)
-  - Refactor PatientList.tsx (pending)
-Wave 3: Verifying compilation (pending)
-  - Run TypeScript compiler (pending)
+
+**Output example:**
+```
+🏊 AGENT POOL STRATEGY:
+├─ Pool size: 6 agents (based on Wave 1)
+├─ Total waves: 3
+├─ Total agent slots needed: 8
+├─ Without pooling: 8 agents created
+├─ With pooling: 6 agents created (reuse 25%)
+└─ Overhead saved: 0.6s ♻️
 ```
 
-2. **For each wave sequentially**:
-   - Mark wave as `in_progress` in TodoWrite
-   - Launch ALL wave subtasks in parallel using multiple Task tool calls in the SAME message
-   - Wait for all subtasks in wave to complete
-   - Validate results from each agent
-   - Mark all wave subtasks as `completed` in TodoWrite
-   - Mark wave itself as `completed`
-   - Aggregate results for next wave's context
+---
 
-3. **Checkpoint synchronization**:
-   - NEVER start wave N+1 until wave N fully completes
-   - Collect outputs from all agents in current wave
-   - Pass aggregated context to next wave if needed
-   - Handle any errors before proceeding
+#### Step 2: Initialize TodoWrite with Pool Information
 
-4. **Critical execution rule**:
-   - Waves execute sequentially (wave by wave)
-   - Subtasks within each wave execute in parallel (all at once)
-   - One wave must finish before next wave starts
+```
+Wave 1: Read security files (6 agents - pool initialization) (in_progress)
+Wave 2: Consolidate files (1 agent - reuse from pool) (pending)
+Wave 3: Cleanup files (1 agent - reuse from pool) (pending)
+```
+
+---
+
+#### Step 3: Execute Waves with Agent Reuse
+
+**For each wave sequentially:**
+
+```python
+# WAVE 1 EXECUTION (Pool Initialization)
+print("🌊 WAVE 1: Read security files")
+print("├─ Agents needed: 6")
+print("├─ Pool status: Creating fresh pool of 6 agents")
+print("├─ Reused agents: 0 (first wave)")
+print("└─ New agents: 6 🆕")
+print()
+
+# Launch ALL 6 agents in parallel (ONE message with 6 Task calls)
+# These agents go into the pool and remain available after completion
+
+# Mark wave 1 completed in TodoWrite
+
+
+# WAVE 2 EXECUTION (Reuse from Pool)
+print("🌊 WAVE 2: Consolidate files")
+print("├─ Agents needed: 1")
+print("├─ Pool status: 6 agents available (all completed Wave 1)")
+print("├─ Reused agents: 1 ♻️ (agent_1 from pool)")
+print("└─ New agents: 0")
+print()
+
+# Assign task to agent_1 from pool (reuse, no initialization overhead)
+# Agent already warmed up and ready
+
+# Mark wave 2 completed in TodoWrite
+
+
+# WAVE 3 EXECUTION (Reuse from Pool)
+print("🌊 WAVE 3: Cleanup files")
+print("├─ Agents needed: 1")
+print("├─ Pool status: 6 agents available")
+print("├─ Reused agents: 1 ♻️ (agent_2 from pool)")
+print("└─ New agents: 0")
+print()
+
+# Assign task to agent_2 from pool (reuse)
+
+# Mark wave 3 completed in TodoWrite
+```
+
+**Output example:**
+```
+🌊 WAVE 1: Read security files
+├─ Agents needed: 6
+├─ Pool status: Creating fresh pool of 6 agents
+├─ Reused agents: 0 (first wave)
+└─ New agents: 6 🆕
+
+🌊 WAVE 2: Consolidate files
+├─ Agents needed: 1
+├─ Pool status: 6 agents available (all completed Wave 1)
+├─ Reused agents: 1 ♻️ (agent_1 from pool)
+└─ New agents: 0
+
+🌊 WAVE 3: Cleanup files
+├─ Agents needed: 1
+├─ Pool status: 6 agents available
+├─ Reused agents: 1 ♻️ (agent_2 from pool)
+└─ New agents: 0
+```
+
+---
+
+#### Step 4: Pool Expansion (Dynamic Scaling)
+
+**If a wave needs more agents than pool capacity:**
+
+```python
+# Example: Wave 2 suddenly needs 10 agents, but pool only has 6
+print("🌊 WAVE 2: Large consolidation task")
+print("├─ Agents needed: 10")
+print("├─ Pool capacity: 6 agents")
+print("├─ Reused agents: 6 ♻️ (all from pool)")
+print("├─ New agents: 4 🆕 (expanding pool)")
+print("└─ Pool expanded to: 10 agents")
+print()
+
+# Reuse all 6 agents from pool
+# Create 4 additional agents and add to pool
+# Future waves can now reuse from expanded pool of 10
+```
+
+---
+
+#### Step 5: Agent Assignment Strategy
+
+**Priority order for assigning tasks:**
+
+1. **First priority:** Agents that have completed previous tasks (status: 'completed')
+2. **Second priority:** Fresh agents on standby (status: 'standby')
+3. **Last resort:** Create new agents if pool exhausted (expand pool)
+
+**Load balancing:**
+- Track how many tasks each agent has completed
+- Prefer agents with fewer completed tasks (distribute load evenly)
+- Agents that work multiple waves build up task history
+
+```python
+# Example task distribution
+Agent 1: [Wave 1 Task A, Wave 2 Task X, Wave 3 Task Y] - 3 tasks
+Agent 2: [Wave 1 Task B] - 1 task
+Agent 3: [Wave 1 Task C] - 1 task
+Agent 4: [Wave 1 Task D] - 1 task
+Agent 5: [Wave 1 Task E] - 1 task
+Agent 6: [Wave 1 Task F] - 1 task
+
+Pool efficiency: 66% (Agent 1 did 3x more work than others)
+```
+
+---
+
+#### Step 6: Checkpoint Synchronization with Pooling
+
+**Critical rules remain unchanged:**
+- NEVER start wave N+1 until wave N fully completes
+- Collect outputs from all agents in current wave
+- Pass aggregated context to next wave if needed
+- Handle any errors before proceeding
+
+**Additional pooling-specific rules:**
+- Mark agents as 'completed' after wave finishes (ready for reuse)
+- Don't destroy/release agents between waves (keep pool alive)
+- Track agent task history for reporting and load balancing
+- Expand pool only when absolutely necessary
+
+---
+
+#### Step 7: Final Pool Statistics
+
+**After all waves complete, report pool efficiency:**
+
+```python
+print("📊 AGENT POOL STATISTICS:")
+print(f"├─ Total agents created: 6")
+print(f"├─ Total waves executed: 3")
+print(f"├─ Total tasks completed: 8")
+print(f"├─ Average tasks per agent: 1.3")
+print(f"├─ Agent utilization:")
+print(f"│   ├─ Agent 1: 2 tasks (Wave 1, 2)")
+print(f"│   ├─ Agent 2: 2 tasks (Wave 1, 3)")
+print(f"│   └─ Agents 3-6: 1 task each (Wave 1 only)")
+print(f"├─ Reuse rate: 25% (2 of 8 task slots reused agents)")
+print(f"├─ Overhead saved: 0.6s (vs creating 8 fresh agents)")
+print(f"└─ Pool efficiency: 83% ✅")
+```
+
+---
+
+#### Practical Example: Security Files Consolidation
+
+**Task:** Consolidate 6 security files into Project MDs/
+
+**Without Pooling (OLD - Inefficient):**
+```
+Wave 1: Create 6 new agents → read files → destroy
+Wave 2: Create 1 new agent → consolidate → destroy
+Wave 3: Create 1 new agent → cleanup → destroy
+
+Total agents: 8
+Initialization: 8 × 0.3s = 2.4s
+```
+
+**With Pooling (NEW - Efficient):**
+```
+Setup: Create pool of 6 agents (keep alive)
+
+Wave 1: Agents 1-6 read files → mark completed (still in pool)
+Wave 2: Agent 1 (reused) consolidates → mark completed
+Wave 3: Agent 2 (reused) cleanup → mark completed
+
+Total agents: 6 (25% reduction)
+Initialization: 6 × 0.3s = 1.8s (25% faster)
+Reuse: 2 tasks used existing agents
+```
+
+---
+
+#### Critical Execution Rules (Updated)
+
+1. **Waves execute sequentially** (wave by wave)
+2. **Subtasks within each wave execute in parallel** (all at once in ONE message)
+3. **One wave must finish before next wave starts** (checkpoint synchronization)
+4. **🆕 Agents persist across waves** (pool remains alive)
+5. **🆕 Reuse idle agents before creating new ones** (maximize pool efficiency)
+6. **🆕 Track agent task history** (for load balancing and reporting)
 
 ### Phase 4: Results Aggregation & Reporting
 

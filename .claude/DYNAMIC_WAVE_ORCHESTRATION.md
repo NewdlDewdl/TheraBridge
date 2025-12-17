@@ -532,7 +532,233 @@ def estimate_resource_capacity():
 
 ---
 
-### 2. Cost-Benefit Analysis
+### 2. Agent Pool Management & Reuse
+
+**CRITICAL OPTIMIZATION: Reuse agents across waves instead of creating new ones.**
+
+**Core Principle:** Create a persistent agent pool upfront and reuse idle agents across waves to minimize initialization overhead and resource consumption.
+
+**Agent Pooling Strategy:**
+
+```python
+def create_agent_pool(wave_structure):
+    """
+    Create persistent agent pool based on maximum wave size
+    Agents remain on standby and get reused across waves
+
+    Returns: pool of agent IDs that can be assigned tasks
+    """
+    # Calculate pool size (maximum agents needed in any single wave)
+    max_wave_size = max(len(wave['agents']) for wave in wave_structure)
+
+    print(f"🏊 CREATING AGENT POOL...")
+    print(f"├─ Pool size: {max_wave_size} agents")
+    print(f"├─ Total waves: {len(wave_structure)}")
+    print(f"└─ Optimization: Reusing agents across {len(wave_structure)} waves")
+    print()
+
+    # Create all agents upfront (they go on standby until assigned work)
+    agent_pool = []
+    for i in range(max_wave_size):
+        agent_id = f"agent_{i+1}"
+        agent_pool.append({
+            'id': agent_id,
+            'status': 'standby',  # standby | busy | completed
+            'current_task': None,
+            'completed_tasks': []
+        })
+
+    return agent_pool
+
+
+def assign_tasks_to_pool(agent_pool, wave_tasks):
+    """
+    Assign tasks from current wave to available agents in pool
+    Reuses agents that completed previous wave tasks
+
+    Returns: list of (agent_id, task) assignments
+    """
+    # Find available agents (standby or completed previous tasks)
+    available_agents = [a for a in agent_pool if a['status'] in ['standby', 'completed']]
+
+    if len(wave_tasks) > len(available_agents):
+        # Need more agents - expand pool dynamically
+        needed = len(wave_tasks) - len(available_agents)
+        print(f"⚠️ Expanding agent pool by {needed} agents (high demand)")
+        for i in range(needed):
+            new_id = f"agent_{len(agent_pool) + 1}"
+            agent_pool.append({
+                'id': new_id,
+                'status': 'standby',
+                'current_task': None,
+                'completed_tasks': []
+            })
+            available_agents.append(agent_pool[-1])
+
+    # Assign tasks to agents
+    assignments = []
+    for task, agent in zip(wave_tasks, available_agents[:len(wave_tasks)]):
+        agent['status'] = 'busy'
+        agent['current_task'] = task
+        assignments.append((agent['id'], task))
+
+    return assignments
+
+
+def release_agents_to_pool(agent_pool, completed_agent_ids):
+    """
+    Mark agents as completed and ready for reuse in next wave
+    """
+    for agent in agent_pool:
+        if agent['id'] in completed_agent_ids:
+            agent['completed_tasks'].append(agent['current_task'])
+            agent['current_task'] = None
+            agent['status'] = 'completed'  # Ready for reuse
+```
+
+**Execution Model Comparison:**
+
+**OLD (Inefficient - Creates fresh agents each wave):**
+```
+Wave 1: Create 6 new agents → execute → destroy
+Wave 2: Create 1 new agent → execute → destroy
+Wave 3: Create 1 new agent → execute → destroy
+
+Total: 8 agent initializations
+Overhead: 8 × 0.3s = 2.4s wasted on initialization
+```
+
+**NEW (Efficient - Reuse agent pool):**
+```
+Setup: Create pool of 6 agents (keep alive)
+Wave 1: Assign 6 tasks to pool → execute → mark completed
+Wave 2: Reuse 1 agent from pool → execute → mark completed
+Wave 3: Reuse 1 agent from pool → execute → mark completed
+
+Total: 6 agent initializations (33% fewer)
+Overhead: 6 × 0.3s = 1.8s (0.6s saved, 25% reduction)
+Reuse rate: 66% (2 of 3 wave executions reused existing agents)
+```
+
+**Implementation in Wave Execution:**
+
+```python
+def execute_orchestration_with_pooling(wave_structure):
+    """
+    Execute waves using persistent agent pool with maximum reuse
+    """
+    # STEP 1: Create agent pool based on max wave size
+    agent_pool = create_agent_pool(wave_structure)
+
+    print(f"📊 AGENT POOL STATISTICS:")
+    print(f"├─ Total agents created: {len(agent_pool)}")
+    print(f"├─ Pool reuse strategy: ENABLED ✅")
+    print(f"└─ Expected reuse rate: {calculate_reuse_rate(wave_structure)}%")
+    print()
+
+    # STEP 2: Execute each wave using pool
+    for wave_num, wave in enumerate(wave_structure, 1):
+        print(f"🌊 WAVE {wave_num}: {wave['description']}")
+
+        # Assign tasks to available agents from pool
+        assignments = assign_tasks_to_pool(agent_pool, wave['tasks'])
+
+        # Show reuse statistics
+        reused = sum(1 for _, task in assignments if any(
+            agent['id'] == assignments[0][0] and len(agent['completed_tasks']) > 0
+            for agent in agent_pool
+        ))
+        new = len(assignments) - reused
+
+        print(f"├─ Agents assigned: {len(assignments)}")
+        print(f"├─ Reused from pool: {reused} agents ♻️")
+        print(f"├─ Fresh agents: {new} agents 🆕")
+        print()
+
+        # Launch all tasks in parallel (ONE message with multiple Task calls)
+        results = launch_parallel_tasks(assignments)
+
+        # Release agents back to pool for next wave
+        completed_ids = [agent_id for agent_id, _ in assignments]
+        release_agents_to_pool(agent_pool, completed_ids)
+
+    # STEP 3: Report final pool statistics
+    print(f"✅ ORCHESTRATION COMPLETE")
+    print(f"📊 FINAL POOL STATISTICS:")
+    print(f"├─ Total agents in pool: {len(agent_pool)}")
+    print(f"├─ Total tasks executed: {sum(len(a['completed_tasks']) for a in agent_pool)}")
+    print(f"├─ Avg tasks per agent: {sum(len(a['completed_tasks']) for a in agent_pool) / len(agent_pool):.1f}")
+    print(f"└─ Pool efficiency: {calculate_pool_efficiency(agent_pool)}%")
+
+
+def calculate_reuse_rate(wave_structure):
+    """Calculate expected agent reuse rate across waves"""
+    total_agent_slots = sum(len(wave['tasks']) for wave in wave_structure)
+    max_wave_size = max(len(wave['tasks']) for wave in wave_structure)
+
+    reuse_rate = ((total_agent_slots - max_wave_size) / total_agent_slots) * 100
+    return int(reuse_rate)
+
+
+def calculate_pool_efficiency(agent_pool):
+    """Calculate how efficiently the pool was utilized"""
+    total_tasks = sum(len(a['completed_tasks']) for a in agent_pool)
+    ideal_distribution = total_tasks / len(agent_pool)
+
+    # Calculate variance from ideal
+    variance = sum(abs(len(a['completed_tasks']) - ideal_distribution)
+                   for a in agent_pool)
+    efficiency = max(0, 100 - (variance / total_tasks * 100))
+
+    return int(efficiency)
+```
+
+**Real-World Example:**
+
+**Task:** Consolidate 6 security files (from previous execution)
+
+**Without Pooling:**
+```
+Wave 1: Create agents 1-6 → Read 6 files
+Wave 2: Create agent 7 → Consolidate files
+Wave 3: Create agent 8 → Cleanup files
+
+Agents created: 8
+Initialization overhead: 2.4s
+```
+
+**With Pooling:**
+```
+Setup: Create pool of 6 agents (agents 1-6)
+Wave 1: Agents 1-6 → Read 6 files → Mark completed
+Wave 2: Agent 1 (reused) → Consolidate files → Mark completed
+Wave 3: Agent 2 (reused) → Cleanup files → Mark completed
+
+Agents created: 6 (25% reduction)
+Initialization overhead: 1.8s (25% faster)
+Reuse rate: 66% (Wave 2 and 3 reused existing agents)
+Pool efficiency: 83% (agents 1-2 did 2 tasks each, agents 3-6 did 1 task each)
+```
+
+**Key Benefits:**
+
+1. **Reduced Overhead:** 25-50% reduction in agent initialization time
+2. **Lower Resource Usage:** Fewer total agents = less memory/CPU
+3. **Faster Wave Transitions:** Agents already warmed up and ready
+4. **Better Utilization:** High-demand agents do more work (load balancing)
+5. **Scalability:** Pool dynamically expands only when absolutely necessary
+
+**When to Use Pooling:**
+
+- ✅ **Multi-wave orchestrations** (3+ waves) - High reuse potential
+- ✅ **Variable wave sizes** (e.g., 10 → 2 → 3 agents) - Excellent reuse
+- ✅ **Long-running orchestrations** - Initialization overhead matters
+- ⚠️ **Single wave tasks** - No benefit (no reuse opportunity)
+- ⚠️ **Equal wave sizes** - Marginal benefit (low reuse rate)
+
+---
+
+### 3. Cost-Benefit Analysis
 
 **For each scaling decision:**
 

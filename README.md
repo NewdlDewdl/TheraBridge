@@ -4,13 +4,16 @@ AI-powered therapy session transcription and analysis platform.
 
 ## Project Structure
 
-This monorepo contains two independent projects:
+This monorepo contains two independent, deployable projects:
 
 ```
 peerbridge proj/
+├── .claude/                          # Claude Code config & orchestration methodology
+├── Project MDs/
+│   └── TherapyBridge.md             # Master documentation (read this first!)
 ├── audio-transcription-pipeline/    # Standalone audio processing
 ├── backend/                          # Standalone FastAPI server
-└── Project MDs/TherapyBridge.md     # Master documentation
+└── frontend/                         # Next.js dashboard (in development)
 ```
 
 ### Projects
@@ -18,15 +21,22 @@ peerbridge proj/
 **1. Audio Transcription Pipeline** (`audio-transcription-pipeline/`)
 - Converts therapy audio to speaker-labeled transcripts
 - CPU/API and GPU/Vast.ai implementations
-- Standalone - can be used independently
+- Standalone deployment
 - See: `audio-transcription-pipeline/README.md`
 
 **2. Backend API** (`backend/`)
 - FastAPI server for session management
 - AI-powered note extraction (GPT-4o)
 - PostgreSQL database integration
-- Standalone - can be deployed independently
+- Standalone deployment
 - See: `backend/README.md`
+
+**3. Frontend Dashboard** (`frontend/`)
+- Next.js 16 + React 19 + Tailwind CSS
+- Therapist and patient dashboards
+- Session transcript viewer
+- In active development
+- See: `frontend/README.md`
 
 ## Quick Start
 
@@ -52,10 +62,12 @@ uvicorn app.main:app --reload
 
 ## Documentation
 
-- **Master docs**: `Project MDs/TherapyBridge.md`
+- **Master documentation**: `Project MDs/TherapyBridge.md` (start here!)
 - **Organization rules**: `.claude/CLAUDE.md`
+- **Orchestration methodology**: `.claude/DYNAMIC_WAVE_ORCHESTRATION.md`
 - **Pipeline docs**: `audio-transcription-pipeline/README.md`
 - **Backend docs**: `backend/README.md`
+- **Frontend docs**: `frontend/README.md`
 
 ## Environment Setup
 
@@ -90,7 +102,7 @@ This repo follows strict organization rules (see `.claude/CLAUDE.md`):
 - **Diarization**: pyannote.audio 3.1
 - **Backend**: FastAPI + PostgreSQL (Neon)
 - **AI Extraction**: OpenAI GPT-4o
-- **Frontend**: Next.js 14 (pending)
+- **Frontend**: Next.js 16 + React 19 + Tailwind CSS
 
 ## Development
 
