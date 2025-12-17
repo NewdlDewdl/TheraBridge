@@ -16,13 +16,35 @@ The system intelligently scales from **1 to unlimited agents** based on:
 
 ## 📋 HOW TO USE (ULTRA SIMPLE)
 
-### Your Input:
+### Option 1: Automatic Scaling (Recommended)
 
 ```
 Execute this task dynamically with auto-scaled parallel instances:
 
 [Describe what you want in plain English]
 ```
+
+**System automatically determines optimal agent count** (1 to unlimited based on intelligent analysis).
+
+### Option 2: Explicit Agent Count
+
+```
+Execute this task using [N] parallel agents:
+
+[Describe what you want in plain English]
+```
+
+**Examples:**
+- `Execute the task of cleaning up this repo using 50 parallel agents`
+- `Refactor the authentication system using 100 parallel agents`
+- `Deploy to all servers using 1000 parallel agents`
+
+**System behavior with explicit count:**
+- Uses your specified agent count as the target
+- Still validates against resource constraints (warns if count exceeds capacity)
+- Still performs intelligent wave structuring and dependency analysis
+- Still applies task-specific optimizations within your agent limit
+- Overrides automatic scaling only for agent count, not wave structure
 
 ### System Does Automatically:
 
@@ -47,12 +69,30 @@ Execute this task dynamically with auto-scaled parallel instances:
 ### Advanced Scaling Logic:
 
 ```python
-def intelligent_auto_scale(subtasks, dependencies, avg_duration_min, task_type):
+def intelligent_auto_scale(subtasks, dependencies, avg_duration_min, task_type, user_override=None):
     """
     Intelligently determine optimal agent count with NO arbitrary limits
 
-    Returns: 1 to unlimited agents based on cost-benefit analysis
+    Parameters:
+    - user_override: If specified, uses this count instead of calculating optimal
+                     Still validates against resource constraints
+
+    Returns: 1 to unlimited agents based on cost-benefit analysis or user override
     """
+
+    # Handle user override (explicit agent count)
+    if user_override is not None:
+        # Validate against resource constraints
+        resource_limit = estimate_resource_capacity()
+        max_safe_agents = min(resource_limit.values())
+
+        if user_override > max_safe_agents:
+            print(f"⚠️ WARNING: Requested {user_override} agents exceeds safe capacity ({max_safe_agents})")
+            print(f"   Recommend: Use auto-scaling or reduce to {max_safe_agents} agents")
+            print(f"   Proceeding with {user_override} agents as requested...")
+
+        # Use user's agent count, skip optimization algorithm
+        return user_override
     # Phase 1: Calculate maximum theoretical parallelism
     max_parallel = calculate_max_parallel_depth(subtasks, dependencies)
 
@@ -311,7 +351,87 @@ Ready to execute? (yes/no)
 
 ---
 
-### Scenario 3: Bug Fix (Intelligent Reduction)
+### Scenario 3: Repository Cleanup (User-Specified 50 Agents)
+
+**Task:**
+```
+Execute the task of cleaning up and enhancing navigability of this repo using 50 parallel agents
+```
+
+**System Analysis:**
+```
+🔍 Analyzing task...
+
+USER OVERRIDE DETECTED: 50 agents requested (overriding auto-scaling)
+
+PATTERN DETECTED: Repository Maintenance
+SUBTASKS: 85 identified
+├─ Remove duplicate files: 20 files
+├─ Consolidate documentation: 15 files
+├─ Update outdated dependencies: 10 files
+├─ Fix linting errors: 25 files
+├─ Refactor redundant code: 10 files
+└─ Update README files: 5 files
+
+DEPENDENCIES: Moderate (some tasks depend on file analysis)
+TASK TYPE: Mixed (file operations + code analysis)
+AVG DURATION: 3 minutes per subtask
+
+SCALING DECISION:
+├─ User requested: 50 agents ✅
+├─ System calculated optimal: 35 agents (automatic mode)
+├─ Resource capacity: 80 agents max
+├─ Decision: USING 50 AGENTS per user request
+└─ Note: Using 43% more agents than optimal (acceptable user preference)
+
+🌊 WAVE STRUCTURE (optimized for 50 agents):
+
+Wave 0: Safety Backup (1 agent) - 2min
+  └─ git commit -m "Backup before cleanup"
+
+Wave 1: Analysis Phase (15 agents - parallel) - 5min
+  ├─ Scan for duplicate files (5 agents)
+  ├─ Analyze documentation structure (5 agents)
+  └─ Check dependencies (5 agents)
+
+Wave 2: File Operations (30 agents - parallel) - 4min
+  ├─ Remove duplicates (10 agents)
+  ├─ Move/consolidate docs (10 agents)
+  └─ Update dependencies (10 agents)
+
+Wave 3: Code Quality (25 agents - parallel) - 6min
+  ├─ Fix linting errors (15 agents)
+  └─ Refactor code (10 agents)
+
+Wave 4: Documentation (10 agents - parallel) - 5min
+  ├─ Update READMEs (5 agents)
+  └─ Generate docs (5 agents)
+
+Wave 5: Verification (15 agents - parallel) - 4min
+  ├─ Run tests (10 agents)
+  └─ Validate structure (5 agents)
+
+Wave 6: Final Commit (1 agent) - 3min
+
+TOTAL AGENTS: 50 (user-specified override)
+PEAK AGENTS: 30 (Wave 2)
+TOTAL WAVES: 7
+ESTIMATED TIME: 29 minutes
+SEQUENTIAL TIME: 255 minutes (4.25 hours)
+EFFICIENCY: 88% faster ✅
+
+Note: Auto-scaling would use 35 agents (33 min total).
+User override adds 14% more parallelism at cost of 12% coordination overhead.
+Still excellent ROI: 226 minutes saved vs 4 minutes additional overhead.
+
+Ready to execute? (yes/no)
+```
+
+**Result:** Repository cleaned with 50 agents in 29 minutes vs 4.25 hours! ✨
+
+---
+
+### Scenario 4: Bug Fix (Intelligent Reduction)
 
 **Task:**
 ```
@@ -748,9 +868,9 @@ def monitor_resources_during_execution():
 
 ---
 
-## 🎬 PROMPT TEMPLATE
+## 🎬 PROMPT TEMPLATES
 
-### Ultimate Simplicity:
+### Template 1: Automatic Scaling (Intelligent)
 
 ```
 Execute this task dynamically with auto-scaled parallel instances:
@@ -767,6 +887,34 @@ Execute this task dynamically with auto-scaled parallel instances:
 - ✅ Adaptive batch sizing
 - ✅ Failure handling strategies
 - ✅ Real-time scaling adjustments
+
+### Template 2: Explicit Agent Count (User Override)
+
+```
+Execute this task using [N] parallel agents:
+
+[Describe what you want in plain English]
+```
+
+**System uses your agent count and determines:**
+- ✅ Optimal wave structure for N agents
+- ✅ Task distribution across N agents
+- ✅ Dependency-aware scheduling
+- ✅ Resource validation (warns if N exceeds capacity)
+- ⚠️ Overrides automatic scaling (you control agent count)
+
+**Examples:**
+```
+Execute the task of cleaning up and enhancing navigability of this repo using 50 parallel agents
+```
+
+```
+Execute the task of refactoring the authentication system using 100 parallel agents
+```
+
+```
+Execute the task of deploying to all production servers using 1000 parallel agents
+```
 
 ---
 
@@ -815,7 +963,7 @@ Execute this task dynamically with auto-scaled parallel instances:
 
 ## 🚀 GET STARTED NOW
 
-**Just use this prompt:**
+### Automatic Scaling (Recommended):
 
 ```
 Execute this task dynamically with auto-scaled parallel instances:
@@ -825,4 +973,16 @@ Execute this task dynamically with auto-scaled parallel instances:
 
 **The intelligent system handles everything else.** 🌊
 
-**No limits. No caps. No manual configuration. Just maximum efficiency through intelligent automation.**
+### Or Specify Agent Count (User Override):
+
+```
+Execute this task using [N] parallel agents:
+
+[Your task in plain English]
+```
+
+**System uses your agent count and optimizes everything else.** 🎯
+
+---
+
+**No limits. No caps. Flexible control. Maximum efficiency through intelligent automation.**
