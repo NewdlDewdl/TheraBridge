@@ -1,7 +1,7 @@
 """
 Session management endpoints
 """
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, BackgroundTasks, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update
 from uuid import UUID
@@ -10,6 +10,8 @@ import os
 import shutil
 from pathlib import Path
 import asyncio
+import hashlib
+import logging
 
 from app.database import get_db
 from app.models.schemas import (
@@ -17,8 +19,19 @@ from app.models.schemas import (
     ExtractedNotes, ExtractNotesResponse
 )
 from app.models import db_models
-from app.services.note_extraction import get_extraction_service
+from app.services.note_extraction import get_extraction_service, NoteExtractionService
 from app.services.transcription import transcribe_audio_file
+from app.validators import (
+    sanitize_filename,
+    validate_audio_file_header,
+    validate_patient_exists,
+    validate_session_exists,
+    validate_positive_int
+)
+from app.middleware.rate_limit import limiter
+
+# Configure logger for upload operations
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -193,7 +206,9 @@ async def process_audio_pipeline(
 
 
 @router.post("/upload", response_model=SessionResponse)
+@limiter.limit("10/hour")
 async def upload_audio_session(
+    request: Request,
     patient_id: UUID,
     file: UploadFile = File(...),
     background_tasks: BackgroundTasks = BackgroundTasks(),
@@ -205,6 +220,10 @@ async def upload_audio_session(
     Creates a session in the database and begins background processing (transcription
     and note extraction). Returns immediately with status="uploading"; client can poll
     the session endpoint to track progress.
+
+    Rate Limit:
+        - 10 uploads per hour per IP address
+        - Prevents API quota exhaustion from excessive processing
 
     Validation:
         - File size must not exceed 500MB
@@ -224,6 +243,7 @@ async def upload_audio_session(
         HTTPException 400: Invalid filename, unsupported extension, or invalid MIME type
         HTTPException 413: File size exceeds 500MB
         HTTPException 415: Unsupported MIME type
+        HTTPException 429: Rate limit exceeded (too many uploads)
         HTTPException 500: No therapist found or file save failed
     """
     # Validate file early before database operations
@@ -252,34 +272,90 @@ async def upload_audio_session(
     await db.commit()
     await db.refresh(new_session)
 
-    # Save audio file
+    # Save audio file with enhanced streaming, progress tracking, and checksum verification
     file_path = UPLOAD_DIR / f"{new_session.id}{Path(file.filename).suffix.lower()}"
+    temp_path = file_path.with_suffix(file_path.suffix + ".tmp")
 
     try:
-        # Write file with streaming size validation
+        # Write file with streaming size validation, progress tracking, and checksum
         bytes_written = 0
-        with open(file_path, "wb") as buffer:
-            chunk_size = 1024 * 1024  # 1MB chunks
-            while True:
-                chunk = await file.read(chunk_size)
-                if not chunk:
-                    break
-                bytes_written += len(chunk)
+        chunk_count = 0
+        sha256_hash = hashlib.sha256()
+        chunk_size = 1024 * 1024  # 1MB chunks
 
-                # Check file size during write (runtime validation for streamed uploads)
-                if bytes_written > MAX_FILE_SIZE:
+        logger.info(f"[Upload] Starting upload for session {new_session.id}: {file.filename}")
+
+        with open(temp_path, "wb") as buffer:
+            while True:
+                try:
+                    chunk = await file.read(chunk_size)
+                    if not chunk:
+                        break
+
+                    chunk_count += 1
+                    bytes_written += len(chunk)
+
+                    # Check file size during write (runtime validation for streamed uploads)
+                    if bytes_written > MAX_FILE_SIZE:
+                        buffer.close()
+                        temp_path.unlink(missing_ok=True)
+                        max_size_mb = MAX_FILE_SIZE / (1024 * 1024)
+                        file_size_mb = bytes_written / (1024 * 1024)
+                        logger.warning(
+                            f"[Upload] File size exceeded: {file_size_mb:.1f}MB > {max_size_mb:.0f}MB"
+                        )
+                        raise HTTPException(
+                            status_code=413,
+                            detail=f"File size ({file_size_mb:.1f}MB) exceeds maximum allowed size ({max_size_mb:.0f}MB)"
+                        )
+
+                    # Write chunk and update checksum
+                    buffer.write(chunk)
+                    sha256_hash.update(chunk)
+
+                    # Log progress every 50MB
+                    if bytes_written % (50 * 1024 * 1024) < chunk_size:
+                        progress_mb = bytes_written / (1024 * 1024)
+                        logger.info(f"[Upload] Progress: {progress_mb:.1f}MB uploaded")
+
+                except asyncio.TimeoutError:
                     buffer.close()
-                    file_path.unlink()
-                    max_size_mb = MAX_FILE_SIZE / (1024 * 1024)
-                    file_size_mb = bytes_written / (1024 * 1024)
+                    temp_path.unlink(missing_ok=True)
+                    logger.error(f"[Upload] Timeout reading chunk {chunk_count}")
                     raise HTTPException(
-                        status_code=413,
-                        detail=f"File size ({file_size_mb:.1f}MB) exceeds maximum allowed size ({max_size_mb:.0f}MB)"
+                        status_code=408,
+                        detail="Upload timeout - connection lost during file transfer"
+                    )
+                except Exception as chunk_error:
+                    buffer.close()
+                    temp_path.unlink(missing_ok=True)
+                    logger.error(f"[Upload] Error reading chunk {chunk_count}: {str(chunk_error)}")
+                    raise HTTPException(
+                        status_code=500,
+                        detail=f"Upload failed during chunk {chunk_count}: {str(chunk_error)}"
                     )
 
-                buffer.write(chunk)
+        # Verify minimum file size (at least 1KB to ensure valid audio)
+        if bytes_written < 1024:
+            temp_path.unlink(missing_ok=True)
+            logger.warning(f"[Upload] File too small: {bytes_written} bytes")
+            raise HTTPException(
+                status_code=400,
+                detail=f"File too small ({bytes_written} bytes). Audio file must be at least 1KB."
+            )
 
-        print(f"[Upload] Saved audio file: {file_path} ({bytes_written / (1024*1024):.1f}MB)")
+        # Move temp file to final location (atomic operation)
+        temp_path.rename(file_path)
+
+        file_checksum = sha256_hash.hexdigest()
+        file_size_mb = bytes_written / (1024 * 1024)
+
+        logger.info(
+            f"[Upload] Successfully saved: {file_path} "
+            f"({file_size_mb:.1f}MB, {chunk_count} chunks, SHA256: {file_checksum[:16]}...)"
+        )
+        print(f"[Upload] Saved audio file: {file_path} ({file_size_mb:.1f}MB)")
+        print(f"[Upload] File checksum (SHA256): {file_checksum}")
 
         # Update session with file path
         await db.execute(
@@ -299,17 +375,35 @@ async def upload_audio_session(
 
         return SessionResponse.model_validate(new_session)
 
-    except Exception as e:
-        # Clean up on error
-        if file_path.exists():
-            file_path.unlink()
+    except HTTPException:
+        # Re-raise HTTP exceptions (validation errors, size limits, etc.)
+        # Clean up any partial uploads
+        temp_path.unlink(missing_ok=True)
+        file_path.unlink(missing_ok=True)
 
         await db.execute(
             update(db_models.Session)
             .where(db_models.Session.id == new_session.id)
             .values(
                 status=SessionStatus.failed.value,
-                error_message=str(e)
+                error_message="Upload validation failed"
+            )
+        )
+        await db.commit()
+        raise
+
+    except Exception as e:
+        # Clean up on unexpected error
+        logger.error(f"[Upload] Unexpected error for session {new_session.id}: {str(e)}")
+        temp_path.unlink(missing_ok=True)
+        file_path.unlink(missing_ok=True)
+
+        await db.execute(
+            update(db_models.Session)
+            .where(db_models.Session.id == new_session.id)
+            .values(
+                status=SessionStatus.failed.value,
+                error_message=f"Upload failed: {str(e)}"
             )
         )
         await db.commit()
@@ -428,9 +522,11 @@ async def list_sessions(
 
 
 @router.post("/{session_id}/extract-notes", response_model=ExtractNotesResponse)
+@limiter.limit("20/hour")
 async def manually_extract_notes(
     session_id: UUID,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    extraction_service: NoteExtractionService = Depends(get_extraction_service)
 ):
     """
     Manually trigger note extraction for a transcribed session.
@@ -438,9 +534,14 @@ async def manually_extract_notes(
     Useful for re-processing a session or if automatic extraction failed.
     Session must have transcript_text before extraction is possible.
 
+    Rate Limit:
+        - 20 extractions per hour per IP address
+        - Prevents OpenAI API quota exhaustion from excessive re-processing
+
     Args:
         session_id: UUID of session to extract notes from
         db: AsyncSession database dependency
+        extraction_service: NoteExtractionService injected dependency
 
     Returns:
         ExtractNotesResponse: Extracted notes and processing time
@@ -448,6 +549,7 @@ async def manually_extract_notes(
     Raises:
         HTTPException 404: If session not found
         HTTPException 400: If session has no transcript_text yet
+        HTTPException 429: Rate limit exceeded (too many extractions)
     """
     result = await db.execute(
         select(db_models.Session).where(db_models.Session.id == session_id)
@@ -464,7 +566,6 @@ async def manually_extract_notes(
     import time
     start_time = time.time()
 
-    extraction_service = get_extraction_service()
     notes = await extraction_service.extract_notes_from_transcript(
         transcript=session.transcript_text,
         segments=session.transcript_segments

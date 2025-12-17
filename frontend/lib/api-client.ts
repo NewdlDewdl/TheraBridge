@@ -1,90 +1,357 @@
 import { tokenStorage } from './token-storage';
+import type {
+  ApiResult,
+  ApiErrorType,
+  ApiRequestOptions,
+  FailureResult,
+  RefreshTokenResponse,
+  HttpStatusCode,
+} from './api-types';
+import {
+  HTTP_STATUS,
+  isFailureResponse,
+  isNetworkError,
+  isTimeoutError,
+  createFailureResult,
+  createSuccessResult,
+  isValidationError,
+} from './api-types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
 
+/**
+ * Custom error class for API errors with full response details
+ */
+export class ApiClientError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly message: string,
+    public readonly details?: Record<string, unknown>
+  ) {
+    super(message);
+    this.name = 'ApiClientError';
+    Object.setPrototypeOf(this, ApiClientError.prototype);
+  }
+}
+
+/**
+ * Authenticated API client with built-in token refresh and error handling.
+ * All methods return typed ApiResult<T> for discriminated union error handling.
+ *
+ * @example
+ * ```ts
+ * const result = await apiClient.get<Patient>('/api/patients/123');
+ * if (result.success) {
+ *   console.log(result.data.name);
+ * } else {
+ *   console.error(result.error, result.status);
+ * }
+ * ```
+ */
 class ApiClient {
   /**
-   * Make authenticated API request.
-   * Automatically adds Authorization header and handles token refresh.
+   * Make authenticated API request with full error handling.
+   * Automatically adds Authorization header and handles token refresh on 401.
+   * Returns discriminated union type for exhaustive error handling.
+   *
+   * @template T - The expected response data type
+   * @param endpoint - API endpoint (e.g., '/api/patients/123')
+   * @param options - Request options including custom timeout, retry logic, etc.
+   * @returns ApiResult<T> - Success or failure result with full type information
    */
   async request<T>(
     endpoint: string,
-    options: RequestInit = {}
-  ): Promise<T> {
-    const accessToken = tokenStorage.getAccessToken();
+    options: ApiRequestOptions = {}
+  ): Promise<ApiResult<T>> {
+    const { timeout = 30000, retry = { maxAttempts: 1, delayMs: 1000 }, onError, ...fetchOptions } = options;
 
-    const config: RequestInit = {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-        ...options.headers,
-      },
-    };
+    let lastError: ApiErrorType | null = null;
+    const maxAttempts = retry.maxAttempts || 1;
+    let currentAttempt = 0;
 
-    try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    while (currentAttempt < maxAttempts) {
+      try {
+        currentAttempt++;
 
-      // Handle 401 (token expired)
-      if (response.status === 401) {
-        return await this.handleTokenRefresh(endpoint, options);
+        const accessToken = tokenStorage.getAccessToken();
+
+        const config: RequestInit = {
+          ...fetchOptions,
+          headers: {
+            'Content-Type': 'application/json',
+            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+            ...fetchOptions.headers,
+          },
+        };
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+        let response: Response;
+        try {
+          response = await fetch(`${API_BASE_URL}${endpoint}`, {
+            ...config,
+            signal: controller.signal,
+          });
+        } catch (error) {
+          clearTimeout(timeoutId);
+
+          if (error instanceof DOMException && error.name === 'AbortError') {
+            lastError = {
+              type: 'timeout',
+              message: `Request timeout after ${timeout}ms`,
+              timeoutMs: timeout,
+            };
+          } else {
+            lastError = {
+              type: 'network',
+              message: error instanceof Error ? error.message : 'Network request failed',
+              originalError: error instanceof Error ? error : undefined,
+            };
+          }
+
+          if (currentAttempt >= maxAttempts) {
+            onError?.(lastError);
+            return this.errorToResult(lastError);
+          }
+
+          // Wait before retry
+          if (retry && retry.delayMs) {
+            const delayMs = retry.delayMs * Math.pow(retry.backoffMultiplier || 1, currentAttempt - 1);
+            await new Promise((resolve) => setTimeout(resolve, delayMs));
+          }
+          continue;
+        }
+
+        clearTimeout(timeoutId);
+
+        // Handle 401 (token expired) - attempt refresh
+        if (response.status === 401) {
+          const refreshResult = await this.handleTokenRefresh();
+          if (!refreshResult.success) {
+            onError?.(refreshResult as unknown as ApiErrorType);
+            return refreshResult as unknown as ApiResult<T>;
+          }
+
+          // Retry original request with refreshed token
+          if (currentAttempt < maxAttempts) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+            continue;
+          }
+        }
+
+        // Parse response body
+        let responseBody: unknown;
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType?.includes('application/json')) {
+            responseBody = await response.json();
+          } else {
+            responseBody = await response.text();
+          }
+        } catch (parseError) {
+          lastError = {
+            type: 'unknown',
+            message: 'Failed to parse response body',
+            originalError: parseError instanceof Error ? parseError : undefined,
+          };
+
+          if (currentAttempt >= maxAttempts) {
+            onError?.(lastError);
+            return this.errorToResult(lastError);
+          }
+          continue;
+        }
+
+        // Handle HTTP error status codes
+        if (!response.ok) {
+          const failureResult = this.createErrorResult(response.status, responseBody);
+          lastError = failureResult;
+
+          if (currentAttempt >= maxAttempts) {
+            onError?.(failureResult);
+            return failureResult as unknown as ApiResult<T>;
+          }
+
+          // Retry on server errors (5xx), but not client errors (4xx)
+          if (response.status >= 500 && retry && currentAttempt < maxAttempts) {
+            const delayMs = (retry.delayMs || 1000) * Math.pow(retry.backoffMultiplier || 1, currentAttempt - 1);
+            await new Promise((resolve) => setTimeout(resolve, delayMs));
+            continue;
+          }
+
+          return failureResult as unknown as ApiResult<T>;
+        }
+
+        // Success response
+        return createSuccessResult<T>(responseBody as T, response.status as any);
+      } catch (error) {
+        // Unexpected error
+        lastError = {
+          type: 'unknown',
+          message: error instanceof Error ? error.message : 'Unknown error occurred',
+          originalError: error instanceof Error ? error : undefined,
+        };
+
+        if (currentAttempt >= maxAttempts) {
+          onError?.(lastError);
+          return this.errorToResult(lastError);
+        }
       }
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.detail || 'API request failed');
-      }
-
-      return await response.json();
-    } catch (error) {
-      throw error;
     }
+
+    // All retries exhausted
+    if (lastError) {
+      onError?.(lastError);
+      return this.errorToResult(lastError);
+    }
+
+    return createFailureResult('Request failed', HTTP_STATUS.INTERNAL_SERVER_ERROR);
   }
 
   /**
    * Handle token refresh when 401 received.
+   * Returns typed result to prevent cascading errors.
    */
-  private async handleTokenRefresh<T>(
-    endpoint: string,
-    options: RequestInit
-  ): Promise<T> {
+  private async handleTokenRefresh(): Promise<ApiResult<RefreshTokenResponse>> {
     const refreshToken = tokenStorage.getRefreshToken();
 
     if (!refreshToken) {
       tokenStorage.clearTokens();
-      window.location.href = '/auth/login';
-      throw new Error('No refresh token available');
+      // Redirect to login in browser context
+      if (typeof window !== 'undefined') {
+        window.location.href = '/auth/login';
+      }
+      return createFailureResult('No refresh token available', HTTP_STATUS.UNAUTHORIZED);
     }
 
-    // Refresh the access token
-    const refreshResponse = await fetch(`${API_BASE_URL}/auth/refresh`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refresh_token: refreshToken }),
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: refreshToken }),
+      });
 
-    if (!refreshResponse.ok) {
-      // Refresh token also expired, force re-login
+      if (!response.ok) {
+        tokenStorage.clearTokens();
+        if (typeof window !== 'undefined') {
+          window.location.href = '/auth/login';
+        }
+        return createFailureResult('Session expired', HTTP_STATUS.UNAUTHORIZED);
+      }
+
+      const data = await response.json();
+      tokenStorage.saveTokens(data.access_token, data.refresh_token);
+      return createSuccessResult(data, HTTP_STATUS.OK);
+    } catch (error) {
       tokenStorage.clearTokens();
-      window.location.href = '/auth/login';
-      throw new Error('Session expired');
+      if (typeof window !== 'undefined') {
+        window.location.href = '/auth/login';
+      }
+      return createFailureResult(
+        error instanceof Error ? error.message : 'Token refresh failed',
+        HTTP_STATUS.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  /**
+   * Create a failure result from an error response
+   */
+  private createErrorResult(status: number, responseBody: unknown): FailureResult {
+    if (isValidationError(responseBody)) {
+      const details: Record<string, string> = {};
+      for (const error of responseBody.detail) {
+        const key = error.loc.join('.');
+        details[key] = error.msg;
+      }
+      return createFailureResult(
+        'Validation error',
+        status as HttpStatusCode,
+        details
+      );
     }
 
-    const { access_token, refresh_token } = await refreshResponse.json();
-    tokenStorage.saveTokens(access_token, refresh_token);
+    if (
+      typeof responseBody === 'object' &&
+      responseBody !== null &&
+      'detail' in responseBody
+    ) {
+      const detail = (responseBody as Record<string, unknown>).detail;
+      return createFailureResult(
+        typeof detail === 'string' ? detail : 'API request failed',
+        status as HttpStatusCode
+      );
+    }
 
-    // Retry original request with new token
-    return this.request<T>(endpoint, options);
+    return createFailureResult(
+      typeof responseBody === 'string' ? responseBody : 'API request failed',
+      status as HttpStatusCode
+    );
   }
 
-  // Convenience methods
-  get<T>(endpoint: string): Promise<T> {
-    return this.request<T>(endpoint, { method: 'GET' });
+  /**
+   * Convert error types to result
+   */
+  private errorToResult(error: ApiErrorType): FailureResult {
+    if (isFailureResponse(error)) {
+      return error;
+    }
+
+    if (isNetworkError(error)) {
+      return createFailureResult(error.message, HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    }
+
+    if (isTimeoutError(error)) {
+      return createFailureResult(error.message, HTTP_STATUS.INTERNAL_SERVER_ERROR);
+    }
+
+    return createFailureResult(error.message, HTTP_STATUS.INTERNAL_SERVER_ERROR);
   }
 
-  post<T>(endpoint: string, data?: Record<string, unknown>): Promise<T> {
+  /**
+   * GET request (returns ApiResult<T>)
+   */
+  get<T>(endpoint: string, options?: ApiRequestOptions): Promise<ApiResult<T>> {
+    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  }
+
+  /**
+   * POST request (returns ApiResult<T>)
+   */
+  post<T>(endpoint: string, data?: Record<string, unknown>, options?: ApiRequestOptions): Promise<ApiResult<T>> {
     return this.request<T>(endpoint, {
+      ...options,
       method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  /**
+   * PUT request (returns ApiResult<T>)
+   */
+  put<T>(endpoint: string, data?: Record<string, unknown>, options?: ApiRequestOptions): Promise<ApiResult<T>> {
+    return this.request<T>(endpoint, {
+      ...options,
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  /**
+   * DELETE request (returns ApiResult<null>)
+   */
+  delete<T = null>(endpoint: string, options?: ApiRequestOptions): Promise<ApiResult<T>> {
+    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  }
+
+  /**
+   * PATCH request (returns ApiResult<T>)
+   */
+  patch<T>(endpoint: string, data?: Record<string, unknown>, options?: ApiRequestOptions): Promise<ApiResult<T>> {
+    return this.request<T>(endpoint, {
+      ...options,
+      method: 'PATCH',
       body: JSON.stringify(data),
     });
   }

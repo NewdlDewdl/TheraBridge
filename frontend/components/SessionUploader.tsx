@@ -3,9 +3,13 @@
 import { useState, useCallback, useRef } from 'react';
 import { uploadSession } from '@/lib/api';
 import { useRouter } from 'next/navigation';
-import { Upload, File, Loader2, AlertCircle } from 'lucide-react';
+import { Upload, File, Loader2 } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
+import { ErrorMessage } from './ui/error-message';
+import type { FormattedError } from '@/lib/error-formatter';
+import { formatUploadError } from '@/lib/error-formatter';
+import type { FailureResult } from '@/lib/api-types';
 
 interface SessionUploaderProps {
   patientId: string;
@@ -24,46 +28,65 @@ const ALLOWED_TYPES = [
 ];
 
 const ALLOWED_EXTENSIONS = ['.mp3', '.wav', '.m4a', '.mp4', '.mpeg', '.webm', '.mpga'];
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+
+interface ValidationError {
+  type: 'extension' | 'size';
+  message: string;
+  description: string;
+}
 
 export function SessionUploader({ patientId, onUploadComplete }: SessionUploaderProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<FormattedError | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const validateFile = (file: File): boolean => {
+  const validateFile = (file: File): ValidationError | null => {
     const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
     const isValidType = ALLOWED_TYPES.includes(file.type) || ALLOWED_EXTENSIONS.includes(fileExtension);
 
     if (!isValidType) {
-      setError(`Invalid file type. Please upload ${ALLOWED_EXTENSIONS.join(', ')}`);
-      return false;
+      return {
+        type: 'extension',
+        message: 'Invalid file type',
+        description: `Please upload a supported audio or video file: ${ALLOWED_EXTENSIONS.join(', ')}`,
+      };
     }
 
-    // Max file size: 100MB
-    if (file.size > 100 * 1024 * 1024) {
-      setError('File size must be less than 100MB');
-      return false;
+    if (file.size > MAX_FILE_SIZE) {
+      const sizeMB = (MAX_FILE_SIZE / (1024 * 1024)).toFixed(0);
+      const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
+      return {
+        type: 'size',
+        message: 'File too large',
+        description: `Your file is ${fileSizeMB}MB. Maximum size is ${sizeMB}MB.`,
+      };
     }
 
-    return true;
+    return null;
   };
 
   const handleUpload = useCallback(async (file: File) => {
-    if (!validateFile(file)) {
+    const validationError = validateFile(file);
+    if (validationError) {
+      setError({
+        message: validationError.message,
+        description: validationError.description,
+        suggestion: 'Try selecting a different file',
+        severity: 'error',
+        retryable: false,
+      });
       return;
     }
 
     setIsUploading(true);
     setError(null);
-    setUploadProgress(0);
 
     try {
       const session = await uploadSession(patientId, file);
-      setUploadProgress(100);
 
       if (onUploadComplete) {
         onUploadComplete(session.id);
@@ -71,14 +94,43 @@ export function SessionUploader({ patientId, onUploadComplete }: SessionUploader
         router.push(`/therapist/sessions/${session.id}`);
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Upload failed';
-      setError(errorMessage);
+      // Format the error for display
+      let formattedError: FormattedError;
+
+      if (err instanceof Error) {
+        // Check if it's a JSON parsing error from the upload function
+        if (err.message.includes('Failed to parse')) {
+          formattedError = {
+            message: 'Server error during upload',
+            description: 'The server responded with unexpected data',
+            suggestion: 'Try uploading again',
+            severity: 'error',
+            retryable: true,
+          };
+        } else {
+          // Treat as a general upload error
+          formattedError = formatUploadError({
+            success: false,
+            status: 500,
+            error: err.message,
+          } as FailureResult);
+        }
+      } else {
+        formattedError = {
+          message: 'Upload failed',
+          description: 'An unexpected error occurred',
+          suggestion: 'Try uploading again',
+          severity: 'error',
+          retryable: true,
+        };
+      }
+
+      setError(formattedError);
       setIsUploading(false);
-      setUploadProgress(0);
     }
   }, [patientId, onUploadComplete, router]);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
 
@@ -97,12 +149,12 @@ export function SessionUploader({ patientId, onUploadComplete }: SessionUploader
     }
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
 
-  const handleDragLeave = (e: React.DragEvent) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
@@ -172,9 +224,15 @@ export function SessionUploader({ patientId, onUploadComplete }: SessionUploader
           </div>
 
           {error && (
-            <div className="mt-4 p-3 bg-destructive/10 border border-destructive/20 rounded-md flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-destructive text-left">{error}</p>
+            <div className="mt-4">
+              <ErrorMessage
+                message={error.message}
+                description={error.description}
+                variant="inline"
+                severity={error.severity}
+                dismissible
+                onDismiss={() => setError(null)}
+              />
             </div>
           )}
         </div>
@@ -182,3 +240,5 @@ export function SessionUploader({ patientId, onUploadComplete }: SessionUploader
     </Card>
   );
 }
+
+export type { SessionUploaderProps };

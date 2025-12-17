@@ -2,6 +2,10 @@ import type { Patient, Session, ExtractedNotes, SessionStatus } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
+/**
+ * Custom error class for API errors
+ * Includes HTTP status code and error message from the server
+ */
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -27,18 +31,18 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
 }
 
 // Patients API
-export const getPatients = () => fetchApi<Patient[]>('/api/patients/');
+export const getPatients = (): Promise<Patient[]> => fetchApi<Patient[]>('/api/patients/');
 
-export const getPatient = (id: string) => fetchApi<Patient>(`/api/patients/${id}`);
+export const getPatient = (id: string): Promise<Patient> => fetchApi<Patient>(`/api/patients/${id}`);
 
-export const createPatient = (data: { name: string; email: string; phone?: string; therapist_id: string }) =>
+export const createPatient = (data: { name: string; email: string; phone?: string; therapist_id: string }): Promise<Patient> =>
   fetchApi<Patient>('/api/patients/', {
     method: 'POST',
     body: JSON.stringify(data),
   });
 
 // Sessions API
-export const getSessions = (patientId?: string, status?: SessionStatus) => {
+export const getSessions = (patientId?: string, status?: SessionStatus): Promise<Session[]> => {
   const params = new URLSearchParams();
   if (patientId) params.set('patient_id', patientId);
   if (status) params.set('status', status);
@@ -46,9 +50,9 @@ export const getSessions = (patientId?: string, status?: SessionStatus) => {
   return fetchApi<Session[]>(`/api/sessions/${queryString ? `?${queryString}` : ''}`);
 };
 
-export const getSession = (id: string) => fetchApi<Session>(`/api/sessions/${id}`);
+export const getSession = (id: string): Promise<Session> => fetchApi<Session>(`/api/sessions/${id}`);
 
-export const getSessionNotes = (id: string) =>
+export const getSessionNotes = (id: string): Promise<ExtractedNotes> =>
   fetchApi<ExtractedNotes>(`/api/sessions/${id}/notes`);
 
 export const uploadSession = async (patientId: string, file: File): Promise<Session> => {
@@ -71,8 +75,8 @@ export const uploadSession = async (patientId: string, file: File): Promise<Sess
   return response.json();
 };
 
-// Fetcher for SWR
-export const fetcher = <T,>(url: string): Promise<T> => {
+// Fetcher for SWR - typed for use with SWR hooks
+export const fetcher = async <T,>(url: string): Promise<T> => {
   if (url.startsWith('/')) {
     return fetchApi<T>(url);
   }

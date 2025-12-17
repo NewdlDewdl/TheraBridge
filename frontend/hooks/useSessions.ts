@@ -1,15 +1,41 @@
-import useSWR from 'swr';
-import { fetcher } from '@/lib/api';
+import { useSWRTyped } from '@/lib/swr-wrapper';
+import { fetcher, type ApiError } from '@/lib/api';
 import type { Session, SessionStatus } from '@/lib/types';
 
+/**
+ * Configuration options for the useSessions hook
+ */
 export interface UseSessionsOptions {
+  /** Filter sessions by patient ID */
   patientId?: string;
+  /** Filter sessions by status (processed, failed, uploading, etc.) */
   status?: SessionStatus;
-  // Allow override of refresh interval if needed (default: 30s, disabled when status is 'processed' or 'failed')
+  /** Override the default refresh interval (ms). By default: 30s for in-progress, 0 for completed */
   refreshInterval?: number;
 }
 
-export function useSessions(options?: UseSessionsOptions) {
+/**
+ * Fetches a list of sessions with filtering and intelligent polling
+ *
+ * Sessions are automatically filtered by patient ID and/or status.
+ * Automatically polls every 30 seconds for in-progress sessions,
+ * and disables polling for completed/failed sessions.
+ *
+ * @param options - Configuration options (patientId, status filter, refreshInterval override)
+ * @returns Hook return with sessions array, loading state, error, and refresh function
+ *
+ * @example
+ * ```ts
+ * // Fetch all sessions for a specific patient
+ * const { data: sessions, isLoading } = useSessions({ patientId: 'patient-123' });
+ *
+ * // Fetch only completed sessions
+ * const { data: completedSessions } = useSessions({ status: 'processed' });
+ * ```
+ */
+export function useSessions(
+  options?: UseSessionsOptions
+) {
   const params = new URLSearchParams();
   if (options?.patientId) params.set('patient_id', options.patientId);
   if (options?.status) params.set('status', options.status);
@@ -20,7 +46,7 @@ export function useSessions(options?: UseSessionsOptions) {
   // - Processed/failed sessions: no refresh (they don't change)
   // - In-progress sessions: poll every 30s
   // - Explicit override: use provided refreshInterval
-  const getRefreshInterval = () => {
+  const getRefreshInterval = (): number => {
     if (options?.refreshInterval !== undefined) {
       return options.refreshInterval;
     }
@@ -32,7 +58,7 @@ export function useSessions(options?: UseSessionsOptions) {
     return 30000;
   };
 
-  const { data, error, mutate, isLoading } = useSWR<Session[]>(
+  const swr = useSWRTyped<Session[], ApiError>(
     endpoint,
     fetcher,
     {
@@ -48,10 +74,11 @@ export function useSessions(options?: UseSessionsOptions) {
   );
 
   return {
-    sessions: data,
-    isLoading,
-    isError: !!error,
-    error,
-    refresh: mutate,
+    sessions: swr.data,
+    data: swr.data,
+    isLoading: swr.isLoading,
+    isError: !!swr.error,
+    error: swr.error,
+    refresh: swr.mutate,
   };
 }

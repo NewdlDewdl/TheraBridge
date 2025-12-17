@@ -1,5 +1,5 @@
-import useSWR from 'swr';
-import { fetcher } from '@/lib/api';
+import { useSWRTyped } from '@/lib/swr-wrapper';
+import { fetcher, type ApiError } from '@/lib/api';
 import type { Patient } from '@/lib/types';
 
 // SWR configuration for patient data - prevents duplicate requests
@@ -10,36 +10,59 @@ const patientSWRConfig = {
   revalidateOnFocus: false,
   // Revalidate on reconnect for network resilience
   revalidateOnReconnect: true,
-};
+} as const;
 
+/**
+ * Fetches all patients for the current therapist
+ *
+ * @returns Hook return with patients array, loading state, error, and refresh function
+ *
+ * @example
+ * ```ts
+ * const { patients, isLoading, error, refresh } = usePatients();
+ * ```
+ */
 export function usePatients() {
-  const { data, error, mutate, isLoading } = useSWR<Patient[]>(
+  const swr = useSWRTyped<Patient[], ApiError>(
     '/api/patients/',
     fetcher,
     patientSWRConfig
   );
 
   return {
-    patients: data,
-    isLoading,
-    isError: !!error,
-    error,
-    refresh: mutate,
+    patients: swr.data,
+    data: swr.data,
+    isLoading: swr.isLoading,
+    isError: !!swr.error,
+    error: swr.error,
+    refresh: swr.mutate,
   };
 }
 
+/**
+ * Fetches a single patient by ID
+ *
+ * @param patientId - The patient ID to fetch, or null to disable the request
+ * @returns Hook return with patient object, loading state, error, and refresh function
+ *
+ * @example
+ * ```ts
+ * const { data: patient, isLoading } = usePatient(patientId);
+ * ```
+ */
 export function usePatient(patientId: string | null) {
-  const { data, error, mutate, isLoading } = useSWR<Patient>(
+  const swr = useSWRTyped<Patient, ApiError>(
     patientId ? `/api/patients/${patientId}` : null,
     fetcher,
     patientSWRConfig
   );
 
   return {
-    patient: data,
-    isLoading,
-    isError: !!error,
-    error,
-    refresh: mutate,
+    patient: swr.data,
+    data: swr.data,
+    isLoading: swr.isLoading,
+    isError: !!swr.error,
+    error: swr.error,
+    refresh: swr.mutate,
   };
 }

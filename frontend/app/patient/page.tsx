@@ -2,9 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { EmptyState } from '@/components/EmptyState';
 import { MoodIndicator } from '@/components/MoodIndicator';
-import { Calendar, Target, CheckCircle } from 'lucide-react';
+import { PatientDashboardSkeleton } from '@/components/skeletons';
+import { Calendar, Target, CheckCircle, MessageCircle } from 'lucide-react';
 import { formatDate, formatDuration } from '@/lib/utils';
+import { useState, useEffect } from 'react';
 
 // This is a simplified example - in production, you'd:
 // 1. Add authentication to identify the patient
@@ -12,6 +15,18 @@ import { formatDate, formatDuration } from '@/lib/utils';
 // 3. Display patient_summary instead of therapist_notes
 
 export default function PatientPortal() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading time
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <PatientDashboardSkeleton />;
+  }
+
   // Mock data for demonstration - replace with real API calls
   const mockSessions = [
     {
@@ -77,81 +92,111 @@ export default function PatientPortal() {
       </div>
 
       {/* Active Strategies */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Active Strategies</CardTitle>
-          <CardDescription>Techniques you&apos;re currently working with</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2">
-            {activeStrategies.map((strategy, index) => (
-              <li key={index} className="flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600" />
-                <span className="font-medium">{strategy.name}</span>
-                <Badge variant="secondary" className="text-xs">
-                  {strategy.category}
-                </Badge>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+      {activeStrategies.length > 0 ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Active Strategies</CardTitle>
+            <CardDescription>Techniques you&apos;re currently working with</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2">
+              {activeStrategies.map((strategy, index) => (
+                <li key={index} className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="font-medium">{strategy.name}</span>
+                  <Badge variant="secondary" className="text-xs">
+                    {strategy.category}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      ) : (
+        <EmptyState
+          icon={Target}
+          heading="No active strategies yet"
+          description="Work with your therapist to identify strategies for your treatment plan"
+          iconSize="md"
+          showCard
+        />
+      )}
 
       {/* Action Items */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Action Items</CardTitle>
-          <CardDescription>Things to practice between sessions</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {mockSessions.flatMap((session) =>
-              session.actionItems.map((item, index) => (
-                <div key={`${session.id}-${index}`} className="flex items-start gap-3">
-                  <input type="checkbox" className="mt-1 h-4 w-4 rounded border-gray-300" />
-                  <span className="text-sm">{item}</span>
-                </div>
-              ))
-            )}
-          </div>
-        </CardContent>
-      </Card>
+      {mockSessions.length > 0 && mockSessions.some(s => s.actionItems.length > 0) ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Your Action Items</CardTitle>
+            <CardDescription>Things to practice between sessions</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {mockSessions.flatMap((session) =>
+                session.actionItems.map((item, index) => (
+                  <div key={`${session.id}-${index}`} className="flex items-start gap-3">
+                    <input type="checkbox" className="mt-1 h-4 w-4 rounded border-gray-300" />
+                    <span className="text-sm">{item}</span>
+                  </div>
+                ))
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <EmptyState
+          icon={CheckCircle}
+          heading="No action items yet"
+          description="Your therapist will share action items after your sessions"
+          iconSize="md"
+          showCard
+        />
+      )}
 
       {/* Recent Sessions */}
       <div className="space-y-4">
         <h3 className="text-xl font-semibold">Recent Sessions</h3>
-        <div className="space-y-4">
-          {mockSessions.map((session) => (
-            <Card key={session.id}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-lg">{formatDate(session.date)}</CardTitle>
-                    <CardDescription className="flex items-center gap-1 mt-1">
-                      <Calendar className="w-3 h-3" />
-                      {formatDuration(session.duration)}
-                    </CardDescription>
+        {mockSessions.length > 0 ? (
+          <div className="space-y-4">
+            {mockSessions.map((session) => (
+              <Card key={session.id}>
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-lg">{formatDate(session.date)}</CardTitle>
+                      <CardDescription className="flex items-center gap-1 mt-1">
+                        <Calendar className="w-3 h-3" />
+                        {formatDuration(session.duration)}
+                      </CardDescription>
+                    </div>
+                    <MoodIndicator mood={session.mood} showLabel={false} size="sm" />
                   </div>
-                  <MoodIndicator mood={session.mood} showLabel={false} size="sm" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4">{session.summary}</p>
-                <div className="space-y-2">
-                  <p className="text-xs font-medium">Action Items:</p>
-                  <ul className="space-y-1">
-                    {session.actionItems.map((item, index) => (
-                      <li key={index} className="text-sm flex items-start gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">{session.summary}</p>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium">Action Items:</p>
+                    <ul className="space-y-1">
+                      {session.actionItems.map((item, index) => (
+                        <li key={index} className="text-sm flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            icon={MessageCircle}
+            heading="No sessions yet"
+            description="Schedule your first session with your therapist to get started"
+            iconSize="md"
+            showCard
+          />
+        )}
       </div>
     </div>
   );

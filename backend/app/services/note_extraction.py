@@ -3,11 +3,16 @@ AI-powered note extraction from therapy session transcripts
 """
 import json
 import time
+import logging
 from typing import Dict, Optional
-from openai import OpenAI
+from openai import AsyncOpenAI, RateLimitError, APIError, APITimeoutError
 from app.models.schemas import ExtractedNotes, TranscriptSegment
 import os
 from dotenv import load_dotenv
+import httpx
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 load_dotenv("../audio-transcription-pipeline/.env")
 
@@ -83,18 +88,35 @@ TRANSCRIPT:
 class NoteExtractionService:
     """Service for extracting structured notes from transcripts using OpenAI"""
 
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None, timeout: Optional[float] = None):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         if not self.api_key:
             raise ValueError("OPENAI_API_KEY not found in environment")
 
-        self.client = OpenAI(api_key=self.api_key)
+        # Configure timeout from environment or use default of 120 seconds
+        self.default_timeout = timeout or float(os.getenv("OPENAI_TIMEOUT", "120"))
+
+        # Create HTTP client with timeout configuration
+        http_client = httpx.AsyncClient(
+            timeout=httpx.Timeout(
+                connect=30.0,  # Connection timeout
+                read=self.default_timeout,  # Read timeout (most important for long API calls)
+                write=30.0,  # Write timeout
+                pool=10.0   # Pool timeout
+            )
+        )
+
+        self.client = AsyncOpenAI(
+            api_key=self.api_key,
+            http_client=http_client
+        )
         self.model = "gpt-4o"  # Using GPT-4 for better reasoning
 
     async def extract_notes_from_transcript(
         self,
         transcript: str,
-        segments: Optional[list[TranscriptSegment]] = None
+        segments: Optional[list[TranscriptSegment]] = None,
+        timeout: Optional[float] = None
     ) -> ExtractedNotes:
         """
         Extract structured clinical notes from a therapy session transcript.
@@ -106,6 +128,8 @@ class NoteExtractionService:
         Args:
             transcript: Full text of the therapy session
             segments: Optional list of timestamped segments from transcription
+            timeout: Optional timeout in seconds for this specific API call.
+                    If not provided, uses the default timeout configured at service initialization.
 
         Returns:
             ExtractedNotes: Pydantic model containing all structured clinical data
@@ -115,32 +139,98 @@ class NoteExtractionService:
             - Uses JSON mode to enforce valid JSON output
             - Includes error handling for JSON parsing
             - Logs extraction metrics (duration, counts)
+            - Default timeout: 120 seconds (configurable via OPENAI_TIMEOUT env var)
 
         Raises:
             ValueError: If OPENAI_API_KEY not in environment
             json.JSONDecodeError: If API response cannot be parsed as JSON
+            APITimeoutError: If the API call exceeds the timeout duration
         """
-        print(f"[NoteExtraction] Starting extraction for {len(transcript)} character transcript")
-        start_time = time.time()
+        # Use method-specific timeout or fall back to default
+        effective_timeout = timeout if timeout is not None else self.default_timeout
 
-        # Call OpenAI API
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a clinical psychology expert who extracts structured data from therapy transcripts. Always return valid JSON."
-                },
-                {
-                    "role": "user",
-                    "content": EXTRACTION_PROMPT.format(transcript=transcript)
-                }
-            ],
-            temperature=0.3,  # Lower temperature for more consistent extraction
-            response_format={"type": "json_object"}  # Force JSON output
+        logger.info(
+            "Starting note extraction",
+            extra={
+                "transcript_length": len(transcript),
+                "timeout_seconds": effective_timeout
+            }
         )
+        start_time = time.time()
+        transcript_preview = transcript[:100] + "..." if len(transcript) > 100 else transcript
 
-        # Parse response
+        # Call OpenAI API with comprehensive error handling
+        try:
+            response = await self.client.chat.completions.create(
+                model=self.model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a clinical psychology expert who extracts structured data from therapy transcripts. Always return valid JSON."
+                    },
+                    {
+                        "role": "user",
+                        "content": EXTRACTION_PROMPT.format(transcript=transcript)
+                    }
+                ],
+                temperature=0.3,  # Lower temperature for more consistent extraction
+                response_format={"type": "json_object"},  # Force JSON output
+                timeout=effective_timeout  # Apply timeout to this specific request
+            )
+        except RateLimitError as e:
+            logger.error(
+                "Rate limit exceeded during note extraction",
+                extra={
+                    "transcript_length": len(transcript),
+                    "error": str(e)
+                }
+            )
+            raise ValueError(
+                f"OpenAI rate limit exceeded. Please try again later. "
+                f"(Transcript length: {len(transcript)} chars)"
+            ) from e
+        except APITimeoutError as e:
+            elapsed = time.time() - start_time
+            logger.error(
+                "API timeout during note extraction",
+                extra={
+                    "transcript_length": len(transcript),
+                    "timeout_seconds": effective_timeout,
+                    "elapsed_seconds": round(elapsed, 2),
+                    "error": str(e)
+                }
+            )
+            raise ValueError(
+                f"OpenAI API request timed out after {effective_timeout}s. "
+                f"The transcript may be too long. (Transcript length: {len(transcript)} chars)"
+            ) from e
+        except APIError as e:
+            logger.error(
+                "OpenAI API error during note extraction",
+                extra={
+                    "status_code": getattr(e, 'status_code', 'unknown'),
+                    "transcript_length": len(transcript),
+                    "error": str(e)
+                }
+            )
+            raise ValueError(
+                f"OpenAI API error: {str(e)}. "
+                f"Please check API status or try again later."
+            ) from e
+        except Exception as e:
+            logger.error(
+                "Unexpected error during OpenAI API call",
+                extra={
+                    "transcript_preview": transcript_preview,
+                    "error_type": type(e).__name__,
+                    "error": str(e)
+                }
+            )
+            raise ValueError(
+                f"Unexpected error during note extraction: {type(e).__name__}: {str(e)}"
+            ) from e
+
+        # Parse response with error handling
         response_text = response.choices[0].message.content
 
         # Handle potential markdown code blocks (shouldn't happen with json_object mode)
@@ -149,18 +239,53 @@ class NoteExtractionService:
         elif "```" in response_text:
             response_text = response_text.split("```")[1].split("```")[0]
 
-        # Parse JSON
-        extracted_data = json.loads(response_text)
+        # Parse JSON with error handling
+        try:
+            extracted_data = json.loads(response_text)
+        except json.JSONDecodeError as e:
+            response_preview = response_text[:200] + "..." if len(response_text) > 200 else response_text
+            logger.error(
+                "JSON parsing failed for OpenAI response",
+                extra={
+                    "response_preview": response_preview,
+                    "transcript_length": len(transcript),
+                    "error": str(e),
+                    "error_position": f"line {e.lineno}, column {e.colno}"
+                }
+            )
+            raise ValueError(
+                f"Failed to parse OpenAI response as JSON. "
+                f"Response preview: '{response_preview}'. "
+                f"Error at line {e.lineno}, column {e.colno}: {e.msg}"
+            ) from e
 
-        # Create Pydantic model (this validates the structure)
-        notes = ExtractedNotes(**extracted_data)
+        # Create Pydantic model with validation error handling
+        try:
+            notes = ExtractedNotes(**extracted_data)
+        except Exception as e:
+            logger.error(
+                "Pydantic validation failed for extracted data",
+                extra={
+                    "error_type": type(e).__name__,
+                    "error": str(e),
+                    "data_keys": list(extracted_data.keys()) if isinstance(extracted_data, dict) else "not_a_dict"
+                }
+            )
+            raise ValueError(
+                f"Extracted data failed validation: {type(e).__name__}: {str(e)}"
+            ) from e
 
         elapsed = time.time() - start_time
-        print(f"[NoteExtraction] Completed in {elapsed:.2f}s")
-        print(f"  - Topics: {len(notes.key_topics)}")
-        print(f"  - Strategies: {len(notes.strategies)}")
-        print(f"  - Action items: {len(notes.action_items)}")
-        print(f"  - Risk flags: {len(notes.risk_flags)}")
+        logger.info(
+            "Note extraction completed",
+            extra={
+                "duration_seconds": round(elapsed, 2),
+                "topics_count": len(notes.key_topics),
+                "strategies_count": len(notes.strategies),
+                "action_items_count": len(notes.action_items),
+                "risk_flags_count": len(notes.risk_flags)
+            }
+        )
 
         return notes
 
@@ -202,24 +327,21 @@ class NoteExtractionService:
         }
 
 
-# Singleton instance
-_extraction_service: Optional[NoteExtractionService] = None
-
-
 def get_extraction_service() -> NoteExtractionService:
     """
-    Get or create the note extraction service singleton.
+    FastAPI dependency to provide the note extraction service.
 
-    Uses singleton pattern to reuse a single OpenAI client across the application,
-    avoiding repeated initialization. The service is lazily instantiated on first use.
+    Creates a new NoteExtractionService instance for each request.
+    The AsyncOpenAI client within the service handles connection pooling internally,
+    so creating new instances is efficient and thread-safe.
 
     Returns:
-        NoteExtractionService: Singleton instance with OpenAI client initialized
+        NoteExtractionService: New instance with OpenAI client initialized
 
     Raises:
-        ValueError: If OPENAI_API_KEY not in environment (raised on first call)
+        ValueError: If OPENAI_API_KEY not in environment
+
+    Usage:
+        In FastAPI routes, use: service = Depends(get_extraction_service)
     """
-    global _extraction_service
-    if _extraction_service is None:
-        _extraction_service = NoteExtractionService()
-    return _extraction_service
+    return NoteExtractionService()

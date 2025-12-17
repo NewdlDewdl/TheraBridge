@@ -25,7 +25,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: React.ReactNode }): React.ReactNode {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,16 +34,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkAuth();
   }, []);
 
-  const checkAuth = async () => {
+  const checkAuth = async (): Promise<void> => {
     if (!tokenStorage.hasTokens()) {
       setIsLoading(false);
       return;
     }
 
     try {
-      const userData = await apiClient.get<User>('/auth/me');
-      setUser(userData);
-    } catch (error) {
+      const result = await apiClient.get<User>('/auth/me');
+      if (result.success) {
+        setUser(result.data);
+      } else {
+        tokenStorage.clearTokens();
+        setUser(null);
+      }
+    } catch {
       tokenStorage.clearTokens();
       setUser(null);
     } finally {
@@ -51,18 +56,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const login = async (email: string, password: string) => {
-    const response = await apiClient.post<{
+  const login = async (email: string, password: string): Promise<void> => {
+    const result = await apiClient.post<{
       access_token: string;
       refresh_token: string;
     }>('/auth/login', { email, password });
 
-    tokenStorage.saveTokens(response.access_token, response.refresh_token);
-    await checkAuth();
+    if (result.success) {
+      tokenStorage.saveTokens(result.data.access_token, result.data.refresh_token);
+      await checkAuth();
+    } else {
+      throw new Error(result.error || 'Login failed');
+    }
   };
 
-  const signup = async (email: string, password: string, fullName: string, role: string) => {
-    const response = await apiClient.post<{
+  const signup = async (email: string, password: string, fullName: string, role: string): Promise<void> => {
+    const result = await apiClient.post<{
       access_token: string;
       refresh_token: string;
     }>('/auth/signup', {
@@ -72,17 +81,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       role,
     });
 
-    tokenStorage.saveTokens(response.access_token, response.refresh_token);
-    await checkAuth();
+    if (result.success) {
+      tokenStorage.saveTokens(result.data.access_token, result.data.refresh_token);
+      await checkAuth();
+    } else {
+      throw new Error(result.error || 'Signup failed');
+    }
   };
 
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     const refreshToken = tokenStorage.getRefreshToken();
 
     if (refreshToken) {
       try {
         await apiClient.post('/auth/logout', { refresh_token: refreshToken });
-      } catch (error) {
+      } catch {
         // Ignore errors (already logged out on server)
       }
     }
@@ -104,7 +117,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-export function useAuth() {
+export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within AuthProvider');

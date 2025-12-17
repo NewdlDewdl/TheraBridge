@@ -1,6 +1,7 @@
 import { Badge } from './ui/badge';
 import type { SessionStatus } from '@/lib/types';
 import { Loader2 } from 'lucide-react';
+import { buildExhaustive } from '@/lib/exhaustive';
 
 interface SessionStatusBadgeProps {
   status: SessionStatus;
@@ -8,7 +9,9 @@ interface SessionStatusBadgeProps {
 }
 
 export function SessionStatusBadge({ status, className }: SessionStatusBadgeProps) {
-  const config = {
+  // Exhaustive configuration for all SessionStatus values
+  // TypeScript will error if a status type is not included
+  const config = buildExhaustive<SessionStatus, { label: string; className: string; icon: React.ReactNode }>({
     uploading: {
       label: 'Uploading',
       className: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -39,7 +42,7 @@ export function SessionStatusBadge({ status, className }: SessionStatusBadgeProp
       className: 'bg-red-100 text-red-800 border-red-200',
       icon: null,
     },
-  };
+  });
 
   const { label, className: statusClassName, icon } = config[status];
 
@@ -50,3 +53,5 @@ export function SessionStatusBadge({ status, className }: SessionStatusBadgeProp
     </Badge>
   );
 }
+
+export type { SessionStatusBadgeProps };

@@ -1176,9 +1176,9 @@ Constraints: Preserve all functionality, maintain existing prop interfaces
 
 ---
 
-#### Step 1: Analyze Wave Structure & Create Agent Pool
+#### Step 1: Create Agent Pool Manifest with Clear Roles
 
-**🚨 CRITICAL: Parse user request for explicit agent count FIRST**
+**🚨 CRITICAL: Assign roles to ALL agents upfront. Map instance IDs to specific roles.**
 
 ```python
 import re
@@ -1201,69 +1201,97 @@ def parse_agent_count_from_request(user_input: str) -> int | None:
 
     return None  # Auto-scaling mode
 
-# Example:
-user_request = "Consolidate files using 10 agents"
-user_agent_count = parse_agent_count_from_request(user_request)  # Returns 10
+def assign_agent_roles(pool_size: int, task_types: dict) -> list:
+    """
+    Assign clear roles to each agent based on task requirements
+
+    Returns: List of agents with roles
+    [
+        {'instance': 'I1', 'role': 'Backend Dev #1', 'specialty': 'API endpoints', 'waves': [1, 3]},
+        {'instance': 'I2', 'role': 'Frontend Dev #1', 'specialty': 'Components', 'waves': [2, 4]},
+        ...
+    ]
+    """
+    agents = []
+    instance_counter = 1
+
+    # Assign roles based on task distribution
+    for task_type, count in task_types.items():
+        for i in range(count):
+            role_number = i + 1
+            agents.append({
+                'instance': f'I{instance_counter}',
+                'role': f'{task_type} #{role_number}',
+                'specialty': determine_specialty(task_type, i),
+                'waves': []  # Will be populated during wave planning
+            })
+            instance_counter += 1
+
+    return agents[:pool_size]  # Trim to pool size
 ```
 
-**Before executing any waves:**
+**Before executing any waves, create and display agent manifest:**
 
 ```python
-# Analyze wave structure to determine pool size
+# Analyze wave structure
 wave_structure = [
-    {'wave': 1, 'tasks': 6, 'description': 'Read security files'},
-    {'wave': 2, 'tasks': 1, 'description': 'Consolidate files'},
-    {'wave': 3, 'tasks': 1, 'description': 'Cleanup files'}
+    {'wave': 1, 'tasks': 6, 'task_types': {'Backend Dev': 3, 'Frontend Dev': 3}},
+    {'wave': 2, 'tasks': 4, 'task_types': {'Backend Dev': 2, 'Frontend Dev': 2}},
+    {'wave': 3, 'tasks': 2, 'task_types': {'Test Engineer': 2}}
 ]
 
 # CRITICAL: Check if user specified agent count
 user_agent_count = parse_agent_count_from_request(original_user_request)
 
 if user_agent_count is not None:
-    # USER OVERRIDE: Use exact count requested
     pool_size = user_agent_count
-    system_optimal = max(wave['tasks'] for wave in wave_structure)
-
-    print(f"🏊 AGENT POOL STRATEGY:")
-    print(f"├─ User requested: {user_agent_count} agents 🎯")
-    print(f"├─ Pool size: {pool_size} agents (honoring user request exactly)")
-    print(f"├─ System optimal: {system_optimal} agents")
-    print(f"├─ Total waves: {len(wave_structure)}")
-    print(f"├─ Decision: Creating pool of {pool_size} agents as requested ✅")
-    if pool_size > system_optimal:
-        print(f"└─ Note: More than optimal, but user preference honored")
-    elif pool_size < system_optimal:
-        print(f"└─ Note: Fewer than optimal, will distribute work across {pool_size} agents")
-    else:
-        print(f"└─ Note: Matches system optimal (perfect alignment)")
 else:
-    # AUTO-SCALING: Calculate optimal pool size
-    pool_size = max(wave['tasks'] for wave in wave_structure)  # 6
+    pool_size = max(wave['tasks'] for wave in wave_structure)
 
-    # Calculate reuse statistics
-    total_agent_slots = sum(wave['tasks'] for wave in wave_structure)  # 8
-    reuse_rate = ((total_agent_slots - pool_size) / total_agent_slots) * 100  # 25%
+# Create agent pool manifest with roles
+agent_manifest = assign_agent_roles(pool_size, aggregate_task_types(wave_structure))
 
-    print(f"🏊 AGENT POOL STRATEGY:")
-    print(f"├─ Pool size: {pool_size} agents (based on largest wave)")
-    print(f"├─ Total waves: {len(wave_structure)}")
-    print(f"├─ Total agent slots needed: {total_agent_slots}")
-    print(f"├─ Without pooling: {total_agent_slots} agents created")
-    print(f"├─ With pooling: {pool_size} agents created (reuse {reuse_rate:.0f}%)")
-    print(f"└─ Overhead saved: {(total_agent_slots - pool_size) * 0.3}s ♻️")
+print("🏊 AGENT POOL INITIALIZATION:")
+print()
+print("Creating pool of", pool_size, "agents with assigned roles:")
+print()
+print("| Instance | Role | Specialty | Waves Assigned |")
+print("|----------|------|-----------|----------------|")
+for agent in agent_manifest:
+    waves_str = ', '.join([f'W{w}' for w in agent['waves']]) or 'TBD'
+    print(f"| {agent['instance']} | {agent['role']} | {agent['specialty']} | {waves_str} |")
 
+print()
+print("Pool Statistics:")
+print(f"├─ Total agents: {pool_size}")
+print(f"├─ Total waves: {len(wave_structure)}")
+reuse_count = sum(1 for a in agent_manifest if len(a['waves']) > 1)
+reuse_rate = (reuse_count / pool_size) * 100
+print(f"├─ Agent reuse rate: {reuse_rate:.0f}% ({reuse_count} agents work multiple waves)")
+print(f"└─ Pool efficiency: XX% ✅")
 print()
 ```
 
 **Output example:**
 ```
-🏊 AGENT POOL STRATEGY:
-├─ Pool size: 6 agents (based on Wave 1)
+🏊 AGENT POOL INITIALIZATION:
+
+Creating pool of 6 agents with assigned roles:
+
+| Instance | Role | Specialty | Waves Assigned |
+|----------|------|-----------|----------------|
+| I1 | Backend Dev #1 | API endpoints | W1, W2 |
+| I2 | Backend Dev #2 | Services layer | W1, W2 |
+| I3 | Backend Dev #3 | Database queries | W1 |
+| I4 | Frontend Dev #1 | Components | W1, W2 |
+| I5 | Frontend Dev #2 | Hooks/utils | W1, W2 |
+| I6 | Frontend Dev #3 | Styling | W1 |
+
+Pool Statistics:
+├─ Total agents: 6
 ├─ Total waves: 3
-├─ Total agent slots needed: 8
-├─ Without pooling: 8 agents created
-├─ With pooling: 6 agents created (reuse 25%)
-└─ Overhead saved: 0.6s ♻️
+├─ Agent reuse rate: 67% (4 agents work multiple waves)
+└─ Pool efficiency: 92% ✅
 ```
 
 ---
@@ -1278,71 +1306,98 @@ Wave 3: Cleanup files (1 agent - reuse from pool) (pending)
 
 ---
 
-#### Step 3: Execute Waves with Agent Reuse
+#### Step 3: Execute Waves with Role-Based Agent Assignment
 
-**For each wave sequentially:**
+**For each wave sequentially, assign tasks to agents by their roles:**
 
 ```python
-# WAVE 1 EXECUTION (Pool Initialization)
-print("🌊 WAVE 1: Read security files")
+# WAVE 1 EXECUTION (Pool Initialization with Roles)
+print("🌊 WAVE 1: Implement backend endpoints")
 print("├─ Agents needed: 6")
-print("├─ Pool status: Creating fresh pool of 6 agents")
-print("├─ Reused agents: 0 (first wave)")
-print("└─ New agents: 6 🆕")
+print("├─ Pool status: Creating fresh pool of 6 agents with roles")
+print("├─ Assignments:")
+print("│   ├─ I1 (Backend Dev #1): Implement /auth/login endpoint")
+print("│   ├─ I2 (Backend Dev #2): Implement /auth/signup endpoint")
+print("│   ├─ I3 (Backend Dev #3): Implement /sessions/create endpoint")
+print("│   ├─ I4 (Frontend Dev #1): Create LoginForm component")
+print("│   ├─ I5 (Frontend Dev #2): Create SignupForm component")
+print("│   └─ I6 (Frontend Dev #3): Create SessionCard component")
+print("└─ Status: Launching 6 agents in parallel... 🆕")
 print()
 
 # Launch ALL 6 agents in parallel (ONE message with 6 Task calls)
-# These agents go into the pool and remain available after completion
+# Each Task description includes role: "Wave 1.1: Backend Dev #1 - [task]"
+# These agents persist in pool after completion
 
 # Mark wave 1 completed in TodoWrite
 
 
-# WAVE 2 EXECUTION (Reuse from Pool)
-print("🌊 WAVE 2: Consolidate files")
-print("├─ Agents needed: 1")
-print("├─ Pool status: 6 agents available (all completed Wave 1)")
-print("├─ Reused agents: 1 ♻️ (agent_1 from pool)")
-print("└─ New agents: 0")
+# WAVE 2 EXECUTION (Reuse from Pool by Role)
+print("🌊 WAVE 2: Add validation and error handling")
+print("├─ Agents needed: 4")
+print("├─ Pool status: 6 agents available for reuse")
+print("├─ Assignments:")
+print("│   ├─ I1 (Backend Dev #1): Add input validation to login ♻️ REUSED")
+print("│   ├─ I2 (Backend Dev #2): Add input validation to signup ♻️ REUSED")
+print("│   ├─ I4 (Frontend Dev #1): Add error handling to LoginForm ♻️ REUSED")
+print("│   └─ I5 (Frontend Dev #2): Add error handling to SignupForm ♻️ REUSED")
+print("└─ Status: Assigning tasks to agents from pool...")
 print()
 
-# Assign task to agent_1 from pool (reuse, no initialization overhead)
-# Agent already warmed up and ready
+# Assign tasks to 4 specific agents from pool (by role match)
+# Backend Devs continue backend work, Frontend Devs continue frontend work
+# I3 and I6 remain idle this wave (available if needed)
 
 # Mark wave 2 completed in TodoWrite
 
 
-# WAVE 3 EXECUTION (Reuse from Pool)
-print("🌊 WAVE 3: Cleanup files")
-print("├─ Agents needed: 1")
+# WAVE 3 EXECUTION (New Task Type - Assign Available Agents)
+print("🌊 WAVE 3: Write tests")
+print("├─ Agents needed: 2")
 print("├─ Pool status: 6 agents available")
-print("├─ Reused agents: 1 ♻️ (agent_2 from pool)")
-print("└─ New agents: 0")
+print("├─ Assignments:")
+print("│   ├─ I3 (Backend Dev #3 → Test Engineer): Write backend tests ♻️ REUSED")
+print("│   └─ I6 (Frontend Dev #3 → Test Engineer): Write frontend tests ♻️ REUSED")
+print("└─ Status: Assigning tasks to idle agents...")
 print()
 
-# Assign task to agent_2 from pool (reuse)
+# Reuse idle agents (I3, I6) for new task type
+# Agents can adapt to different roles as needed
 
 # Mark wave 3 completed in TodoWrite
 ```
 
 **Output example:**
 ```
-🌊 WAVE 1: Read security files
+🌊 WAVE 1: Implement backend endpoints
 ├─ Agents needed: 6
-├─ Pool status: Creating fresh pool of 6 agents
-├─ Reused agents: 0 (first wave)
-└─ New agents: 6 🆕
+├─ Pool status: Creating fresh pool of 6 agents with roles
+├─ Assignments:
+│   ├─ I1 (Backend Dev #1): Implement /auth/login endpoint
+│   ├─ I2 (Backend Dev #2): Implement /auth/signup endpoint
+│   ├─ I3 (Backend Dev #3): Implement /sessions/create endpoint
+│   ├─ I4 (Frontend Dev #1): Create LoginForm component
+│   ├─ I5 (Frontend Dev #2): Create SignupForm component
+│   └─ I6 (Frontend Dev #3): Create SessionCard component
+└─ Status: Launching 6 agents in parallel... 🆕
 
-🌊 WAVE 2: Consolidate files
-├─ Agents needed: 1
-├─ Pool status: 6 agents available (all completed Wave 1)
-├─ Reused agents: 1 ♻️ (agent_1 from pool)
-└─ New agents: 0
+🌊 WAVE 2: Add validation and error handling
+├─ Agents needed: 4
+├─ Pool status: 6 agents available for reuse
+├─ Assignments:
+│   ├─ I1 (Backend Dev #1): Add input validation to login ♻️ REUSED
+│   ├─ I2 (Backend Dev #2): Add input validation to signup ♻️ REUSED
+│   ├─ I4 (Frontend Dev #1): Add error handling to LoginForm ♻️ REUSED
+│   └─ I5 (Frontend Dev #2): Add error handling to SignupForm ♻️ REUSED
+└─ Status: Assigning tasks to agents from pool...
 
-🌊 WAVE 3: Cleanup files
-├─ Agents needed: 1
+🌊 WAVE 3: Write tests
+├─ Agents needed: 2
 ├─ Pool status: 6 agents available
-├─ Reused agents: 1 ♻️ (agent_2 from pool)
-└─ New agents: 0
+├─ Assignments:
+│   ├─ I3 (Backend Dev #3 → Test Engineer): Write backend tests ♻️ REUSED
+│   └─ I6 (Frontend Dev #3 → Test Engineer): Write frontend tests ♻️ REUSED
+└─ Status: Assigning tasks to idle agents...
 ```
 
 ---

@@ -8,7 +8,7 @@ import type { TranscriptSegment } from '@/lib/types';
 import { formatTimestamp } from '@/lib/utils';
 
 interface TranscriptViewerProps {
-  segments: TranscriptSegment[] | null;
+  segments: ReadonlyArray<TranscriptSegment> | null;
   transcriptText?: string | null;
 }
 
@@ -21,7 +21,7 @@ export function TranscriptViewer({ segments, transcriptText }: TranscriptViewerP
 
   return (
     <Card>
-      <CardHeader className="cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+      <CardHeader className="cursor-pointer" onClick={(e: React.MouseEvent<HTMLDivElement>) => setIsExpanded(!isExpanded)}>
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">Full Transcript</CardTitle>
           <Button variant="ghost" size="sm">
@@ -60,3 +60,5 @@ export function TranscriptViewer({ segments, transcriptText }: TranscriptViewerP
     </Card>
   );
 }
+
+export type { TranscriptViewerProps };

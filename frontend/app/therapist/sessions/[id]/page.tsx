@@ -12,6 +12,7 @@ import { StrategyCard } from '@/components/StrategyCard';
 import { TriggerCard } from '@/components/TriggerCard';
 import { ActionItemCard } from '@/components/ActionItemCard';
 import { TranscriptViewer } from '@/components/TranscriptViewer';
+import { SessionDetailSkeleton } from '@/components/skeletons';
 import {
   ArrowLeft,
   Clock,
@@ -19,9 +20,9 @@ import {
   AlertTriangle,
   Quote,
   Target,
-  Loader2,
   AlertCircle,
   CheckCircle,
+  Loader2,
 } from 'lucide-react';
 import Link from 'next/link';
 import { formatDateTime, formatDuration } from '@/lib/utils';
@@ -39,11 +40,7 @@ export default function SessionDetailPage({ params }: PageProps) {
   // No manual polling needed here - the hook's dynamic refreshInterval handles it
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
+    return <SessionDetailSkeleton />;
   }
 
   if (isError || !session) {

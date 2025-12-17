@@ -50,3 +50,5 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
 
   return <>{children}</>;
 }
+
+export type { ProtectedRouteProps };

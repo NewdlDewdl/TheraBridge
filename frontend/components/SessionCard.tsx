@@ -76,3 +76,5 @@ export function SessionCard({ session }: SessionCardProps) {
     </Link>
   );
 }
+
+export type { SessionCardProps };

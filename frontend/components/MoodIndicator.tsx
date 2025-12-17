@@ -1,5 +1,6 @@
 import type { SessionMood, MoodTrajectory } from '@/lib/types';
 import { TrendingUp, TrendingDown, Minus, ArrowUpDown } from 'lucide-react';
+import { buildExhaustive } from '@/lib/exhaustive';
 
 interface MoodIndicatorProps {
   mood: SessionMood;
@@ -9,7 +10,9 @@ interface MoodIndicatorProps {
 }
 
 export function MoodIndicator({ mood, trajectory, showLabel = true, size = 'md' }: MoodIndicatorProps) {
-  const moodConfig = {
+  // Exhaustive configuration for all SessionMood values
+  // TypeScript will error if a mood type is not included
+  const moodConfig = buildExhaustive<SessionMood, { emoji: string; label: string; color: string; textColor: string }>({
     very_low: {
       emoji: '😢',
       label: 'Very Low',
@@ -40,14 +43,16 @@ export function MoodIndicator({ mood, trajectory, showLabel = true, size = 'md' 
       color: 'bg-green-600',
       textColor: 'text-green-700',
     },
-  };
+  });
 
-  const trajectoryConfig = {
+  // Exhaustive configuration for all MoodTrajectory values
+  // TypeScript will error if a trajectory type is not included
+  const trajectoryConfig = buildExhaustive<MoodTrajectory, { icon: typeof TrendingUp; label: string; color: string }>({
     improving: { icon: TrendingUp, label: 'Improving', color: 'text-green-600' },
     declining: { icon: TrendingDown, label: 'Declining', color: 'text-red-600' },
     stable: { icon: Minus, label: 'Stable', color: 'text-gray-600' },
     fluctuating: { icon: ArrowUpDown, label: 'Fluctuating', color: 'text-orange-600' },
-  };
+  });
 
   const { emoji, label, color, textColor } = moodConfig[mood];
   const sizeClasses = {
@@ -77,3 +82,5 @@ export function MoodIndicator({ mood, trajectory, showLabel = true, size = 'md' 
     </div>
   );
 }
+
+export type { MoodIndicatorProps };

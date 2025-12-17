@@ -21,6 +21,12 @@ if not DATABASE_URL:
 # NEVER enable SQL_ECHO in production environments.
 SQL_ECHO = os.getenv("SQL_ECHO", "false").lower() in ("true", "1", "yes")
 
+# Connection pool configuration
+DB_POOL_SIZE = int(os.getenv("DB_POOL_SIZE", "20"))  # Number of connections to maintain
+DB_MAX_OVERFLOW = int(os.getenv("DB_MAX_OVERFLOW", "10"))  # Additional connections when pool is full
+DB_POOL_TIMEOUT = int(os.getenv("DB_POOL_TIMEOUT", "30"))  # Seconds to wait for available connection
+DB_POOL_RECYCLE = int(os.getenv("DB_POOL_RECYCLE", "3600"))  # Seconds before recycling connections (1 hour)
+
 # Convert postgres:// to postgresql+asyncpg://
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
@@ -32,11 +38,15 @@ import re
 DATABASE_URL = re.sub(r'[&?]sslmode=\w+', '', DATABASE_URL)
 DATABASE_URL = re.sub(r'[&?]channel_binding=\w+', '', DATABASE_URL)
 
-# Create async engine with SSL enabled
+# Create async engine with SSL enabled and connection pool configuration
 # SECURITY: SQL_ECHO logs all queries - disable in production to prevent PHI exposure
 engine = create_async_engine(
     DATABASE_URL,
     echo=SQL_ECHO,  # Log SQL queries (controlled by SQL_ECHO env var, disabled by default for security)
+    pool_size=DB_POOL_SIZE,  # Number of connections to maintain in the pool
+    max_overflow=DB_MAX_OVERFLOW,  # Additional connections when pool is full
+    pool_timeout=DB_POOL_TIMEOUT,  # Seconds to wait for available connection
+    pool_recycle=DB_POOL_RECYCLE,  # Seconds before recycling connections
     pool_pre_ping=True,  # Verify connections before using
     connect_args={"ssl": "require"}  # Enable SSL for Neon
 )
@@ -48,12 +58,16 @@ AsyncSessionLocal = async_sessionmaker(
     expire_on_commit=False,
 )
 
-# Create synchronous engine for auth endpoints (which use sync operations)
+# Create synchronous engine for auth endpoints (which use sync operations) with connection pool configuration
 # SECURITY: SQL_ECHO logs all queries - disable in production to prevent PHI exposure
 SYNC_DATABASE_URL = DATABASE_URL.replace("postgresql+asyncpg://", "postgresql://")
 sync_engine = create_engine(
     SYNC_DATABASE_URL,
     echo=SQL_ECHO,  # Log SQL queries (controlled by SQL_ECHO env var, disabled by default for security)
+    pool_size=DB_POOL_SIZE,  # Number of connections to maintain in the pool
+    max_overflow=DB_MAX_OVERFLOW,  # Additional connections when pool is full
+    pool_timeout=DB_POOL_TIMEOUT,  # Seconds to wait for available connection
+    pool_recycle=DB_POOL_RECYCLE,  # Seconds before recycling connections
     pool_pre_ping=True,
     connect_args={"sslmode": "require"}
 )

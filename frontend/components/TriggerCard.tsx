@@ -44,3 +44,5 @@ export function TriggerCard({ trigger }: TriggerCardProps) {
     </Card>
   );
 }
+
+export type { TriggerCardProps };

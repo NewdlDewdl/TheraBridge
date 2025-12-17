@@ -43,3 +43,5 @@ export function StrategyCard({ strategy }: StrategyCardProps) {
     </Card>
   );
 }
+
+export type { StrategyCardProps };

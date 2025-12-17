@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Users, Home } from 'lucide-react';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export default function TherapistLayout({
   children,
@@ -31,6 +32,7 @@ export default function TherapistLayout({
                 </Link>
               </nav>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>

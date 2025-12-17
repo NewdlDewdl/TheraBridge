@@ -37,3 +37,5 @@ export function ActionItemCard({ actionItem, initialCompleted = false }: ActionI
     </Card>
   );
 }
+
+export type { ActionItemCardProps };

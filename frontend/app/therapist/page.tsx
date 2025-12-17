@@ -4,33 +4,15 @@ import { usePatients } from '@/hooks/usePatients';
 import { useSessions } from '@/hooks/useSessions';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Plus, Users, Calendar, AlertCircle, Loader2 } from 'lucide-react';
+import { EmptyState } from '@/components/EmptyState';
+import { ErrorMessageAlert } from '@/components/ui/error-message';
+import { Plus, Users, Calendar, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
 
 export default function TherapistDashboard() {
   const { patients, isLoading: loadingPatients, isError: patientsError } = usePatients();
   const { sessions } = useSessions();
-
-  if (loadingPatients) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (patientsError) {
-    return (
-      <div className="flex flex-col items-center justify-center h-64 gap-4">
-        <AlertCircle className="w-12 h-12 text-destructive" />
-        <p className="text-lg text-muted-foreground">Failed to load patients</p>
-        <p className="text-sm text-muted-foreground">
-          Make sure the backend server is running on http://localhost:8000
-        </p>
-      </div>
-    );
-  }
 
   const getPatientStats = (patientId: string) => {
     const patientSessions = sessions?.filter(s => s.patient_id === patientId) || [];
@@ -54,6 +36,28 @@ export default function TherapistDashboard() {
     };
   };
 
+  if (loadingPatients) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <p className="mt-4 text-muted-foreground">Loading patients...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (patientsError) {
+    return (
+      <div className="space-y-4">
+        <ErrorMessageAlert
+          message="Failed to load patients"
+          description="Unable to connect to the server"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -70,70 +74,64 @@ export default function TherapistDashboard() {
       </div>
 
       {!patients || patients.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center h-64 gap-4">
-            <Users className="w-16 h-16 text-muted-foreground" />
-            <div className="text-center">
-              <h3 className="text-lg font-semibold">No patients yet</h3>
-              <p className="text-sm text-muted-foreground">
-                Add your first patient to get started
-              </p>
-            </div>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Patient
-            </Button>
-          </CardContent>
-        </Card>
+        <EmptyState
+          icon={Users}
+          heading="No patients yet"
+          description="Add your first patient to get started"
+          actionLabel="Add Patient"
+          onAction={() => {
+            // TODO: Implement patient creation flow
+          }}
+        />
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {patients.map((patient) => {
             const stats = getPatientStats(patient.id);
 
             return (
-              <Link key={patient.id} href={`/therapist/patients/${patient.id}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <CardTitle className="text-xl">{patient.name}</CardTitle>
-                        <CardDescription>{patient.email}</CardDescription>
+                <Link key={patient.id} href={`/therapist/patients/${patient.id}`}>
+                  <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-1">
+                          <CardTitle className="text-xl">{patient.name}</CardTitle>
+                          <CardDescription>{patient.email}</CardDescription>
+                        </div>
+                        {stats && stats.riskFlags > 0 && (
+                          <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                            <AlertCircle className="w-5 h-5 text-red-600" />
+                          </div>
+                        )}
                       </div>
-                      {stats.riskFlags > 0 && (
-                        <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                          <AlertCircle className="w-5 h-5 text-red-600" />
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Calendar className="w-4 h-4" />
+                            Sessions
+                          </div>
+                          <p className="text-2xl font-bold">{stats?.totalSessions || 0}</p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-sm text-muted-foreground">Action Items</p>
+                          <p className="text-2xl font-bold">{stats?.actionItems || 0}</p>
+                        </div>
+                      </div>
+
+                      {stats?.latestSession && (
+                        <div className="pt-4 border-t">
+                          <p className="text-xs text-muted-foreground">Latest Session</p>
+                          <p className="text-sm font-medium">
+                            {formatDate(stats.latestSession.session_date)}
+                          </p>
                         </div>
                       )}
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Calendar className="w-4 h-4" />
-                          Sessions
-                        </div>
-                        <p className="text-2xl font-bold">{stats.totalSessions}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-sm text-muted-foreground">Action Items</p>
-                        <p className="text-2xl font-bold">{stats.actionItems}</p>
-                      </div>
-                    </div>
-
-                    {stats.latestSession && (
-                      <div className="pt-4 border-t">
-                        <p className="text-xs text-muted-foreground">Latest Session</p>
-                        <p className="text-sm font-medium">
-                          {formatDate(stats.latestSession.session_date)}
-                        </p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
         </div>
       )}
     </div>

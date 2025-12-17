@@ -1,5 +1,124 @@
 // TypeScript types matching backend Pydantic schemas
 
+// ============================================================================
+// Branded Types for Type-Safe ID Handling
+// ============================================================================
+// These branded types prevent accidentally passing the wrong ID type to functions.
+// Example: You can't pass a PatientId where a SessionId is expected.
+// ============================================================================
+
+/**
+ * Branded type for patient IDs.
+ * Prevents accidentally using wrong ID types at compile time.
+ */
+export type PatientId = string & { readonly __brand: 'PatientId' };
+
+/**
+ * Branded type for session IDs.
+ * Prevents accidentally using wrong ID types at compile time.
+ */
+export type SessionId = string & { readonly __brand: 'SessionId' };
+
+/**
+ * Branded type for user/therapist IDs.
+ * Prevents accidentally using wrong ID types at compile time.
+ */
+export type UserId = string & { readonly __brand: 'UserId' };
+
+/**
+ * Helper function to create a branded PatientId.
+ * Use this when you have a raw string patient ID from the backend.
+ *
+ * @example
+ * const patientId = createPatientId('patient-123');
+ */
+export function createPatientId(id: string): PatientId {
+  if (!id || id.trim().length === 0) {
+    throw new Error('PatientId cannot be empty');
+  }
+  return id as PatientId;
+}
+
+/**
+ * Helper function to create a branded SessionId.
+ * Use this when you have a raw string session ID from the backend.
+ *
+ * @example
+ * const sessionId = createSessionId('session-456');
+ */
+export function createSessionId(id: string): SessionId {
+  if (!id || id.trim().length === 0) {
+    throw new Error('SessionId cannot be empty');
+  }
+  return id as SessionId;
+}
+
+/**
+ * Helper function to create a branded UserId.
+ * Use this when you have a raw string user/therapist ID from the backend.
+ *
+ * @example
+ * const userId = createUserId('user-789');
+ */
+export function createUserId(id: string): UserId {
+  if (!id || id.trim().length === 0) {
+    throw new Error('UserId cannot be empty');
+  }
+  return id as UserId;
+}
+
+/**
+ * Type guard to check if a value is a valid PatientId.
+ * Useful for runtime validation of untrusted data.
+ *
+ * @example
+ * if (isPatientId(someValue)) {
+ *   // TypeScript now knows it's a PatientId
+ * }
+ */
+export function isPatientId(value: any): value is PatientId {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+/**
+ * Type guard to check if a value is a valid SessionId.
+ * Useful for runtime validation of untrusted data.
+ *
+ * @example
+ * if (isSessionId(someValue)) {
+ *   // TypeScript now knows it's a SessionId
+ * }
+ */
+export function isSessionId(value: any): value is SessionId {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+/**
+ * Type guard to check if a value is a valid UserId.
+ * Useful for runtime validation of untrusted data.
+ *
+ * @example
+ * if (isUserId(someValue)) {
+ *   // TypeScript now knows it's a UserId
+ * }
+ */
+export function isUserId(value: any): value is UserId {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+/**
+ * Helper to safely extract a raw string from a branded ID type.
+ * Useful when you need to pass the ID to an API call or log it.
+ *
+ * @example
+ * const rawId = unwrapId(patientId); // Returns the string value
+ */
+export function unwrapId(id: PatientId | SessionId | UserId): string {
+  return id as string;
+}
+
+// ============================================================================
+
 export type SessionStatus =
   | 'uploading'
   | 'transcribing'
@@ -37,85 +156,84 @@ export type StrategyCategory =
 export type TriggerSeverity = 'mild' | 'moderate' | 'severe';
 
 export interface Strategy {
-  name: string;
-  category: StrategyCategory;
-  status: StrategyStatus;
-  context: string;
+  readonly name: string;
+  readonly category: StrategyCategory;
+  readonly status: StrategyStatus;
+  readonly context: string;
 }
 
 export interface Trigger {
-  trigger: string;
-  context: string;
-  severity: TriggerSeverity;
+  readonly trigger: string;
+  readonly context: string;
+  readonly severity: TriggerSeverity;
 }
 
 export interface ActionItem {
-  task: string;
-  category: string;
-  details: string;
+  readonly task: string;
+  readonly category: string;
+  readonly details: string;
 }
 
 export interface SignificantQuote {
-  quote: string;
-  context: string;
-  timestamp_start?: number | null;
+  readonly quote: string;
+  readonly context: string;
+  readonly timestamp_start?: number | null;
 }
 
 export interface RiskFlag {
-  type: string;
-  evidence: string;
-  severity: string;
+  readonly type: string;
+  readonly evidence: string;
+  readonly severity: string;
 }
 
 export interface ExtractedNotes {
-  key_topics: string[];
-  topic_summary: string;
-  strategies: Strategy[];
-  emotional_themes: string[];
-  triggers: Trigger[];
-  action_items: ActionItem[];
-  significant_quotes: SignificantQuote[];
-  session_mood: SessionMood;
-  mood_trajectory: MoodTrajectory;
-  follow_up_topics: string[];
-  unresolved_concerns: string[];
-  risk_flags: RiskFlag[];
-  therapist_notes: string;
-  patient_summary: string;
+  readonly key_topics: ReadonlyArray<string>;
+  readonly topic_summary: string;
+  readonly strategies: ReadonlyArray<Strategy>;
+  readonly emotional_themes: ReadonlyArray<string>;
+  readonly triggers: ReadonlyArray<Trigger>;
+  readonly action_items: ReadonlyArray<ActionItem>;
+  readonly significant_quotes: ReadonlyArray<SignificantQuote>;
+  readonly session_mood: SessionMood;
+  readonly mood_trajectory: MoodTrajectory;
+  readonly follow_up_topics: ReadonlyArray<string>;
+  readonly unresolved_concerns: ReadonlyArray<string>;
+  readonly risk_flags: ReadonlyArray<RiskFlag>;
+  readonly therapist_notes: string;
+  readonly patient_summary: string;
 }
 
 export interface TranscriptSegment {
-  start: number;
-  end: number;
-  speaker: string;
-  text: string;
+  readonly start: number;
+  readonly end: number;
+  readonly speaker: string;
+  readonly text: string;
 }
 
 export interface Session {
-  id: string;
-  patient_id: string;
-  therapist_id: string;
-  session_date: string;
-  duration_seconds: number | null;
-  audio_filename: string | null;
-  audio_url: string | null;
-  transcript_text: string | null;
-  transcript_segments: TranscriptSegment[] | null;
-  extracted_notes: ExtractedNotes | null;
-  status: SessionStatus;
-  error_message: string | null;
-  created_at: string;
-  updated_at: string;
-  processed_at: string | null;
+  readonly id: string;
+  readonly patient_id: string;
+  readonly therapist_id: string;
+  readonly session_date: string;
+  readonly duration_seconds: number | null;
+  readonly audio_filename: string | null;
+  readonly audio_url: string | null;
+  readonly transcript_text: string | null;
+  readonly transcript_segments: ReadonlyArray<TranscriptSegment> | null;
+  readonly extracted_notes: ExtractedNotes | null;
+  readonly status: SessionStatus;
+  readonly error_message: string | null;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly processed_at: string | null;
 }
 
 export interface Patient {
-  id: string;
-  name: string;
-  email: string;
-  phone: string | null;
-  therapist_id: string;
-  created_at: string;
-  updated_at: string;
+  readonly id: string;
+  readonly name: string;
+  readonly email: string;
+  readonly phone: string | null;
+  readonly therapist_id: string;
+  readonly created_at: string;
+  readonly updated_at: string;
 }
-

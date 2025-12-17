@@ -149,25 +149,69 @@ Total: [N] agents across [W] waves
 Estimated: [X] min vs [Y] min sequential
 ```
 
-## STEP 3: Execute with Agent Pooling
+## STEP 3: Initialize Agent Pool with Clear Roles (REQUIRED)
 
-**🚨 CRITICAL: Use persistent agent pool with maximum reuse across waves.**
+**🚨 CRITICAL: Create ALL agents upfront with descriptive roles. Reuse them across waves.**
 
 ### Agent Pool Strategy:
 
 1. **Parse user request** - Check if explicit agent count specified
 2. **Determine pool size**:
    - **If user specified count**: Pool size = user-requested count (MUST honor exactly)
-   - **If auto-scaling**: Pool size = max agents needed in any wave
-3. **Output pool statistics** - Show reuse rate and overhead savings
-4. **Initialize TodoWrite** - Include pool information in wave descriptions
-5. **Execute waves** - Reuse agents from pool instead of creating new ones
+   - **If auto-scaling**: Pool size = calculated optimal count
+3. **Assign clear roles to each agent** based on tasks:
+   - File operations → "File Reader #1-N", "File Processor #1-N", "Consolidator"
+   - Database → "Database Analyst", "Migration Engineer #1-N", "Schema Validator"
+   - Backend → "Backend Dev #1-N", "API Developer #1-N", "Service Builder"
+   - Frontend → "Frontend Dev #1-N", "Component Engineer #1-N", "UI Specialist #1-N"
+   - Testing → "Test Engineer #1-N", "QA Validator #1-N", "Integration Tester"
+   - Security → "Security Engineer", "Audit Specialist", "Vulnerability Analyst"
+   - DevOps → "DevOps Engineer", "Deployment Specialist", "Infrastructure"
+   - Documentation → "Documentation Specialist", "README Writer"
+4. **Create agent pool manifest** - Map each agent instance (I1, I2, etc.) to its role
+5. **Initialize TodoWrite** - Include agent roles and wave assignments
+6. **Execute waves** - Assign specific agents by role to tasks
 
-**🚨 CRITICAL RULE: If user requests X agents, create exactly X agents in the pool, even if fewer would be optimal.**
+**🚨 CRITICAL RULES:**
+- **ALL agents created upfront** - No on-demand agent creation during execution
+- **Clear descriptive roles** - Every agent has a specific job title
+- **Agent persistence** - Same agent instances used across multiple waves
+- **Role-based assignment** - Tasks assigned to agents by their role/expertise
 
 ### Execution Steps:
 
-**Before Wave 1 (Auto-scaling mode):**
+**Step 3a: Create Agent Pool Manifest (REQUIRED)**
+
+Before executing any waves, create a manifest mapping agents to roles:
+
+```
+🏊 AGENT POOL INITIALIZATION:
+
+Creating pool of [N] agents with assigned roles:
+
+| Instance | Role | Specialty | Waves Assigned |
+|----------|------|-----------|----------------|
+| I1 | Backend Dev #1 | API endpoints | W1, W3 |
+| I2 | Backend Dev #2 | Services layer | W1, W3 |
+| I3 | Frontend Dev #1 | Components | W2, W4 |
+| I4 | Frontend Dev #2 | Hooks/utils | W2, W4 |
+| I5 | Test Engineer #1 | Unit tests | W5 |
+| I6 | Test Engineer #2 | Integration tests | W5 |
+| I7 | Security Engineer | Auditing | W6 |
+| I8 | Documentation Specialist | README/guides | W7 |
+| ... | ... | ... | ... |
+
+Pool Statistics:
+├─ Total agents: [N]
+├─ Total waves: [W]
+├─ Agent reuse rate: [X]% (Y agents work multiple waves)
+├─ Average tasks per agent: [Z]
+└─ Pool efficiency: [E]% ✅
+```
+
+**Step 3b: Output Pool Strategy**
+
+**Auto-scaling mode:**
 ```
 🏊 AGENT POOL STRATEGY:
 ├─ Pool size: [N] agents (based on largest wave)
@@ -178,7 +222,7 @@ Estimated: [X] min vs [Y] min sequential
 └─ Overhead saved: [Z]s ♻️
 ```
 
-**Before Wave 1 (User-requested agent count):**
+**User-requested agent count:**
 ```
 🏊 AGENT POOL STRATEGY:
 ├─ User requested: [X] agents 🎯
@@ -189,26 +233,54 @@ Estimated: [X] min vs [Y] min sequential
 └─ Note: [More/Fewer] than optimal, but user preference honored
 ```
 
-**Wave 1 (Pool Initialization):**
+**Step 3c: Execute Wave 1 (Pool Initialization with Roles)**
+
 ```
 🌊 WAVE 1: [Description]
 ├─ Agents needed: [N]
-├─ Pool status: Creating fresh pool of [N] agents
-├─ Reused agents: 0 (first wave)
-└─ New agents: [N] 🆕
+├─ Pool status: Creating fresh pool of [N] agents with roles
+├─ Assignments:
+│   ├─ I1 (Backend Dev #1): [Specific task]
+│   ├─ I2 (Backend Dev #2): [Specific task]
+│   ├─ I3 (Frontend Dev #1): [Specific task]
+│   └─ ... (N agents total)
+└─ Status: Launching [N] agents in parallel... 🆕
 
 [Launch N agents in parallel - ONE message with N Task calls]
+[Each Task description includes: "Wave 1.X: [Role] - [Task description]"]
 ```
 
-**Wave 2+ (Reuse from Pool):**
+**Example Task invocations:**
+```xml
+<function_calls>
+<invoke name="Task">
+<parameter name="subagent_type">general-purpose</parameter>
+<parameter name="description">Wave 1.1: Backend Dev #1 - Implement auth endpoint</parameter>
+<parameter name="prompt">As Backend Dev #1, implement the authentication endpoint...</parameter>
+</invoke>
+<invoke name="Task">
+<parameter name="subagent_type">general-purpose</parameter>
+<parameter name="description">Wave 1.2: Backend Dev #2 - Implement session endpoint</parameter>
+<parameter name="prompt">As Backend Dev #2, implement the session management endpoint...</parameter>
+</invoke>
+... (more agents)
+</function_calls>
+```
+
+**Step 3d: Execute Wave 2+ (Reuse Agents by Role)**
+
 ```
 🌊 WAVE [X]: [Description]
 ├─ Agents needed: [M]
-├─ Pool status: [N] agents available
-├─ Reused agents: [M] ♻️ (from pool)
-└─ New agents: 0
+├─ Pool status: [N] agents available for reuse
+├─ Assignments:
+│   ├─ I1 (Backend Dev #1): [New task] ♻️ REUSED
+│   ├─ I3 (Frontend Dev #1): [New task] ♻️ REUSED
+│   └─ ... (M agents total)
+└─ Status: Assigning tasks to agents from pool...
 
-[Assign tasks to M agents from pool - reuse, no initialization]
+[Assign tasks to M agents from pool by their roles]
+[Tasks given to agents match their expertise/role]
 ```
 
 **If wave needs MORE agents than pool capacity:**
