@@ -25,7 +25,68 @@ router = APIRouter()
 # File upload configuration
 UPLOAD_DIR = Path("uploads/audio")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-MAX_FILE_SIZE = 100 * 1024 * 1024  # 100MB
+MAX_FILE_SIZE = 500 * 1024 * 1024  # 500MB
+ALLOWED_AUDIO_MIME_TYPES = {
+    "audio/mpeg",      # .mp3
+    "audio/wav",       # .wav
+    "audio/x-wav",     # .wav (alternative)
+    "audio/mp4",       # .m4a
+    "audio/mpeg4",     # .m4a (alternative)
+    "video/mp4",       # .mp4
+    "audio/mpg",       # .mpeg
+    "audio/mpeg3",     # .mpeg (alternative)
+    "audio/x-mpeg",    # .mpeg (alternative)
+    "audio/webm",      # .webm
+    "video/webm"       # .webm (alternative)
+}
+ALLOWED_EXTENSIONS = {".mp3", ".wav", ".m4a", ".mp4", ".mpeg", ".mpga", ".webm"}
+
+
+async def validate_audio_upload(file: UploadFile) -> None:
+    """
+    Validate audio file for upload.
+
+    Checks:
+    - File size does not exceed MAX_FILE_SIZE
+    - File extension is in ALLOWED_EXTENSIONS
+    - MIME type is audio/* or video/* (for container formats)
+
+    Raises HTTPException with descriptive error message if validation fails.
+    """
+    # Validate filename exists
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No filename provided")
+
+    # Validate file extension
+    file_ext = Path(file.filename).suffix.lower()
+    if file_ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"File type '{file_ext}' not supported. Allowed types: {', '.join(sorted(ALLOWED_EXTENSIONS))}"
+        )
+
+    # Validate MIME type
+    if file.content_type:
+        if not (file.content_type.startswith("audio/") or file.content_type.startswith("video/")):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid MIME type: {file.content_type}. Only audio files are accepted."
+            )
+        if file.content_type not in ALLOWED_AUDIO_MIME_TYPES:
+            raise HTTPException(
+                status_code=415,  # 415 Unsupported Media Type
+                detail=f"MIME type '{file.content_type}' not supported. Allowed: audio/mpeg, audio/wav, audio/mp4, audio/webm, etc."
+            )
+
+    # Validate file size
+    # Note: file.size is set for in-memory files; for streamed files, we validate during write
+    if file.size and file.size > MAX_FILE_SIZE:
+        max_size_mb = MAX_FILE_SIZE / (1024 * 1024)
+        file_size_mb = file.size / (1024 * 1024)
+        raise HTTPException(
+            status_code=413,  # 413 Payload Too Large
+            detail=f"File size ({file_size_mb:.1f}MB) exceeds maximum allowed size ({max_size_mb:.0f}MB)"
+        )
 
 
 async def process_audio_pipeline(

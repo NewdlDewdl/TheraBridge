@@ -16,11 +16,10 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, Optional
 from contextlib import contextmanager
 from datetime import datetime
 import threading
-import queue
 
 try:
     import torch

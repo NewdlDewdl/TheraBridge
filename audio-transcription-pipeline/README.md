@@ -239,8 +239,8 @@ Run the test suite:
 # CPU version tests
 python tests/test_full_pipeline.py
 
-# GPU version tests (in Colab)
-python test_colab_gpu.py
+# GPU version tests (on Vast.ai or other provider)
+python tests/test_gpu_pipeline.py
 
 # Performance logging tests
 python tests/test_performance_logging.py
