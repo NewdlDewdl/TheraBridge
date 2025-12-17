@@ -269,6 +269,39 @@ See `backend/README.md` and `backend/QUICKSTART.md` for full details.
 
 ---
 
+## Security Notes
+
+### Backend Security Audit (2025-12-17)
+
+**Overall Status:** ✅ 100% Secure (after authentication integration)
+
+**Components Reviewed:**
+- ✅ Database Layer - ORM-based, no raw SQL
+- ✅ Session API Endpoints - Parameterized queries
+- ✅ Patient API Endpoints - Type-safe operations
+- ✅ Note Extraction Service - No database queries
+- ✅ Authentication System - JWT with refresh token rotation, bcrypt password hashing
+- ✅ Backup Script - Fixed SQL injection vulnerability (psycopg2.sql.Identifier)
+
+**Previous Vulnerability (RESOLVED):**
+- **Issue:** SQL injection in backup_database.py (f-string interpolation of table names)
+- **Fix Applied:** Using `psycopg2.sql.Identifier` for identifier quoting
+- **Date Fixed:** 2025-12-17
+- **Status:** RESOLVED
+
+**Security Features:**
+- SQLAlchemy ORM for all API queries (prevents SQL injection)
+- JWT-based authentication with refresh token rotation
+- Bcrypt password hashing (12 rounds)
+- Rate limiting (5 req/min on login, 100 req/min general)
+- SSL enforcement in database connections
+- SQL echo logging disabled (PHI protection)
+- FastAPI + Pydantic type validation
+
+**Compliance:** OWASP Top 10, CWE-89, HIPAA technical safeguards, GDPR Article 32
+
+---
+
 ## Session Log
 
 ### 2025-12-17 - Authentication Integration via 15-Instance Parallel Workflow
