@@ -6,6 +6,7 @@ as well as securely hashing and verifying passwords using bcrypt.
 """
 
 import secrets
+import hashlib
 from datetime import datetime, timedelta
 from typing import Dict
 from uuid import UUID
@@ -146,13 +147,14 @@ def hash_refresh_token(token: str) -> str:
     """
     Hash a refresh token before storing in database.
 
-    We store hashed tokens so if the database is compromised,
-    attackers can't use the refresh tokens.
+    We use SHA256 for deterministic hashing so we can look up tokens in the database.
+    Refresh tokens are already random (43 chars from secrets.token_urlsafe),
+    so the hash provides an additional layer of security if DB is compromised.
 
     Args:
         token: Plain refresh token
 
     Returns:
-        Bcrypt hash of token
+        SHA256 hash of token (hex string)
     """
-    return get_password_hash(token)
+    return hashlib.sha256(token.encode()).hexdigest()
