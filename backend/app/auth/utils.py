@@ -5,6 +5,7 @@ This module provides functions for creating and validating JWT tokens,
 as well as securely hashing and verifying passwords using bcrypt.
 """
 
+import re
 import secrets
 import hashlib
 from datetime import datetime, timedelta
@@ -17,6 +18,55 @@ from app.auth.config import auth_config
 
 # Password hashing context using bcrypt
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# Password complexity requirements
+PASSWORD_MIN_LENGTH = 12
+PASSWORD_PATTERN = re.compile(
+    r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
+)
+
+
+def validate_password_strength(password: str) -> None:
+    """
+    Validate password meets security requirements.
+
+    Requirements:
+    - Minimum 12 characters
+    - At least one uppercase letter (A-Z)
+    - At least one lowercase letter (a-z)
+    - At least one digit (0-9)
+    - At least one special character (@$!%*?&)
+
+    Args:
+        password: Plain text password to validate
+
+    Raises:
+        ValueError: If password does not meet requirements
+    """
+    if len(password) < PASSWORD_MIN_LENGTH:
+        raise ValueError(
+            f"Password must be at least {PASSWORD_MIN_LENGTH} characters long"
+        )
+
+    if not re.search(r"[a-z]", password):
+        raise ValueError(
+            "Password must contain at least one lowercase letter (a-z)"
+        )
+
+    if not re.search(r"[A-Z]", password):
+        raise ValueError(
+            "Password must contain at least one uppercase letter (A-Z)"
+        )
+
+    if not re.search(r"\d", password):
+        raise ValueError(
+            "Password must contain at least one digit (0-9)"
+        )
+
+    if not re.search(r"[@$!%*?&]", password):
+        raise ValueError(
+            "Password must contain at least one special character (@$!%*?&)"
+        )
 
 
 def create_access_token(user_id: UUID, role: str) -> str:

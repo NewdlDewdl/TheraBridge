@@ -7,30 +7,32 @@ export interface UseSessionOptions {
 }
 
 export function useSession(sessionId: string | null, options?: UseSessionOptions) {
-  const { data, error, mutate, isLoading } = useSWR<Session>(
-    sessionId ? `/api/sessions/${sessionId}` : null,
-    fetcher,
-    {
-      refreshInterval: options?.refreshInterval ?? 0,
-      revalidateOnFocus: true,
-      revalidateOnReconnect: true,
-    }
-  );
-
-  const isProcessing =
+  const isProcessing = (data?: Session) =>
     data?.status === 'uploading' ||
     data?.status === 'transcribing' ||
     data?.status === 'extracting_notes';
 
-  // Automatically poll while processing
-  const shouldPoll = isProcessing && !options?.refreshInterval;
+  // Determine refresh interval: 5s while processing, 0 (disabled) otherwise
+  // Respects explicit refreshInterval override from options
+  const getRefreshInterval = (data?: Session) => {
+    if (options?.refreshInterval !== undefined) {
+      return options.refreshInterval;
+    }
+    return isProcessing(data) ? 5000 : 0;
+  };
 
-  useSWR<Session>(
-    shouldPoll && sessionId ? `/api/sessions/${sessionId}` : null,
+  const { data, error, mutate, isLoading } = useSWR<Session>(
+    sessionId ? `/api/sessions/${sessionId}` : null,
     fetcher,
     {
-      refreshInterval: 5000, // Poll every 5 seconds while processing
-      revalidateOnFocus: true,
+      // Dynamic refresh interval based on processing status
+      refreshInterval: (latestData) => getRefreshInterval(latestData),
+      // Prevent duplicate requests within 60 seconds
+      dedupingInterval: 60000,
+      // Don't revalidate on focus - let manual refresh be explicit
+      revalidateOnFocus: false,
+      // Revalidate on reconnect for network resilience
+      revalidateOnReconnect: true,
     }
   );
 
@@ -39,7 +41,7 @@ export function useSession(sessionId: string | null, options?: UseSessionOptions
     isLoading,
     isError: !!error,
     error,
-    isProcessing,
+    isProcessing: isProcessing(data),
     refresh: mutate,
   };
 }

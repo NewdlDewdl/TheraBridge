@@ -1,19 +1,34 @@
 """
 Pydantic schemas for User API input/output validation
 """
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import Optional
 from datetime import datetime
 from uuid import UUID
 from app.auth.models import UserRole
+from app.auth.utils import validate_password_strength
 
 
 class UserCreate(BaseModel):
     """Schema for user registration"""
     email: EmailStr  # Auto-validates email format
-    password: str = Field(..., min_length=8)
+    password: str = Field(
+        ...,
+        min_length=12,
+        description="Password must be at least 12 characters with uppercase, lowercase, number, and special character"
+    )
     full_name: str = Field(..., min_length=1)
     role: UserRole
+
+    @field_validator('password')
+    @classmethod
+    def validate_password(cls, v: str) -> str:
+        """Validate password meets security requirements"""
+        try:
+            validate_password_strength(v)
+        except ValueError as e:
+            raise ValueError(str(e))
+        return v
 
 
 class UserLogin(BaseModel):

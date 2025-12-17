@@ -16,7 +16,9 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL not found in environment")
 
-# Control SQL echo logging via environment variable (disabled by default for performance)
+# Control SQL echo logging via environment variable (disabled by default for performance and security)
+# WARNING: Enabling SQL_ECHO will log all database queries, potentially exposing Protected Health Information (PHI)
+# NEVER enable SQL_ECHO in production environments.
 SQL_ECHO = os.getenv("SQL_ECHO", "false").lower() in ("true", "1", "yes")
 
 # Convert postgres:// to postgresql+asyncpg://
@@ -31,9 +33,10 @@ DATABASE_URL = re.sub(r'[&?]sslmode=\w+', '', DATABASE_URL)
 DATABASE_URL = re.sub(r'[&?]channel_binding=\w+', '', DATABASE_URL)
 
 # Create async engine with SSL enabled
+# SECURITY: SQL_ECHO logs all queries - disable in production to prevent PHI exposure
 engine = create_async_engine(
     DATABASE_URL,
-    echo=SQL_ECHO,  # Log SQL queries (controlled by SQL_ECHO env var, disabled by default for performance)
+    echo=SQL_ECHO,  # Log SQL queries (controlled by SQL_ECHO env var, disabled by default for security)
     pool_pre_ping=True,  # Verify connections before using
     connect_args={"ssl": "require"}  # Enable SSL for Neon
 )
@@ -46,10 +49,11 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 # Create synchronous engine for auth endpoints (which use sync operations)
+# SECURITY: SQL_ECHO logs all queries - disable in production to prevent PHI exposure
 SYNC_DATABASE_URL = DATABASE_URL.replace("postgresql+asyncpg://", "postgresql://")
 sync_engine = create_engine(
     SYNC_DATABASE_URL,
-    echo=SQL_ECHO,  # Log SQL queries (controlled by SQL_ECHO env var, disabled by default for performance)
+    echo=SQL_ECHO,  # Log SQL queries (controlled by SQL_ECHO env var, disabled by default for security)
     pool_pre_ping=True,
     connect_args={"sslmode": "require"}
 )

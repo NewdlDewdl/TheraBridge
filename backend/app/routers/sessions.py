@@ -22,6 +22,100 @@ from app.services.transcription import transcribe_audio_file
 
 router = APIRouter()
 
+# ============================================================================
+# Helper Functions for Session Updates (DRY pattern consolidation)
+# ============================================================================
+
+async def update_session_status(
+    session_id: UUID,
+    status: str,
+    db: AsyncSession
+) -> None:
+    """Update only the session status"""
+    await db.execute(
+        update(db_models.Session)
+        .where(db_models.Session.id == session_id)
+        .values(status=status)
+    )
+    await db.commit()
+
+
+async def update_session_with_transcript(
+    session_id: UUID,
+    transcript_text: str,
+    transcript_segments: List,
+    duration_seconds: int,
+    db: AsyncSession
+) -> None:
+    """Update session with transcript data and mark as transcribed"""
+    await db.execute(
+        update(db_models.Session)
+        .where(db_models.Session.id == session_id)
+        .values(
+            transcript_text=transcript_text,
+            transcript_segments=transcript_segments,
+            duration_seconds=duration_seconds,
+            status=SessionStatus.transcribed.value
+        )
+    )
+    await db.commit()
+
+
+async def update_session_with_notes(
+    session_id: UUID,
+    notes: ExtractedNotes,
+    db: AsyncSession
+) -> None:
+    """Update session with extracted notes and mark as processed"""
+    await db.execute(
+        update(db_models.Session)
+        .where(db_models.Session.id == session_id)
+        .values(
+            extracted_notes=notes.model_dump(),
+            therapist_summary=notes.therapist_notes,
+            patient_summary=notes.patient_summary,
+            risk_flags=[flag.model_dump() for flag in notes.risk_flags],
+            status=SessionStatus.processed.value
+        )
+    )
+    await db.commit()
+
+
+async def update_session_with_error(
+    session_id: UUID,
+    error_message: str,
+    db: AsyncSession
+) -> None:
+    """Update session status to failed with error message"""
+    await db.execute(
+        update(db_models.Session)
+        .where(db_models.Session.id == session_id)
+        .values(
+            status=SessionStatus.failed.value,
+            error_message=error_message
+        )
+    )
+    await db.commit()
+
+
+async def update_session_audio_url(
+    session_id: UUID,
+    audio_url: str,
+    db: AsyncSession
+) -> None:
+    """Update session with audio file path"""
+    await db.execute(
+        update(db_models.Session)
+        .where(db_models.Session.id == session_id)
+        .values(audio_url=audio_url)
+    )
+    await db.commit()
+
+
+# ============================================================================
+# File Upload Configuration
+# ============================================================================
+
 # File upload configuration
 UPLOAD_DIR = Path("uploads/audio")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -101,37 +195,23 @@ async def process_audio_pipeline(
     """
     try:
         # Update status: transcribing
-        await db.execute(
-            update(db_models.Session)
-            .where(db_models.Session.id == session_id)
-            .values(status=SessionStatus.transcribing.value)
-        )
-        await db.commit()
+        await update_session_status(session_id, SessionStatus.transcribing.value, db)
 
         # Step 1: Transcribe audio
         print(f"[Pipeline] Transcribing session {session_id}...")
         transcript_result = await transcribe_audio_file(audio_path)
 
         # Save transcript to database
-        await db.execute(
-            update(db_models.Session)
-            .where(db_models.Session.id == session_id)
-            .values(
-                transcript_text=transcript_result["full_text"],
-                transcript_segments=transcript_result["segments"],
-                duration_seconds=int(transcript_result.get("duration", 0)),
-                status=SessionStatus.transcribed.value
-            )
+        await update_session_with_transcript(
+            session_id,
+            transcript_result["full_text"],
+            transcript_result["segments"],
+            int(transcript_result.get("duration", 0)),
+            db
         )
-        await db.commit()
 
         # Step 2: Extract notes
-        await db.execute(
-            update(db_models.Session)
-            .where(db_models.Session.id == session_id)
-            .values(status=SessionStatus.extracting_notes.value)
-        )
-        await db.commit()
+        await update_session_status(session_id, SessionStatus.extracting_notes.value, db)
 
         print(f"[Pipeline] Extracting notes for session {session_id}...")
         extraction_service = get_extraction_service()
@@ -141,18 +221,7 @@ async def process_audio_pipeline(
         )
 
         # Save extracted notes
-        await db.execute(
-            update(db_models.Session)
-            .where(db_models.Session.id == session_id)
-            .values(
-                extracted_notes=notes.model_dump(),
-                therapist_summary=notes.therapist_notes,
-                patient_summary=notes.patient_summary,
-                risk_flags=[flag.model_dump() for flag in notes.risk_flags],
-                status=SessionStatus.processed.value
-            )
-        )
-        await db.commit()
+        await update_session_with_notes(session_id, notes, db)
 
         print(f"[Pipeline] Session {session_id} processed successfully!")
 
@@ -165,15 +234,7 @@ async def process_audio_pipeline(
         print(f"[Pipeline] Error processing session {session_id}: {str(e)}")
 
         # Update status to failed
-        await db.execute(
-            update(db_models.Session)
-            .where(db_models.Session.id == session_id)
-            .values(
-                status=SessionStatus.failed.value,
-                error_message=str(e)
-            )
-        )
-        await db.commit()
+        await update_session_with_error(session_id, str(e), db)
 
 
 @router.post("/upload", response_model=SessionResponse)

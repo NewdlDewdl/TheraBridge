@@ -167,14 +167,17 @@ curl "http://localhost:8000/api/sessions/$SESSION_ID/notes" | jq
 # Run all tests
 pytest tests/ -v
 
-# Run specific test file
-pytest tests/test_extraction_service.py -v
+# Run specific test suite
+pytest tests/test_extraction_service.py -v      # Note extraction tests
+pytest tests/test_e2e_auth_flow.py -v           # End-to-end auth flow
+pytest tests/test_auth_integration.py -v        # Auth endpoint integration
+pytest tests/test_auth_rbac.py -v               # Role-based access control
 
 # Run specific test
 pytest tests/test_extraction_service.py::test_extract_notes_basic -v
 
-# With coverage
-pytest tests/ --cov=app
+# With coverage report
+pytest tests/ --cov=app --cov-report=html
 ```
 
 ### Interactive API Testing
