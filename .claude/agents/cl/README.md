@@ -84,15 +84,13 @@ This directory contains specialized AI agents that help you work with your codeb
 
 ### parallel-orchestrator (Advanced)
 
-**Purpose:** Executes complex multi-step tasks using parallel AI agents
-
-The parallel-orchestrator enables large-scale operations by breaking them into coordinated subtasks executed across multiple agents working in parallel waves. It uses intelligent auto-scaling to determine the optimal number of agents (1 to unlimited) based on cost-benefit analysis.
+**Purpose:** Executes complex multi-step tasks using intelligent parallel coordination across multiple AI agents
 
 **When to use:**
 - Large-scale refactoring or migrations across many files
-- Multi-file analysis or bulk modifications
+- Repository-wide analysis, audits, or bulk modifications
 - Complex tasks requiring 5+ independent operations
-- Any operation that benefits from parallel execution
+- Any operation that benefits from parallel execution with dependency awareness
 
 **Usage Modes:**
 
@@ -100,30 +98,33 @@ The parallel-orchestrator enables large-scale operations by breaking them into c
    ```
    @parallel-orchestrator Refactor all React components to use TypeScript strict mode
    ```
-   System automatically determines optimal agent count based on task complexity, dependencies, and ROI.
+   Agent automatically determines optimal agent count based on task complexity and ROI.
 
 2. **Explicit Agent Count:**
    ```
    @parallel-orchestrator with 50 agents Clean up and organize the entire repository
    ```
-   Specify exact number of agents for precise control.
+   Specify exact number of agents for precise control over parallelism.
 
 **Key Features:**
 - Intelligent auto-scaling (1 to unlimited agents)
 - Cost-benefit analysis and ROI calculation
+- Dependency-aware wave-based execution
 - Resource-aware scaling (CPU, memory, disk, network)
 - Task-specific optimization (file I/O, API calls, deployments)
-- Real-time adaptive execution
-- Multi-wave coordination with dependency management
+- Real-time progress tracking and adaptive execution
+
+**Documentation:**
+- **Complete Methodology:** `.claude/DYNAMIC_WAVE_ORCHESTRATION.md`
+- **Real-World Examples:** `.claude/agents/cl/parallel-orchestrator-examples.md`
+- **Test Cases:** `.claude/agents/cl/parallel-orchestrator-tests.md`
 
 **Example Prompts:**
 ```
+@parallel-orchestrator Add comprehensive error handling to all API endpoints
 @parallel-orchestrator Migrate all database queries from raw SQL to ORM
 @parallel-orchestrator with 100 agents Analyze test coverage across entire codebase
-@parallel-orchestrator Deploy to all production servers with health checks
 ```
-
-**Full Documentation:** See `.claude/DYNAMIC_WAVE_ORCHESTRATION.md` for complete methodology and advanced usage.
 
 ---
 

@@ -234,6 +234,23 @@ Transform any user task into an intelligently parallelized execution plan with:
 - **Dependency-aware scheduling** (DAG-based task ordering)
 - **Real-time progress tracking** (comprehensive results reporting)
 
+---
+
+## 📚 Documentation Reference
+
+This agent implements the intelligent parallel orchestration system. For complete methodology:
+
+**See `.claude/DYNAMIC_WAVE_ORCHESTRATION.md` for:**
+- Complete 8-phase scaling algorithm with all implementation details
+- Extreme scaling scenarios (10K agents, 1M files)
+- Intelligence features (resource-aware, predictive, failure-aware)
+- Real-time monitoring and pattern recognition
+- User-facing examples and prompt templates
+
+**This file contains:** Agent-specific execution instructions, request parsing, and tool usage protocols.
+
+---
+
 ## 📊 Dependency Analysis & Wave Generation
 
 ### Building the Directed Acyclic Graph (DAG)
@@ -802,216 +819,17 @@ Good: "Fix broken links in docs/*.md"
 
 ---
 
-## 🎚️ INTELLIGENT AUTO-SCALING ALGORITHM
+## 🎚️ INTELLIGENT SCALING ALGORITHM
 
-### Agent Count Determination Modes
+For the complete 8-phase intelligent auto-scaling algorithm with ROI calculations, resource validation, and task-specific optimization, see `.claude/DYNAMIC_WAVE_ORCHESTRATION.md` (lines 67-214).
 
-**MODE 1: USER_OVERRIDE (Explicit Agent Count)**
-- When user specifies "using N agents" or "with N agents"
-- Validate against resource constraints
-- Warn if count exceeds capacity
-- Use specified count, skip optimization algorithm
-- Still perform wave structuring and dependency analysis
+**Key points for execution:**
+- USER_OVERRIDE mode: Use specified agent count, validate resources
+- AUTOMATIC mode: Calculate optimal based on subtasks, dependencies, task type
+- Always perform cost-benefit analysis (time saved vs coordination overhead)
+- Reference the methodology file for complete implementation
 
-**MODE 2: AUTOMATIC (Intelligent Auto-Scaling)**
-- When no agent count specified
-- Use 8-phase intelligent scaling algorithm
-- Calculate optimal agent count (1 to unlimited)
-- Based on ROI, resources, task type, coordination overhead
-
-### 8-Phase Intelligent Scaling Algorithm
-
-```python
-def intelligent_auto_scale(subtasks, dependencies, avg_duration_min, task_type, user_override=None):
-    """
-    Intelligently determine optimal agent count with NO arbitrary limits
-
-    Parameters:
-    - user_override: If specified, uses this count instead of calculating optimal
-                     Still validates against resource constraints
-
-    Returns: 1 to unlimited agents based on cost-benefit analysis or user override
-    """
-
-    # Handle user override (explicit agent count)
-    if user_override is not None:
-        # Validate against resource constraints
-        resource_limit = estimate_resource_capacity()
-        max_safe_agents = min(resource_limit.values())
-
-        if user_override > max_safe_agents:
-            print(f"⚠️ WARNING: Requested {user_override} agents exceeds safe capacity ({max_safe_agents})")
-            print(f"   Recommend: Use auto-scaling or reduce to {max_safe_agents} agents")
-            print(f"   Proceeding with {user_override} agents as requested...")
-
-        # Use user's agent count, skip optimization algorithm
-        return user_override
-
-    # Phase 1: Calculate maximum theoretical parallelism
-    max_parallel = calculate_max_parallel_depth(subtasks, dependencies)
-
-    if max_parallel <= 1:
-        return 1  # Sequential task, no parallelization possible
-
-    # Phase 2: Calculate coordination overhead
-    # Each agent requires: checkpoint creation, verification, context loading
-    overhead_per_agent = 0.3  # seconds (empirically measured)
-    total_overhead = (overhead_per_agent * max_parallel) / 60  # convert to minutes
-
-    # Phase 3: Calculate time savings
-    sequential_time = avg_duration_min * len(subtasks)
-    parallel_time = avg_duration_min + total_overhead  # longest task + overhead
-    time_saved = sequential_time - parallel_time
-
-    # Phase 4: Cost-benefit analysis (ROI calculation)
-    if time_saved <= total_overhead:
-        # Coordination overhead exceeds benefit - reduce agents
-        # Find optimal point where benefit > overhead
-        optimal = 1
-        for n in range(1, max_parallel + 1):
-            test_overhead = (overhead_per_agent * n) / 60
-            test_parallel_time = (sequential_time / n) + test_overhead
-            test_savings = sequential_time - test_parallel_time
-            if test_savings > test_overhead:
-                optimal = n
-            else:
-                break
-        return optimal
-
-    # Phase 5: Resource-based validation
-    # Consider available resources (memory, API limits, etc.)
-    resource_limit = estimate_resource_capacity()
-
-    # Phase 6: Task-specific optimization
-    if task_type == "file_operations":
-        # File I/O benefits massively from parallelism up to disk IOPS limit
-        disk_iops_limit = 10000  # typical SSD
-        optimal = min(max_parallel, disk_iops_limit)
-
-    elif task_type == "api_calls":
-        # API calls limited by rate limits
-        api_rate_limit = 1000  # requests per second
-        optimal = min(max_parallel, api_rate_limit * avg_duration_min * 60)
-
-    elif task_type == "computation":
-        # CPU-bound tasks limited by cores
-        cpu_cores = get_cpu_count()
-        optimal = min(max_parallel, cpu_cores * 4)  # 4x hyperthreading
-
-    elif task_type == "network_operations":
-        # Network operations (deployments, downloads)
-        # Limited by bandwidth and connection limits
-        optimal = min(max_parallel, 5000)  # typical connection limit
-
-    else:
-        # General tasks - use full parallelism if beneficial
-        optimal = max_parallel
-
-    # Phase 7: Intelligent scaling for very large numbers (ROI verification)
-    if optimal > 1000:
-        # For 1000+ agents, verify the ROI is significant
-        roi_ratio = time_saved / total_overhead
-        if roi_ratio < 10:  # Less than 10x return on overhead investment
-            # Scale back to more reasonable number
-            optimal = int(optimal * (roi_ratio / 10))
-
-    # Phase 8: Dynamic adjustment based on task duration
-    if avg_duration_min < 1:  # Very quick tasks (< 1 minute each)
-        # Micro-tasks: coordination overhead dominates
-        # Cap agents to keep overhead under 10% of total time
-        max_agents_for_micro = int((sequential_time * 0.1) / overhead_per_agent)
-        optimal = min(optimal, max_agents_for_micro)
-
-    elif avg_duration_min > 30:  # Long-running tasks (> 30 minutes each)
-        # Long tasks: coordination overhead negligible
-        # Use maximum parallelism possible
-        optimal = max_parallel  # No limits!
-
-    return max(1, optimal)
-
-
-def estimate_resource_capacity():
-    """
-    Dynamically assess available resources
-    """
-    resources = {
-        'cpu_cores': os.cpu_count(),
-        'memory_gb': psutil.virtual_memory().total / (1024**3),
-        'disk_iops': measure_disk_iops(),  # benchmark on startup
-        'network_bandwidth_mbps': measure_network_speed(),
-        'api_rate_limits': {
-            'openai': 10000,  # requests per minute
-            'github': 5000,
-            'aws': 'unlimited'
-        }
-    }
-
-    # Calculate safe agent limits
-    max_agents = {
-        'cpu_bound': resources['cpu_cores'] * 4,
-        'memory_bound': int(resources['memory_gb'] / 0.5),  # 500MB per agent
-        'disk_bound': resources['disk_iops'] // 2,
-        'network_bound': resources['network_bandwidth_mbps'] * 10
-    }
-
-    return max_agents
-
-
-def calculate_roi(agents, sequential_time, overhead_per_agent):
-    """
-    Calculate return on investment for agent count
-    """
-    total_overhead = (overhead_per_agent * agents) / 60  # minutes
-    parallel_time = (sequential_time / agents) + total_overhead
-    time_saved = sequential_time - parallel_time
-
-    roi_ratio = time_saved / total_overhead if total_overhead > 0 else float('inf')
-
-    # Decision matrix
-    if roi_ratio > 100:
-        return "EXCELLENT - Use full parallelization"
-    elif roi_ratio > 10:
-        return "GOOD - Recommended"
-    elif roi_ratio > 2:
-        return "MARGINAL - Consider reducing agents"
-    else:
-        return "POOR - Reduce agents significantly"
-```
-
-### Scaling Decision Examples
-
-| Subtasks | Avg Duration | Dependencies | Task Type | User Override | Final Agents | Decision |
-|----------|--------------|--------------|-----------|---------------|--------------|----------|
-| 85 | 3min | Moderate | Mixed | 50 | **50** | USER_OVERRIDE ✅ |
-| 85 | 3min | Moderate | Mixed | None | **35** | AUTOMATIC (optimal) |
-| 10,000 | 3min | None | Network | None | **10,000** | AUTOMATIC (unlimited!) |
-| 1M | 0.05min | None | File I/O | None | **5,000** | AUTOMATIC (IOPS-capped) |
-| 20 | 10min | Deep | Dev | None | **4** | AUTOMATIC (dependency-limited) |
-| 500 | 2min | None | File I/O | 100 | **100** | USER_OVERRIDE ✅ |
-
-### Key Intelligence Features
-
-**Resource-Aware Scaling:**
-- CPU cores, memory capacity, disk IOPS, network bandwidth
-- API rate limits (OpenAI, GitHub, AWS, etc.)
-- Validates against constraints, warns on overages
-
-**ROI Calculation:**
-- Time saved vs coordination overhead
-- Excellent (>100x), Good (>10x), Marginal (>2x), Poor (<2x)
-- Automatically reduces agents when ROI poor
-
-**Task-Type Optimization:**
-- **File operations**: Limited by disk IOPS (10,000 typical SSD)
-- **API calls**: Limited by rate limits (varies by service)
-- **Computation**: Limited by CPU cores (4x hyperthreading)
-- **Network operations**: Limited by bandwidth/connections (5,000 typical)
-- **General tasks**: Full parallelism if beneficial
-
-**Intelligent Capping:**
-- Micro-tasks (<1min): Cap to keep overhead <10% of total time
-- Long tasks (>30min): No limits, overhead negligible
-- Massive tasks (>1,000 agents): Verify 10x ROI minimum
+---
 
 ## 🚀 Execution Protocol
 

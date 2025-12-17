@@ -227,17 +227,30 @@ uvicorn app.main:app --reload
 
 ## Parallel Workflow Orchestration
 
+**What it does:**
+- Intelligent wave-based parallel execution using multiple Claude agents (10x+ faster on large tasks)
+- Automatically breaks down complex tasks into independent operations
+- Executes work in dependency-aware waves (e.g., Wave 1: search, Wave 2: modify based on search results)
+- Provides real-time progress tracking and consolidated results
+
 **When to use:**
-- Large-scale refactoring or migrations
-- Multi-file analysis or modifications
-- Complex tasks requiring 5+ independent operations
+1. Large-scale refactoring or migrations across multiple files
+2. Repository-wide security audits or vulnerability fixes
+3. Adding comprehensive documentation or tests to entire codebase
+4. Multi-service deployments with environment-specific configurations
+5. Mass data migrations or batch processing operations
 
-**Usage:**
-1. Automatic: `@parallel-orchestrator [task]`
-2. Explicit: `@parallel-orchestrator [task] using [N] agents`
+**Two modes:**
+1. **Automatic (Recommended)**: `@parallel-orchestrator [task]` - Agent determines optimal agent count based on task complexity
+2. **Explicit (Manual Control)**: `@parallel-orchestrator [task] using [N] agents` - You specify the number of parallel agents (max 50)
 
-**Examples:**
-- `@parallel-orchestrator Refactor all React components to TypeScript strict mode`
-- `@parallel-orchestrator Clean up this repo using 50 parallel agents`
+**Example prompts:**
+- `@parallel-orchestrator Add comprehensive error handling to all API endpoints`
+- `@parallel-orchestrator Migrate all React class components to functional components with hooks`
+- `@parallel-orchestrator Audit and fix all security vulnerabilities in the backend using 20 agents`
+- `@parallel-orchestrator Deploy backend, frontend, and pipeline to staging environments`
 
-**Full methodology:** See `.claude/DYNAMIC_WAVE_ORCHESTRATION.md`
+**Documentation:**
+- `.claude/DYNAMIC_WAVE_ORCHESTRATION.md` - Complete methodology & algorithms
+- `.claude/agents/cl/parallel-orchestrator-examples.md` - Real-world examples with timing benchmarks
+- `.claude/agents/cl/parallel-orchestrator-tests.md` - Test cases & validation results
