@@ -3,13 +3,11 @@ fastapi==0.109.0
 uvicorn[standard]==0.27.0
 python-multipart==0.0.6  # For file uploads
 
-# Database (Python 3.14 compatible versions)
-# Note: Using SQLAlchemy 2.1.0b1 from GitHub for Python 3.14 support
-# Install with: pip install "git+https://github.com/sqlalchemy/sqlalchemy.git@main#egg=sqlalchemy[asyncio]"
-sqlalchemy[asyncio]>=2.1.0b1
-psycopg[binary]>=3.3.2  # Modern PostgreSQL driver (Python 3.14 compatible)
-asyncpg>=0.31.0  # PostgreSQL async driver (Python 3.14+ compatible)
-psycopg2-binary>=2.9.11  # Legacy driver for migrations if needed
+# Database (Python 3.13 stable versions)
+sqlalchemy[asyncio]>=2.0.25
+psycopg[binary]>=3.1.10  # Modern PostgreSQL driver
+asyncpg>=0.29.0  # PostgreSQL async driver
+psycopg2-binary>=2.9.9  # Legacy driver for migrations if needed
 alembic==1.13.1  # Migrations (future use)
 
 # OpenAI

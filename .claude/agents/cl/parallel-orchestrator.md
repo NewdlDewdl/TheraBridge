@@ -270,25 +270,39 @@ SCALING DECISION:
 ```
 
 ### Step 2: Wave Structure (REQUIRED)
+
+**🚨 CRITICAL: Show POOL SIZE (maximum across waves), not total agent slots.**
+
 Output this exact format:
 ```
 🌊 WAVE STRUCTURE:
 
-Wave 1: [Description] ([N] agents - parallel) - [time]
-├─ [Agent task 1]
-├─ [Agent task 2]
+Wave 1: [Description] ([N] agents)
+├─ I1 ([Role]): [task]
+├─ I2 ([Role]): [task]
 └─ ...
 
-Wave 2: [Description] ([N] agents - parallel) - [time]
-├─ [Agent task 1]
+Wave 2: [Description] ([M] agents)
+├─ I1 ([Role]): [task] ♻️ REUSED
+├─ I2 ([Role]): [task] ♻️ REUSED
+├─ I[N+1] ([Role]): [task] 🆕 NEW (if M > N)
 └─ ...
 
-TOTAL AGENTS: [N] ([auto-calculated/user-specified])
-PEAK AGENTS: [N] (Wave [X])
-TOTAL WAVES: [N]
+Wave 3: [Description] ([P] agents - reusing from pool)
+└─ ...
+
+🏊 AGENT POOL SUMMARY:
+├─ Pool size: [MAX] agents (maximum needed across all waves)
+├─ Total waves: [W]
+├─ Wave requirements: W1=[N], W2=[M], W3=[P], ...
+├─ Total agent slots: [sum] (if creating new agents each wave)
+├─ With pooling: [MAX] agents created
+├─ Agent reuse rate: [X]%
+└─ Efficiency: [Y]% fewer agents needed
+
 ESTIMATED TIME: [X] minutes
 SEQUENTIAL TIME: [Y] minutes
-EFFICIENCY: [Z]% faster ✅
+SPEEDUP: [Z]% faster ✅
 ```
 
 ### Step 3: Execute (REQUIRED)

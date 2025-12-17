@@ -227,12 +227,12 @@ def test_user(test_db):
     Returns:
         User object with the following credentials:
         - email: test@example.com
-        - password: TestPass123!
+        - password: TestPass123!@
         - role: therapist
     """
     user = User(
         email="test@example.com",
-        hashed_password=get_password_hash("TestPass123!"),
+        hashed_password=get_password_hash("TestPass123!@"),
         first_name="Test",
         last_name="User",
         full_name="Test User",

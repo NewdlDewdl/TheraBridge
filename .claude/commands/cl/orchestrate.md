@@ -134,19 +134,74 @@ SCALING DECISION:
 
 ## STEP 2: Output Wave Structure (REQUIRED)
 
+**🚨 CRITICAL: Show POOL SIZE (maximum across waves), not total agent slots.**
+
 ```
 🌊 WAVE STRUCTURE:
 
-Wave 1: [Description] ([N] agents - parallel)
+Wave 1: [Description] ([N] agents)
 ├─ Agent 1.1: [task]
 ├─ Agent 1.2: [task]
 └─ ...
 
-Wave 2: [Description] ([N] agents - parallel)
+Wave 2: [Description] ([M] agents)
 └─ ...
 
-Total: [N] agents across [W] waves
+Wave 3: [Description] ([P] agents - reusing from pool)
+└─ ...
+
+🏊 AGENT POOL SUMMARY:
+├─ Pool size: [MAX] agents (maximum needed across all waves)
+├─ Total waves: [W]
+├─ Wave requirements: W1=[N], W2=[M], W3=[P], ...
+├─ Total agent slots: [N+M+P+...] (if creating new agents each wave)
+├─ With pooling: [MAX] agents created
+├─ Agent reuse rate: [X]%
+└─ Efficiency: [Y]% fewer agents needed
+
 Estimated: [X] min vs [Y] min sequential
+Speedup: [Z]% faster
+```
+
+**Example (CORRECT):**
+```
+🌊 WAVE STRUCTURE:
+
+Wave 1: Database Schema (3 agents)
+├─ I1 (Database Engineer #1): Create analytics models
+├─ I2 (Database Engineer #2): Create Alembic migration
+└─ I3 (Database Engineer #3): Create Pydantic schemas
+
+Wave 2: Backend Implementation (6 agents)
+├─ I1 (Backend Dev #1): Analytics service - overview ♻️ REUSED
+├─ I2 (Backend Dev #2): Analytics service - patient progress ♻️ REUSED
+├─ I3 (Backend Dev #3): Analytics service - session trends ♻️ REUSED
+├─ I4 (Backend Dev #4): Analytics service - topics 🆕 NEW
+├─ I5 (API Developer #1): Router with /overview endpoint 🆕 NEW
+└─ I6 (API Developer #2): Router with patient/trends/topics endpoints 🆕 NEW
+
+Wave 3: Scheduler Infrastructure (3 agents - reusing from pool)
+├─ I1 (DevOps Engineer): APScheduler setup ♻️ REUSED
+├─ I2 (Backend Dev #5): Background tasks module ♻️ REUSED
+└─ I3 (Backend Dev #6): Integrate scheduler with lifespan ♻️ REUSED
+
+Wave 4: Testing & Validation (6 agents - reusing from pool)
+├─ I1-I6 all reused ♻️
+
+Wave 5: Integration (2 agents - reusing from pool)
+├─ I1, I2 reused ♻️
+
+🏊 AGENT POOL SUMMARY:
+├─ Pool size: 6 agents (maximum needed in Wave 2)
+├─ Total waves: 5
+├─ Wave requirements: W1=3, W2=6, W3=3, W4=6, W5=2
+├─ Total agent slots: 20 (if creating new agents each wave)
+├─ With pooling: 6 agents created
+├─ Agent reuse rate: 70% (14 of 20 slots reuse existing agents)
+└─ Efficiency: 70% fewer agents needed
+
+Estimated: 45 min vs 5 hours sequential
+Speedup: 85% faster
 ```
 
 ## STEP 3: Initialize Agent Pool with Clear Roles (REQUIRED)

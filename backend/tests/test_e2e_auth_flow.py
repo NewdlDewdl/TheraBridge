@@ -20,7 +20,7 @@ def test_complete_user_journey(client, db_session):
     # ==================== STEP 1: SIGNUP ====================
     signup_resp = client.post("/api/v1/signup", json={
         "email": "journey@example.com",
-        "password": "Journey123!",
+        "password": "Journey123!@",
         "first_name": "Journey",
         "last_name": "User",
         "role": "therapist"
@@ -111,7 +111,7 @@ def test_signup_duplicate_email_rejected(client, db_session):
     # First signup
     first_signup = client.post("/api/v1/signup", json={
         "email": "duplicate@example.com",
-        "password": "Password123!",
+        "password": "Password123!@",
         "full_name": "First User",
         "role": "therapist"
     })
@@ -120,7 +120,7 @@ def test_signup_duplicate_email_rejected(client, db_session):
     # Second signup with same email should fail
     second_signup = client.post("/api/v1/signup", json={
         "email": "duplicate@example.com",
-        "password": "DifferentPassword123!",
+        "password": "DifferentPassword123!@",
         "full_name": "Second User",
         "role": "patient"
     })
@@ -136,7 +136,7 @@ def test_login_after_signup(client, db_session):
     # Signup
     signup_resp = client.post("/api/v1/signup", json={
         "email": "logintest@example.com",
-        "password": "SecurePass123!",
+        "password": "SecurePass123!@",
         "full_name": "Login Test User",
         "role": "patient"
     })
@@ -146,7 +146,7 @@ def test_login_after_signup(client, db_session):
     # Login with same credentials
     login_resp = client.post("/api/v1/login", json={
         "email": "logintest@example.com",
-        "password": "SecurePass123!"
+        "password": "SecurePass123!@"
     })
     assert login_resp.status_code == status.HTTP_200_OK
 
@@ -175,7 +175,7 @@ def test_invalid_credentials_rejected(client, db_session):
     # Signup
     client.post("/api/v1/signup", json={
         "email": "secure@example.com",
-        "password": "CorrectPassword123!",
+        "password": "CorrectPassword123!@",
         "full_name": "Secure User",
         "role": "therapist"
     })
@@ -183,7 +183,7 @@ def test_invalid_credentials_rejected(client, db_session):
     # Try login with wrong password
     wrong_password_resp = client.post("/api/v1/login", json={
         "email": "secure@example.com",
-        "password": "WrongPassword123!"
+        "password": "WrongPassword123!@"
     })
     assert wrong_password_resp.status_code == status.HTTP_401_UNAUTHORIZED
     assert "incorrect" in wrong_password_resp.json()["detail"].lower()
@@ -191,7 +191,7 @@ def test_invalid_credentials_rejected(client, db_session):
     # Try login with non-existent email
     wrong_email_resp = client.post("/api/v1/login", json={
         "email": "nonexistent@example.com",
-        "password": "SomePassword123!"
+        "password": "SomePassword123!@"
     })
     assert wrong_email_resp.status_code == status.HTTP_401_UNAUTHORIZED
     assert "incorrect" in wrong_email_resp.json()["detail"].lower()
@@ -205,7 +205,7 @@ def test_multiple_refresh_cycles(client, db_session):
     # Signup
     signup_resp = client.post("/api/v1/signup", json={
         "email": "multirefresh@example.com",
-        "password": "RefreshTest123!",
+        "password": "RefreshTest123!@",
         "full_name": "Multi Refresh User",
         "role": "therapist"
     })
@@ -275,7 +275,7 @@ def test_different_roles_can_signup(client, db_session):
         # Signup
         signup_resp = client.post("/api/v1/signup", json={
             "email": email,
-            "password": f"{role.capitalize()}Pass123!",
+            "password": f"{role.capitalize()}Pass123!@",
             "full_name": f"Test {role.capitalize()}",
             "role": role
         })
@@ -365,7 +365,7 @@ def test_cross_user_token_isolation(client, db_session):
     # Create User A
     user_a_signup = client.post("/api/v1/signup", json={
         "email": "user_a@example.com",
-        "password": "UserAPass123!",
+        "password": "UserAPass123!@",
         "full_name": "User A",
         "role": "therapist"
     })
@@ -375,7 +375,7 @@ def test_cross_user_token_isolation(client, db_session):
     # Create User B
     user_b_signup = client.post("/api/v1/signup", json={
         "email": "user_b@example.com",
-        "password": "UserBPass123!",
+        "password": "UserBPass123!@",
         "full_name": "User B",
         "role": "patient"
     })
@@ -444,7 +444,7 @@ def test_token_expiration_and_rejection(client, db_session):
     # Create user
     signup_resp = client.post("/api/v1/signup", json={
         "email": "expiration_test@example.com",
-        "password": "ExpirationTest123!",
+        "password": "ExpirationTest123!@",
         "full_name": "Expiration Test User",
         "role": "therapist"
     })

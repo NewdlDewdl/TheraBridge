@@ -28,7 +28,7 @@ class TestSignup:
             f"{AUTH_PREFIX}/signup",
             json={
                 "email": "newuser@example.com",
-                "password": "NewPass123!",
+                "password": "NewPass123!@",
                 "first_name": "New",
                 "last_name": "User",
                 "role": "therapist"
@@ -62,7 +62,7 @@ class TestSignup:
             f"{AUTH_PREFIX}/signup",
             json={
                 "email": "patient@example.com",
-                "password": "PatientPass123!",
+                "password": "PatientPass123!@",
                 "first_name": "Patient",
                 "last_name": "User",
                 "role": "patient"
@@ -79,7 +79,7 @@ class TestSignup:
             f"{AUTH_PREFIX}/signup",
             json={
                 "email": "test@example.com",  # Already exists from test_user fixture
-                "password": "AnotherPass123!",
+                "password": "AnotherPass123!@",
                 "first_name": "Another",
                 "last_name": "User",
                 "role": "therapist"
@@ -95,7 +95,7 @@ class TestSignup:
             f"{AUTH_PREFIX}/signup",
             json={
                 "email": "not-an-email",
-                "password": "ValidPass123!",
+                "password": "ValidPass123!@",
                 "first_name": "Test",
                 "last_name": "User",
                 "role": "therapist"
@@ -141,7 +141,7 @@ class TestLogin:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
 
@@ -160,7 +160,7 @@ class TestLogin:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "WrongPassword123!"
+                "password": "WrongPassword123!@"
             }
         )
 
@@ -173,7 +173,7 @@ class TestLogin:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "nonexistent@example.com",
-                "password": "SomePass123!"
+                "password": "SomePass123!@"
             }
         )
 
@@ -186,7 +186,7 @@ class TestLogin:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "inactive@example.com",
-                "password": "InactivePass123!"
+                "password": "InactivePass123!@"
             }
         )
 
@@ -200,7 +200,7 @@ class TestLogin:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         token1 = response1.json()["refresh_token"]
@@ -210,7 +210,7 @@ class TestLogin:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         token2 = response2.json()["refresh_token"]
@@ -235,7 +235,7 @@ class TestTokenRefresh:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         refresh_token = login_response.json()["refresh_token"]
@@ -272,7 +272,7 @@ class TestTokenRefresh:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         refresh_token = login_response.json()["refresh_token"]
@@ -305,7 +305,7 @@ class TestLogout:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         refresh_token = login_response.json()["refresh_token"]
@@ -344,7 +344,7 @@ class TestLogout:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         access_token = login_response.json()["access_token"]
@@ -370,7 +370,7 @@ class TestGetMe:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         access_token = login_response.json()["access_token"]
@@ -417,7 +417,7 @@ class TestAuthenticationFlow:
             f"{AUTH_PREFIX}/signup",
             json={
                 "email": "flowtest@example.com",
-                "password": "FlowPass123!",
+                "password": "FlowPass123!@",
                 "first_name": "Flow Test",
                 "last_name": "User",
                 "role": "therapist"
@@ -471,7 +471,7 @@ class TestAuthenticationFlow:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         tokens1 = login1.json()
@@ -481,7 +481,7 @@ class TestAuthenticationFlow:
             f"{AUTH_PREFIX}/login",
             json={
                 "email": "test@example.com",
-                "password": "TestPass123!"
+                "password": "TestPass123!@"
             }
         )
         tokens2 = login2.json()
