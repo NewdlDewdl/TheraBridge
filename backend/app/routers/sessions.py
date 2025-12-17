@@ -22,100 +22,6 @@ from app.services.transcription import transcribe_audio_file
 
 router = APIRouter()
 
-# ============================================================================
-# Helper Functions for Session Updates (DRY pattern consolidation)
-# ============================================================================
-
-async def update_session_status(
-    session_id: UUID,
-    status: str,
-    db: AsyncSession
-) -> None:
-    """Update only the session status"""
-    await db.execute(
-        update(db_models.Session)
-        .where(db_models.Session.id == session_id)
-        .values(status=status)
-    )
-    await db.commit()
-
-
-async def update_session_with_transcript(
-    session_id: UUID,
-    transcript_text: str,
-    transcript_segments: List,
-    duration_seconds: int,
-    db: AsyncSession
-) -> None:
-    """Update session with transcript data and mark as transcribed"""
-    await db.execute(
-        update(db_models.Session)
-        .where(db_models.Session.id == session_id)
-        .values(
-            transcript_text=transcript_text,
-            transcript_segments=transcript_segments,
-            duration_seconds=duration_seconds,
-            status=SessionStatus.transcribed.value
-        )
-    )
-    await db.commit()
-
-
-async def update_session_with_notes(
-    session_id: UUID,
-    notes: ExtractedNotes,
-    db: AsyncSession
-) -> None:
-    """Update session with extracted notes and mark as processed"""
-    await db.execute(
-        update(db_models.Session)
-        .where(db_models.Session.id == session_id)
-        .values(
-            extracted_notes=notes.model_dump(),
-            therapist_summary=notes.therapist_notes,
-            patient_summary=notes.patient_summary,
-            risk_flags=[flag.model_dump() for flag in notes.risk_flags],
-            status=SessionStatus.processed.value
-        )
-    )
-    await db.commit()
-
-
-async def update_session_with_error(
-    session_id: UUID,
-    error_message: str,
-    db: AsyncSession
-) -> None:
-    """Update session status to failed with error message"""
-    await db.execute(
-        update(db_models.Session)
-        .where(db_models.Session.id == session_id)
-        .values(
-            status=SessionStatus.failed.value,
-            error_message=error_message
-        )
-    )
-    await db.commit()
-
-
-async def update_session_audio_url(
-    session_id: UUID,
-    audio_url: str,
-    db: AsyncSession
-) -> None:
-    """Update session with audio file path"""
-    await db.execute(
-        update(db_models.Session)
-        .where(db_models.Session.id == session_id)
-        .values(audio_url=audio_url)
-    )
-    await db.commit()
-
-
-# ============================================================================
-# File Upload Configuration
-# ============================================================================
-
 # File upload configuration
 UPLOAD_DIR = Path("uploads/audio")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -189,29 +95,59 @@ async def process_audio_pipeline(
     db: AsyncSession
 ):
     """
-    Background task to process audio: transcribe → extract notes
+    Background task to orchestrate audio processing pipeline.
 
-    This runs asynchronously after audio upload.
+    Executes the complete workflow: transcription -> note extraction -> database update.
+    Updates session status at each stage and handles errors gracefully.
+
+    Args:
+        session_id: UUID of the session being processed
+        audio_path: Absolute file system path to the audio file
+        db: AsyncSession database connection for updates
+
+    Processing Stages:
+        1. Transcribing: Convert audio to text with timestamps
+        2. Transcribed: Save transcript and segments to database
+        3. Extracting Notes: Generate structured clinical notes from transcript
+        4. Processed: Save extracted notes and update final status
+        5. Failed: Capture error message if any stage fails
+
+    Returns:
+        None (updates database and status only)
     """
     try:
         # Update status: transcribing
-        await update_session_status(session_id, SessionStatus.transcribing.value, db)
+        await db.execute(
+            update(db_models.Session)
+            .where(db_models.Session.id == session_id)
+            .values(status=SessionStatus.transcribing.value)
+        )
+        await db.commit()
 
         # Step 1: Transcribe audio
         print(f"[Pipeline] Transcribing session {session_id}...")
         transcript_result = await transcribe_audio_file(audio_path)
 
         # Save transcript to database
-        await update_session_with_transcript(
-            session_id,
-            transcript_result["full_text"],
-            transcript_result["segments"],
-            int(transcript_result.get("duration", 0)),
-            db
+        await db.execute(
+            update(db_models.Session)
+            .where(db_models.Session.id == session_id)
+            .values(
+                transcript_text=transcript_result["full_text"],
+                transcript_segments=transcript_result["segments"],
+                duration_seconds=int(transcript_result.get("duration", 0)),
+                status=SessionStatus.transcribed.value
+            )
         )
+        await db.commit()
 
         # Step 2: Extract notes
-        await update_session_status(session_id, SessionStatus.extracting_notes.value, db)
+        await db.execute(
+            update(db_models.Session)
+            .where(db_models.Session.id == session_id)
+            .values(status=SessionStatus.extracting_notes.value)
+        )
+        await db.commit()
 
         print(f"[Pipeline] Extracting notes for session {session_id}...")
         extraction_service = get_extraction_service()
@@ -221,7 +157,18 @@ async def process_audio_pipeline(
         )
 
         # Save extracted notes
-        await update_session_with_notes(session_id, notes, db)
+        await db.execute(
+            update(db_models.Session)
+            .where(db_models.Session.id == session_id)
+            .values(
+                extracted_notes=notes.model_dump(),
+                therapist_summary=notes.therapist_notes,
+                patient_summary=notes.patient_summary,
+                risk_flags=[flag.model_dump() for flag in notes.risk_flags],
+                status=SessionStatus.processed.value
+            )
+        )
+        await db.commit()
 
         print(f"[Pipeline] Session {session_id} processed successfully!")
 
@@ -234,7 +181,15 @@ async def process_audio_pipeline(
         print(f"[Pipeline] Error processing session {session_id}: {str(e)}")
 
         # Update status to failed
-        await update_session_with_error(session_id, str(e), db)
+        await db.execute(
+            update(db_models.Session)
+            .where(db_models.Session.id == session_id)
+            .values(
+                status=SessionStatus.failed.value,
+                error_message=str(e)
+            )
+        )
+        await db.commit()
 
 
 @router.post("/upload", response_model=SessionResponse)
@@ -245,20 +200,31 @@ async def upload_audio_session(
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Upload an audio file to create a new session
+    Upload an audio file and create a new therapy session record.
 
-    This will:
-    1. Validate file size (max 500MB) and type (audio/* MIME types only)
-    2. Create session record in database
-    3. Save audio file
-    4. Start background processing (transcription + extraction)
+    Creates a session in the database and begins background processing (transcription
+    and note extraction). Returns immediately with status="uploading"; client can poll
+    the session endpoint to track progress.
 
-    Returns immediately with session_id and status="uploading"
+    Validation:
+        - File size must not exceed 500MB
+        - File extension must be in ALLOWED_EXTENSIONS
+        - MIME type must be audio/* or video/* (for container formats)
+
+    Args:
+        patient_id: UUID of the patient associated with this session
+        file: Audio file upload (UploadFile from form-data)
+        background_tasks: FastAPI BackgroundTasks for async processing
+        db: AsyncSession database dependency
+
+    Returns:
+        SessionResponse: Newly created session with status="uploading"
 
     Raises:
-    - 400: Invalid filename, extension, or MIME type
-    - 413: File size exceeds 500MB
-    - 415: Unsupported MIME type
+        HTTPException 400: Invalid filename, unsupported extension, or invalid MIME type
+        HTTPException 413: File size exceeds 500MB
+        HTTPException 415: Unsupported MIME type
+        HTTPException 500: No therapist found or file save failed
     """
     # Validate file early before database operations
     await validate_audio_upload(file)
@@ -287,7 +253,7 @@ async def upload_audio_session(
     await db.refresh(new_session)
 
     # Save audio file
-    file_path = UPLOAD_DIR / f"{new_session.id}{file_ext}"
+    file_path = UPLOAD_DIR / f"{new_session.id}{Path(file.filename).suffix.lower()}"
 
     try:
         # Write file with streaming size validation
@@ -356,7 +322,22 @@ async def get_session(
     session_id: UUID,
     db: AsyncSession = Depends(get_db)
 ):
-    """Get complete session data including extracted notes"""
+    """
+    Retrieve a complete session record by ID.
+
+    Fetches the full session data including transcript, extracted notes,
+    and processing status from the database.
+
+    Args:
+        session_id: UUID of the session to retrieve
+        db: AsyncSession database dependency
+
+    Returns:
+        SessionResponse: Complete session object with all data
+
+    Raises:
+        HTTPException 404: If session with given ID not found
+    """
     result = await db.execute(
         select(db_models.Session).where(db_models.Session.id == session_id)
     )
@@ -373,7 +354,22 @@ async def get_session_notes(
     session_id: UUID,
     db: AsyncSession = Depends(get_db)
 ):
-    """Get just the extracted notes for a session"""
+    """
+    Retrieve extracted clinical notes for a specific session.
+
+    Returns only the structured note extraction (without raw transcript).
+    Useful for reading notes without the full session data.
+
+    Args:
+        session_id: UUID of the session
+        db: AsyncSession database dependency
+
+    Returns:
+        ExtractedNotes: Structured clinical notes object
+
+    Raises:
+        HTTPException 404: If session not found or notes not yet extracted
+    """
     result = await db.execute(
         select(db_models.Session).where(db_models.Session.id == session_id)
     )
@@ -395,7 +391,26 @@ async def list_sessions(
     limit: int = 50,
     db: AsyncSession = Depends(get_db)
 ):
-    """List sessions with optional filters"""
+    """
+    List therapy sessions with optional filtering.
+
+    Retrieves sessions ordered by date (newest first) with optional
+    filtering by patient and processing status.
+
+    Args:
+        patient_id: Optional UUID to filter sessions by patient
+        status: Optional SessionStatus to filter by processing status
+        limit: Maximum number of results to return (default 50)
+        db: AsyncSession database dependency
+
+    Returns:
+        List[SessionResponse]: List of session records matching filters
+
+    Query Examples:
+        GET /sessions?patient_id=<uuid> - all sessions for a patient
+        GET /sessions?status=processed - only completed sessions
+        GET /sessions?patient_id=<uuid>&status=failed - failed sessions for a patient
+    """
     query = select(db_models.Session).order_by(db_models.Session.session_date.desc())
 
     if patient_id:
@@ -418,9 +433,21 @@ async def manually_extract_notes(
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Manually trigger note extraction for a transcribed session
+    Manually trigger note extraction for a transcribed session.
 
-    Useful for re-processing or if automatic extraction failed
+    Useful for re-processing a session or if automatic extraction failed.
+    Session must have transcript_text before extraction is possible.
+
+    Args:
+        session_id: UUID of session to extract notes from
+        db: AsyncSession database dependency
+
+    Returns:
+        ExtractNotesResponse: Extracted notes and processing time
+
+    Raises:
+        HTTPException 404: If session not found
+        HTTPException 400: If session has no transcript_text yet
     """
     result = await db.execute(
         select(db_models.Session).where(db_models.Session.id == session_id)

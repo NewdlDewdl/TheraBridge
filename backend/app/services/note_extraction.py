@@ -99,12 +99,26 @@ class NoteExtractionService:
         """
         Extract structured clinical notes from a therapy session transcript.
 
+        Calls OpenAI GPT-4o API to analyze the transcript and produce structured
+        clinical data including topics, strategies, risk flags, and summaries for
+        both therapist and patient.
+
         Args:
-            transcript: Full text of the session
-            segments: Optional list of timestamped segments
+            transcript: Full text of the therapy session
+            segments: Optional list of timestamped segments from transcription
 
         Returns:
-            ExtractedNotes object with all structured data
+            ExtractedNotes: Pydantic model containing all structured clinical data
+
+        Processing Details:
+            - Temperature set to 0.3 for consistent, factual extraction
+            - Uses JSON mode to enforce valid JSON output
+            - Includes error handling for JSON parsing
+            - Logs extraction metrics (duration, counts)
+
+        Raises:
+            ValueError: If OPENAI_API_KEY not in environment
+            json.JSONDecodeError: If API response cannot be parsed as JSON
         """
         print(f"[NoteExtraction] Starting extraction for {len(transcript)} character transcript")
         start_time = time.time()
@@ -152,13 +166,26 @@ class NoteExtractionService:
 
     def estimate_cost(self, transcript: str) -> Dict[str, float]:
         """
-        Estimate the cost of extracting notes from a transcript.
+        Estimate the API cost for extracting notes from a transcript.
 
-        GPT-4o pricing (as of Dec 2024):
-        - Input: $2.50 per 1M tokens
-        - Output: $10.00 per 1M tokens
+        Uses rough token estimation based on character count (approximately 1 token
+        per 4 characters) and GPT-4o pricing as of December 2024.
 
-        Rough estimate: ~1 token per 4 characters
+        Args:
+            transcript: The transcript to estimate cost for
+
+        Returns:
+            Dict with estimated token counts and cost in USD:
+                - estimated_input_tokens: Number of input tokens
+                - estimated_output_tokens: Number of output tokens (typically 1500)
+                - estimated_cost_usd: Total estimated cost
+
+        Pricing Reference (Dec 2024):
+            - Input: $2.50 per 1M tokens
+            - Output: $10.00 per 1M tokens
+
+        Note:
+            Token estimation is approximate. Actual usage may vary.
         """
         # Rough token estimation
         prompt_tokens = len(EXTRACTION_PROMPT) / 4 + len(transcript) / 4
@@ -180,7 +207,18 @@ _extraction_service: Optional[NoteExtractionService] = None
 
 
 def get_extraction_service() -> NoteExtractionService:
-    """Get or create the extraction service singleton"""
+    """
+    Get or create the note extraction service singleton.
+
+    Uses singleton pattern to reuse a single OpenAI client across the application,
+    avoiding repeated initialization. The service is lazily instantiated on first use.
+
+    Returns:
+        NoteExtractionService: Singleton instance with OpenAI client initialized
+
+    Raises:
+        ValueError: If OPENAI_API_KEY not in environment (raised on first call)
+    """
     global _extraction_service
     if _extraction_service is None:
         _extraction_service = NoteExtractionService()
