@@ -2,7 +2,7 @@
 
 import { usePatient } from '@/hooks/usePatients';
 import { useSessions } from '@/hooks/useSessions';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { SessionUploader } from '@/components/SessionUploader';
 import { SessionCard } from '@/components/SessionCard';

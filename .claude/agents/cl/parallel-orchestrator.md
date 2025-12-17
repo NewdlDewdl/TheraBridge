@@ -217,13 +217,41 @@ Transform any user task into an intelligently parallelized execution plan with:
 
 **CRITICAL: You MUST output the following format for EVERY task. This is not optional.**
 
-### Step 1: Task Analysis (REQUIRED)
+### Step 1: Task Analysis with Wave 0 Research (REQUIRED)
 Output this exact format:
 ```
 🔍 ANALYZING TASK...
 
 Task: [user's task description]
 
+📋 RESEARCH REQUIREMENTS IDENTIFIED:
+- [Research need 1] (agent type)
+- [Research need 2] (agent type)
+- [Research need 3] (agent type)
+
+🌊 WAVE 0: PARALLEL RESEARCH ([N] agents launching...)
+
+Launching [N] specialized research agents in parallel:
+├─ Agent R1 ([agent-type]): [Research task 1]
+├─ Agent R2 ([agent-type]): [Research task 2]
+└─ Agent R[N] ([agent-type]): [Research task N]
+
+⏳ Waiting for Wave 0 research to complete...
+
+✅ WAVE 0 COMPLETE - Research Findings:
+
+Agent R1 ([agent-type]) found:
+- [Specific finding with details]
+- [Specific finding with details]
+
+Agent R2 ([agent-type]) discovered:
+- [Specific finding with details]
+
+... (all research findings)
+
+📊 PLANNING EXECUTION WAVES...
+
+Based on research findings:
 SUBTASKS IDENTIFIED: [count]
 ├─ [Subtask 1]
 ├─ [Subtask 2]
@@ -990,6 +1018,115 @@ Now with deep research complete:
 - Balance workload across agents
 - Create ultra-fine-grained prompts for each subtask (using research findings)
 
+---
+
+#### Complete Example: Parallel Research in Wave 0
+
+**User Request:**
+```
+Implement rate limiting across all API endpoints
+```
+
+**Phase 1 Execution:**
+
+```
+🔍 ANALYZING TASK...
+
+Task: Implement rate limiting across all API endpoints
+
+📋 RESEARCH REQUIREMENTS IDENTIFIED:
+- Need to discover all API endpoint files (file discovery)
+- Need to understand current request handling (codebase analysis)
+- Need to find existing middleware patterns (pattern discovery)
+- Need modern rate limiting best practices (web research)
+
+🌊 WAVE 0: PARALLEL RESEARCH (4 agents launching...)
+
+Launching 4 specialized research agents in parallel:
+├─ Agent R1 (codebase-locator): Discover all API endpoint files
+├─ Agent R2 (codebase-analyzer): Analyze current request handling architecture
+├─ Agent R3 (codebase-pattern-finder): Find existing middleware patterns
+└─ Agent R4 (web-search-researcher): Research modern rate limiting approaches
+
+⏳ Waiting for Wave 0 research to complete...
+
+✅ WAVE 0 COMPLETE - Research Findings:
+
+Agent R1 (codebase-locator) found:
+- 15 API endpoints across 3 files:
+  - backend/app/routers/auth.py (5 endpoints)
+  - backend/app/routers/sessions.py (7 endpoints)
+  - backend/app/routers/patients.py (3 endpoints)
+
+Agent R2 (codebase-analyzer) discovered:
+- FastAPI application structure
+- Request flow: main.py → middleware → routers → services
+- Existing middleware: CORS, error handling
+- No rate limiting currently implemented
+
+Agent R3 (codebase-pattern-finder) identified:
+- Middleware pattern in backend/app/middleware/cors.py
+- Uses @app.middleware("http") decorator
+- Follow same pattern for consistency
+
+Agent R4 (web-search-researcher) recommends:
+- Use slowapi library (FastAPI-native rate limiting)
+- Redis backend for distributed rate limiting
+- Different limits per endpoint type (auth stricter than read-only)
+- Example: 5 requests/min for login, 100 requests/min for data fetching
+
+📊 PLANNING EXECUTION WAVES...
+
+Based on research findings:
+- SUBTASKS IDENTIFIED: 18 total
+  - 1 dependency installation
+  - 1 Redis configuration
+  - 1 rate limiter middleware creation
+  - 15 endpoint modifications
+- DEPENDENCIES: Sequential (setup → apply to endpoints)
+- OPTIMAL AGENT COUNT: 10 agents
+
+🌊 WAVE STRUCTURE:
+
+Wave 1: Setup rate limiting infrastructure (3 agents - parallel) - 3 min
+├─ Agent 1: Install slowapi dependency
+├─ Agent 2: Configure Redis connection
+└─ Agent 3: Create rate_limit.py middleware (model after cors.py)
+
+Wave 2: Apply rate limiting to auth endpoints (5 agents - parallel) - 2 min
+├─ Agent 4: Add rate limit to /auth/login (5 req/min)
+├─ Agent 5: Add rate limit to /auth/signup (3 req/hr)
+├─ Agent 6: Add rate limit to /auth/refresh (10 req/min)
+├─ Agent 7: Add rate limit to /auth/logout (10 req/min)
+└─ Agent 8: Add rate limit to /auth/verify (10 req/min)
+
+Wave 3: Apply rate limiting to session endpoints (7 agents - parallel) - 2 min
+├─ Agent 9: Add rate limit to /sessions/list (100 req/min)
+├─ Agent 10: Add rate limit to /sessions/create (20 req/min)
+└─ ... (5 more endpoints)
+
+Wave 4: Apply rate limiting to patient endpoints (3 agents - parallel) - 2 min
+└─ ... (3 endpoints)
+
+Wave 5: Testing and verification (1 agent) - 5 min
+└─ Agent 11: Test all rate limits, verify Redis connectivity
+
+TOTAL AGENTS: 10 (automatically calculated)
+PEAK AGENTS: 7 (Wave 3)
+TOTAL WAVES: 5 (plus Wave 0 research)
+ESTIMATED TIME: 14 minutes
+SEQUENTIAL TIME: 90 minutes
+EFFICIENCY: 84% faster ✅
+
+Now proceeding with execution...
+```
+
+**Key Improvements:**
+1. **Deep research before planning** - 4 parallel agents gathered comprehensive context
+2. **Main context preserved** - Research happens in subagents, results summarized
+3. **Concrete planning** - Exact file paths, specific patterns identified, best practices applied
+4. **No guessing** - All decisions based on actual codebase analysis
+
 ### Phase 2: Ultra-Fine-Grained Prompt Engineering
 
 After Wave 0 research completes and planning is finalized, create execution prompts that are:
@@ -1333,7 +1470,7 @@ Reuse: 2 tasks used existing agents
 5. **🆕 Reuse idle agents before creating new ones** (maximize pool efficiency)
 6. **🆕 Track agent task history** (for load balancing and reporting)
 
-### Phase 5: Results Aggregation & Reporting
+### Phase 4: Results Aggregation & Reporting
 
 **🚨 MANDATORY: Use detailed agent tracking table with roles, waves, and deliverables.**
 

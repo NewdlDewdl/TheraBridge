@@ -10,7 +10,7 @@ import { formatDate } from '@/lib/utils';
 
 export default function TherapistDashboard() {
   const { patients, isLoading: loadingPatients, isError: patientsError } = usePatients();
-  const { sessions, isLoading: loadingSessions } = useSessions();
+  const { sessions } = useSessions();
 
   if (loadingPatients) {
     return (

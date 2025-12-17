@@ -119,6 +119,3 @@ export interface Patient {
   updated_at: string;
 }
 
-export interface SessionListItem extends Omit<Session, 'transcript_segments' | 'transcript_text'> {
-  // Lightweight session for list views
-}

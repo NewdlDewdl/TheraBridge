@@ -2,9 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { MoodIndicator } from '@/components/MoodIndicator';
-import { Calendar, Target, CheckCircle, Loader2 } from 'lucide-react';
+import { Calendar, Target, CheckCircle } from 'lucide-react';
 import { formatDate, formatDuration } from '@/lib/utils';
 
 // This is a simplified example - in production, you'd:
@@ -81,7 +80,7 @@ export default function PatientPortal() {
       <Card>
         <CardHeader>
           <CardTitle>Your Active Strategies</CardTitle>
-          <CardDescription>Techniques you're currently working with</CardDescription>
+          <CardDescription>Techniques you&apos;re currently working with</CardDescription>
         </CardHeader>
         <CardContent>
           <ul className="space-y-2">

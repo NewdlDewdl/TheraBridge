@@ -38,8 +38,9 @@ export default function LoginPage() {
     try {
       await login(email, password);
       setShouldRedirect(true); // Trigger redirect in useEffect once user state updates
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Login failed';
+      setError(errorMessage);
       setIsLoading(false);
     }
   };
@@ -90,7 +91,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/auth/signup" className="text-blue-600 hover:underline">
             Sign up
           </Link>

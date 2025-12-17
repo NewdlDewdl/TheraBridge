@@ -42,7 +42,7 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-red-600">
-          You don't have permission to access this page.
+          You don&apos;t have permission to access this page.
         </div>
       </div>
     );

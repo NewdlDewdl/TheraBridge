@@ -45,8 +45,9 @@ export default function SignupPage() {
       } else {
         router.push('/patient');
       }
-    } catch (err: any) {
-      setError(err.message || 'Signup failed');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Signup failed';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
