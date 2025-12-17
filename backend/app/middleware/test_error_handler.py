@@ -83,8 +83,8 @@ async def test_unhandled_error():
     raise ValueError("Unexpected error")
 
 
-# Test client
-client = TestClient(app)
+# Test client (raise_server_exceptions=False allows us to test error responses)
+client = TestClient(app, raise_server_exceptions=False)
 
 
 def test_transcription_error_response():

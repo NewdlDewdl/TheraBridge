@@ -51,7 +51,8 @@ backend/
 │   │   └── db_models.py        # SQLAlchemy ORM models
 │   ├── routers/
 │   │   ├── sessions.py         # Session upload & management (324 lines)
-│   │   └── patients.py         # Patient endpoints (71 lines)
+│   │   ├── patients.py         # Patient endpoints (71 lines)
+│   │   └── cleanup.py          # Cleanup endpoints (248 lines)
 │   ├── auth/
 │   │   ├── router.py           # Authentication routes (signup, login, logout)
 │   │   ├── utils.py            # Auth utilities (JWT, password hashing)
@@ -62,6 +63,7 @@ backend/
 │   ├── services/
 │   │   ├── transcription.py    # Whisper/Pipeline wrapper (27 lines)
 │   │   ├── note_extraction.py  # GPT-4o extraction service (187 lines)
+│   │   ├── cleanup.py          # Audio cleanup service (574 lines)
 │   │   └── __init__.py         # Service initialization
 │   ├── middleware/
 │   │   ├── rate_limit.py       # Rate limiting middleware
@@ -101,6 +103,15 @@ backend/
 - `POST /api/patients` - Create patient
 - `GET /api/patients` - List all patients
 - `GET /api/patients/{id}` - Get patient details
+
+### Cleanup - Audio File Management
+- `POST /api/admin/cleanup/orphaned-files` - Clean up orphaned audio files (with dry-run option)
+- `POST /api/admin/cleanup/failed-sessions` - Clean up audio from old failed sessions (with dry-run option)
+- `POST /api/admin/cleanup/all` - Run all cleanup operations
+- `GET /api/admin/cleanup/status` - Get cleanup statistics without deleting
+- `GET /api/admin/cleanup/config` - View current cleanup configuration
+
+**Security:** All cleanup endpoints require therapist or admin role.
 
 ### Authentication - User Management
 - `POST /api/auth/signup` - Register new user (therapist, patient, or admin)
@@ -346,6 +357,80 @@ alembic downgrade -1
 # Generate new migration (auto-detect model changes)
 alembic revision --autogenerate -m "Description"
 ```
+
+## Audio File Cleanup
+
+The backend includes an automated cleanup service to manage orphaned audio files and prevent storage bloat.
+
+### Cleanup Features
+
+**Orphaned File Cleanup:**
+- Identifies audio files in `uploads/audio/` not referenced in database
+- Deletes files older than configured retention period (default: 24 hours)
+- Includes both original and processed file variants
+
+**Failed Session Cleanup:**
+- Finds sessions with `status='failed'` older than retention period (default: 7 days)
+- Deletes associated audio files to free storage
+- Preserves session records for audit trail
+
+**Safety Features:**
+- Dry-run mode for testing before actual deletion
+- Configurable retention periods
+- Comprehensive logging of all operations
+- Role-based access control (therapist/admin only)
+
+### Configuration
+
+Add to `.env`:
+
+```bash
+# Retention period for failed sessions (days, default: 7)
+FAILED_SESSION_RETENTION_DAYS=7
+
+# Retention period for orphaned files (hours, default: 24)
+ORPHANED_FILE_RETENTION_HOURS=24
+
+# Enable automatic cleanup on startup (default: false)
+AUTO_CLEANUP_ON_STARTUP=false
+```
+
+### Manual Cleanup
+
+**Check cleanup status (dry-run):**
+```bash
+curl "http://localhost:8000/api/admin/cleanup/status" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**Run cleanup with dry-run:**
+```bash
+curl -X POST "http://localhost:8000/api/admin/cleanup/all?dry_run=true" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**Run actual cleanup:**
+```bash
+curl -X POST "http://localhost:8000/api/admin/cleanup/all" \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
+```
+
+**Response includes:**
+- Files deleted and sessions cleaned
+- Total space freed (MB)
+- Any errors encountered
+- Dry-run flag status
+
+### Scheduled Cleanup
+
+For production environments, set up a cron job or scheduled task:
+
+```bash
+# Run cleanup daily at 3 AM
+0 3 * * * cd /path/to/backend && source venv/bin/activate && python -c "import asyncio; from app.services.cleanup import run_scheduled_cleanup; asyncio.run(run_scheduled_cleanup())"
+```
+
+Or use Celery Beat, APScheduler, or cloud scheduler (AWS EventBridge, GCP Cloud Scheduler).
 
 ## Cost Estimation
 

@@ -243,6 +243,3 @@ export function FormField({
   );
 }
 
-function isSuccess(fieldState: FieldState): boolean {
-  return fieldState.isDirty && fieldState.isValid;
-}

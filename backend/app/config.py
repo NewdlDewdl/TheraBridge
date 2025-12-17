@@ -195,6 +195,36 @@ class Settings(BaseSettings):
     )
 
     # ============================================
+    # Cleanup Configuration
+    # ============================================
+
+    FAILED_SESSION_RETENTION_DAYS: int = Field(
+        default=7,
+        ge=1,
+        le=365,
+        description="Retention period for failed sessions in days"
+    )
+
+    ORPHANED_FILE_RETENTION_HOURS: int = Field(
+        default=24,
+        ge=1,
+        le=720,
+        description="Retention period for orphaned files in hours"
+    )
+
+    AUTO_CLEANUP_ON_STARTUP: bool = Field(
+        default=False,
+        description="Enable automatic cleanup when API starts"
+    )
+
+    CLEANUP_SCHEDULE_HOUR: int = Field(
+        default=3,
+        ge=0,
+        le=23,
+        description="Hour of day (0-23) for scheduled cleanup (reserved for future use)"
+    )
+
+    # ============================================
     # Rate Limiting Configuration
     # ============================================
 

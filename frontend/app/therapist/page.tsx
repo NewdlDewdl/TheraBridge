@@ -2,13 +2,17 @@
 
 import { usePatients } from '@/hooks/usePatients';
 import { useSessions } from '@/hooks/useSessions';
+import { usePatientSort } from '@/hooks/usePatientSort';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { EmptyState } from '@/components/EmptyState';
+import { PatientSortControl } from '@/components/PatientSortControl';
+import { TherapistDashboardSkeleton } from '@/components/skeletons';
 import { ErrorMessageAlert } from '@/components/ui/error-message';
 import { Plus, Users, Calendar, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { formatDate } from '@/lib/utils';
+import { useMemo } from 'react';
 
 export default function TherapistDashboard() {
   const { patients, isLoading: loadingPatients, isError: patientsError } = usePatients();
@@ -31,20 +35,34 @@ export default function TherapistDashboard() {
     return {
       totalSessions: patientSessions.length,
       latestSession,
+      latestSessionDate: latestSession?.session_date,
       actionItems,
       riskFlags,
     };
   };
 
+  // Build stats map for all patients
+  const patientStats = useMemo(() => {
+    if (!patients) return {};
+
+    const statsMap: Record<string, any> = {};
+    patients.forEach((patient) => {
+      statsMap[patient.id] = getPatientStats(patient.id);
+    });
+    return statsMap;
+  }, [patients, sessions]);
+
+  // Use patient sorting hook
+  const {
+    sortConfig,
+    setSortField,
+    setSortOrder,
+    sortedPatients,
+    toggleSortOrder,
+  } = usePatientSort(patients, patientStats);
+
   if (loadingPatients) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-          <p className="mt-4 text-muted-foreground">Loading patients...</p>
-        </div>
-      </div>
-    );
+    return <TherapistDashboardSkeleton />;
   }
 
   if (patientsError) {
@@ -84,11 +102,21 @@ export default function TherapistDashboard() {
           }}
         />
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {patients.map((patient) => {
-            const stats = getPatientStats(patient.id);
+        <>
+          <div className="flex items-center justify-end">
+            <PatientSortControl
+              sortField={sortConfig.field}
+              sortOrder={sortConfig.order}
+              onSortFieldChange={setSortField}
+              onSortOrderChange={setSortOrder}
+              onToggleSortOrder={toggleSortOrder}
+            />
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {sortedPatients.map((patient) => {
+              const stats = patientStats[patient.id];
 
-            return (
+              return (
                 <Link key={patient.id} href={`/therapist/patients/${patient.id}`}>
                   <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
                     <CardHeader>
@@ -132,7 +160,8 @@ export default function TherapistDashboard() {
                 </Link>
               );
             })}
-        </div>
+          </div>
+        </>
       )}
     </div>
   );

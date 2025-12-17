@@ -138,7 +138,7 @@ async def process_audio_pipeline(
         await db.commit()
 
         # Step 1: Transcribe audio
-        print(f"[Pipeline] Transcribing session {session_id}...")
+        logger.info("Starting transcription", extra={"session_id": str(session_id)})
         transcript_result = await transcribe_audio_file(audio_path)
 
         # Save transcript to database
@@ -162,7 +162,7 @@ async def process_audio_pipeline(
         )
         await db.commit()
 
-        print(f"[Pipeline] Extracting notes for session {session_id}...")
+        logger.info("Starting note extraction", extra={"session_id": str(session_id)})
         extraction_service = get_extraction_service()
         notes = await extraction_service.extract_notes_from_transcript(
             transcript=transcript_result["full_text"],
@@ -183,15 +183,15 @@ async def process_audio_pipeline(
         )
         await db.commit()
 
-        print(f"[Pipeline] Session {session_id} processed successfully!")
+        logger.info("Session processing completed", extra={"session_id": str(session_id)})
 
         # Cleanup audio file
         if os.path.exists(audio_path):
             os.remove(audio_path)
-            print(f"[Pipeline] Cleaned up audio file: {audio_path}")
+            logger.debug("Audio file cleaned up", extra={"audio_path": audio_path})
 
     except Exception as e:
-        print(f"[Pipeline] Error processing session {session_id}: {str(e)}")
+        logger.error("Pipeline processing failed", extra={"session_id": str(session_id), "error": str(e)}, exc_info=True)
 
         # Update status to failed
         await db.execute(
@@ -226,9 +226,12 @@ async def upload_audio_session(
         - Prevents API quota exhaustion from excessive processing
 
     Validation:
+        - Patient ID must exist in database
         - File size must not exceed 500MB
         - File extension must be in ALLOWED_EXTENSIONS
         - MIME type must be audio/* or video/* (for container formats)
+        - File header (magic bytes) must match expected audio format
+        - File must be at least 1KB in size
 
     Args:
         patient_id: UUID of the patient associated with this session
@@ -240,14 +243,19 @@ async def upload_audio_session(
         SessionResponse: Newly created session with status="uploading"
 
     Raises:
-        HTTPException 400: Invalid filename, unsupported extension, or invalid MIME type
+        HTTPException 400: Invalid filename, unsupported extension, invalid MIME type, or file too small
+        HTTPException 404: Patient ID not found
         HTTPException 413: File size exceeds 500MB
-        HTTPException 415: Unsupported MIME type
+        HTTPException 415: Unsupported MIME type or file header doesn't match audio format
         HTTPException 429: Rate limit exceeded (too many uploads)
         HTTPException 500: No therapist found or file save failed
     """
     # Validate file early before database operations
     await validate_audio_upload(file)
+
+    # Validate patient exists in database (prevents orphaned sessions)
+    patient = await validate_patient_exists(patient_id, db)
+    logger.info(f"[Upload] Validated patient: {patient.name} (ID: {patient_id})")
 
     # Get therapist (for MVP, use the seeded therapist)
     therapist_result = await db.execute(
@@ -261,7 +269,7 @@ async def upload_audio_session(
     from datetime import datetime
 
     new_session = db_models.Session(
-        patient_id=patient_id,
+        patient_id=patient.id,
         therapist_id=therapist.id,
         session_date=datetime.utcnow(),
         audio_filename=file.filename,
@@ -347,15 +355,31 @@ async def upload_audio_session(
         # Move temp file to final location (atomic operation)
         temp_path.rename(file_path)
 
+        # Validate file header (magic bytes) to ensure it's actually an audio file
+        # This prevents attacks where malicious files are renamed with audio extensions
+        try:
+            detected_mime_type = validate_audio_file_header(file_path)
+            logger.info(f"[Upload] File header validated: {detected_mime_type}")
+        except HTTPException as header_error:
+            # File header validation failed - delete the file and fail the upload
+            file_path.unlink(missing_ok=True)
+            logger.error(f"[Upload] File header validation failed: {header_error.detail}")
+            raise
+
         file_checksum = sha256_hash.hexdigest()
         file_size_mb = bytes_written / (1024 * 1024)
 
         logger.info(
-            f"[Upload] Successfully saved: {file_path} "
-            f"({file_size_mb:.1f}MB, {chunk_count} chunks, SHA256: {file_checksum[:16]}...)"
+            "Audio file saved and validated",
+            extra={
+                "session_id": str(new_session.id),
+                "file_size_mb": round(file_size_mb, 1),
+                "file_path": str(file_path),
+                "file_checksum": file_checksum,
+                "chunk_count": chunk_count,
+                "mime_type": detected_mime_type
+            }
         )
-        print(f"[Upload] Saved audio file: {file_path} ({file_size_mb:.1f}MB)")
-        print(f"[Upload] File checksum (SHA256): {file_checksum}")
 
         # Update session with file path
         await db.execute(
@@ -491,29 +515,46 @@ async def list_sessions(
     Retrieves sessions ordered by date (newest first) with optional
     filtering by patient and processing status.
 
+    Validation:
+        - limit must be between 1 and 1000
+        - patient_id must exist if provided
+
     Args:
         patient_id: Optional UUID to filter sessions by patient
         status: Optional SessionStatus to filter by processing status
-        limit: Maximum number of results to return (default 50)
+        limit: Maximum number of results to return (default 50, max 1000)
         db: AsyncSession database dependency
 
     Returns:
         List[SessionResponse]: List of session records matching filters
+
+    Raises:
+        HTTPException 400: If limit is invalid
+        HTTPException 404: If patient_id not found
 
     Query Examples:
         GET /sessions?patient_id=<uuid> - all sessions for a patient
         GET /sessions?status=processed - only completed sessions
         GET /sessions?patient_id=<uuid>&status=failed - failed sessions for a patient
     """
+    # Validate limit parameter
+    validated_limit = validate_positive_int(
+        limit,
+        field_name="limit",
+        max_value=1000
+    )
+
     query = select(db_models.Session).order_by(db_models.Session.session_date.desc())
 
     if patient_id:
+        # Validate patient exists when filtering
+        await validate_patient_exists(patient_id, db)
         query = query.where(db_models.Session.patient_id == patient_id)
 
     if status:
         query = query.where(db_models.Session.status == status.value)
 
-    query = query.limit(limit)
+    query = query.limit(validated_limit)
 
     result = await db.execute(query)
     sessions = result.scalars().all()
@@ -524,6 +565,7 @@ async def list_sessions(
 @router.post("/{session_id}/extract-notes", response_model=ExtractNotesResponse)
 @limiter.limit("20/hour")
 async def manually_extract_notes(
+    request: Request,
     session_id: UUID,
     db: AsyncSession = Depends(get_db),
     extraction_service: NoteExtractionService = Depends(get_extraction_service)

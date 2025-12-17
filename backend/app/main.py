@@ -40,6 +40,9 @@ async def lifespan(app: FastAPI):
     await init_db()
     logger.info("Database initialized")
 
+    # Run cleanup on startup if enabled
+    await run_startup_cleanup()
+
     yield
 
     # Shutdown
@@ -91,6 +94,7 @@ app.add_middleware(
 app.include_router(auth_router, prefix="/api/v1", tags=["authentication"])
 app.include_router(sessions.router, prefix="/api/sessions", tags=["Sessions"])
 app.include_router(patients.router, prefix="/api/patients", tags=["Patients"])
+app.include_router(cleanup.router, prefix="/api/admin", tags=["Cleanup"])
 
 
 @app.get("/")
