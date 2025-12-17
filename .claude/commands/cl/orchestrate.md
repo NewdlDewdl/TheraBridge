@@ -167,63 +167,93 @@ Estimated: [X] min vs [Y] min sequential
 
 ## STEP 4: Report Results
 
-Show what was accomplished, including agent pool statistics.
+**🚨 MANDATORY FORMAT: Use detailed agent tracking table with roles, waves, and deliverables.**
 
-### Final Report Format:
+### Required Reporting Format:
 
 ```
-✅ ORCHESTRATION COMPLETE
+## 📊 EXECUTION SUMMARY
+### ✅ Agents Completed: [N]/[N]
 
-📊 EXECUTION SUMMARY:
-├─ Task: [task description]
-├─ Total waves: [W]
-├─ Total tasks: [X]
-├─ Execution time: [Y] minutes
-└─ Sequential time: [Z] minutes (saved [Z-Y] minutes)
+| Instance | Role | Waves | Status | Key Deliverables |
+|----------|------|-------|--------|------------------|
+| I1 | [Role Name] | W[X] | ✅ COMPLETE | [Specific deliverable with metrics] |
+| I2 | [Role Name] | W[X] | ✅ COMPLETE | [Specific deliverable with metrics] |
+| I3 | [Role Name] | W[X]-W[Y] | ✅ COMPLETE | [Specific deliverable with metrics] |
+| ... | ... | ... | ... | ... |
 
-📊 AGENT POOL STATISTICS:
-├─ Total agents created: [N]
-├─ Total tasks completed: [X]
-├─ Average tasks per agent: [X/N]
-├─ Agent utilization:
-│   ├─ Agent 1: [T1] tasks (Wave [list])
-│   ├─ Agent 2: [T2] tasks (Wave [list])
-│   └─ Agents [3-N]: [T] task(s) each
-├─ Reuse rate: [Y]% ([R] of [X] task slots reused agents)
-├─ Overhead saved: [Z]s (vs creating [X] fresh agents)
-└─ Pool efficiency: [E]% ✅
+### 📈 Performance Metrics:
+- **Total Waves Executed:** [W]
+- **Execution Time:** [X] minutes
+- **Sequential Time:** [Y] minutes
+- **Time Saved:** [Z] minutes ([P]% faster)
+- **Agent Reuse Rate:** [R]%
+- **Pool Efficiency:** [E]%
 
-RESULTS:
-[What was accomplished]
+### 🎯 Final Results:
+[Detailed list of what was accomplished]
 ```
 
-**Example:**
+### Role Assignment Rules:
+
+**Assign each agent a clear, descriptive role based on their task:**
+- File operations → "File Processor", "Reader", "Writer", "Consolidator"
+- Database tasks → "Database Analyst", "Migration Engineer", "Data Specialist"
+- Backend work → "Backend Dev #1", "API Developer", "Endpoint Engineer"
+- Security → "Security Engineer", "Audit Specialist"
+- Testing → "Test Engineer #1", "Integration Tester", "QA Validator"
+- DevOps → "DevOps", "Deployment Specialist", "CI/CD Engineer"
+- Documentation → "Documentation", "Doc Writer", "README Specialist"
+- Coordination → "Coordinator", "Orchestrator", "Backup Specialist"
+- Code Review → "Code Reviewer", "Security Auditor"
+- Cleanup → "Cleanup Specialist", "Maintenance Engineer"
+
+### Wave Notation:
+
+- Single wave: `W1`, `W2`, `W3`
+- Multiple waves: `W1-W3`, `W2, W5`, `W1, W3-W5`
+- Indicate if agent worked across multiple waves
+
+### Deliverables Format:
+
+**Be SPECIFIC with metrics:**
+- ✅ "Schema analysis (users: 7 cols, auth_sessions: 6 cols)"
+- ✅ "22 integration tests, pytest fixtures"
+- ✅ "Security audit 9.5/10 - APPROVED for production"
+- ✅ "Git backup (commit 3b2aa4e)"
+- ❌ "Created tests" (too vague)
+- ❌ "Updated documentation" (too vague)
+
+**Example Report:**
+
 ```
-✅ ORCHESTRATION COMPLETE
+## 📊 EXECUTION SUMMARY
+### ✅ Agents Completed: 6/6
 
-📊 EXECUTION SUMMARY:
-├─ Task: Consolidate security files into Project MDs/
-├─ Total waves: 3
-├─ Total tasks: 8
-├─ Execution time: 6 minutes
-└─ Sequential time: 16 minutes (saved 10 minutes)
+| Instance | Role | Waves | Status | Key Deliverables |
+|----------|------|-------|--------|------------------|
+| I1 | File Reader #1 | W1 | ✅ COMPLETE | Read SECURITY_ANALYSIS.md (11 KB, SQL injection findings) |
+| I2 | File Reader #2 | W1 | ✅ COMPLETE | Read SECURITY_SUMMARY.txt (12 KB, compliance status) |
+| I3 | File Reader #3 | W1 | ✅ COMPLETE | Read SECURITY_REPORT_INDEX.md (7.2 KB, navigation guide) |
+| I4 | File Reader #4 | W1 | ✅ COMPLETE | Read VULNERABILITY_CHECKLIST.md (20+ components audited) |
+| I5 | File Reader #5 | W1 | ✅ COMPLETE | Read SECURITY_FIX_PATCH.py (393 lines, remediation code) |
+| I6 | File Reader #6 | W1 | ✅ COMPLETE | Read SECURITY_REPORT_EXECUTIVE_SUMMARY.txt (CVSS 8.6 findings) |
+| I1 | Consolidator | W2 | ✅ COMPLETE | Created Security-Report.md (40 KB, 1,519 lines, 6 sources merged) |
+| I2 | Cleanup Specialist | W3 | ✅ COMPLETE | Removed 6 scattered files, verified consolidation |
 
-📊 AGENT POOL STATISTICS:
-├─ Total agents created: 6
-├─ Total tasks completed: 8
-├─ Average tasks per agent: 1.3
-├─ Agent utilization:
-│   ├─ Agent 1: 2 tasks (Wave 1, 2)
-│   ├─ Agent 2: 2 tasks (Wave 1, 3)
-│   └─ Agents 3-6: 1 task each (Wave 1 only)
-├─ Reuse rate: 25% (2 of 8 task slots reused agents)
-├─ Overhead saved: 0.6s (vs creating 8 fresh agents)
-└─ Pool efficiency: 83% ✅
+### 📈 Performance Metrics:
+- **Total Waves Executed:** 3
+- **Execution Time:** 6 minutes
+- **Sequential Time:** 16 minutes
+- **Time Saved:** 10 minutes (62% faster)
+- **Agent Reuse Rate:** 25% (2 agents reused across waves)
+- **Pool Efficiency:** 83%
 
-RESULTS:
-- Created Project MDs/Security-Report.md (40 KB, 1,519 lines)
-- Removed 6 scattered security files
-- All security documentation consolidated into single comprehensive report
+### 🎯 Final Results:
+- ✅ Created comprehensive Security-Report.md (40 KB, 1,519 lines)
+- ✅ Consolidated 6 security files into single authoritative source
+- ✅ Eliminated redundancy while preserving all unique information
+- ✅ Removed scattered files: SECURITY_ANALYSIS.md, SECURITY_SUMMARY.txt, SECURITY_REPORT_INDEX.md, VULNERABILITY_CHECKLIST.md, SECURITY_FIX_PATCH.py, SECURITY_REPORT_EXECUTIVE_SUMMARY.txt
 ```
 
 ---

@@ -1255,40 +1255,112 @@ Reuse: 2 tasks used existing agents
 
 ### Phase 4: Results Aggregation & Reporting
 
-After all waves complete:
-- Collect outputs from all agents across all waves
-- Synthesize findings into coherent summary
-- Report comprehensive results with metrics
-- Identify any failures or blockers with specific details
-- Provide actionable next steps if needed
+**🚨 MANDATORY: Use detailed agent tracking table with roles, waves, and deliverables.**
 
-**Report Template:**
+After all waves complete, you MUST:
+1. Assign each agent instance a clear role (e.g., "Database Analyst", "Backend Dev #1", "Security Engineer")
+2. Track which waves each agent participated in (W1, W2-W4, W1, W5, etc.)
+3. Document specific deliverables with metrics for each agent
+4. Present in comprehensive table format
+
+**Required Report Format:**
+
 ```
-Parallel orchestration complete:
+## 📊 EXECUTION SUMMARY
+### ✅ Agents Completed: [N]/[N]
 
-Execution Summary:
-- Total tasks: [N]
-- Total waves: [N]
-- Total agents used: [N]
-- Execution pattern: [description]
+| Instance | Role | Waves | Status | Key Deliverables |
+|----------|------|-------|--------|------------------|
+| I1 | [Role Name] | W[X] | ✅ COMPLETE | [Specific deliverable with metrics] |
+| I2 | [Role Name] | W[X] | ✅ COMPLETE | [Specific deliverable with metrics] |
+| I3 | [Role Name] | W[X]-W[Y] | ✅ COMPLETE | [Specific deliverable with metrics] |
+| ... | ... | ... | ... | ... |
 
-Results by Wave:
-Wave 1: [summary]
-Wave 2: [summary]
-...
+### 📈 Performance Metrics:
+- **Total Waves Executed:** [W]
+- **Execution Time:** [X] minutes
+- **Sequential Time:** [Y] minutes
+- **Time Saved:** [Z] minutes ([P]% faster)
+- **Agent Reuse Rate:** [R]%
+- **Pool Efficiency:** [E]%
 
-Final Outcomes:
-- [Key result 1]
-- [Key result 2]
-- [Key result 3]
+### 🎯 Final Results:
+- ✅ [Specific accomplishment 1 with metrics]
+- ✅ [Specific accomplishment 2 with metrics]
+- ✅ [Specific accomplishment 3 with metrics]
+```
 
-Issues Found: [N]
-- [Issue 1 with details]
-- [Issue 2 with details]
+**Role Assignment Guidelines:**
 
-Next Steps:
-- [Action 1]
-- [Action 2]
+Assign descriptive roles based on agent tasks:
+- **File operations:** File Reader #1-N, Consolidator, File Processor, Cleanup Specialist
+- **Database:** Database Analyst, Migration Engineer, Data Specialist, Schema Validator
+- **Backend:** Backend Dev #1-N, API Developer, Endpoint Engineer, Service Builder
+- **Security:** Security Engineer, Audit Specialist, Vulnerability Analyst
+- **Testing:** Test Engineer #1-N, Integration Tester, QA Validator, Coverage Analyst
+- **DevOps:** DevOps, Deployment Specialist, CI/CD Engineer, Infrastructure
+- **Documentation:** Documentation, Doc Writer, README Specialist
+- **Coordination:** Coordinator, Orchestrator, Backup Specialist
+- **Code Review:** Code Reviewer, Security Auditor, Quality Analyst
+
+**Wave Notation:**
+
+- Single wave: `W1`, `W2`, `W10`
+- Multiple non-consecutive: `W1, W5`, `W2, W7, W10`
+- Consecutive range: `W1-W3`, `W5-W8`
+- Mixed: `W1, W3-W5, W9`
+
+**Deliverables Requirements:**
+
+Be SPECIFIC with metrics - include numbers, file sizes, line counts, test counts, etc.:
+- ✅ GOOD: "Schema analysis (users: 7 cols, auth_sessions: 6 cols)"
+- ✅ GOOD: "22 integration tests, pytest fixtures"
+- ✅ GOOD: "Security audit 9.5/10 - APPROVED for production"
+- ✅ GOOD: "Git backup (commit 3b2aa4e)"
+- ✅ GOOD: "Read SECURITY_ANALYSIS.md (11 KB, SQL injection findings)"
+- ❌ BAD: "Created tests" (no metrics)
+- ❌ BAD: "Updated documentation" (too vague)
+- ❌ BAD: "Fixed issues" (no specifics)
+
+**Complete Example:**
+
+```
+## 📊 EXECUTION SUMMARY
+### ✅ Agents Completed: 15/15
+
+| Instance | Role | Waves | Status | Key Deliverables |
+|----------|------|-------|--------|------------------|
+| I1 | Coordinator | W0 | ✅ COMPLETE | Git backup (commit 3b2aa4e) |
+| I2 | Database Analyst | W1 | ✅ COMPLETE | Schema analysis (users: 7 cols, auth_sessions: 6 cols) |
+| I3 | Migration Engineer | W2-W3 | ✅ COMPLETE | Alembic configured, migration 42ef48f739a4 generated |
+| I4 | Backend Dev #1 | W4 | ✅ COMPLETE | Signup endpoint (409 for duplicates) |
+| I5 | Backend Dev #2 | W4 | ✅ COMPLETE | Token rotation implemented |
+| I6 | Security Engineer | W4 | ✅ COMPLETE | Rate limiting (5/min login, 3/hr signup, 10/min refresh) |
+| I7 | Test Engineer #1 | W6-W7 | ✅ COMPLETE | 22 integration tests, pytest fixtures |
+| I8 | Test Engineer #2 | W6-W7 | ✅ COMPLETE | 44 RBAC tests, role-based access control |
+| I9 | API Tester | W10 | ✅ COMPLETE | Manual API testing (7/7 tests passed) |
+| I10 | DevOps | W1 | ✅ COMPLETE | Dependencies verified (slowapi, alembic, pytest-cov) |
+| I11 | Documentation | W5, W11 | ✅ COMPLETE | Backend README + TherapyBridge.md updated (678 lines) |
+| I12 | Code Reviewer | W10 | ✅ COMPLETE | Security audit 9.5/10 - APPROVED for production |
+| I13 | Data Migration | W2 | ✅ COMPLETE | Database backup (782 bytes, 1 user record) |
+| I14 | Integration Validator | W7, W9 | ✅ COMPLETE | 10 E2E tests, 84% coverage (exceeds 80% target) |
+| I15 | Cleanup Specialist | W11 | ✅ COMPLETE | Repository cleaned, summary created |
+
+### 📈 Performance Metrics:
+- **Total Waves Executed:** 11
+- **Execution Time:** 45 minutes
+- **Sequential Time:** 180 minutes
+- **Time Saved:** 135 minutes (75% faster)
+- **Agent Reuse Rate:** 20% (3 agents worked multiple waves)
+- **Pool Efficiency:** 92%
+
+### 🎯 Final Results:
+- ✅ Authentication system fully implemented with JWT tokens and refresh rotation
+- ✅ Database migrations configured with Alembic (1 migration file generated)
+- ✅ 66 total tests created (22 integration + 44 RBAC, 84% coverage)
+- ✅ Security features: rate limiting, duplicate prevention, role-based access
+- ✅ Documentation updated (678 lines across 2 files)
+- ✅ Security audit passed 9.5/10 - APPROVED for production deployment
 ```
 
 ## 🛠️ Tool Usage Guidelines
