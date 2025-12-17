@@ -367,6 +367,186 @@ curl http://localhost:8000/api/auth/me \
 - **SQL injection protection:** Parameterized queries via SQLAlchemy ORM
 - **CORS:** Configured for frontend origin only
 
+### Troubleshooting Authentication
+
+#### "401 Unauthorized" - Token invalid or expired
+
+**Symptoms:**
+- API returns 401 when using access token
+- Error message: "Could not validate credentials"
+
+**Solutions:**
+```bash
+# 1. Check if token is expired (access tokens expire in 30 minutes)
+# Use refresh token to get new access token:
+curl -X POST http://localhost:8000/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{"refresh_token": "YOUR_REFRESH_TOKEN"}'
+
+# 2. Verify token format in Authorization header:
+# Correct: "Bearer eyJhbGc..."
+# Wrong: "eyJhbGc..." (missing "Bearer" prefix)
+
+# 3. Check for whitespace issues:
+curl http://localhost:8000/api/auth/me \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+  -v  # verbose mode shows exact headers sent
+```
+
+#### "429 Too Many Requests" - Rate limit exceeded
+
+**Symptoms:**
+- Error: "rate_limit_exceeded"
+- Response includes retry_after field
+
+**Solutions:**
+```bash
+# Wait for retry_after seconds, then try again
+# Login: Wait 60 seconds (5 requests/minute limit)
+# Signup: Wait until next hour (3 requests/hour limit)
+# Refresh: Wait 60 seconds (10 requests/minute limit)
+
+# For development/testing, temporarily disable rate limiting:
+# Comment out @limiter.limit() decorators in backend/app/auth/router.py
+```
+
+#### "Invalid refresh token" when using /refresh
+
+**Common causes:**
+1. **Token already used** (refresh tokens are single-use due to rotation)
+2. **Token revoked** (user logged out)
+3. **Token expired** (refresh tokens expire after 7 days)
+
+**Solution:**
+```bash
+# If refresh token is invalid, user must log in again:
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "password123"
+  }'
+```
+
+#### "Email already registered" during signup
+
+**Symptoms:**
+- HTTP 409 Conflict when creating account
+- Email already exists in database
+
+**Solutions:**
+```bash
+# 1. Use different email address
+# 2. If you forgot password, use login endpoint:
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "existing@example.com", "password": "yourpassword"}'
+
+# 3. For testing, manually delete user from database:
+# psql $DATABASE_URL -c "DELETE FROM users WHERE email='test@example.com';"
+```
+
+#### JWT secret key changes invalidate all tokens
+
+**Symptoms:**
+- All users logged out after server restart
+- All tokens return 401 Unauthorized
+
+**Cause:**
+- JWT_SECRET_KEY changed (or regenerated on restart if not set in .env)
+
+**Solution:**
+```bash
+# Set persistent JWT_SECRET_KEY in backend/.env:
+echo "JWT_SECRET_KEY=$(openssl rand -hex 32)" >> backend/.env
+
+# Or use fixed key for development:
+echo "JWT_SECRET_KEY=dev-secret-key-8a7f3e2d9c1b4a6e5f8d7c3b2a1e9f4d" >> backend/.env
+```
+
+#### Database migration errors
+
+**Symptoms:**
+- Server fails to start with SQLAlchemy errors
+- Missing columns: hashed_password, is_active, role
+
+**Solution:**
+```bash
+cd backend
+
+# 1. Check current migration status:
+alembic current
+
+# 2. Apply all pending migrations:
+alembic upgrade head
+
+# 3. If migration fails, check database manually:
+psql $DATABASE_URL -c "\d users"  # Show users table schema
+
+# 4. Emergency rollback (if needed):
+alembic downgrade -1  # Go back one migration
+```
+
+#### Password validation errors
+
+**Symptoms:**
+- 422 Unprocessable Entity during signup
+- "Password must be at least 8 characters"
+
+**Solution:**
+```bash
+# Ensure password meets requirements:
+# - Minimum 8 characters
+# - No other complexity requirements (for now)
+
+# Valid example:
+curl -X POST http://localhost:8000/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "longenoughpassword",
+    "full_name": "Test User",
+    "role": "therapist"
+  }'
+```
+
+#### Testing authentication in development
+
+```bash
+# Complete authentication flow test:
+
+# 1. Signup
+RESPONSE=$(curl -s -X POST http://localhost:8000/api/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "password": "testpass123",
+    "full_name": "Test User",
+    "role": "therapist"
+  }')
+
+# 2. Extract tokens (requires jq or python)
+ACCESS=$(echo $RESPONSE | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])")
+REFRESH=$(echo $RESPONSE | python3 -c "import sys, json; print(json.load(sys.stdin)['refresh_token'])")
+
+# 3. Test authenticated endpoint
+curl http://localhost:8000/api/auth/me \
+  -H "Authorization: Bearer $ACCESS"
+
+# 4. Test token refresh
+NEW_RESPONSE=$(curl -s -X POST http://localhost:8000/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d "{\"refresh_token\": \"$REFRESH\"}")
+
+# 5. Extract new tokens
+NEW_ACCESS=$(echo $NEW_RESPONSE | python3 -c "import sys, json; print(json.load(sys.stdin)['access_token'])")
+
+# 6. Verify old refresh token is revoked (should fail with 401)
+curl -X POST http://localhost:8000/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d "{\"refresh_token\": \"$REFRESH\"}"  # This should return 401
+```
+
 ## Cost Estimation
 
 - Whisper API: $0.006/min → **~$0.18** for 30-min session

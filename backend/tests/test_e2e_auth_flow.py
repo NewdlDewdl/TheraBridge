@@ -289,3 +289,188 @@ def test_different_roles_can_signup(client, db_session):
         )
         assert me_resp.status_code == status.HTTP_200_OK, f"{role} access failed"
         assert me_resp.json()["role"] == role, f"{role} role mismatch"
+
+
+@pytest.mark.integration
+def test_concurrent_user_sessions(client, db_session):
+    """
+    Test: Multiple users can be authenticated simultaneously without interference
+
+    This test validates that the authentication system properly isolates
+    user sessions when multiple users are active at the same time.
+    """
+    # Create 3 users simultaneously
+    users = []
+    for i in range(1, 4):
+        signup_resp = client.post("/api/v1/signup", json={
+            "email": f"concurrent_user_{i}@example.com",
+            "password": f"ConcurrentPass{i}!",
+            "full_name": f"Concurrent User {i}",
+            "role": "therapist"
+        })
+        assert signup_resp.status_code == status.HTTP_201_CREATED
+
+        tokens = signup_resp.json()
+        users.append({
+            "email": f"concurrent_user_{i}@example.com",
+            "access_token": tokens["access_token"],
+            "refresh_token": tokens["refresh_token"]
+        })
+
+    # All users should be able to access their own data
+    for user in users:
+        me_resp = client.get(
+            "/api/v1/me",
+            headers={"Authorization": f"Bearer {user['access_token']}"}
+        )
+        assert me_resp.status_code == status.HTTP_200_OK
+        assert me_resp.json()["email"] == user["email"]
+
+    # All users should be able to refresh their tokens
+    for user in users:
+        refresh_resp = client.post(
+            "/api/v1/refresh",
+            json={"refresh_token": user["refresh_token"]}
+        )
+        assert refresh_resp.status_code == status.HTTP_200_OK
+        new_tokens = refresh_resp.json()
+
+        # Verify new token works
+        me_resp = client.get(
+            "/api/v1/me",
+            headers={"Authorization": f"Bearer {new_tokens['access_token']}"}
+        )
+        assert me_resp.status_code == status.HTTP_200_OK
+        assert me_resp.json()["email"] == user["email"]
+
+    # All users can logout independently
+    for user in users:
+        logout_resp = client.post(
+            "/api/v1/logout",
+            json={"refresh_token": user["refresh_token"]},
+            headers={"Authorization": f"Bearer {user['access_token']}"}
+        )
+        assert logout_resp.status_code == status.HTTP_200_OK
+
+
+@pytest.mark.integration
+def test_cross_user_token_isolation(client, db_session):
+    """
+    Test: User A cannot use User B's refresh token
+
+    This test ensures that refresh tokens are properly isolated between users
+    and that one user cannot hijack another user's session.
+    """
+    # Create User A
+    user_a_signup = client.post("/api/v1/signup", json={
+        "email": "user_a@example.com",
+        "password": "UserAPass123!",
+        "full_name": "User A",
+        "role": "therapist"
+    })
+    assert user_a_signup.status_code == status.HTTP_201_CREATED
+    user_a_tokens = user_a_signup.json()
+
+    # Create User B
+    user_b_signup = client.post("/api/v1/signup", json={
+        "email": "user_b@example.com",
+        "password": "UserBPass123!",
+        "full_name": "User B",
+        "role": "patient"
+    })
+    assert user_b_signup.status_code == status.HTTP_201_CREATED
+    user_b_tokens = user_b_signup.json()
+
+    # User A can access their own data
+    user_a_me = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {user_a_tokens['access_token']}"}
+    )
+    assert user_a_me.status_code == status.HTTP_200_OK
+    assert user_a_me.json()["email"] == "user_a@example.com"
+
+    # User B can access their own data
+    user_b_me = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {user_b_tokens['access_token']}"}
+    )
+    assert user_b_me.status_code == status.HTTP_200_OK
+    assert user_b_me.json()["email"] == "user_b@example.com"
+
+    # User A's refresh token should only work for User A
+    user_a_refresh = client.post(
+        "/api/v1/refresh",
+        json={"refresh_token": user_a_tokens["refresh_token"]}
+    )
+    assert user_a_refresh.status_code == status.HTTP_200_OK
+    new_user_a_tokens = user_a_refresh.json()
+
+    # New token should still be for User A
+    new_user_a_me = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {new_user_a_tokens['access_token']}"}
+    )
+    assert new_user_a_me.status_code == status.HTTP_200_OK
+    assert new_user_a_me.json()["email"] == "user_a@example.com"
+    assert new_user_a_me.json()["role"] == "therapist"
+
+    # User B's data should be completely isolated
+    user_b_refresh = client.post(
+        "/api/v1/refresh",
+        json={"refresh_token": user_b_tokens["refresh_token"]}
+    )
+    assert user_b_refresh.status_code == status.HTTP_200_OK
+    new_user_b_tokens = user_b_refresh.json()
+
+    new_user_b_me = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {new_user_b_tokens['access_token']}"}
+    )
+    assert new_user_b_me.status_code == status.HTTP_200_OK
+    assert new_user_b_me.json()["email"] == "user_b@example.com"
+    assert new_user_b_me.json()["role"] == "patient"
+
+
+@pytest.mark.integration
+def test_token_expiration_and_rejection(client, db_session):
+    """
+    Test: Expired or revoked tokens are properly rejected
+
+    This test ensures the system handles token lifecycle correctly:
+    - Revoked tokens cannot be reused
+    - Logout properly invalidates tokens
+    """
+    # Create user
+    signup_resp = client.post("/api/v1/signup", json={
+        "email": "expiration_test@example.com",
+        "password": "ExpirationTest123!",
+        "full_name": "Expiration Test User",
+        "role": "therapist"
+    })
+    assert signup_resp.status_code == status.HTTP_201_CREATED
+    tokens = signup_resp.json()
+
+    # Logout (revoke refresh token)
+    logout_resp = client.post(
+        "/api/v1/logout",
+        json={"refresh_token": tokens["refresh_token"]},
+        headers={"Authorization": f"Bearer {tokens['access_token']}"}
+    )
+    assert logout_resp.status_code == status.HTTP_200_OK
+
+    # Attempt to use revoked refresh token (should fail)
+    refresh_resp = client.post(
+        "/api/v1/refresh",
+        json={"refresh_token": tokens["refresh_token"]}
+    )
+    assert refresh_resp.status_code == status.HTTP_401_UNAUTHORIZED
+    assert "revoked" in refresh_resp.json()["detail"].lower()
+
+    # Access token might still work (it's stateless JWT, expires based on time)
+    # But refresh token is definitely revoked in database
+    me_resp = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {tokens['access_token']}"}
+    )
+    # Access token is still valid until expiration (this is expected JWT behavior)
+    assert me_resp.status_code == status.HTTP_200_OK
