@@ -1,7 +1,7 @@
 """
 SQLAlchemy ORM models for database tables
 """
-from sqlalchemy import Column, String, Integer, Text, DateTime, ForeignKey, Enum, Boolean
+from sqlalchemy import Column, String, Integer, Text, DateTime, ForeignKey, Enum, Boolean, Index
 from sqlalchemy.dialects.postgresql import UUID as SQLUUID, JSONB
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -112,3 +112,45 @@ class TherapySession(Base):
 
 # Backwards compatibility alias - allows existing code to use 'Session' name
 Session = TherapySession
+
+
+class TimelineEvent(Base):
+    """
+    Timeline events for patient treatment history.
+    Tracks sessions, milestones, clinical events, goals, assessments, and administrative notes.
+    Supports filtering, searching, and chronological display of patient care journey.
+    """
+    __tablename__ = "timeline_events"
+
+    # Primary key
+    id = Column(SQLUUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+    # Foreign keys with cascade delete
+    patient_id = Column(SQLUUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    therapist_id = Column(SQLUUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=True)
+
+    # Event classification
+    event_type = Column(String(50), nullable=False, index=True)  # 'session', 'milestone', 'clinical', 'administrative', 'goal', 'assessment', 'note'
+    event_subtype = Column(String(50), nullable=True)  # Specific subtype within event_type
+
+    # Event details
+    event_date = Column(DateTime, nullable=False)  # When the event occurred
+    title = Column(String(200), nullable=False)  # Short event title
+    description = Column(Text, nullable=True)  # Detailed description
+    metadata = Column(JSONB, nullable=True)  # Type-specific data (e.g., session metrics, goal progress)
+
+    # Polymorphic reference to related entities
+    related_entity_type = Column(String(50), nullable=True)  # e.g., 'session', 'goal', 'plan'
+    related_entity_id = Column(SQLUUID(as_uuid=True), nullable=True)  # UUID of related entity
+
+    # Event attributes
+    importance = Column(String(20), default='normal', nullable=False)  # 'low', 'normal', 'high', 'milestone'
+    is_private = Column(Boolean, default=False, nullable=False)  # Therapist-only visibility flag
+
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    # Composite index for efficient timeline queries (patient_id, event_date DESC)
+    __table_args__ = (
+        Index('ix_timeline_events_patient_date', 'patient_id', 'event_date', postgresql_ops={'event_date': 'DESC'}),
+    )

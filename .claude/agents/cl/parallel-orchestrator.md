@@ -1403,8 +1403,19 @@ print()
 
 # Mark wave 3 completed in TodoWrite
 
+# CRITICAL: After each wave, output context window usage
+print()
+print("✅ WAVE 3 COMPLETE")
+print()
+print("📊 CONTEXT WINDOW STATUS:")
+print(f"├─ Main window: {current_tokens}K / 200K tokens ({usage_pct}% used)")
+print(f"├─ Remaining: {remaining_tokens}K tokens")
+print(f"└─ Status: {status} {'⚠️' if status != 'HEALTHY' else ''}")
+print()
+
 # Continue with remaining waves (Wave 4, Wave 5, etc.)
 # Execute each wave sequentially until all planned waves complete
+# Output context window status after EACH wave
 ```
 
 **Output example:**
@@ -1665,6 +1676,12 @@ Be SPECIFIC with metrics - include numbers, file sizes, line counts, test counts
 - **Time Saved:** 135 minutes (75% faster)
 - **Agent Reuse Rate:** 20% (3 agents worked multiple waves)
 - **Pool Efficiency:** 92%
+
+### 📊 Context Window Usage:
+- **Main window:** 165K / 200K tokens (83% used)
+- **Remaining:** 35K tokens
+- **Status:** WARNING ⚠️
+- **Agent windows:** Wave 0: 4 agents, Waves 1-11: 15 total agents launched
 
 ### 🎯 Final Results:
 - ✅ Authentication system fully implemented with JWT tokens and refresh rotation

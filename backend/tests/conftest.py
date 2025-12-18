@@ -879,6 +879,418 @@ def mock_openai_api_error():
 
 
 # ============================================================================
+# Analytics Test Fixtures
+# ============================================================================
+
+@pytest.fixture(scope="function")
+def sample_sessions_with_analytics_data(test_db, therapist_user):
+    """
+    Create 10 therapy sessions with varied analytics data for testing.
+
+    This fixture provides sessions distributed across the last 60 days with:
+    - Mixed dates (distributed across weeks/months)
+    - Varied session durations (30-90 minutes)
+    - Complete extracted_notes JSONB with key_topics, action_items, session_mood
+    - Different statuses (processed, failed, pending)
+    - Multiple patients (2-3 different patients)
+
+    Args:
+        test_db: Test database session
+        therapist_user: Therapist who owns these sessions
+
+    Returns:
+        List of 10 Session objects with analytics-ready data
+    """
+    # Create 3 patients
+    patients = []
+    for i in range(3):
+        patient = Patient(
+            name=f"Analytics Patient {i+1}",
+            email=f"analytics.patient{i+1}@example.com",
+            phone=f"555-010{i}",
+            therapist_id=therapist_user.id
+        )
+        test_db.add(patient)
+        patients.append(patient)
+    test_db.commit()
+
+    # Refresh patients
+    for patient in patients:
+        test_db.refresh(patient)
+
+    # Date distribution across last 60 days
+    now = datetime.utcnow()
+    dates = [
+        now - timedelta(days=60),  # 2 months ago
+        now - timedelta(days=52),
+        now - timedelta(days=45),
+        now - timedelta(days=30),  # 1 month ago
+        now - timedelta(days=21),
+        now - timedelta(days=14),  # 2 weeks ago
+        now - timedelta(days=10),
+        now - timedelta(days=7),   # 1 week ago
+        now - timedelta(days=3),
+        now - timedelta(days=1),   # Yesterday
+    ]
+
+    # Session configurations
+    session_configs = [
+        {
+            "duration": 1800,  # 30 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "anxious",
+            "topics": ["anxiety", "work stress"],
+            "trajectory": "stable",
+        },
+        {
+            "duration": 3600,  # 60 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "neutral",
+            "topics": ["coping strategies", "relationships"],
+            "trajectory": "improving",
+        },
+        {
+            "duration": 5400,  # 90 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "positive",
+            "topics": ["progress", "goals"],
+            "trajectory": "improving",
+        },
+        {
+            "duration": 2700,  # 45 minutes
+            "status": SessionStatus.failed.value,
+            "mood": "neutral",
+            "topics": ["family issues"],
+            "trajectory": "stable",
+        },
+        {
+            "duration": 3600,  # 60 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "neutral",
+            "topics": ["stress management", "sleep"],
+            "trajectory": "stable",
+        },
+        {
+            "duration": 4500,  # 75 minutes
+            "status": SessionStatus.pending.value,
+            "mood": "anxious",
+            "topics": ["anxiety", "panic attacks"],
+            "trajectory": "declining",
+        },
+        {
+            "duration": 3600,  # 60 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "hopeful",
+            "topics": ["mindfulness", "meditation"],
+            "trajectory": "improving",
+        },
+        {
+            "duration": 3000,  # 50 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "positive",
+            "topics": ["achievements", "self-esteem"],
+            "trajectory": "improving",
+        },
+        {
+            "duration": 3600,  # 60 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "neutral",
+            "topics": ["work-life balance", "boundaries"],
+            "trajectory": "stable",
+        },
+        {
+            "duration": 4200,  # 70 minutes
+            "status": SessionStatus.processed.value,
+            "mood": "calm",
+            "topics": ["reflection", "gratitude"],
+            "trajectory": "improving",
+        },
+    ]
+
+    sessions = []
+    for i, (date, config) in enumerate(zip(dates, session_configs)):
+        # Rotate through patients
+        patient = patients[i % len(patients)]
+
+        # Build extracted_notes
+        extracted_notes = {
+            "key_topics": config["topics"],
+            "session_mood": config["mood"],
+            "mood_trajectory": config["trajectory"],
+            "action_items": [
+                {
+                    "task": f"Practice breathing exercises",
+                    "status": "completed" if i % 3 == 0 else "in_progress",
+                    "category": "homework"
+                },
+                {
+                    "task": f"Journal daily about emotions",
+                    "status": "in_progress" if i % 2 == 0 else "completed",
+                    "category": "reflection"
+                }
+            ],
+            "emotional_themes": config["topics"][:2] if len(config["topics"]) >= 2 else config["topics"],
+        }
+
+        session = Session(
+            patient_id=patient.id,
+            therapist_id=therapist_user.id,
+            session_date=date,
+            duration_seconds=config["duration"],
+            audio_filename=f"analytics_session_{i+1}.mp3",
+            status=config["status"],
+            extracted_notes=extracted_notes if config["status"] == SessionStatus.processed.value else None
+        )
+        test_db.add(session)
+        sessions.append(session)
+
+    test_db.commit()
+
+    # Refresh all sessions
+    for session in sessions:
+        test_db.refresh(session)
+
+    return sessions
+
+
+@pytest.fixture(scope="function")
+def completed_sessions(test_db, therapist_user):
+    """
+    Create 5 completed sessions with status='processed' for testing.
+
+    All sessions:
+    - Have status='processed'
+    - Include complete extracted_notes
+    - Are from the last 14 days
+    - Have analytics-ready data
+
+    Args:
+        test_db: Test database session
+        therapist_user: Therapist who owns these sessions
+
+    Returns:
+        List of 5 Session objects with complete data
+    """
+    # Create 2 patients
+    patients = []
+    for i in range(2):
+        patient = Patient(
+            name=f"Completed Session Patient {i+1}",
+            email=f"completed.patient{i+1}@example.com",
+            phone=f"555-020{i}",
+            therapist_id=therapist_user.id
+        )
+        test_db.add(patient)
+        patients.append(patient)
+    test_db.commit()
+
+    # Refresh patients
+    for patient in patients:
+        test_db.refresh(patient)
+
+    # Recent dates (last 14 days)
+    now = datetime.utcnow()
+    dates = [
+        now - timedelta(days=14),
+        now - timedelta(days=10),
+        now - timedelta(days=7),
+        now - timedelta(days=3),
+        now - timedelta(days=1),
+    ]
+
+    sessions = []
+    topics_list = [
+        ["anxiety", "work stress", "coping strategies"],
+        ["relationships", "communication", "boundaries"],
+        ["depression", "medication", "sleep"],
+        ["trauma", "healing", "resilience"],
+        ["goals", "progress", "self-compassion"],
+    ]
+
+    moods = ["anxious", "neutral", "hopeful", "calm", "positive"]
+
+    for i, (date, topics, mood) in enumerate(zip(dates, topics_list, moods)):
+        patient = patients[i % len(patients)]
+
+        extracted_notes = {
+            "key_topics": topics,
+            "session_mood": mood,
+            "mood_trajectory": "improving" if i >= 3 else "stable",
+            "action_items": [
+                {
+                    "task": "Practice mindfulness meditation",
+                    "status": "completed",
+                    "category": "homework"
+                },
+                {
+                    "task": "Complete mood tracking log",
+                    "status": "in_progress",
+                    "category": "reflection"
+                }
+            ],
+            "emotional_themes": [topics[0], "hope"] if i >= 2 else [topics[0], "anxiety"],
+        }
+
+        session = Session(
+            patient_id=patient.id,
+            therapist_id=therapist_user.id,
+            session_date=date,
+            duration_seconds=3600,  # 60 minutes
+            audio_filename=f"completed_session_{i+1}.mp3",
+            status=SessionStatus.processed.value,
+            extracted_notes=extracted_notes
+        )
+        test_db.add(session)
+        sessions.append(session)
+
+    test_db.commit()
+
+    # Refresh all sessions
+    for session in sessions:
+        test_db.refresh(session)
+
+    return sessions
+
+
+@pytest.fixture(scope="function")
+def therapist_with_patients_and_sessions(test_db):
+    """
+    Create a therapist with 3 patients and 6-9 sessions for comprehensive testing.
+
+    Creates:
+    - 1 therapist
+    - 3 patients assigned to the therapist
+    - 2-3 sessions per patient (total 6-9 sessions)
+    - All sessions have analytics-ready data
+
+    Args:
+        test_db: Test database session
+
+    Returns:
+        Dict with:
+        - therapist: User object (therapist)
+        - patients: List of 3 Patient objects
+        - sessions: List of 6-9 Session objects
+    """
+    # Create therapist
+    therapist = User(
+        email="analytics.therapist@test.com",
+        hashed_password=get_password_hash("testpass123"),
+        first_name="Analytics",
+        last_name="Therapist",
+        full_name="Analytics Therapist",
+        role=UserRole.therapist,
+        is_active=True,
+        is_verified=False
+    )
+    test_db.add(therapist)
+    test_db.commit()
+    test_db.refresh(therapist)
+
+    # Create 3 patients
+    patients = []
+    for i in range(3):
+        patient = Patient(
+            name=f"Patient {chr(65+i)}",  # Patient A, B, C
+            email=f"patient{chr(97+i)}@example.com",
+            phone=f"555-030{i}",
+            therapist_id=therapist.id
+        )
+        test_db.add(patient)
+        patients.append(patient)
+    test_db.commit()
+
+    # Refresh patients
+    for patient in patients:
+        test_db.refresh(patient)
+
+    # Create 2-3 sessions per patient
+    sessions = []
+    now = datetime.utcnow()
+
+    session_data = [
+        # Patient A - 3 sessions
+        {"patient_idx": 0, "days_ago": 21, "topics": ["anxiety", "work"], "mood": "anxious", "trajectory": "stable"},
+        {"patient_idx": 0, "days_ago": 14, "topics": ["coping", "stress"], "mood": "neutral", "trajectory": "improving"},
+        {"patient_idx": 0, "days_ago": 7, "topics": ["progress", "goals"], "mood": "hopeful", "trajectory": "improving"},
+        # Patient B - 3 sessions
+        {"patient_idx": 1, "days_ago": 20, "topics": ["depression", "sleep"], "mood": "low", "trajectory": "stable"},
+        {"patient_idx": 1, "days_ago": 13, "topics": ["medication", "energy"], "mood": "neutral", "trajectory": "improving"},
+        {"patient_idx": 1, "days_ago": 6, "topics": ["activities", "motivation"], "mood": "positive", "trajectory": "improving"},
+        # Patient C - 2 sessions
+        {"patient_idx": 2, "days_ago": 15, "topics": ["relationships", "boundaries"], "mood": "neutral", "trajectory": "stable"},
+        {"patient_idx": 2, "days_ago": 8, "topics": ["communication", "assertiveness"], "mood": "hopeful", "trajectory": "improving"},
+    ]
+
+    for i, data in enumerate(session_data):
+        patient = patients[data["patient_idx"]]
+        session_date = now - timedelta(days=data["days_ago"])
+
+        extracted_notes = {
+            "key_topics": data["topics"],
+            "session_mood": data["mood"],
+            "mood_trajectory": data["trajectory"],
+            "action_items": [
+                {
+                    "task": f"Practice {data['topics'][0]} management",
+                    "status": "completed" if i % 2 == 0 else "in_progress",
+                    "category": "homework"
+                }
+            ],
+            "emotional_themes": data["topics"],
+        }
+
+        session = Session(
+            patient_id=patient.id,
+            therapist_id=therapist.id,
+            session_date=session_date,
+            duration_seconds=3600,
+            audio_filename=f"session_{i+1}.mp3",
+            status=SessionStatus.processed.value,
+            extracted_notes=extracted_notes
+        )
+        test_db.add(session)
+        sessions.append(session)
+
+    test_db.commit()
+
+    # Refresh all sessions
+    for session in sessions:
+        test_db.refresh(session)
+
+    return {
+        "therapist": therapist,
+        "patients": patients,
+        "sessions": sessions
+    }
+
+
+@pytest.fixture(scope="function")
+def mock_analytics_date_range():
+    """
+    Provide consistent date ranges for analytics testing.
+
+    Returns:
+        Dict with:
+        - start_date: datetime (30 days ago)
+        - end_date: datetime (now)
+        - middle_date: datetime (15 days ago)
+
+    Usage:
+        def test_analytics(mock_analytics_date_range):
+            start = mock_analytics_date_range["start_date"]
+            end = mock_analytics_date_range["end_date"]
+            # Use for consistent date filtering
+    """
+    now = datetime.utcnow()
+    return {
+        "start_date": now - timedelta(days=30),
+        "end_date": now,
+        "middle_date": now - timedelta(days=15),
+    }
+
+
+# ============================================================================
 # Fixtures for Async Router Tests (e.g., patients router)
 # ============================================================================
 

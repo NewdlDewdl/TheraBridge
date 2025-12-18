@@ -147,9 +147,12 @@ def therapist_user(test_async_db):
             id=uuid4(),
             email="therapist@test.com",
             hashed_password=get_password_hash("testpass123"),
+            first_name="Test",
+            last_name="Therapist",
             full_name="Test Therapist",
             role=UserRole.therapist,
-            is_active=True
+            is_active=True,
+            is_verified=False
         )
         db.add(user)
         db.commit()
@@ -210,5 +213,108 @@ def test_session(test_patient, therapist_user):
         db.commit()
         db.refresh(session)
         return session
+    finally:
+        db.close()
+
+
+@pytest.fixture(scope="function")
+def patient_user(test_async_db):
+    """
+    Create a test patient user in the database (synchronous).
+
+    Returns:
+        User object with patient role
+    """
+    # Use sync session for fixture setup
+    db = TestingSyncSessionLocal()
+    try:
+        user = User(
+            id=uuid4(),
+            email="patient@test.com",
+            hashed_password=get_password_hash("patientpass123"),
+            first_name="Test",
+            last_name="Patient User",
+            full_name="Test Patient User",
+            role=UserRole.patient,
+            is_active=True,
+            is_verified=False
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        return user
+    finally:
+        db.close()
+
+
+@pytest.fixture(scope="function")
+def therapist_token(therapist_user):
+    """
+    Generate an access token for the therapist user.
+
+    Args:
+        therapist_user: Therapist user fixture
+
+    Returns:
+        JWT access token string
+    """
+    from app.auth.utils import create_access_token
+    return create_access_token(therapist_user.id, therapist_user.role.value)
+
+
+@pytest.fixture(scope="function")
+def patient_token(patient_user):
+    """
+    Generate an access token for the patient user.
+
+    Args:
+        patient_user: Patient user fixture
+
+    Returns:
+        JWT access token string
+    """
+    from app.auth.utils import create_access_token
+    return create_access_token(patient_user.id, patient_user.role.value)
+
+
+@pytest.fixture(scope="function")
+def therapist_auth_headers(therapist_token):
+    """
+    Generate authorization headers for therapist user.
+
+    Args:
+        therapist_token: JWT token for therapist
+
+    Returns:
+        Dict with Authorization header
+    """
+    return {"Authorization": f"Bearer {therapist_token}"}
+
+
+@pytest.fixture(scope="function")
+def patient_auth_headers(patient_token):
+    """
+    Generate authorization headers for patient user.
+
+    Args:
+        patient_token: JWT token for patient
+
+    Returns:
+        Dict with Authorization header
+    """
+    return {"Authorization": f"Bearer {patient_token}"}
+
+
+@pytest.fixture(scope="function")
+def test_db():
+    """
+    Provide a sync database session for tests that need to create test data.
+
+    Returns:
+        Sync database session
+    """
+    db = TestingSyncSessionLocal()
+    try:
+        yield db
     finally:
         db.close()

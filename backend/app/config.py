@@ -225,6 +225,29 @@ class Settings(BaseSettings):
     )
 
     # ============================================
+    # Analytics & Scheduler Settings
+    # ============================================
+
+    ENABLE_ANALYTICS_SCHEDULER: bool = Field(
+        default=True,
+        description="Enable background jobs for analytics aggregation"
+    )
+
+    DAILY_AGGREGATION_HOUR: int = Field(
+        default=0,
+        ge=0,
+        le=23,
+        description="Hour (0-23 UTC) to run daily analytics aggregation"
+    )
+
+    ANALYTICS_CACHE_TTL_SECONDS: int = Field(
+        default=300,
+        ge=60,
+        le=3600,
+        description="Cache TTL for analytics endpoints (60s-1h)"
+    )
+
+    # ============================================
     # Rate Limiting Configuration
     # ============================================
 

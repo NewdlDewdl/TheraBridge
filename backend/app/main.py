@@ -14,13 +14,17 @@ from sqlalchemy import text
 from openai import AsyncOpenAI
 
 from app.database import init_db, close_db, engine
-from app.routers import sessions, patients, cleanup
+from app.routers import sessions, patients, cleanup, analytics
 from app.auth.router import router as auth_router
 from app.middleware.rate_limit import limiter, custom_rate_limit_handler
 from app.middleware.error_handler import register_exception_handlers
 from app.middleware.correlation_id import CorrelationIdMiddleware
 from app.logging_config import setup_logging
 from app.services.cleanup import run_startup_cleanup
+
+# Analytics scheduler imports (to be implemented by DevOps Engineer and Backend Dev #5)
+# from app.scheduler import start_scheduler, shutdown_scheduler
+# from app.tasks.aggregation import register_analytics_jobs
 
 load_dotenv()
 
@@ -34,19 +38,36 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Startup and shutdown events"""
+    """
+    Lifespan context manager for startup/shutdown events.
+    Runs database checks, initializes services, and starts scheduler on startup.
+    """
     # Startup
-    logger.info("Starting TherapyBridge API")
+    logger.info("🚀 Starting TherapyBridge API")
     await init_db()
-    logger.info("Database initialized")
+    logger.info("✅ Database initialized")
 
     # Run cleanup on startup if enabled
     await run_startup_cleanup()
+
+    # Start analytics scheduler and register background jobs
+    # TODO: Uncomment when scheduler files are implemented by DevOps Engineer
+    # logger.info("Starting analytics scheduler...")
+    # start_scheduler()
+    # register_analytics_jobs()
+    # logger.info("✅ Analytics scheduler started and jobs registered")
 
     yield
 
     # Shutdown
     logger.info("Shutting down TherapyBridge API")
+
+    # Stop analytics scheduler
+    # TODO: Uncomment when scheduler files are implemented by DevOps Engineer
+    # logger.info("Stopping analytics scheduler...")
+    # shutdown_scheduler()
+    # logger.info("✅ Analytics scheduler stopped")
+
     await close_db()
     logger.info("Database connections closed")
 
@@ -95,6 +116,7 @@ app.include_router(auth_router, prefix="/api/v1", tags=["authentication"])
 app.include_router(sessions.router, prefix="/api/sessions", tags=["Sessions"])
 app.include_router(patients.router, prefix="/api/patients", tags=["Patients"])
 app.include_router(cleanup.router, prefix="/api/admin", tags=["Cleanup"])
+app.include_router(analytics.router, prefix="/api/v1/analytics", tags=["Analytics"])
 
 
 @app.get("/")

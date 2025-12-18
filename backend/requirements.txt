@@ -40,6 +40,9 @@ slowapi==0.1.9
 # Testing coverage
 pytest-cov==4.1.0  # Code coverage reporting
 
+# Background job scheduler
+apscheduler==3.10.4  # Scheduled analytics aggregation jobs
+
 # Performance testing (optional - install separately for load testing)
 # pip install locust pytest-xdist psutil
 # locust>=2.20.0  # Web-based load testing

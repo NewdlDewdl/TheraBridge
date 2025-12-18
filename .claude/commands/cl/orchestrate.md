@@ -381,7 +381,27 @@ For each subsequent wave:
 2. Launch agents in parallel (reusing from pool)
 3. Wait for completion
 4. Update TodoWrite
-5. Move to next wave
+5. **Output context window usage** (see format below)
+6. Move to next wave
+
+**🚨 CRITICAL: After EVERY wave completion, show context window usage:**
+
+```
+✅ WAVE [X] COMPLETE
+
+📊 CONTEXT WINDOW STATUS:
+├─ Main window: [X]K / 200K tokens ([Y]% used)
+├─ Remaining: [Z]K tokens
+└─ Status: [HEALTHY/WARNING/CRITICAL] ⚠️
+
+[If WARNING or CRITICAL, add this:]
+💡 If context is running low, you can copy the continuation prompt above to continue in a new window.
+```
+
+**Status thresholds:**
+- HEALTHY: < 150K tokens used (< 75%)
+- WARNING: 150K-180K tokens used (75-90%) ⚠️
+- CRITICAL: > 180K tokens used (> 90%) 🚨
 
 **If wave needs MORE agents than pool capacity:**
 ```
@@ -429,6 +449,12 @@ For each subsequent wave:
 - **Time Saved:** [Z] minutes ([P]% faster)
 - **Agent Reuse Rate:** [R]%
 - **Pool Efficiency:** [E]%
+
+### 📊 Context Window Usage:
+- **Main window:** [X]K / 200K tokens ([Y]% used)
+- **Remaining:** [Z]K tokens
+- **Status:** [HEALTHY/WARNING/CRITICAL]
+- **Agent windows:** Wave 0: [N] agents, Waves 1-[W]: [M] total agents launched
 
 ### 🎯 Final Results:
 [Detailed list of what was accomplished]
