@@ -1929,7 +1929,74 @@ Success criteria: Repository cleaner, better organized, follows CLAUDE.md rules,
 </invoke>
 ```
 
-**After cleanup completes:**
+**If current_depth >= 2, use DIRECT BASH cleanup commands instead:**
+
+```
+🧹 RUNNING DIRECT CLEANUP...
+
+Orchestrator depth: 2 → Max depth reached, using direct cleanup commands
+
+Executing cleanup operations:
+1. Capturing baseline metrics
+2. Removing temporary files
+3. Consolidating duplicates
+4. Organizing structure
+5. Capturing post-cleanup metrics
+```
+
+**Execute cleanup directly with Bash tool:**
+
+```xml
+<invoke name="Bash">
+<parameter name="command">cd [project_root] && {
+  # Capture before metrics
+  echo "=== BEFORE CLEANUP ===" > /tmp/cleanup_report.txt
+  echo "Files: $(git ls-files | wc -l)" >> /tmp/cleanup_report.txt
+  git ls-files > /tmp/before_cleanup.txt
+
+  # Remove temporary files
+  find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+  find . -type f -name "*.pyc" -delete 2>/dev/null || true
+  find . -type f -name "*.tmp" -delete 2>/dev/null || true
+  find . -type f -name ".DS_Store" -delete 2>/dev/null || true
+
+  # Capture after metrics
+  echo "=== AFTER CLEANUP ===" >> /tmp/cleanup_report.txt
+  echo "Files: $(git ls-files | wc -l)" >> /tmp/cleanup_report.txt
+  git ls-files > /tmp/after_cleanup.txt
+
+  # Show diff
+  echo "=== FILES REMOVED ===" >> /tmp/cleanup_report.txt
+  diff /tmp/before_cleanup.txt /tmp/after_cleanup.txt | grep "^<" | wc -l >> /tmp/cleanup_report.txt
+
+  # Display report
+  cat /tmp/cleanup_report.txt
+}</parameter>
+<parameter name="description">Execute direct cleanup at max recursion depth</parameter>
+</invoke>
+```
+
+**Parse output and show cleanup summary:**
+
+```
+📊 DIRECT CLEANUP SUMMARY:
+
+### Actions Taken:
+- Removed __pycache__/ directories
+- Deleted *.pyc files
+- Deleted *.tmp files
+- Deleted .DS_Store files
+
+### Statistics:
+- Files before: [N]
+- Files after: [M]
+- Files removed: [N-M]
+- Repository organization: ✅ Basic cleanup complete
+
+Note: Direct cleanup mode (max depth reached) - comprehensive organization skipped
+```
+
+**After cleanup completes (both methods):**
 
 ```
 ✅ CLEANUP PHASE COMPLETE

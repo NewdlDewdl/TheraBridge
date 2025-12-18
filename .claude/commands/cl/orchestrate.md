@@ -565,9 +565,19 @@ For each subsequent wave:
 
 ### Step 4b: Self-Orchestrated Cleanup (REQUIRED)
 
-**🚨 CRITICAL: After completing ALL planned waves, automatically launch a cleanup orchestration to organize the repository.**
+**🚨 CRITICAL: After completing ALL planned waves, automatically launch cleanup (method depends on recursion depth).**
 
-After the execution summary, immediately launch a self-orchestrated cleanup phase:
+After the execution summary, check recursion depth and choose cleanup method:
+
+**Recursion Depth Rules:**
+- Root orchestrator (no depth tag in prompt) = Depth 0
+- Child orchestrator (spawned by another) = Depth 1+
+- **Maximum depth: 2** (prevents infinite loops)
+- Cleanup behavior:
+  - **Depth 0-1:** Spawn orchestrator for comprehensive cleanup
+  - **Depth 2+:** Use direct Bash commands for simple cleanup
+
+After the execution summary, immediately launch cleanup:
 
 ```
 ---
@@ -586,13 +596,17 @@ This will:
 ⏳ Launching cleanup agents...
 ```
 
-**Then invoke the orchestrator agent recursively:**
+**Then invoke the orchestrator agent recursively WITH RECURSION DEPTH TAG:**
 
 ```xml
 <invoke name="Task">
 <parameter name="subagent_type">parallel-orchestrator</parameter>
-<parameter name="description">Cleanup repository after orchestration</parameter>
-<parameter name="prompt">Clean up the repository after task completion. Remove temporary files, consolidate duplicates, organize structure.
+<parameter name="description">Cleanup repository after orchestration (Depth 1)</parameter>
+<parameter name="prompt">[RECURSION_DEPTH: 1]
+
+Clean up the repository after task completion. Remove temporary files, consolidate duplicates, organize structure.
+
+**IMPORTANT: You are a cleanup orchestrator at recursion depth 1. When you finish YOUR work, check your depth (it will be 1) before spawning another cleanup orchestrator. If depth >= 2, use direct Bash commands instead.**
 
 Requirements:
 1. BEFORE making any changes: Capture baseline metrics using git and filesystem tools
