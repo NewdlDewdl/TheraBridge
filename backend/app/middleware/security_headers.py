@@ -120,8 +120,11 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         # Process request
         response = await call_next(request)
 
-        # Add security headers
-        self._add_security_headers(response)
+        # Check if this is a documentation endpoint
+        is_docs_endpoint = request.url.path in ["/docs", "/redoc", "/openapi.json"]
+
+        # Add security headers (with conditional CSP for docs)
+        self._add_security_headers(response, is_docs_endpoint)
 
         # Remove server identification headers
         self._remove_fingerprint_headers(response)
@@ -133,18 +136,20 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
                 extra={
                     "path": request.url.path,
                     "method": request.method,
-                    "hsts_enabled": self.enable_hsts
+                    "hsts_enabled": self.enable_hsts,
+                    "docs_endpoint": is_docs_endpoint
                 }
             )
 
         return response
 
-    def _add_security_headers(self, response: Response) -> None:
+    def _add_security_headers(self, response: Response, is_docs_endpoint: bool = False) -> None:
         """
         Add all security headers to the response.
 
         Args:
             response: HTTP response object to modify
+            is_docs_endpoint: Whether this is a documentation endpoint (relaxed CSP)
         """
         # 1. HSTS - Force HTTPS for 1 year with subdomains and preload
         if self.enable_hsts:
@@ -153,7 +158,22 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
             )
 
         # 2. Content-Security-Policy - Prevent XSS and data injection attacks
-        response.headers["Content-Security-Policy"] = self.csp_policy
+        # Use relaxed CSP for documentation endpoints to allow Swagger UI CDN resources
+        if is_docs_endpoint:
+            docs_csp = (
+                "default-src 'self'; "
+                "script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "  # Allow Swagger UI scripts
+                "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "  # Allow Swagger UI styles
+                "img-src 'self' data: https://fastapi.tiangolo.com; "  # Allow favicon
+                "font-src 'self' https://cdn.jsdelivr.net; "  # Allow Swagger UI fonts
+                "connect-src 'self'; "
+                "frame-ancestors 'none'; "
+                "base-uri 'self'; "
+                "form-action 'self'"
+            )
+            response.headers["Content-Security-Policy"] = docs_csp
+        else:
+            response.headers["Content-Security-Policy"] = self.csp_policy
 
         # 3. X-Content-Type-Options - Prevent MIME sniffing
         response.headers["X-Content-Type-Options"] = "nosniff"
