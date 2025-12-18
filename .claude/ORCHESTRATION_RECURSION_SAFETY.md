@@ -1,4 +1,8 @@
-# Orchestration Recursion Safety System
+# Automatic Orchestration Recursion Safety System
+
+## Overview
+
+The orchestration system features **fully automatic recursion depth tracking** using execution ID chains. Orchestrators self-manage their recursion depth without any user or manual intervention.
 
 ## Problem Solved
 
@@ -18,73 +22,115 @@ This caused:
 - Context window exhaustion (approaching 200K token limit)
 - System resource exhaustion (CPU/memory overload)
 
-## Solution: Recursion Depth Tracking
+## Solution: Automatic Execution ID Tracking
 
 ### Core Mechanism
 
-Each orchestrator tracks its **recursion depth** using a tag in the prompt:
+Each orchestrator **automatically** tracks its recursion depth using an execution ID chain:
 
 ```
-[RECURSION_DEPTH: N]
+[EXEC_ID: ORG_1234.1.1]
 ```
 
-- **Depth 0:** Root orchestrator (user-initiated, no tag)
-- **Depth 1:** Child orchestrator (spawned by root)
-- **Depth 2:** Grandchild orchestrator (spawned by child)
-- **Depth 3+:** FORBIDDEN (prevents infinite loops)
+**How it works:**
+- **No tag in prompt:** Root orchestrator (auto-generates `ORG_1234`)
+- **One dot:** Child orchestrator (`ORG_1234.1`)
+- **Two dots:** Grandchild orchestrator (`ORG_1234.1.1`)
+- **Three+ dots:** FORBIDDEN (prevents infinite loops)
 
-### Implementation
+**The orchestrator automatically:**
+1. Checks for `[EXEC_ID: ...]` in its prompt
+2. If not found, generates a root ID (e.g., `ORG_1234`)
+3. Counts dots to determine its depth
+4. Decides whether to spawn children or use direct commands
+5. When spawning, generates child ID by appending `.N`
 
-#### 1. Parse Recursion Depth
+**NO USER INTERVENTION REQUIRED**
 
-Every orchestrator starts by checking its depth:
+### Automatic Implementation
+
+#### 1. Parse or Generate Execution ID
+
+Every orchestrator starts by getting its ID:
 
 ```python
 import re
+import time
 
-def parse_recursion_depth(prompt: str) -> int:
-    """Extract recursion depth from prompt, default to 0"""
-    match = re.search(r'\[RECURSION_DEPTH:\s*(\d+)\]', prompt)
-    return int(match.group(1)) if match else 0
+def parse_execution_id(prompt: str) -> str:
+    """
+    Extract execution ID from prompt, or generate if root
+    """
+    match = re.search(r'\[EXEC_ID:\s*([^\]]+)\]', prompt)
+    if match:
+        return match.group(1)
+    else:
+        # Root orchestrator - auto-generate ID
+        timestamp = str(int(time.time() * 1000))[-4:]
+        return f"ORG_{timestamp}"
 
-# Usage
-current_depth = parse_recursion_depth(incoming_prompt)
-print(f"🔄 Orchestrator Depth: {current_depth} (max: 2)")
+# Usage (automatic)
+my_exec_id = parse_execution_id(incoming_prompt)
+print(f"🔄 Orchestrator ID: {my_exec_id}")
 ```
 
-#### 2. Check Spawning Permissions
+#### 2. Calculate Depth Automatically
 
-Before spawning a child orchestrator:
+Depth is calculated by counting dots:
 
 ```python
-def can_spawn_child_orchestrator(current_depth: int) -> bool:
-    """Check if we can spawn another orchestrator"""
-    return current_depth < 2
+def calculate_depth(exec_id: str) -> int:
+    """
+    Count dots to determine depth
+    ORG_1234 → 0
+    ORG_1234.1 → 1
+    ORG_1234.1.1 → 2
+    """
+    return exec_id.count('.')
 
-if can_spawn_child_orchestrator(current_depth):
+# Usage (automatic)
+my_depth = calculate_depth(my_exec_id)
+print(f"🔄 Recursion Depth: {my_depth} / 2 (max)")
+```
+
+#### 3. Check Spawning Permissions Automatically
+
+```python
+def can_spawn_child(exec_id: str, max_depth: int = 2) -> bool:
+    """Check if we can spawn a child"""
+    return calculate_depth(exec_id) < max_depth
+
+# Usage (automatic)
+if can_spawn_child(my_exec_id):
     # Safe to spawn child orchestrator
     spawn_child_orchestrator()
 else:
     # Max depth reached - use direct commands
+    print("⚠️ Max depth reached - using direct commands")
     run_direct_commands()
 ```
 
-#### 3. Propagate Depth Tags
+#### 4. Generate Child ID Automatically
 
-When spawning a child orchestrator, ALWAYS include incremented depth:
+When spawning a child:
 
 ```python
-def get_next_depth_tag(current_depth: int) -> str:
-    """Get depth tag for child orchestrator"""
-    return f"[RECURSION_DEPTH: {current_depth + 1}]"
+def generate_child_id(parent_id: str, child_index: int = 1) -> str:
+    """
+    Auto-generate child ID by appending index
+    ORG_1234 + 1 → ORG_1234.1
+    ORG_1234.1 + 1 → ORG_1234.1.1
+    """
+    return f"{parent_id}.{child_index}"
 
-# Example child orchestrator prompt
-child_prompt = f"""
-{get_next_depth_tag(current_depth)}
+# Usage (automatic)
+child_id = generate_child_id(my_exec_id, child_index=1)
+child_prompt = f"""[EXEC_ID: {child_id}]
 
-Clean up the repository after task completion.
+Clean up repository...
 
-**IMPORTANT: You are at depth {current_depth + 1}. Check your depth before spawning cleanup.**
+Your ID: {child_id}
+Your depth: {calculate_depth(child_id)} (automatically calculated)
 """
 ```
 

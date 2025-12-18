@@ -618,7 +618,7 @@ async def test_cleanup_expired_sessions(async_test_db, test_user, session_manage
         await async_test_db.commit()
         expired_id = expired_sess.id
 
-    with freeze_time("2025-01-01 05:00:00"):
+    with freeze_time("2025-01-01 08:50:00"):
         valid_sess, _ = await session_manager.create_session(
             user_id=test_user.id,
             request=mock_request,
@@ -627,7 +627,7 @@ async def test_cleanup_expired_sessions(async_test_db, test_user, session_manage
         await async_test_db.commit()
         valid_id = valid_sess.id
 
-    # Run cleanup at T=9 hours (expired session is 9 hours old, valid is 4 hours old)
+    # Run cleanup at T=9 hours (expired session is 9 hours old, valid is 10 min old)
     with freeze_time("2025-01-01 09:00:00"):
         count = await session_manager.cleanup_expired_sessions(async_test_db)
         await async_test_db.commit()

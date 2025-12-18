@@ -217,11 +217,12 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     )
     async_test_db.add(session3)
 
-    # Older sessions (within month)
+    # Older sessions (within month, but not this week)
+    # Use day 14 to ensure it's always before current date (tests run after day 14)
     session4 = TherapySession(
         patient_id=patient2.id,
         therapist_id=therapist.id,
-        session_date=month_start + timedelta(days=20),  # 20th of this month
+        session_date=month_start + timedelta(days=14),  # 14th of this month
         status=SessionStatus.processed.value,
         extracted_notes={
             "key_topics": ["work stress", "boundaries"],

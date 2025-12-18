@@ -183,6 +183,7 @@ async def calculate_overview_analytics(
             TherapySession.therapist_id == therapist_id,
             TherapySession.session_date >= month_start,
             TherapySession.session_date < next_month_start,  # Use month boundary instead of now
+            TherapySession.session_date <= now,  # Exclude future sessions
             TherapySession.status != 'failed'
         )
     )
@@ -953,7 +954,7 @@ async def _calculate_mood_trend(
         month_expr,
         func.avg(
             func.cast(
-                func.case(
+                case(
                     (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'very_low', 1),
                     (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'low', 2),
                     (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'neutral', 3),
