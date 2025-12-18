@@ -563,13 +563,102 @@ For each subsequent wave:
 
 ---
 
-### Step 4b: Provide Orchestration Continuation Prompt (REQUIRED)
+### Step 4b: Self-Orchestrated Cleanup (REQUIRED)
 
-**🚨 CRITICAL: After completing ALL waves and providing the execution summary, provide a continuation prompt for follow-up orchestration.**
+**🚨 CRITICAL: After completing ALL planned waves, automatically launch a cleanup orchestration to organize the repository.**
 
-After the execution summary, output:
+After the execution summary, immediately launch a self-orchestrated cleanup phase:
 
 ```
+---
+
+🧹 INITIATING AUTOMATED CLEANUP PHASE...
+
+Launching cleanup orchestration to organize repository and remove any temporary files, duplicates, or artifacts created during execution.
+
+This will:
+- Identify and remove temporary files
+- Consolidate duplicate documentation
+- Clean up unused artifacts
+- Organize project structure
+- Generate cleanup summary with file metrics
+
+⏳ Launching cleanup agents...
+```
+
+**Then invoke the orchestrator agent recursively:**
+
+```xml
+<invoke name="Task">
+<parameter name="subagent_type">parallel-orchestrator</parameter>
+<parameter name="description">Cleanup repository after orchestration</parameter>
+<parameter name="prompt">Clean up the repository after task completion. Remove temporary files, consolidate duplicates, organize structure.
+
+Requirements:
+1. BEFORE making any changes: Capture baseline metrics using git and filesystem tools
+   - Count files by type: git ls-files | wc -l
+   - List all files: git ls-files > /tmp/before_files.txt
+   - Get line counts: find . -type f -name "*.py" -o -name "*.md" | xargs wc -l
+
+2. Identify cleanup targets:
+   - Temporary files (*.tmp, *.cache, __pycache__)
+   - Duplicate documentation files
+   - Unused artifacts from orchestration
+   - Files violating CLAUDE.md organization rules
+
+3. Execute cleanup operations
+
+4. AFTER making changes: Capture post-cleanup metrics
+   - Count files by type: git ls-files | wc -l
+   - List all files: git ls-files > /tmp/after_files.txt
+   - Get line counts: find . -type f -name "*.py" -o -name "*.md" | xargs wc -l
+   - Calculate diff: diff /tmp/before_files.txt /tmp/after_files.txt
+
+5. Generate comprehensive cleanup summary with:
+
+📊 CLEANUP SUMMARY:
+
+### Files Modified:
+| File Path | Lines Before | Lines After | Change |
+|-----------|--------------|-------------|--------|
+| [path] | [N] | [M] | +[M-N] / -[N-M] |
+
+Total modified: [N] files, [X] lines added, [Y] lines removed
+
+### Files Added:
+| File Path | Lines | Purpose |
+|-----------|-------|---------|
+| [path] | [N] | [description] |
+
+Total added: [N] files, [X] total lines
+
+### Files Deleted:
+| File Path | Lines | Reason |
+|-----------|-------|--------|
+| [path] | [N] | [reason] |
+
+Total deleted: [N] files, [X] total lines removed
+
+### Summary Statistics:
+- **Total files before:** [N]
+- **Total files after:** [M]
+- **Net change:** [M-N] files ([+/-][X]%)
+- **Total lines before:** [N]
+- **Total lines after:** [M]
+- **Net line change:** [M-N] lines ([+/-][X]%)
+- **Repository size change:** [X] MB → [Y] MB ([+/-][Z] MB)
+
+Success criteria: Repository cleaner, better organized, follows CLAUDE.md rules</parameter>
+</invoke>
+```
+
+**After cleanup completes, show final state and continuation prompt:**
+
+```
+✅ CLEANUP PHASE COMPLETE
+
+[Cleanup summary from agent will appear here]
+
 ---
 
 💡 FOLLOW-UP ORCHESTRATION PROMPT:
@@ -587,43 +676,26 @@ Example follow-up tasks based on what was just completed:
 
 Current project state:
 - [Brief summary of what was just accomplished]
+- [Cleanup results summary]
 - [Any known gaps or future work identified]
 
 Ready to continue with another orchestration? (Copy the command above and describe your task)
 ```
 
-**Example:**
-```
----
-
-💡 FOLLOW-UP ORCHESTRATION PROMPT:
-
-If there are additional improvements or follow-up tasks to address, you can run:
-
-/cl:orchestrate [describe the follow-up task]
-
-Example follow-up tasks based on what was just completed:
-- Add comprehensive test coverage for all new endpoints
-- Implement frontend components to consume the new API endpoints
-- Add API documentation (OpenAPI/Swagger)
-- Set up monitoring and logging for the new features
-- Performance testing and optimization
-
-Current project state:
-- ✅ Authentication system fully implemented (6 endpoints, JWT rotation)
-- ✅ Database migrations configured with Alembic
-- ✅ 66 tests created with 84% coverage
-- 📋 Frontend integration pending
-- 📋 API documentation pending
-
-Ready to continue with another orchestration? (Copy the command above and describe your task)
-```
+**Why this is required:**
+- Automatically cleans up after orchestration execution
+- Maintains repository organization per CLAUDE.md rules
+- Provides detailed metrics on what changed during cleanup
+- Shows before/after comparisons for transparency
+- Ensures orchestration doesn't leave temporary artifacts
+- No manual cleanup needed from user
 
 **Benefits:**
-1. **Seamless workflow** - User can immediately continue with next task
-2. **Context preservation** - Reminds user of what was just done
-3. **Suggests logical next steps** - Helps identify follow-up work
-4. **Easy to use** - Just copy and modify the command
+1. **Automatic maintenance** - Repository stays organized without user intervention
+2. **Full transparency** - Detailed metrics show exactly what changed
+3. **CLAUDE.md compliance** - Cleanup follows repository organization rules
+4. **Seamless workflow** - User can immediately continue with next task
+5. **Prevents clutter** - No temporary files or artifacts left behind
 
 ---
 

@@ -1753,6 +1753,152 @@ Current project state:
 Ready to continue with another orchestration? (Copy the command above and describe your task)
 ```
 
+---
+
+### Step 4b: Self-Orchestrated Cleanup (REQUIRED)
+
+**🚨 CRITICAL: After providing the execution summary, automatically launch a cleanup orchestration.**
+
+This is the FINAL step of every orchestration. After showing results and continuation prompt, immediately invoke cleanup:
+
+```
+---
+
+🧹 INITIATING AUTOMATED CLEANUP PHASE...
+
+Launching cleanup orchestration to organize repository and remove any temporary files, duplicates, or artifacts created during execution.
+
+This will:
+- Identify and remove temporary files
+- Consolidate duplicate documentation
+- Clean up unused artifacts
+- Organize project structure
+- Generate cleanup summary with file metrics
+
+⏳ Launching cleanup agents...
+```
+
+**Then invoke the orchestrator recursively:**
+
+```xml
+<invoke name="Task">
+<parameter name="subagent_type">parallel-orchestrator</parameter>
+<parameter name="description">Cleanup repository after orchestration</parameter>
+<parameter name="prompt">Clean up the repository after task completion. Remove temporary files, consolidate duplicates, organize structure.
+
+Requirements:
+1. BEFORE making any changes: Capture baseline metrics using git and filesystem tools
+   - Count files by type: git ls-files | wc -l
+   - List all files: git ls-files > /tmp/before_cleanup_files.txt
+   - Get line counts for key file types:
+     - Python: find . -type f -name "*.py" -not -path "*/venv/*" | xargs wc -l 2>/dev/null | tail -1
+     - Markdown: find . -type f -name "*.md" -not -path "*/venv/*" | xargs wc -l 2>/dev/null | tail -1
+     - TypeScript: find . -type f \( -name "*.ts" -o -name "*.tsx" \) -not -path "*/node_modules/*" | xargs wc -l 2>/dev/null | tail -1
+
+2. Identify cleanup targets:
+   - Temporary files: __pycache__/, *.pyc, *.tmp, .DS_Store, *.cache
+   - Duplicate documentation files
+   - Unused artifacts from orchestration
+   - Files violating .claude/CLAUDE.md organization rules
+   - Empty directories
+
+3. Execute cleanup operations:
+   - Remove identified temporary files
+   - Consolidate duplicates
+   - Delete empty directories
+   - Organize per CLAUDE.md rules
+
+4. AFTER making changes: Capture post-cleanup metrics
+   - Count files: git ls-files | wc -l
+   - List all files: git ls-files > /tmp/after_cleanup_files.txt
+   - Get line counts for same file types
+   - Calculate diff: diff /tmp/before_cleanup_files.txt /tmp/after_cleanup_files.txt
+
+5. Generate comprehensive cleanup summary with:
+
+📊 CLEANUP SUMMARY:
+
+### Files Modified:
+| File Path | Lines Before | Lines After | Change |
+|-----------|--------------|-------------|--------|
+| [path] | [N] | [M] | +[M-N] / -[N-M] |
+
+**Total modified:** [N] files, [X] lines added, [Y] lines removed
+
+### Files Added:
+| File Path | Lines | Purpose |
+|-----------|-------|---------|
+| [path] | [N] | [description] |
+
+**Total added:** [N] files, [X] total lines
+
+### Files Deleted:
+| File Path | Lines | Reason |
+|-----------|-------|--------|
+| [path] | [N] | [reason for deletion] |
+
+**Total deleted:** [N] files, [X] total lines removed
+
+### Summary Statistics:
+- **Total files before cleanup:** [N]
+- **Total files after cleanup:** [M]
+- **Net file change:** [M-N] files ([+/-][X]%)
+- **Python lines before:** [N]
+- **Python lines after:** [M]
+- **Markdown lines before:** [N]
+- **Markdown lines after:** [M]
+- **TypeScript lines before:** [N]
+- **TypeScript lines after:** [M]
+- **Total lines removed:** [X]
+- **Repository organization:** ✅ Compliant with CLAUDE.md rules
+
+### Cleanup Actions Taken:
+- [Specific action 1]
+- [Specific action 2]
+- [Specific action 3]
+
+Success criteria: Repository cleaner, better organized, follows CLAUDE.md rules, no temporary artifacts remaining</parameter>
+</invoke>
+```
+
+**After cleanup completes:**
+
+```
+✅ CLEANUP PHASE COMPLETE
+
+[Detailed cleanup summary from agent appears here]
+
+---
+
+🎉 ORCHESTRATION FULLY COMPLETE
+
+The task has been executed and the repository has been automatically cleaned and organized.
+
+Final state:
+- ✅ All planned waves executed successfully
+- ✅ Repository cleaned and organized
+- ✅ Ready for next orchestration
+
+Use the continuation prompt above to start another orchestration task.
+```
+
+**Why this is required:**
+- Automatically maintains repository cleanliness
+- Prevents accumulation of temporary files and artifacts
+- Ensures CLAUDE.md compliance after every orchestration
+- Provides full transparency with before/after metrics
+- No manual cleanup burden on user
+- Repository stays organized and navigable
+
+**Critical Rules:**
+1. Cleanup ALWAYS runs after main execution completes
+2. Cleanup must capture before/after metrics
+3. Cleanup must show detailed file-level changes
+4. Cleanup must follow CLAUDE.md organization rules
+5. Cleanup must not delete important work (only temps/duplicates)
+
+---
+
 ## 🛠️ Tool Usage Guidelines
 
 ### Task Tool - Launch Parallel Agents
