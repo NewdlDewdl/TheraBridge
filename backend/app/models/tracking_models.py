@@ -157,6 +157,11 @@ class ProgressEntry(Base):
         Index('idx_progress_entries_goal_date', 'goal_id', 'entry_date', postgresql_ops={'entry_date': 'DESC'}),
     )
 
+    @property
+    def created_at(self):
+        """Alias for recorded_at to maintain compatibility with response schemas"""
+        return self.recorded_at
+
     def __repr__(self):
         return f"<ProgressEntry(id={self.id}, goal_id={self.goal_id}, date={self.entry_date}, value={self.value}, context={self.context})>"
 
@@ -245,6 +250,7 @@ class ProgressMilestone(Base):
 
     # Achievement tracking
     achieved_at = Column(DateTime, nullable=True)  # When milestone was achieved (NULL = not yet achieved)
+    read = Column(Boolean, default=False, nullable=False)  # Whether notification has been read by user
 
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
@@ -252,9 +258,10 @@ class ProgressMilestone(Base):
     # Relationships
     goal = relationship("TreatmentGoal", foreign_keys=[goal_id], backref="milestones")
 
-    # Check constraint
+    # Check constraints and indexes
     __table_args__ = (
         CheckConstraint("milestone_type IS NULL OR milestone_type IN ('percentage', 'value', 'streak', 'custom')", name='ck_progress_milestones_type'),
+        Index('idx_progress_milestones_goal_achieved', 'goal_id', 'achieved_at', postgresql_ops={'achieved_at': 'DESC'}),
     )
 
     def __repr__(self):

@@ -97,7 +97,10 @@ def _set_json_columns(target, connection, **kw):
     if connection.dialect.name == "sqlite":
         for table in Base.metadata.tables.values():
             for col in table.columns:
+                # Check if column type is JSONB or has JSONB as impl
                 if isinstance(col.type, JSONB):
+                    col.type = JSON()
+                elif hasattr(col.type, 'impl') and isinstance(col.type.impl, JSONB):
                     col.type = JSON()
 
 

@@ -705,7 +705,8 @@ class TestGetPatientTimeline:
             title="Session #1",
             description="General session",
             importance="normal",
-            is_private=False
+            is_private=False,
+            metadata=None
         )
         events.append(event1)
 
@@ -719,7 +720,8 @@ class TestGetPatientTimeline:
             title="Diagnosis: GAD",
             description="Generalized Anxiety Disorder diagnosis",
             importance="high",
-            is_private=True
+            is_private=True,
+            metadata=None
         )
         events.append(event2)
 
@@ -732,7 +734,8 @@ class TestGetPatientTimeline:
             title="Goal: Reduce anxiety",
             description="Patient goal",
             importance="normal",
-            is_private=False
+            is_private=False,
+            metadata=None
         )
         events.append(event3)
 
@@ -746,7 +749,8 @@ class TestGetPatientTimeline:
             title="Treatment plan update",
             description="CBT approach with medication",
             importance="high",
-            is_private=True
+            is_private=True,
+            metadata=None
         )
         events.append(event4)
 
@@ -759,7 +763,8 @@ class TestGetPatientTimeline:
             title="Session #2",
             description="Progress discussion",
             importance="normal",
-            is_private=False
+            is_private=False,
+            metadata=None
         )
         events.append(event5)
 
@@ -830,7 +835,8 @@ class TestGetPatientTimeline:
                 title=f"{'Private' if is_private else 'Public'} Event {i + 1}",
                 description=f"Event description {i + 1}",
                 importance="high" if is_private else "normal",
-                is_private=is_private
+                is_private=is_private,
+                metadata=None
             )
             events.append(event)
             async_test_db.add(event)
@@ -877,7 +883,8 @@ class TestGetPatientTimeline:
             title="Private note about anxiety",
             description="Confidential therapist observations",
             importance="normal",
-            is_private=True
+            is_private=True,
+            metadata=None
         )
         async_test_db.add(private_event)
 
@@ -890,7 +897,8 @@ class TestGetPatientTimeline:
             title="Public note: Practice breathing",
             description="Patient reminder for breathing exercises",
             importance="normal",
-            is_private=False
+            is_private=False,
+            metadata=None
         )
         async_test_db.add(public_event)
 

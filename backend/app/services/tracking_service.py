@@ -25,13 +25,16 @@ from app.schemas.tracking_schemas import (
     ProgressHistoryResponse,
     ProgressStatistics,
     TrendDirection,
-    AggregationPeriod
+    AggregationPeriod,
+    MilestoneAchievement
 )
 from app.models.goal_models import TreatmentGoal
 from app.models.tracking_models import (
     GoalTrackingConfig,
-    ProgressEntry
+    ProgressEntry,
+    ProgressMilestone
 )
+from app.services import milestone_detector
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -256,32 +259,91 @@ async def record_progress_entry(
         # 4. Create progress entry
         entry = ProgressEntry(
             goal_id=goal_id,
+            tracking_config_id=config.id,
             entry_date=entry_data.entry_date,
             entry_time=entry_data.entry_time,
             value=entry_data.value,
             value_label=entry_data.value_label,
             notes=entry_data.notes,
             context=entry_data.context,
-            recorded_by_id=recorded_by_id,
+            recorded_by=recorded_by_id,
             session_id=None  # Will be set if context is 'session'
         )
         db.add(entry)
+        await db.flush()  # Get entry ID without committing
 
+        logger.info(
+            f"Progress entry created: "
+            f"id={entry.id}, goal={goal_id}, value={entry.value}, date={entry.entry_date}"
+        )
+
+        # 5. Check for milestone achievements
+        milestones_achieved = []
+        try:
+            # Check percentage-based milestones (25%, 50%, 75%, 100%)
+            percentage_milestones = await milestone_detector.check_milestones(
+                goal=goal,
+                new_entry=entry,
+                db=db
+            )
+            milestones_achieved.extend(percentage_milestones)
+
+            # Check streak-based milestones (7, 14, 30, 60, 90 days)
+            # Get all entries for this goal to calculate streak
+            all_entries_query = select(ProgressEntry).where(
+                ProgressEntry.goal_id == goal_id
+            ).order_by(ProgressEntry.entry_date.asc())
+            all_entries_result = await db.execute(all_entries_query)
+            all_entries = list(all_entries_result.scalars().all())
+
+            streak_milestones = await milestone_detector.check_streak_milestones(
+                goal_id=goal_id,
+                entries=all_entries,
+                db=db
+            )
+            milestones_achieved.extend(streak_milestones)
+
+            if milestones_achieved:
+                logger.info(
+                    f"Milestones achieved for goal {goal_id}: "
+                    f"{[m.title for m in milestones_achieved]}"
+                )
+        except Exception as milestone_error:
+            # Log milestone detection errors but don't fail the entire transaction
+            logger.error(
+                f"Error checking milestones for goal {goal_id}: {str(milestone_error)}",
+                exc_info=True
+            )
+            # Continue with commit even if milestone detection fails
+
+        # 6. Commit transaction (both entry and milestones)
         await db.commit()
         await db.refresh(entry)
 
         logger.info(
             f"Progress entry recorded successfully: "
-            f"id={entry.id}, goal={goal_id}, value={entry.value}, date={entry.entry_date}"
+            f"id={entry.id}, goal={goal_id}, value={entry.value}, "
+            f"milestones={len(milestones_achieved)}"
         )
 
-        # 5. TODO: Check for milestone achievements
-        # This would call a milestone service function to check if any milestones
-        # were achieved based on this new entry (e.g., reaching target value,
-        # maintaining streak, etc.)
-        # await check_milestone_achievements(goal_id, entry, db)
+        # 7. Build response with milestone achievements
+        response_dict = {
+            "id": entry.id,
+            "goal_id": entry.goal_id,
+            "entry_date": entry.entry_date,
+            "entry_time": entry.entry_time,
+            "value": float(entry.value),
+            "value_label": entry.value_label,
+            "notes": entry.notes,
+            "context": entry.context,
+            "session_id": entry.session_id,
+            "created_at": entry.created_at,
+            "milestones_achieved": [
+                MilestoneAchievement.model_validate(m) for m in milestones_achieved
+            ]
+        }
 
-        return ProgressEntryResponse.model_validate(entry)
+        return ProgressEntryResponse.model_validate(response_dict)
 
     except HTTPException:
         # Re-raise HTTP exceptions
@@ -632,7 +694,7 @@ async def _aggregate_entries(
             notes=None,
             context=template.context,
             session_id=None,
-            recorded_by_id=template.recorded_by_id,
+            recorded_by=template.recorded_by,
             created_at=template.created_at
         )
         aggregated.append(aggregated_entry)

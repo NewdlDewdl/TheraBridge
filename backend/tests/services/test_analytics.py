@@ -167,13 +167,16 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     await async_test_db.flush()
 
     # Create sessions across different time periods
+    # Calculate calendar boundaries to prevent flaky tests
     now = datetime.utcnow()
+    week_start = now - timedelta(days=now.weekday())  # Monday this week
+    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)  # 1st of this month
 
-    # Sessions this week (2 sessions)
+    # Sessions this week (2 sessions) - relative to week_start
     session1 = TherapySession(
         patient_id=patient1.id,
         therapist_id=therapist.id,
-        session_date=now - timedelta(days=2),
+        session_date=week_start + timedelta(days=1),  # Tuesday this week
         status=SessionStatus.processed.value,
         extracted_notes={
             "key_topics": ["anxiety", "work stress", "sleep issues"],
@@ -188,7 +191,7 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     session2 = TherapySession(
         patient_id=patient2.id,
         therapist_id=therapist.id,
-        session_date=now - timedelta(days=1),
+        session_date=week_start + timedelta(days=2),  # Wednesday this week
         status=SessionStatus.processed.value,
         extracted_notes={
             "key_topics": ["relationships", "communication"],
@@ -198,11 +201,11 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     )
     async_test_db.add(session2)
 
-    # Sessions this month (but not this week)
+    # Sessions this month (but not this week) - relative to month_start
     session3 = TherapySession(
         patient_id=patient1.id,
         therapist_id=therapist.id,
-        session_date=now - timedelta(days=15),
+        session_date=month_start + timedelta(days=10),  # 10th of this month
         status=SessionStatus.processed.value,
         extracted_notes={
             "key_topics": ["anxiety", "relationships"],
@@ -214,11 +217,11 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     )
     async_test_db.add(session3)
 
-    # Older sessions (last 30 days)
+    # Older sessions (within month)
     session4 = TherapySession(
         patient_id=patient2.id,
         therapist_id=therapist.id,
-        session_date=now - timedelta(days=25),
+        session_date=month_start + timedelta(days=20),  # 20th of this month
         status=SessionStatus.processed.value,
         extracted_notes={
             "key_topics": ["work stress", "boundaries"],
@@ -228,11 +231,11 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     )
     async_test_db.add(session4)
 
-    # Old session (inactive patient, > 30 days)
+    # Old session (inactive patient, > 30 days ago)
     session5 = TherapySession(
         patient_id=patient3.id,
         therapist_id=therapist.id,
-        session_date=now - timedelta(days=90),
+        session_date=month_start - timedelta(days=90),  # 3 months ago
         status=SessionStatus.processed.value,
         extracted_notes={
             "key_topics": ["depression"],
@@ -246,7 +249,7 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     session6 = TherapySession(
         patient_id=patient1.id,
         therapist_id=therapist.id,
-        session_date=now + timedelta(days=3),
+        session_date=now + timedelta(days=3),  # Keep relative to now for future
         status=SessionStatus.pending.value
     )
     async_test_db.add(session6)
@@ -255,7 +258,7 @@ async def therapist_with_patients_and_sessions(async_test_db: AsyncSession):
     session7 = TherapySession(
         patient_id=patient1.id,
         therapist_id=therapist.id,
-        session_date=now - timedelta(days=5),
+        session_date=week_start + timedelta(days=3),  # Thursday this week
         status=SessionStatus.failed.value
     )
     async_test_db.add(session7)

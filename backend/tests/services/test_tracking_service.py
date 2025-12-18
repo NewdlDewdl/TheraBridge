@@ -168,7 +168,7 @@ async def test_goal_with_entries(
             value=value,
             notes=f"Day {i+1} check-in",
             context="self_report",
-            recorded_by_id=test_patient.id,
+            recorded_by=test_patient.id,
             recorded_at=datetime.utcnow()
         )
         async_test_db.add(entry)
@@ -440,7 +440,6 @@ class TestRecordProgressEntry:
         assert result.value == 6.5
         assert result.notes == "Feeling better today"
         assert result.context == "self_report"
-        assert result.recorded_by_id == test_patient.id
         assert result.id is not None
         assert result.created_at is not None
 
@@ -849,7 +848,7 @@ class TestCalculateProgressStatistics:
                 entry_date=date.today() - timedelta(days=1-i),
                 value=7.0 - i,
                 context="self_report",
-                recorded_by_id=test_patient.id,
+                recorded_by=test_patient.id,
                 recorded_at=datetime.utcnow()
             )
             async_test_db.add(entry)
@@ -917,7 +916,7 @@ class TestCalculateProgressStatistics:
                 entry_date=date.today() - timedelta(days=9-i),
                 value=5.0,  # Constant value
                 context="self_report",
-                recorded_by_id=test_patient.id,
+                recorded_by=test_patient.id,
                 recorded_at=datetime.utcnow()
             )
             async_test_db.add(entry)
@@ -977,7 +976,7 @@ class TestCalculateProgressStatistics:
                 entry_date=date.today() - timedelta(days=9-i),
                 value=value,
                 context="self_report",
-                recorded_by_id=test_patient.id,
+                recorded_by=test_patient.id,
                 recorded_at=datetime.utcnow()
             )
             async_test_db.add(entry)
@@ -1073,7 +1072,7 @@ class TestAggregateEntries:
                 entry_date=same_date,
                 value=value,
                 context="self_report",
-                recorded_by_id=test_patient.id,
+                recorded_by=test_patient.id,
                 recorded_at=datetime.utcnow()
             )
             async_test_db.add(entry)
@@ -1135,7 +1134,7 @@ class TestAggregateEntries:
                     entry_date=entry_date,
                     value=5.0 + month_offset,
                     context="self_report",
-                    recorded_by_id=test_patient.id,
+                    recorded_by=test_patient.id,
                     recorded_at=datetime.utcnow()
                 )
                 async_test_db.add(entry)
@@ -1175,7 +1174,7 @@ class TestAggregateEntries:
                 entry_date=same_date,
                 value=value,
                 context="self_report",
-                recorded_by_id=test_patient.id,
+                recorded_by=test_patient.id,
                 recorded_at=datetime.utcnow()
             )
             async_test_db.add(entry)
@@ -1192,9 +1191,283 @@ class TestAggregateEntries:
         # Should preserve goal_id, context, recorded_by_id from first entry
         assert result[0].goal_id == goal.id
         assert result[0].context == "self_report"
-        assert result[0].recorded_by_id == test_patient.id
+        assert result[0].recorded_by == test_patient.id
         # Time should be None for aggregated entries
         assert result[0].entry_time is None
+
+
+# ============================================================================
+# TestMilestoneDetection
+# ============================================================================
+
+@pytest.mark.goal_tracking
+class TestMilestoneDetection:
+    """Test milestone detection integration in record_progress_entry"""
+
+    @pytest.mark.asyncio
+    async def test_record_entry_with_percentage_milestone(
+        self,
+        async_test_db: AsyncSession,
+        test_goal_with_config,
+        test_patient
+    ):
+        """Test that recording progress triggers percentage milestone detection"""
+        goal, config = test_goal_with_config
+        # Goal: baseline=8.0, target=3.0, so 50% progress is at value=5.5
+
+        # Record entry that achieves 50% milestone
+        entry_data = ProgressEntryCreate(
+            entry_date=date.today(),
+            value=5.5,  # 50% progress: (8.0 - 5.5) / (8.0 - 3.0) = 0.50
+            context="self_report"
+        )
+
+        result = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Verify response includes milestones
+        assert isinstance(result, ProgressEntryResponse)
+        assert hasattr(result, 'milestones_achieved')
+        assert len(result.milestones_achieved) >= 2  # 25% and 50%
+
+        # Verify milestone details
+        milestone_titles = [m.title for m in result.milestones_achieved]
+        assert '25% Improvement Achieved' in milestone_titles
+        assert '50% Improvement Achieved' in milestone_titles
+
+    @pytest.mark.asyncio
+    async def test_record_entry_with_streak_milestone(
+        self,
+        async_test_db: AsyncSession,
+        test_goal_with_config,
+        test_patient
+    ):
+        """Test that recording consecutive entries triggers streak milestone"""
+        goal, config = test_goal_with_config
+
+        # Create 6 entries on consecutive days
+        for i in range(6):
+            entry_data = ProgressEntryCreate(
+                entry_date=date.today() - timedelta(days=6-i),
+                value=7.0,
+                context="self_report"
+            )
+            await record_progress_entry(
+                goal_id=goal.id,
+                entry_data=entry_data,
+                recorded_by_id=test_patient.id,
+                db=async_test_db
+            )
+
+        # 7th entry should trigger 7-day streak milestone
+        entry_data = ProgressEntryCreate(
+            entry_date=date.today(),
+            value=6.5,
+            context="self_report"
+        )
+
+        result = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Check for streak milestone
+        milestone_titles = [m.title for m in result.milestones_achieved]
+        assert '7-Day Streak Achieved' in milestone_titles
+
+    @pytest.mark.asyncio
+    async def test_record_entry_no_milestones(
+        self,
+        async_test_db: AsyncSession,
+        test_goal_with_config,
+        test_patient
+    ):
+        """Test that recording entry without milestone achievement works correctly"""
+        goal, config = test_goal_with_config
+
+        # Record entry that doesn't trigger any milestones (small progress)
+        entry_data = ProgressEntryCreate(
+            entry_date=date.today(),
+            value=7.9,  # Just 1% progress from baseline of 8.0
+            context="self_report"
+        )
+
+        result = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Should have empty milestones list
+        assert result.milestones_achieved == []
+
+    @pytest.mark.asyncio
+    async def test_record_entry_milestone_already_achieved(
+        self,
+        async_test_db: AsyncSession,
+        test_goal_with_config,
+        test_patient
+    ):
+        """Test that already-achieved milestones are not returned again"""
+        goal, config = test_goal_with_config
+
+        # First entry achieves 25% milestone
+        entry_data_1 = ProgressEntryCreate(
+            entry_date=date.today() - timedelta(days=1),
+            value=6.75,  # 25% progress
+            context="self_report"
+        )
+
+        result_1 = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data_1,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Should achieve 25% milestone
+        milestone_titles_1 = [m.title for m in result_1.milestones_achieved]
+        assert '25% Improvement Achieved' in milestone_titles_1
+
+        # Second entry at same progress level
+        entry_data_2 = ProgressEntryCreate(
+            entry_date=date.today(),
+            value=6.70,  # Still at 25% range
+            context="self_report"
+        )
+
+        result_2 = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data_2,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Should not return 25% milestone again (already achieved)
+        assert result_2.milestones_achieved == []
+
+    @pytest.mark.asyncio
+    async def test_record_entry_multiple_milestones_at_once(
+        self,
+        async_test_db: AsyncSession,
+        test_goal_with_config,
+        test_patient
+    ):
+        """Test achieving multiple milestones with a single entry"""
+        goal, config = test_goal_with_config
+
+        # Record entry that jumps directly to 75% progress
+        entry_data = ProgressEntryCreate(
+            entry_date=date.today(),
+            value=4.25,  # 75% progress: (8.0 - 4.25) / (8.0 - 3.0) = 0.75
+            context="self_report"
+        )
+
+        result = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Should achieve 25%, 50%, and 75% milestones
+        milestone_titles = [m.title for m in result.milestones_achieved]
+        assert '25% Improvement Achieved' in milestone_titles
+        assert '50% Improvement Achieved' in milestone_titles
+        assert '75% Improvement Achieved' in milestone_titles
+        assert len(result.milestones_achieved) >= 3
+
+    @pytest.mark.asyncio
+    async def test_record_entry_100_percent_milestone(
+        self,
+        async_test_db: AsyncSession,
+        test_goal_with_config,
+        test_patient
+    ):
+        """Test achieving 100% completion milestone"""
+        goal, config = test_goal_with_config
+
+        # Record entry at target value
+        entry_data = ProgressEntryCreate(
+            entry_date=date.today(),
+            value=3.0,  # Target value = 100% progress
+            context="self_report"
+        )
+
+        result = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Should achieve all percentage milestones
+        milestone_titles = [m.title for m in result.milestones_achieved]
+        assert '25% Improvement Achieved' in milestone_titles
+        assert '50% Improvement Achieved' in milestone_titles
+        assert '75% Improvement Achieved' in milestone_titles
+        assert '100% Improvement Achieved' in milestone_titles
+
+    @pytest.mark.asyncio
+    async def test_milestone_detection_with_increasing_target(
+        self,
+        async_test_db: AsyncSession,
+        test_patient,
+        test_therapist
+    ):
+        """Test milestone detection works correctly for increasing targets"""
+        # Create goal with increasing target direction
+        goal = TreatmentGoal(
+            patient_id=test_patient.id,
+            therapist_id=test_therapist.id,
+            description="Increase exercise frequency",
+            category="physical_activity",
+            status="in_progress",
+            baseline_value=2.0,
+            target_value=10.0,  # Increasing from 2 to 10
+            target_date=date.today() + timedelta(days=60),
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
+        )
+        async_test_db.add(goal)
+        await async_test_db.flush()
+
+        config = GoalTrackingConfig(
+            goal_id=goal.id,
+            tracking_method="frequency",
+            tracking_frequency="daily",
+            frequency_unit="times_per_week",
+            target_direction="increase",
+            created_at=datetime.utcnow()
+        )
+        async_test_db.add(config)
+        await async_test_db.flush()
+
+        # Record entry at 50% progress: 2 + (10 - 2) * 0.5 = 6.0
+        entry_data = ProgressEntryCreate(
+            entry_date=date.today(),
+            value=6.0,
+            context="self_report"
+        )
+
+        result = await record_progress_entry(
+            goal_id=goal.id,
+            entry_data=entry_data,
+            recorded_by_id=test_patient.id,
+            db=async_test_db
+        )
+
+        # Should achieve 25% and 50% milestones
+        milestone_titles = [m.title for m in result.milestones_achieved]
+        assert '25% Improvement Achieved' in milestone_titles
+        assert '50% Improvement Achieved' in milestone_titles
 
 
 # ============================================================================

@@ -225,6 +225,18 @@ class TrackingConfigResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+class MilestoneAchievement(BaseModel):
+    """Milestone achievement returned with progress entry"""
+    id: UUID = Field(..., description="Milestone ID")
+    milestone_type: str = Field(..., description="Type of milestone (percentage, streak, value, custom)")
+    title: str = Field(..., description="Milestone title")
+    description: Optional[str] = Field(None, description="Milestone description")
+    target_value: Optional[float] = Field(None, description="Target value for milestone")
+    achieved_at: datetime = Field(..., description="When milestone was achieved")
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class ProgressEntryResponse(BaseModel):
     """Progress entry data returned by API"""
     id: UUID = Field(..., description="Unique entry identifier")
@@ -237,6 +249,10 @@ class ProgressEntryResponse(BaseModel):
     context: EntryContext = Field(..., description="Entry context")
     session_id: Optional[UUID] = Field(None, description="Associated session ID if context is 'session'")
     created_at: datetime = Field(..., description="When entry was created")
+    milestones_achieved: List[MilestoneAchievement] = Field(
+        default_factory=list,
+        description="Milestones achieved by this progress entry"
+    )
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -304,3 +320,39 @@ class GoalDashboardResponse(BaseModel):
         default_factory=list,
         description="Upcoming assessments that need to be completed"
     )
+
+
+# ============================================================================
+# Notification Schemas
+# ============================================================================
+
+class MilestoneData(BaseModel):
+    """Milestone details for notification"""
+    type: str = Field(..., description="Milestone type (percentage, value, streak, custom)")
+    title: str = Field(..., description="Milestone title")
+    description: Optional[str] = Field(None, description="Milestone description")
+    achieved_at: datetime = Field(..., description="When milestone was achieved")
+
+
+class NotificationResponse(BaseModel):
+    """Individual notification for milestone achievement"""
+    id: UUID = Field(..., description="Notification (milestone) ID")
+    type: str = Field(default="milestone_achieved", description="Notification type")
+    goal_id: UUID = Field(..., description="Associated goal ID")
+    goal_description: str = Field(..., description="Goal description for context")
+    milestone: MilestoneData = Field(..., description="Milestone details")
+    created_at: datetime = Field(..., description="When notification was created")
+    read: bool = Field(..., description="Whether notification has been read")
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class NotificationsResponse(BaseModel):
+    """List of notifications with unread count"""
+    notifications: List[NotificationResponse] = Field(..., description="List of notifications")
+    unread_count: int = Field(..., description="Number of unread notifications")
+
+
+class NotificationReadUpdate(BaseModel):
+    """Request to mark notification as read"""
+    read: bool = Field(default=True, description="Mark as read (true) or unread (false)")

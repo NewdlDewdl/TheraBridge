@@ -6,9 +6,11 @@ Generates comprehensive progress reports aggregating:
 - Assessment score changes and interpretations
 - Clinical observations and recommendations
 - Patient summary statistics
+- PDF progress reports for goal tracking (Feature 6)
 """
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, and_, or_
+from sqlalchemy.orm import selectinload
 from uuid import UUID
 from datetime import date as date_type, datetime, timedelta
 from typing import List, Dict, Optional
@@ -25,7 +27,8 @@ from app.schemas.report_schemas import (
 )
 from app.models.db_models import User, TherapySession
 from app.models.goal_models import TreatmentGoal
-from app.models.tracking_models import ProgressEntry, AssessmentScore
+from app.models.tracking_models import ProgressEntry, AssessmentScore, ProgressMilestone
+from app.services.pdf_generator import PDFGeneratorService
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -436,3 +439,225 @@ async def generate_clinical_observations(
     # clinical_narrative = await call_openai_for_observations(goals_summary, assessment_summary)
 
     return " ".join(observations)
+
+
+async def generate_goal_progress_report(
+    patient_id: UUID,
+    db: AsyncSession,
+    start_date: Optional[date_type] = None,
+    end_date: Optional[date_type] = None
+) -> bytes:
+    """
+    Generate PDF progress report for patient showing goal tracking data.
+
+    Creates a comprehensive PDF document with:
+    - Patient information header
+    - List of treatment goals with baseline, current, and target values
+    - Progress metrics and trends
+    - Milestones achieved during period
+    - Summary statistics (completion rate, average progress)
+
+    Args:
+        patient_id: UUID of the patient
+        db: Async database session
+        start_date: Optional report period start date (defaults to 90 days ago)
+        end_date: Optional report period end date (defaults to today)
+
+    Returns:
+        bytes: PDF file content
+
+    Raises:
+        ValueError: If patient not found or PDF generation fails
+
+    Example:
+        >>> pdf_bytes = await generate_goal_progress_report(
+        ...     patient_id=uuid,
+        ...     db=db,
+        ...     start_date=date(2024, 1, 1),
+        ...     end_date=date(2024, 3, 31)
+        ... )
+        >>> # Save to file or return in HTTP response
+        >>> with open('report.pdf', 'wb') as f:
+        ...     f.write(pdf_bytes)
+    """
+    logger.info(f"Generating goal progress PDF report for patient {patient_id}")
+
+    # Default date range: last 90 days
+    if not end_date:
+        end_date = datetime.utcnow().date()
+    if not start_date:
+        start_date = end_date - timedelta(days=90)
+
+    # Validate patient exists
+    patient_query = select(User).where(User.id == patient_id)
+    patient_result = await db.execute(patient_query)
+    patient = patient_result.scalar_one_or_none()
+
+    if not patient:
+        logger.error(f"Patient {patient_id} not found")
+        raise ValueError(f"Patient {patient_id} not found")
+
+    # Query goals with eager loading to prevent N+1 queries
+    goals_query = (
+        select(TreatmentGoal)
+        .where(TreatmentGoal.patient_id == patient_id)
+        .options(
+            selectinload(TreatmentGoal.progress_entries),
+            selectinload(TreatmentGoal.milestones)
+        )
+        .order_by(TreatmentGoal.created_at)
+    )
+
+    goals_result = await db.execute(goals_query)
+    goals = goals_result.scalars().all()
+
+    # Handle edge case: no goals
+    if not goals:
+        logger.warning(f"No goals found for patient {patient_id}")
+        goals_data = []
+        has_data = False
+    else:
+        has_data = True
+        goals_data = []
+
+        for goal in goals:
+            # Filter progress entries to date range
+            progress_in_range = [
+                entry for entry in goal.progress_entries
+                if start_date <= entry.entry_date <= end_date
+            ]
+
+            # Get baseline value
+            baseline_value = None
+            if goal.baseline_value:
+                baseline_value = float(goal.baseline_value)
+            elif progress_in_range:
+                # Use earliest entry in range as baseline
+                earliest_entry = min(progress_in_range, key=lambda e: e.entry_date)
+                baseline_value = float(earliest_entry.value)
+
+            # Get current value (most recent entry in range)
+            current_value = None
+            if progress_in_range:
+                latest_entry = max(progress_in_range, key=lambda e: e.entry_date)
+                current_value = float(latest_entry.value)
+
+            # Get target value
+            target_value = float(goal.target_value) if goal.target_value else None
+
+            # Calculate progress metrics
+            progress_percentage = None
+            change = None
+
+            if baseline_value is not None and current_value is not None:
+                change = current_value - baseline_value
+
+                # Calculate progress percentage toward target
+                if target_value is not None and baseline_value != target_value:
+                    progress_made = current_value - baseline_value
+                    total_distance = target_value - baseline_value
+                    progress_percentage = (progress_made / total_distance * 100)
+                    # Cap at 100%
+                    progress_percentage = min(100, max(0, progress_percentage))
+
+            # Get milestones achieved in period
+            milestones_achieved = [
+                {
+                    'title': milestone.title,
+                    'achieved_at': milestone.achieved_at
+                }
+                for milestone in goal.milestones
+                if milestone.achieved_at and start_date <= milestone.achieved_at.date() <= end_date
+            ]
+
+            # Build goal data dictionary
+            goal_data = {
+                'description': goal.description,
+                'category': goal.category or 'General',
+                'status': goal.status,
+                'baseline_value': baseline_value,
+                'current_value': current_value,
+                'target_value': target_value,
+                'change': change,
+                'progress_percentage': round(progress_percentage, 1) if progress_percentage else None,
+                'target_date': goal.target_date,
+                'milestones_achieved': milestones_achieved,
+                'num_entries': len(progress_in_range)
+            }
+
+            goals_data.append(goal_data)
+
+    # Calculate summary statistics
+    if has_data and goals_data:
+        # Goals with progress data
+        goals_with_data = [g for g in goals_data if g['progress_percentage'] is not None]
+
+        # Average completion rate
+        avg_completion_rate = (
+            sum(g['progress_percentage'] for g in goals_with_data) / len(goals_with_data)
+            if goals_with_data else 0
+        )
+
+        # Count by status
+        completed_count = sum(1 for g in goals_data if g['status'] == 'completed')
+        in_progress_count = sum(1 for g in goals_data if g['status'] == 'in_progress')
+        assigned_count = sum(1 for g in goals_data if g['status'] == 'assigned')
+
+        # Total milestones achieved
+        total_milestones_achieved = sum(len(g['milestones_achieved']) for g in goals_data)
+
+        summary_stats = {
+            'total_goals': len(goals_data),
+            'avg_completion_rate': round(avg_completion_rate, 1),
+            'completed_count': completed_count,
+            'in_progress_count': in_progress_count,
+            'assigned_count': assigned_count,
+            'total_milestones_achieved': total_milestones_achieved
+        }
+    else:
+        summary_stats = {
+            'total_goals': 0,
+            'avg_completion_rate': 0,
+            'completed_count': 0,
+            'in_progress_count': 0,
+            'assigned_count': 0,
+            'total_milestones_achieved': 0
+        }
+
+    # Prepare template context
+    context = {
+        'patient': patient,
+        'patient_name': patient.full_name,
+        'start_date': start_date,
+        'end_date': end_date,
+        'goals': goals_data,
+        'has_data': has_data,
+        'summary_stats': summary_stats,
+        'generated_at': datetime.utcnow()
+    }
+
+    # Generate PDF using template
+    try:
+        pdf_service = PDFGeneratorService()
+        pdf_bytes = await pdf_service.generate_from_template(
+            template_name='goal_progress_report.html',
+            context=context
+        )
+
+        # Log success with metrics
+        size_kb = len(pdf_bytes) / 1024
+        logger.info(
+            f"Goal progress PDF generated successfully",
+            extra={
+                'patient_id': str(patient_id),
+                'goals_count': len(goals_data),
+                'size_kb': round(size_kb, 2),
+                'date_range_days': (end_date - start_date).days
+            }
+        )
+
+        return pdf_bytes
+
+    except Exception as e:
+        logger.error(f"Failed to generate goal progress PDF: {e}", exc_info=True)
+        raise ValueError(f"Failed to generate PDF report: {str(e)}")

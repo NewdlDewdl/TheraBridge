@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, and_
 from uuid import UUID
 from typing import List, Optional
-from datetime import date as date_type
+from datetime import date as date_type, datetime
 
 from app.database import get_db
 from app.auth.dependencies import require_role
@@ -23,7 +23,11 @@ from app.schemas.tracking_schemas import (
     TreatmentGoalCreate,
     TreatmentGoalResponse,
     GoalStatus,
-    AggregationPeriod
+    AggregationPeriod,
+    NotificationsResponse,
+    NotificationResponse,
+    NotificationReadUpdate,
+    MilestoneData
 )
 from app.services import tracking_service, dashboard_service
 from app.middleware.rate_limit import limiter
@@ -549,3 +553,333 @@ async def list_patient_goals(
     goals = result.scalars().all()
 
     return [TreatmentGoalResponse.model_validate(goal) for goal in goals]
+
+
+@router.get("/notifications", response_model=NotificationsResponse)
+@limiter.limit("100/minute")
+async def get_notifications(
+    request: Request,
+    patient_id: Optional[UUID] = Query(None, description="Patient ID to filter notifications (required for patients, optional for therapists)"),
+    since: Optional[datetime] = Query(None, description="Only include notifications since this timestamp (default: last 24 hours)"),
+    limit: int = Query(20, ge=1, le=100, description="Maximum number of notifications to return"),
+    current_user: User = Depends(require_role(["therapist", "patient"])),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Get recent milestone achievement notifications.
+
+    Retrieves milestone notifications that can be polled by frontends for
+    real-time updates. Supports filtering by time range and patient.
+
+    Auth:
+        Requires therapist or patient role
+        Data isolation: Patients can only see their own notifications,
+                       therapists can see notifications for assigned patients
+
+    Rate Limit:
+        100 requests per minute per IP address
+
+    Query Parameters:
+        - patient_id: Filter to specific patient (required for patients viewing their own)
+        - since: Only show notifications after this timestamp (ISO 8601 format)
+                 Default: last 24 hours
+        - limit: Max notifications to return (1-100, default: 20)
+
+    Args:
+        request: FastAPI request object (for rate limiting)
+        patient_id: Optional patient ID filter
+        since: Optional timestamp filter
+        limit: Maximum number of results
+        current_user: Authenticated user
+        db: AsyncSession database dependency
+
+    Returns:
+        NotificationsResponse: List of notifications with unread count
+
+    Raises:
+        HTTPException 403: If patient tries to access another patient's notifications
+        HTTPException 400: If patient_id not provided by patient user
+        HTTPException 429: Rate limit exceeded
+
+    Data Isolation:
+        - Patients: Can only view their own notifications (must provide patient_id matching their user ID)
+        - Therapists: Can view notifications for all assigned patients
+
+    Example Request:
+        GET /notifications?patient_id={uuid}&since=2025-01-15T00:00:00Z&limit=20
+
+    Example Response:
+        {
+            "notifications": [
+                {
+                    "id": "uuid",
+                    "type": "milestone_achieved",
+                    "goal_id": "uuid",
+                    "goal_description": "Reduce anxiety to manageable levels",
+                    "milestone": {
+                        "type": "percentage",
+                        "title": "50% Improvement Achieved",
+                        "description": "Reached 50% progress toward goal target",
+                        "achieved_at": "2025-01-15T10:30:00Z"
+                    },
+                    "created_at": "2025-01-15T10:30:00Z",
+                    "read": false
+                }
+            ],
+            "unread_count": 3
+        }
+    """
+    from app.models.tracking_models import ProgressMilestone
+    from sqlalchemy.orm import selectinload
+
+    # Data isolation check
+    if current_user.role.value == "patient":
+        # Patients must provide their own patient_id
+        if patient_id is None:
+            raise HTTPException(
+                status_code=400,
+                detail="patient_id is required for patient users"
+            )
+
+        if patient_id != current_user.id:
+            raise HTTPException(
+                status_code=403,
+                detail="Patients can only view their own notifications"
+            )
+
+    elif current_user.role.value == "therapist":
+        # Therapists can optionally filter by patient_id
+        # If patient_id provided, verify they have access to that patient
+        if patient_id:
+            assignment_query = select(TherapistPatient).where(
+                and_(
+                    TherapistPatient.therapist_id == current_user.id,
+                    TherapistPatient.patient_id == patient_id,
+                    TherapistPatient.is_active == True
+                )
+            )
+            assignment_result = await db.execute(assignment_query)
+            assignment = assignment_result.scalar_one_or_none()
+
+            if not assignment:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Not authorized to view this patient's notifications"
+                )
+
+    # Set default time filter to last 24 hours if not provided
+    if since is None:
+        from datetime import timedelta
+        since = datetime.utcnow() - timedelta(hours=24)
+
+    # Build query for achieved milestones
+    query = (
+        select(ProgressMilestone)
+        .options(selectinload(ProgressMilestone.goal))
+        .where(
+            and_(
+                ProgressMilestone.achieved_at.isnot(None),
+                ProgressMilestone.achieved_at >= since
+            )
+        )
+        .order_by(ProgressMilestone.achieved_at.desc())
+        .limit(limit)
+    )
+
+    # Filter by patient if specified
+    if patient_id:
+        # Join with TreatmentGoal to filter by patient_id
+        query = query.join(TreatmentGoal).where(TreatmentGoal.patient_id == patient_id)
+    elif current_user.role.value == "therapist":
+        # Therapist without patient_id filter: show all their patients' notifications
+        # Join with TherapistPatient to get only assigned patients
+        query = (
+            query
+            .join(TreatmentGoal)
+            .join(
+                TherapistPatient,
+                and_(
+                    TherapistPatient.patient_id == TreatmentGoal.patient_id,
+                    TherapistPatient.therapist_id == current_user.id,
+                    TherapistPatient.is_active == True
+                )
+            )
+        )
+
+    # Execute query
+    result = await db.execute(query)
+    milestones = result.scalars().all()
+
+    # Build notification responses
+    notifications = []
+    for milestone in milestones:
+        notification = NotificationResponse(
+            id=milestone.id,
+            type="milestone_achieved",
+            goal_id=milestone.goal_id,
+            goal_description=milestone.goal.description,
+            milestone=MilestoneData(
+                type=milestone.milestone_type or "custom",
+                title=milestone.title,
+                description=milestone.description,
+                achieved_at=milestone.achieved_at
+            ),
+            created_at=milestone.achieved_at,
+            read=milestone.read
+        )
+        notifications.append(notification)
+
+    # Count unread notifications (same filters, but only count unread)
+    unread_query = (
+        select(ProgressMilestone)
+        .where(
+            and_(
+                ProgressMilestone.achieved_at.isnot(None),
+                ProgressMilestone.achieved_at >= since,
+                ProgressMilestone.read == False
+            )
+        )
+    )
+
+    if patient_id:
+        unread_query = unread_query.join(TreatmentGoal).where(TreatmentGoal.patient_id == patient_id)
+    elif current_user.role.value == "therapist":
+        unread_query = (
+            unread_query
+            .join(TreatmentGoal)
+            .join(
+                TherapistPatient,
+                and_(
+                    TherapistPatient.patient_id == TreatmentGoal.patient_id,
+                    TherapistPatient.therapist_id == current_user.id,
+                    TherapistPatient.is_active == True
+                )
+            )
+        )
+
+    unread_result = await db.execute(unread_query)
+    unread_count = len(unread_result.scalars().all())
+
+    return NotificationsResponse(
+        notifications=notifications,
+        unread_count=unread_count
+    )
+
+
+@router.patch("/notifications/{notification_id}/read", response_model=NotificationResponse)
+@limiter.limit("100/minute")
+async def mark_notification_read(
+    request: Request,
+    notification_id: UUID,
+    update_data: NotificationReadUpdate = NotificationReadUpdate(read=True),
+    current_user: User = Depends(require_role(["therapist", "patient"])),
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Mark a notification as read or unread.
+
+    Updates the read status of a milestone notification. Used to track
+    which notifications the user has seen.
+
+    Auth:
+        Requires therapist or patient role
+        Data isolation: Users can only mark notifications for their accessible patients
+
+    Rate Limit:
+        100 requests per minute per IP address
+
+    Args:
+        request: FastAPI request object (for rate limiting)
+        notification_id: UUID of the notification (milestone) to update
+        update_data: Read status update (default: read=true)
+        current_user: Authenticated user
+        db: AsyncSession database dependency
+
+    Returns:
+        NotificationResponse: Updated notification
+
+    Raises:
+        HTTPException 404: If notification not found
+        HTTPException 403: If user not authorized to access this notification
+        HTTPException 429: Rate limit exceeded
+
+    Data Isolation:
+        - Patients: Can only mark their own notifications as read
+        - Therapists: Can mark notifications for assigned patients as read
+
+    Example Request:
+        PATCH /notifications/{notification_id}/read
+        {
+            "read": true
+        }
+    """
+    from app.models.tracking_models import ProgressMilestone
+    from sqlalchemy.orm import selectinload
+
+    # Load milestone with goal relationship
+    query = (
+        select(ProgressMilestone)
+        .options(selectinload(ProgressMilestone.goal))
+        .where(ProgressMilestone.id == notification_id)
+    )
+
+    result = await db.execute(query)
+    milestone = result.scalar_one_or_none()
+
+    if not milestone:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Notification with id {notification_id} not found"
+        )
+
+    # Get patient_id from the goal
+    patient_id = milestone.goal.patient_id
+
+    # Data isolation check
+    if current_user.role.value == "patient":
+        # Patients can only mark their own notifications
+        if patient_id != current_user.id:
+            raise HTTPException(
+                status_code=403,
+                detail="Not authorized to mark this notification as read"
+            )
+    elif current_user.role.value == "therapist":
+        # Therapists can only mark notifications for assigned patients
+        assignment_query = select(TherapistPatient).where(
+            and_(
+                TherapistPatient.therapist_id == current_user.id,
+                TherapistPatient.patient_id == patient_id,
+                TherapistPatient.is_active == True
+            )
+        )
+        assignment_result = await db.execute(assignment_query)
+        assignment = assignment_result.scalar_one_or_none()
+
+        if not assignment:
+            raise HTTPException(
+                status_code=403,
+                detail="Not authorized to mark this notification as read"
+            )
+
+    # Update read status
+    milestone.read = update_data.read
+    await db.commit()
+    await db.refresh(milestone)
+
+    # Return updated notification
+    notification = NotificationResponse(
+        id=milestone.id,
+        type="milestone_achieved",
+        goal_id=milestone.goal_id,
+        goal_description=milestone.goal.description,
+        milestone=MilestoneData(
+            type=milestone.milestone_type or "custom",
+            title=milestone.title,
+            description=milestone.description,
+            achieved_at=milestone.achieved_at
+        ),
+        created_at=milestone.achieved_at,
+        read=milestone.read
+    )
+
+    return notification

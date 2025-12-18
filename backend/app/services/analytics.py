@@ -28,7 +28,7 @@ from app.models.schemas import (
     MoodTrendData,
     GoalStatus
 )
-from app.models.db_models import TherapySession, User, TherapistPatient
+from app.models.db_models import TherapySession, User, TherapistPatient, Patient
 
 # Configure logger
 logger = logging.getLogger(__name__)
@@ -136,7 +136,7 @@ async def calculate_overview_analytics(
 
     # Calculate date boundaries
     now = datetime.utcnow()
-    week_start = now - timedelta(days=now.weekday())  # Monday of current week
+    week_start = (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)  # Monday of current week at midnight
     month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     thirty_days_ago = now - timedelta(days=30)
 
@@ -175,11 +175,14 @@ async def calculate_overview_analytics(
     sessions_this_week = sessions_this_week_result.scalar() or 0
 
     # 4. Calculate sessions_this_month
+    # Calculate end of current month for proper boundary
+    next_month_start = (month_start.replace(day=28) + timedelta(days=4)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
     sessions_this_month_query = select(func.count(TherapySession.id)).where(
         and_(
             TherapySession.therapist_id == therapist_id,
             TherapySession.session_date >= month_start,
-            TherapySession.session_date <= now,
+            TherapySession.session_date < next_month_start,  # Use month boundary instead of now
             TherapySession.status != 'failed'
         )
     )
@@ -364,8 +367,8 @@ async def calculate_session_trends(
         if dialect_name == 'postgresql':
             label_expr = func.to_char(TherapySession.session_date, 'Mon').label('label')
         else:  # sqlite
-            # SQLite: Use strftime with %m and map to month names
-            label_expr = func.strftime('%m', TherapySession.session_date).label('label')
+            # SQLite: Use strftime with %b and map to month names
+            label_expr = func.strftime('%b', TherapySession.session_date).label('label')
     elif label_format == "quarter":
         # Quarter: "Q1 2024", "Q2 2024"
         if dialect_name == 'postgresql':
@@ -699,27 +702,61 @@ async def calculate_patient_progress(
     """
     logger.info(f"Calculating patient progress for patient {patient_id}, therapist {therapist_id}")
 
-    # 1. Verify access: Check that patient is assigned to therapist
-    access_query = select(TherapistPatient).where(
-        and_(
-            TherapistPatient.therapist_id == therapist_id,
-            TherapistPatient.patient_id == patient_id,
-            TherapistPatient.is_active == True
-        )
-    )
-    access_result = await db.execute(access_query)
-    relationship = access_result.scalar_one_or_none()
+    # 1. Lookup Patient record to bridge legacy Patient.id to User.id
+    patient_query = select(Patient).where(Patient.id == patient_id)
+    patient_result = await db.execute(patient_query)
+    patient = patient_result.scalar_one_or_none()
 
-    if not relationship:
-        logger.warning(
-            f"Access denied: Patient {patient_id} not assigned to therapist {therapist_id}"
-        )
+    if not patient:
+        logger.error(f"Patient not found: {patient_id}")
         raise HTTPException(
-            status_code=403,
-            detail="Access denied: Patient is not assigned to this therapist"
+            status_code=404,
+            detail=f"Patient with ID {patient_id} not found"
         )
 
-    # 2. Fetch all sessions for this patient, ordered by date
+    # 2. Find corresponding User record by email for authorization
+    patient_user_id = None
+    if patient.email:
+        user_query = select(User).where(
+            and_(
+                User.email == patient.email,
+                User.role == "patient"
+            )
+        )
+        user_result = await db.execute(user_query)
+        patient_user = user_result.scalar_one_or_none()
+
+        if patient_user:
+            patient_user_id = patient_user.id
+            logger.info(f"Found User record for patient: Patient.id={patient_id}, User.id={patient_user_id}")
+        else:
+            logger.info(f"No User record found for patient {patient_id} (legacy data), skipping authorization")
+    else:
+        logger.warning(f"Patient {patient_id} has no email, skipping authorization (legacy data)")
+
+    # 3. Verify access: Check that patient is assigned to therapist (only if User record exists)
+    if patient_user_id:
+        access_query = select(TherapistPatient).where(
+            and_(
+                TherapistPatient.therapist_id == therapist_id,
+                TherapistPatient.patient_id == patient_user_id,
+                TherapistPatient.is_active == True
+            )
+        )
+        access_result = await db.execute(access_query)
+        relationship = access_result.scalar_one_or_none()
+
+        if not relationship:
+            logger.warning(
+                f"Access denied: Patient User.id={patient_user_id} (Patient.id={patient_id}) "
+                f"not assigned to therapist {therapist_id}"
+            )
+            raise HTTPException(
+                status_code=403,
+                detail="Access denied: Patient is not assigned to this therapist"
+            )
+
+    # 4. Fetch all sessions for this patient, ordered by date
     sessions_query = select(TherapySession).where(
         TherapySession.patient_id == patient_id
     ).order_by(TherapySession.session_date)
@@ -753,17 +790,17 @@ async def calculate_patient_progress(
             )
         )
 
-    # 3. Basic session stats
+    # 5. Basic session stats
     first_session_date = sessions[0].session_date.strftime("%Y-%m-%d")
     last_session_date = sessions[-1].session_date.strftime("%Y-%m-%d")
 
-    # 4. Calculate session frequency
+    # 6. Calculate session frequency
     session_frequency = await _calculate_session_frequency(sessions, db, patient_id)
 
-    # 5. Calculate mood trend
+    # 7. Calculate mood trend
     mood_trend = await _calculate_mood_trend(sessions, db, patient_id)
 
-    # 6. Calculate goals from treatment_goals table
+    # 8. Calculate goals from treatment_goals table
     goals = await _calculate_goals(patient_id, db)
 
     logger.info(
@@ -917,11 +954,11 @@ async def _calculate_mood_trend(
         func.avg(
             func.cast(
                 func.case(
-                    (TherapySession.extracted_notes['session_mood'].astext == 'very_low', 1),
-                    (TherapySession.extracted_notes['session_mood'].astext == 'low', 2),
-                    (TherapySession.extracted_notes['session_mood'].astext == 'neutral', 3),
-                    (TherapySession.extracted_notes['session_mood'].astext == 'positive', 4),
-                    (TherapySession.extracted_notes['session_mood'].astext == 'very_positive', 5),
+                    (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'very_low', 1),
+                    (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'low', 2),
+                    (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'neutral', 3),
+                    (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'positive', 4),
+                    (func.json_extract(TherapySession.extracted_notes, '$.session_mood') == 'very_positive', 5),
                     else_=3  # Default to neutral if missing
                 ),
                 float
