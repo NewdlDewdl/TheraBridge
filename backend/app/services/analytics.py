@@ -8,12 +8,13 @@ Provides calculation functions for analytics endpoints including:
 - Topic analysis and insights
 """
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, and_, distinct, case, cast, Integer
+from sqlalchemy import select, func, and_, distinct, case, cast, Integer, String
 from uuid import UUID
 from datetime import datetime, timedelta
 from typing import Optional, List
 from fastapi import HTTPException
 import logging
+import json
 
 from app.models.schemas import (
     AnalyticsOverviewResponse,

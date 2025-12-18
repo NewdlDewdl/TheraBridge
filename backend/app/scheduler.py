@@ -28,11 +28,23 @@ def start_scheduler():
     """
     Start the APScheduler for background analytics jobs.
 
-    This function is called during application startup. It checks the
-    ENABLE_ANALYTICS_SCHEDULER setting and starts the scheduler if enabled.
-
-    Jobs must be registered separately before calling this function.
+    The scheduler is automatically disabled when running under pytest to prevent
+    background jobs from interfering with test database teardown.
     """
+    import sys
+    import os
+
+    # Detect if running under pytest - disable scheduler during tests
+    is_pytest = (
+        'pytest' in sys.modules or
+        'PYTEST_CURRENT_TEST' in os.environ or
+        'pytest' in sys.argv[0]
+    )
+
+    if is_pytest:
+        logger.info("Analytics scheduler disabled (running under pytest)")
+        return
+
     if not settings.ENABLE_ANALYTICS_SCHEDULER:
         logger.info("Analytics scheduler disabled via config (ENABLE_ANALYTICS_SCHEDULER=False)")
         return
