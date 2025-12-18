@@ -2,7 +2,7 @@
 
 ## 📚 Documentation Overview
 
-The orchestration system consists of **6 core files** organized into 3 categories:
+The orchestration system consists of **7 core files** organized into 3 categories:
 
 ### **1. Executable Files (Agent & Command)**
 - **`agents/cl/parallel-orchestrator.md`** - The orchestrator agent implementation
@@ -10,6 +10,7 @@ The orchestration system consists of **6 core files** organized into 3 categorie
 
 ### **2. Reference Documentation**
 - **`DYNAMIC_WAVE_ORCHESTRATION.md`** - Wave-based execution methodology
+- **`META_ORCHESTRATION.md`** - Recursive parallel orchestration (NEW)
 - **`ORCHESTRATION_IMPROVEMENTS.md`** - Feature improvements history
 - **`ORCHESTRATION_RECURSION_SAFETY.md`** - Automatic recursion tracking
 - **`AUTOMATIC_RECURSION_SUMMARY.md`** - Recursion system quick reference
@@ -99,7 +100,43 @@ The orchestrator will automatically:
 
 ---
 
-### 3. `DYNAMIC_WAVE_ORCHESTRATION.md` (41 KB)
+### 3. `META_ORCHESTRATION.md` (28 KB) **NEW**
+
+**Purpose:** Meta-orchestration pattern for spawning child orchestrators
+
+**Contains:**
+- What is meta-orchestration (child orchestrators vs specialized agents)
+- When to use meta-orchestration (decision criteria)
+- How it works (6-phase process)
+- Recursion depth management for meta-orchestration
+- Benefits (true parallelism, isolated contexts, independent failure)
+- Traditional vs meta-orchestration comparison
+- Real-world scenarios and examples
+- Implementation checklist
+
+**When to read:**
+- Understanding when to spawn child orchestrators
+- Handling multi-issue scenarios (7 bugs, 6 dimensions, 100 microservices)
+- Maximizing parallelization for independent complex subtasks
+- Learning the difference between agent-based and orchestrator-based parallelism
+
+**Key sections:**
+- What is Meta-Orchestration (lines 7-40)
+- When to Use Meta-Orchestration (lines 42-90)
+- How It Works (lines 92-280)
+- Recursion Depth Management (lines 282-330)
+- Benefits (lines 332-400)
+- Comparison Table (lines 402-420)
+- Example Scenarios (lines 422-530)
+
+**Links to:**
+- Implemented in: `parallel-orchestrator.md` Step 1.6 & 1.6a
+- Uses: `AUTOMATIC_RECURSION_SUMMARY.md` execution ID system
+- Related: `DYNAMIC_WAVE_ORCHESTRATION.md` for specialized agent patterns
+
+---
+
+### 4. `DYNAMIC_WAVE_ORCHESTRATION.md` (41 KB)
 
 **Purpose:** Comprehensive wave-based execution methodology
 

@@ -433,6 +433,195 @@ This ensures all work (tracked and untracked) is preserved before changes.
 
 ---
 
+### Step 1.6: Meta-Orchestration Decision (REQUIRED)
+
+**After git backup, analyze if task requires meta-orchestration (spawning child orchestrators vs specialized agents).**
+
+Based on Wave 0 research findings, determine if this task matches the **meta-orchestration pattern**. Meta-orchestration spawns child orchestrators (one per independent complex subtask) instead of using specialized agents in waves.
+
+#### When to Use Meta-Orchestration
+
+Use meta-orchestration when ALL criteria are met:
+
+1. **Multiple Independent Complex Subtasks (2+)**
+   - Task naturally divides into 2+ distinct dimensions/issues
+   - Each subtask requires 3+ steps to complete
+   - Each subtask estimated >10 minutes of work
+
+2. **No Cross-Dependencies**
+   - Subtasks can execute completely in parallel
+   - No shared state or sequential requirements
+   - Results can be consolidated independently
+
+3. **Depth Allows Spawning**
+   - Current depth = 0 (only root orchestrators can use meta-orchestration)
+   - Preserves depth 1-2 for child orchestrators and their cleanup
+
+4. **High Parallelization Benefit**
+   - Total time savings > coordination overhead
+   - Each dimension benefits from independent wave structure
+
+#### Output If Meta-Orchestration Detected
+
+```
+🔍 META-ORCHESTRATION PATTERN DETECTED
+
+Analysis of Wave 0 research findings:
+├─ Independent complex subtasks identified: [N]
+├─ Each subtask requires: 3-5 steps (analysis → fix → test → report)
+├─ Cross-dependencies: None
+├─ Current recursion depth: 0
+└─ Decision: SPAWN [N] CHILD ORCHESTRATORS ✅
+
+Subtask Breakdown:
+1. [Subtask 1 Name] - [X] steps, ~[Y] min → Orchestrator [EXEC_ID].1
+2. [Subtask 2 Name] - [X] steps, ~[Y] min → Orchestrator [EXEC_ID].2
+[... N subtasks total]
+
+Proceed to Step 1.6a to spawn orchestrators.
+```
+
+#### Output If Specialized Agents Pattern
+
+```
+🔍 SPECIALIZED AGENTS PATTERN DETECTED
+
+└─ Decision: USE SPECIALIZED AGENTS IN WAVES ✅
+
+Rationale: [e.g., "Only 1 major subtask" OR "Subtasks have dependencies" OR "Tasks too simple for orchestration"]
+
+Proceed to Step 2 (Wave Structure).
+```
+
+---
+
+### Step 1.6a: Spawn Child Orchestrators (CONDITIONAL)
+
+**Execute ONLY if Step 1.6 detected meta-orchestration pattern.**
+
+Output and launch all child orchestrators in parallel:
+
+```
+🌊 WAVE 1: SPAWN CHILD ORCHESTRATORS ([N] orchestrators in parallel)
+
+├─ Orchestrator 1 ([EXEC_ID].1): [Subtask 1]
+├─ Orchestrator 2 ([EXEC_ID].2): [Subtask 2]
+└─ Orchestrator [N] ([EXEC_ID].[N]): [Subtask N]
+
+⏳ Spawning [N] orchestrators (single message with [N] Task calls)...
+```
+
+Launch all using ONE message with multiple Task invocations. Each child receives focused subtask with context from Wave 0 research.
+
+#### Example: Spawning 6 Child Orchestrators
+
+```
+Task: "Analyze repository across 6 dimensions: documentation, code quality, tests, security, performance, dependencies"
+
+Wave 0 Research → 6 independent complex dimensions identified
+Step 1.6 Decision → META-ORCHESTRATION ✅
+
+Spawning orchestrators:
+```
+
+```xml
+<function_calls>
+<invoke name="Task">
+<parameter name="subagent_type">parallel-orchestrator</parameter>
+<parameter name="description">Orchestrator 1: Documentation (ORG_4729.1)</parameter>
+<parameter name="prompt">[EXEC_ID: ORG_4729.1]
+
+# Documentation Quality Analysis & Improvement
+
+## Context from Wave 0 Research
+- 150+ markdown files found
+- Excessive duplication in frontend (40+ overlapping files)
+- Backend test docs scattered across 32+ files
+
+## Your Mission
+Analyze and consolidate documentation to improve navigability.
+
+## Tasks
+1. Identify all duplicate documentation
+2. Consolidate overlapping content
+3. Remove redundant files
+4. Generate consolidation report
+
+## Success Criteria
+- Reduce doc count by 40-60%
+- Single authoritative doc per topic
+- Clear navigation structure
+</parameter>
+</invoke>
+<invoke name="Task">
+<parameter name="subagent_type">parallel-orchestrator</parameter>
+<parameter name="description">Orchestrator 2: Code Quality (ORG_4729.2)</parameter>
+<parameter name="prompt">[EXEC_ID: ORG_4729.2]
+
+# Code Quality Improvements
+
+## Context from Wave 0 Research
+- 29 TODOs found (8 critical)
+- 227-line function with complexity ~15-20
+- Authorization code duplicated 16+ times
+
+## Your Mission
+Fix critical code quality issues and refactor problematic patterns.
+
+## Tasks
+1. Fix RBAC enforcement gaps
+2. Refactor complex functions
+3. Extract duplicated authorization code
+4. Generate quality improvement report
+
+## Success Criteria
+- RBAC fully enforced
+- No functions >100 lines
+- Authorization DRY (single implementation)
+</parameter>
+</invoke>
+... (4 more orchestrators for tests, security, performance, dependencies)
+</function_calls>
+```
+
+#### Consolidation Phase
+
+After all children complete:
+
+```
+✅ ALL CHILD ORCHESTRATORS COMPLETE
+
+Consolidating results from 6 orchestrators...
+
+📊 CONSOLIDATED RESULTS:
+
+Orchestrator 1 (Documentation) - ✅ COMPLETE
+- Removed 68 redundant files
+- Consolidated to 82 essential docs
+- Documentation quality: 8.5/10
+
+Orchestrator 2 (Code Quality) - ✅ COMPLETE
+- Fixed 8 critical TODOs
+- Refactored 4 complex functions
+- Extracted authorization dependency
+
+[... results from orchestrators 3-6]
+
+### Overall Impact
+- Documentation: 45% file reduction
+- Code Quality: 18 critical issues resolved
+- Test Coverage: 7 routers now tested
+- Security: 3 critical vulnerabilities fixed
+- Performance: 40% faster analytics
+- Dependencies: Version conflicts resolved
+
+Total execution time: 28 minutes (vs 4+ hours sequential)
+```
+
+Then proceed to cleanup (Step 4b).
+
+---
+
 ### Step 2: Wave Structure (REQUIRED)
 
 **🚨 CRITICAL: Show POOL SIZE (maximum across waves), not total agent slots.**
