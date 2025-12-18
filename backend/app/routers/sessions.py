@@ -1162,23 +1162,22 @@ async def process_timeline_export(
     """
     Background task to process timeline export job.
 
-    This is a placeholder that will be implemented by Backend Dev #3 (I7).
-    The actual implementation will:
-    1. Fetch timeline events from database
-    2. Generate export file in requested format (PDF, DOCX, or JSON)
-    3. Update job status and file_path
-    4. Set expiration timestamp
+    Delegates to export_worker module for actual processing.
     """
-    # TODO: Backend Dev #3 (I7) will implement this
-    logger.info(
-        "Timeline export task queued (pending implementation)",
-        extra={
-            "job_id": str(job_id),
-            "patient_id": str(patient_id),
-            "format": format
-        }
+    from app.tasks.export_worker import process_timeline_export as worker_process
+
+    # Convert dates to datetime for worker
+    start_datetime = datetime.combine(start_date, datetime.min.time()) if start_date else None
+    end_datetime = datetime.combine(end_date, datetime.max.time()) if end_date else None
+
+    await worker_process(
+        job_id=job_id,
+        patient_id=patient_id,
+        format=format,
+        start_date=start_datetime,
+        end_date=end_datetime,
+        db=db
     )
-    pass
 
 
 @router.delete("/patients/{patient_id}/timeline/{event_id}")

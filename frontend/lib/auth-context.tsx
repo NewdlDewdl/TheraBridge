@@ -41,7 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }): React
     }
 
     try {
-      const result = await apiClient.get<User>('/auth/me');
+      const result = await apiClient.get<User>('/api/v1/auth/me');
       if (result.success) {
         setUser(result.data);
       } else {
@@ -60,7 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }): React
     const result = await apiClient.post<{
       access_token: string;
       refresh_token: string;
-    }>('/auth/login', { email, password });
+    }>('/api/v1/auth/login', { email, password });
 
     if (result.success) {
       tokenStorage.saveTokens(result.data.access_token, result.data.refresh_token);
@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }): React
     const result = await apiClient.post<{
       access_token: string;
       refresh_token: string;
-    }>('/auth/signup', {
+    }>('/api/v1/auth/signup', {
       email,
       password,
       full_name: fullName,
@@ -94,7 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }): React
 
     if (refreshToken) {
       try {
-        await apiClient.post('/auth/logout', { refresh_token: refreshToken });
+        await apiClient.post('/api/v1/auth/logout', { refresh_token: refreshToken });
       } catch {
         // Ignore errors (already logged out on server)
       }
