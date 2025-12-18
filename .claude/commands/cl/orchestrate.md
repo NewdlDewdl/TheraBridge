@@ -4,6 +4,12 @@ description: Orchestrate complex tasks using intelligent parallel execution
 
 # Parallel Task Orchestration
 
+> **📚 Documentation References:**
+>
+> - **System index:** `../.claude/ORCHESTRATION_SYSTEM_INDEX.md` - Complete documentation
+> - **Improvements:** `../.claude/ORCHESTRATION_IMPROVEMENTS.md` - Feature history
+> - **Recursion:** `../.claude/ORCHESTRATION_RECURSION_SAFETY.md` - Automatic depth tracking
+
 You are executing a parallel orchestration command. When invoked with `/cl:orchestrate [task]`, you MUST follow this protocol:
 
 ## 📚 Reference Documentation
@@ -22,6 +28,12 @@ You are executing a parallel orchestration command. When invoked with `/cl:orche
    - Dependency analysis (how to build DAG)
    - Wave generation rules (how to organize tasks into waves)
    - Tool usage guidelines
+
+3. **`.claude/ORCHESTRATION_SYSTEM_INDEX.md`** - Contains:
+   - Complete documentation index
+   - File relationships and cross-references
+   - Learning path and common tasks
+   - Troubleshooting guide
 
 **Use these files to inform your decisions when calculating agent counts and structuring waves.**
 

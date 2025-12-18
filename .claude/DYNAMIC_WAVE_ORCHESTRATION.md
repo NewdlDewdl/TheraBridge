@@ -1,5 +1,13 @@
 # 🌊 INTELLIGENT DYNAMIC PARALLEL ORCHESTRATION SYSTEM
 
+> **📚 Part of the Orchestration System Documentation**
+>
+> - **See also:** `ORCHESTRATION_SYSTEM_INDEX.md` - Complete documentation index
+> - **Implements:** Auto-scaling algorithm used by `parallel-orchestrator.md`
+> - **Related:** `ORCHESTRATION_IMPROVEMENTS.md` - System improvements history
+
+---
+
 ## 🎯 CORE PRINCIPLE
 
 **You describe the goal in natural language. The system automatically figures out everything else.**

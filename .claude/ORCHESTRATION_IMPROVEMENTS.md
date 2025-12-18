@@ -1,5 +1,13 @@
 # Orchestration Improvements Summary
 
+> **📚 Part of the Orchestration System Documentation**
+>
+> - **See also:** `ORCHESTRATION_SYSTEM_INDEX.md` - Complete documentation index
+> - **Implemented in:** `parallel-orchestrator.md` and `orchestrate.md`
+> - **Related:** `ORCHESTRATION_RECURSION_SAFETY.md` - Recursion system
+
+---
+
 This document summarizes the critical improvements made to the parallel orchestration system.
 
 ## 🎯 Three Critical Improvements

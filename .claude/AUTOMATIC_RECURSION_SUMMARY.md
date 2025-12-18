@@ -1,5 +1,13 @@
 # Automatic Recursion System - Implementation Complete
 
+> **📚 Part of the Orchestration System Documentation**
+>
+> - **See also:** `ORCHESTRATION_SYSTEM_INDEX.md` - Complete documentation index
+> - **Full documentation:** `ORCHESTRATION_RECURSION_SAFETY.md` - Detailed recursion docs
+> - **Implemented in:** `parallel-orchestrator.md` and `orchestrate.md`
+
+---
+
 ## What Was Built
 
 A **fully automatic recursion depth tracking system** for the parallel orchestration framework. Orchestrators now self-manage their recursion depth with **zero user intervention**.

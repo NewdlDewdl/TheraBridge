@@ -1,5 +1,13 @@
 # Automatic Orchestration Recursion Safety System
 
+> **📚 Part of the Orchestration System Documentation**
+>
+> - **See also:** `ORCHESTRATION_SYSTEM_INDEX.md` - Complete documentation index
+> - **Quick reference:** `AUTOMATIC_RECURSION_SUMMARY.md` - Quick reference guide
+> - **Implemented in:** `parallel-orchestrator.md` Step 4b (cleanup phase)
+
+---
+
 ## Overview
 
 The orchestration system features **fully automatic recursion depth tracking** using execution ID chains. Orchestrators self-manage their recursion depth without any user or manual intervention.
