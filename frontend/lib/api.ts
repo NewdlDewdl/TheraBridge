@@ -1,4 +1,4 @@
-import type { Patient, Session, ExtractedNotes, SessionStatus } from './types';
+import type { Patient, Session, ExtractedNotes, SessionStatus, Template } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
@@ -74,6 +74,18 @@ export const uploadSession = async (patientId: string, file: File): Promise<Sess
 
   return response.json();
 };
+
+// Templates API
+export const getTemplates = (templateType?: string, includeShared?: boolean): Promise<Template[]> => {
+  const params = new URLSearchParams();
+  if (templateType) params.set('template_type', templateType);
+  if (includeShared !== undefined) params.set('include_shared', String(includeShared));
+  const queryString = params.toString();
+  return fetchApi<Template[]>(`/api/templates/${queryString ? `?${queryString}` : ''}`);
+};
+
+export const getTemplate = (id: string): Promise<Template> =>
+  fetchApi<Template>(`/api/templates/${id}`);
 
 // Fetcher for SWR - typed for use with SWR hooks
 export const fetcher = async <T,>(url: string): Promise<T> => {

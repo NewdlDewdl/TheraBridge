@@ -355,6 +355,52 @@ class ApiClient {
       body: JSON.stringify(data),
     });
   }
+
+  // ============================================================================
+  // Session Notes API Methods
+  // ============================================================================
+
+  /**
+   * Create a new session note
+   * @param sessionId - The therapy session ID
+   * @param data - Note creation data (template_id, content)
+   * @returns ApiResult<SessionNote>
+   */
+  createSessionNote<T>(
+    sessionId: string,
+    data: { template_id: string; content: Record<string, unknown> },
+    options?: ApiRequestOptions
+  ): Promise<ApiResult<T>> {
+    return this.post<T>(`/sessions/${sessionId}/notes`, data, options);
+  }
+
+  /**
+   * Update an existing session note
+   * @param noteId - The note ID to update
+   * @param data - Partial update data (content, status)
+   * @returns ApiResult<SessionNote>
+   */
+  updateSessionNote<T>(
+    noteId: string,
+    data: { content?: Record<string, unknown>; status?: string },
+    options?: ApiRequestOptions
+  ): Promise<ApiResult<T>> {
+    return this.patch<T>(`/notes/${noteId}`, data, options);
+  }
+
+  /**
+   * Auto-fill template with AI-extracted data from session
+   * @param sessionId - The therapy session ID
+   * @param templateType - Template type (soap, dap, birp, etc.)
+   * @returns ApiResult<AutofillResponse>
+   */
+  autofillTemplate<T>(
+    sessionId: string,
+    templateType: string,
+    options?: ApiRequestOptions
+  ): Promise<ApiResult<T>> {
+    return this.post<T>(`/sessions/${sessionId}/autofill`, { template_type: templateType }, options);
+  }
 }
 
 export const apiClient = new ApiClient();

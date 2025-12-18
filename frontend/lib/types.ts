@@ -237,3 +237,76 @@ export interface Patient {
   readonly created_at: string;
   readonly updated_at: string;
 }
+
+// ============================================================================
+// Template and Note Types
+// ============================================================================
+
+export type TemplateFieldType =
+  | 'text'
+  | 'textarea'
+  | 'select'
+  | 'multiselect'
+  | 'checkbox'
+  | 'number'
+  | 'date'
+  | 'scale';
+
+export type TemplateType = 'soap' | 'dap' | 'birp' | 'progress' | 'custom';
+
+export type NoteStatus = 'draft' | 'completed' | 'signed';
+
+export interface TemplateField {
+  readonly id: string;
+  readonly label: string;
+  readonly type: TemplateFieldType;
+  readonly required: boolean;
+  readonly options?: ReadonlyArray<string> | null;
+  readonly ai_mapping?: string | null;
+  readonly placeholder?: string | null;
+  readonly help_text?: string | null;
+}
+
+export interface TemplateSection {
+  readonly id: string;
+  readonly name: string;
+  readonly description?: string | null;
+  readonly fields: ReadonlyArray<TemplateField>;
+}
+
+export interface TemplateStructure {
+  readonly sections: ReadonlyArray<TemplateSection>;
+}
+
+export interface Template {
+  readonly id: string;
+  readonly name: string;
+  readonly description?: string | null;
+  readonly template_type: TemplateType;
+  readonly is_system: boolean;
+  readonly is_shared: boolean;
+  readonly created_by?: string | null;
+  readonly structure: TemplateStructure;
+  readonly created_at: string;
+  readonly updated_at: string;
+}
+
+export interface SessionNote {
+  readonly id: string;
+  readonly session_id: string;
+  readonly template_id?: string | null;
+  readonly content: Record<string, unknown>;
+  readonly status: NoteStatus;
+  readonly signed_at?: string | null;
+  readonly signed_by?: string | null;
+  readonly created_at: string;
+  readonly updated_at: string;
+}
+
+export interface AutofillResponse {
+  readonly template_type: TemplateType;
+  readonly auto_filled_content: Record<string, unknown>;
+  readonly confidence_scores: Record<string, number>;
+  readonly missing_fields: Record<string, ReadonlyArray<string>>;
+  readonly metadata: Record<string, unknown>;
+}
