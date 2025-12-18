@@ -569,13 +569,22 @@ For each subsequent wave:
 
 After the execution summary, check recursion depth and choose cleanup method:
 
-**Recursion Depth Rules:**
-- Root orchestrator (no depth tag in prompt) = Depth 0
-- Child orchestrator (spawned by another) = Depth 1+
+**Automatic Recursion Depth Tracking:**
+- Every orchestrator automatically generates/inherits an execution ID
+- Depth calculated by counting dots in ID:
+  - `ORG_1234` = depth 0 (root)
+  - `ORG_1234.1` = depth 1 (child)
+  - `ORG_1234.1.1` = depth 2 (grandchild)
 - **Maximum depth: 2** (prevents infinite loops)
 - Cleanup behavior:
   - **Depth 0-1:** Spawn orchestrator for comprehensive cleanup
-  - **Depth 2+:** Use direct Bash commands for simple cleanup
+  - **Depth 2:** Use direct Bash commands for simple cleanup
+
+The orchestrator AUTOMATICALLY:
+1. Parses or generates its execution ID
+2. Calculates its own depth
+3. Decides whether to spawn children or use direct commands
+4. Passes ID to children automatically
 
 After the execution summary, immediately launch cleanup:
 
@@ -596,17 +605,33 @@ This will:
 ⏳ Launching cleanup agents...
 ```
 
-**Then invoke the orchestrator agent recursively WITH RECURSION DEPTH TAG:**
+**Then invoke the orchestrator agent recursively WITH EXEC_ID:**
+
+The orchestrator automatically generates the child ID and passes it:
+
+```python
+# Automatic ID generation (done by orchestrator)
+child_id = generate_child_id(my_exec_id, child_index=1)  # e.g., ORG_1234.1
+```
 
 ```xml
 <invoke name="Task">
 <parameter name="subagent_type">parallel-orchestrator</parameter>
-<parameter name="description">Cleanup repository after orchestration (Depth 1)</parameter>
-<parameter name="prompt">[RECURSION_DEPTH: 1]
+<parameter name="description">Cleanup orchestrator ({child_id})</parameter>
+<parameter name="prompt">[EXEC_ID: {child_id}]
 
 Clean up the repository after task completion. Remove temporary files, consolidate duplicates, organize structure.
 
-**IMPORTANT: You are a cleanup orchestrator at recursion depth 1. When you finish YOUR work, check your depth (it will be 1) before spawning another cleanup orchestrator. If depth >= 2, use direct Bash commands instead.**
+**AUTOMATIC RECURSION INFO:**
+- Your ID: {child_id}
+- Your depth: {calculate_depth(child_id)} (automatically calculated)
+- Parent ID: {my_exec_id}
+
+When you finish YOUR work, you will AUTOMATICALLY:
+1. Parse your execution ID from this prompt
+2. Calculate your depth by counting dots
+3. Decide whether to spawn another cleanup orchestrator or use direct commands
+4. NO MANUAL INTERVENTION REQUIRED
 
 Requirements:
 1. BEFORE making any changes: Capture baseline metrics using git and filesystem tools
