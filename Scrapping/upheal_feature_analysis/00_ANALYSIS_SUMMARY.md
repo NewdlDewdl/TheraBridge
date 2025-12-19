@@ -1,5 +1,5 @@
 # Upheal.io Deep Feature Analysis
-**Generated:** 2025-12-18 18:58:07
+**Generated:** 2025-12-18 19:36:22
 **Purpose:** Feature cloning for TherapyBridge development
 
 ## Executive Summary
@@ -12,8 +12,8 @@ features into TherapyBridge. All data extracted is ready for orchestrator agent 
 - **Pages Analyzed:** 8
 - **Session Workflows:** 0
 - **API Endpoints Discovered:** 0
-- **Unique URLs Found:** 2
-- **Features Identified:** 24
+- **Unique URLs Found:** 9
+- **Features Identified:** 102
 
 ## Key Files Generated
 

@@ -1,742 +1,465 @@
-# Audio Pipeline Architecture - Visual Diagrams
+# Audio Transcription Pipeline - Architecture Diagrams
 
-This document contains text-based architecture diagrams for the unified pipeline design.
-
----
-
-## 1. Current State (Before Consolidation)
+## Component Interaction Map
 
 ```
-Current Architecture: 4 Separate Pipeline Implementations
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     AUDIO TRANSCRIPTION PIPELINE                             │
+│                        (Two Distinct Paths)                                 │
+└─────────────────────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                            pipeline.py                               │
-│                         (CPU/API Variant)                            │
-├─────────────────────────────────────────────────────────────────────┤
-│  AudioPreprocessor                                                   │
-│    ├─ pydub.AudioSegment                                            │
-│    ├─ detect_leading_silence()                                      │
-│    └─ effects.normalize()                                           │
-│                                                                      │
-│  WhisperTranscriber                                                  │
-│    └─ OpenAI Whisper API                                            │
-│                                                                      │
-│  No Diarization                                                      │
-│                                                                      │
-│  Use Case: Production, cloud deployment                             │
-│  Dependencies: pydub, openai, ffmpeg                                │
-└─────────────────────────────────────────────────────────────────────┘
+                              INPUT AUDIO
+                                  │
+                                  ▼
+                    ┌──────────────────────────┐
+                    │  AudioPreprocessor       │
+                    │  (CPU: pydub/torchaudio)│
+                    │                          │
+                    │ • Load audio (any fmt)   │
+                    │ • Trim silence           │
+                    │ • Normalize (-20dBFS)    │
+                    │ • Convert 16kHz mono     │
+                    │ • Validate size (<25MB)  │
+                    └──────────────┬───────────┘
+                                  │
+                    Preprocessed audio (MP3/WAV)
+                                  │
+                    ┌─────────────┴──────────────┐
+                    │                            │
+                    ▼                            ▼
+         ┌──────────────────────┐    ┌──────────────────────┐
+         │  CPU/API PATH        │    │  GPU PATH            │
+         │  (OpenAI Whisper)    │    │  (Local GPU)         │
+         └──────────┬───────────┘    └──────────┬───────────┘
+                    │                           │
+                    ▼                           ▼
+         ┌──────────────────────┐    ┌──────────────────────┐
+         │WhisperTranscriber    │    │GPUTranscriptionPipeline
+         │(API + Retry Logic)   │    │• GPU Audio Ops       │
+         │                      │    │• faster-whisper      │
+         │• Exponential backoff │    │• pyannote diarization│
+         │• Rate limiting       │    │• Speaker alignment   │
+         │• 5x retry max        │    │• GPU monitoring      │
+         └──────────┬───────────┘    └──────────┬───────────┘
+                    │                           │
+                    ├─────────┬─────────────────┤
+                    │         │                 │
+                    ▼         ▼                 ▼
+           Transcription  Speaker Turns    Aligned Segments
+           {segments[],   [{speaker,      [{start, end,
+            full_text,     start, end}]    text, speaker}]
+            language,
+            duration}
 
-┌─────────────────────────────────────────────────────────────────────┐
-│                         pipeline_gpu.py                              │
-│                   (Provider-Agnostic GPU Variant)                    │
-├─────────────────────────────────────────────────────────────────────┤
-│  GPUAudioProcessor                                                   │
-│    ├─ torchaudio.load()                                             │
-│    ├─ torch GPU operations                                          │
-│    └─ julius.resample_frac()                                        │
-│                                                                      │
-│  GPUTranscriptionPipeline                                            │
-│    └─ faster-whisper.WhisperModel                                   │
-│                                                                      │
-│  PyAnnote Diarization                                                │
-│    └─ pyannote.audio.Pipeline                                       │
-│                                                                      │
-│  GPUConfig (auto-detection)                                          │
-│    └─ Detects: Vast.ai, RunPod, Lambda, Paperspace                 │
-│                                                                      │
-│  Use Case: GPU cloud providers                                      │
-│  Dependencies: torch, faster-whisper, pyannote, CUDA                │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                      pipeline_enhanced.py                            │
-│                  (Performance Logging Variant)                       │
-├─────────────────────────────────────────────────────────────────────┤
-│  Same as pipeline.py BUT:                                            │
-│    ├─ PerformanceLogger integration                                 │
-│    ├─ Detailed subprocess timing                                    │
-│    ├─ GPU utilization tracking                                      │
-│    └─ Memory usage monitoring                                       │
-│                                                                      │
-│  SpeakerDiarizer (optional)                                          │
-│    ├─ GPU-aware (CUDA/MPS)                                          │
-│    └─ pyannote.audio.Pipeline                                       │
-│                                                                      │
-│  Speaker Alignment                                                   │
-│    └─ CPU or GPU vectorized                                         │
-│                                                                      │
-│  Use Case: Research, debugging, optimization                        │
-└─────────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────────┐
-│                       pipeline_colab.py                              │
-│                     (Colab L4 Optimized)                             │
-├─────────────────────────────────────────────────────────────────────┤
-│  Same as pipeline_gpu.py BUT:                                        │
-│    ├─ Hardcoded paths: /content/...                                 │
-│    ├─ L4-specific optimizations                                     │
-│    └─ float16 compute type                                          │
-│                                                                      │
-│  Use Case: Google Colab notebooks only                              │
-└─────────────────────────────────────────────────────────────────────┘
-
-PROBLEMS:
-  ❌ ~70% code duplication across files
-  ❌ Bug fixes require changes in 4 places
-  ❌ Features must be added 4 times
-  ❌ Inconsistent behavior and APIs
-  ❌ Confusing for users (which one to use?)
+                              OUTPUT: JSON
+                    {segments[], full_text, language,
+                     duration, speaker_turns, 
+                     aligned_segments, performance_metrics}
 ```
 
 ---
 
-## 2. Proposed State (After Consolidation)
+## CPU/API Path Detail
 
 ```
-Unified Architecture: Single Pipeline with Pluggable Backends
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OPENAI_API_KEY
+     │
+     ▼
+┌────────────────────────────────────────┐
+│         WhisperTranscriber             │
+│  (OpenAI Whisper API Client)           │
+└────────────┬─────────────────────────┘
+             │
+             ├─────────────────────────────────────┐
+             │                                     │
+        Request                              Response
+        (audio, lang,                    {segments,
+         response_format)                  text,
+                                          language,
+                                          duration}
+             │                                │
+             ▼                                ▼
+        [OpenAI API]                  [Parse Response]
+        • Upload file                  • Extract segments
+        • Call whisper-1               • Parse timestamps
+        • Handle 429 rate limits       • Join text
+        • Exponential backoff
+        • Timeout handling
 
-┌───────────────────────────────────────────────────────────────────┐
-│                      USER INTERFACE LAYER                          │
-│  ┌─────────────────────────────────────────────────────────────┐  │
-│  │  AudioTranscriptionPipeline                                 │  │
-│  │  - Single entry point                                       │  │
-│  │  - Auto-detects optimal backend                             │  │
-│  │  - Consistent API across all modes                          │  │
-│  │                                                             │  │
-│  │  Methods:                                                   │  │
-│  │  - __init__(config: PipelineConfig)                        │  │
-│  │  - process(audio_path: str) -> TranscriptionResult         │  │
-│  └─────────────────────────────────────────────────────────────┘  │
-└───────────────────────────────────────────────────────────────────┘
-                               ↓
-┌───────────────────────────────────────────────────────────────────┐
-│                   CONFIGURATION & SELECTION                        │
-│  ┌─────────────────────────────────────────────────────────────┐  │
-│  │  BackendSelector                                            │  │
-│  │  - Auto-detect GPU availability                             │  │
-│  │  - Check for model installations                            │  │
-│  │  - Validate API credentials                                 │  │
-│  │  - Select optimal backend                                   │  │
-│  │                                                             │  │
-│  │  Decision Logic:                                            │  │
-│  │  1. GPU + faster-whisper? → GPU backend                    │  │
-│  │  2. GPU + no models?      → Cloud backend                  │  │
-│  │  3. No GPU + API key?     → Cloud backend                  │  │
-│  │  4. No GPU + no API?      → CPU backend (warn)             │  │
-│  └─────────────────────────────────────────────────────────────┘  │
-│  ┌─────────────────────────────────────────────────────────────┐  │
-│  │  PipelineConfig                                             │  │
-│  │  - backend: Optional[str]                                   │  │
-│  │  - whisper_model: str                                       │  │
-│  │  - enable_diarization: bool                                 │  │
-│  │  - num_speakers: int                                        │  │
-│  │  - enable_performance_logging: bool                         │  │
-│  │  - ... other settings                                       │  │
-│  └─────────────────────────────────────────────────────────────┘  │
-└───────────────────────────────────────────────────────────────────┘
-                               ↓
-┌───────────────────────────────────────────────────────────────────┐
-│                   ABSTRACTION LAYER (INTERFACES)                   │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐        │
-│  │Preprocessor  │    │ Transcriber  │    │  Diarizer    │        │
-│  │  Interface   │    │  Interface   │    │  Interface   │        │
-│  ├──────────────┤    ├──────────────┤    ├──────────────┤        │
-│  │ (ABC)        │    │ (ABC)        │    │ (ABC)        │        │
-│  │              │    │              │    │              │        │
-│  │ preprocess() │    │ transcribe() │    │ diarize()    │        │
-│  │ validate()   │    │ cleanup()    │    │ cleanup()    │        │
-│  └──────────────┘    └──────────────┘    └──────────────┘        │
-└───────────────────────────────────────────────────────────────────┘
-                               ↓
-┌───────────────────────────────────────────────────────────────────┐
-│                 BACKEND IMPLEMENTATIONS (CONCRETE)                 │
-│                                                                    │
-│  ┌────────────────────────────────────────────────────────────┐  │
-│  │                    CPU BACKEND                              │  │
-│  ├────────────────────────────────────────────────────────────┤  │
-│  │  CPUPreprocessor               (pydub)                      │  │
-│  │  WhisperAPITranscriber         (OpenAI API)                 │  │
-│  │  PyAnnoteDiarizer or Null      (optional)                   │  │
-│  │                                                             │  │
-│  │  Use Case: No GPU, has API key                             │  │
-│  │  Performance: Preprocessing fast, transcription slow       │  │
-│  └────────────────────────────────────────────────────────────┘  │
-│                                                                    │
-│  ┌────────────────────────────────────────────────────────────┐  │
-│  │                    GPU BACKEND                              │  │
-│  ├────────────────────────────────────────────────────────────┤  │
-│  │  GPUPreprocessor               (torch/torchaudio)           │  │
-│  │  FasterWhisperTranscriber      (local GPU)                  │  │
-│  │  PyAnnoteDiarizer              (GPU-accelerated)            │  │
-│  │                                                             │  │
-│  │  Use Case: GPU available, local models installed           │  │
-│  │  Performance: All operations GPU-accelerated (fastest)     │  │
-│  └────────────────────────────────────────────────────────────┘  │
-│                                                                    │
-│  ┌────────────────────────────────────────────────────────────┐  │
-│  │                   CLOUD BACKEND                             │  │
-│  ├────────────────────────────────────────────────────────────┤  │
-│  │  CPUPreprocessor               (pydub, minimal)             │  │
-│  │  WhisperAPITranscriber         (OpenAI API)                 │  │
-│  │  PyAnnoteDiarizer              (local CPU/GPU)              │  │
-│  │                                                             │  │
-│  │  Use Case: GPU available but no local models, or no GPU    │  │
-│  │  Performance: Transcription offloaded to cloud             │  │
-│  └────────────────────────────────────────────────────────────┘  │
-└───────────────────────────────────────────────────────────────────┘
-                               ↓
-┌───────────────────────────────────────────────────────────────────┐
-│                  CROSS-CUTTING CONCERNS (UTILITIES)                │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐            │
-│  │ Performance  │  │   Speaker    │  │    Audio     │            │
-│  │   Logger     │  │  Alignment   │  │  Chunking    │            │
-│  ├──────────────┤  ├──────────────┤  ├──────────────┤            │
-│  │ - Timing     │  │ - Overlap    │  │ - Split for  │            │
-│  │ - GPU stats  │  │   calculation│  │   API limits │            │
-│  │ - Memory     │  │ - Threshold  │  │ - Merge      │            │
-│  │ - Reports    │  │   matching   │  │   results    │            │
-│  └──────────────┘  └──────────────┘  └──────────────┘            │
-│                                                                    │
-│  ┌──────────────┐  ┌──────────────┐                              │
-│  │  GPU Config  │  │    Logging   │                              │
-│  │  Detection   │  │    System    │                              │
-│  ├──────────────┤  ├──────────────┤                              │
-│  │ - Provider   │  │ - Structured │                              │
-│  │   detection  │  │ - Levels     │                              │
-│  │ - Optimal    │  │ - Formatters │                              │
-│  │   settings   │  │              │                              │
-│  └──────────────┘  └──────────────┘                              │
-└───────────────────────────────────────────────────────────────────┘
 
-BENEFITS:
-  ✅ ~50% code reduction (single implementation)
-  ✅ Bug fixes in one place
-  ✅ Features added once
-  ✅ Consistent behavior across all modes
-  ✅ Simple, clear API for users
-  ✅ Easy to extend (new backends = new concrete class)
+Retry Logic (tenacity):
+┌────────────────────────────────────────┐
+│        Retry Decision Tree              │
+├────────────────────────────────────────┤
+│ Error Type          │ Action            │
+├─────────────────────┼──────────────────┤
+│ RateLimitError(429) │ Backoff + Retry   │
+│ APIError            │ Backoff + Retry   │
+│ ConnectionError     │ Backoff + Retry   │
+│ TimeoutError        │ Backoff + Retry   │
+│ Other errors        │ Propagate         │
+├────────────────────────────────────────┤
+│ Max Retries: 5                          │
+│ Backoff: 1s → 60s exponential           │
+│ Rate Limit: 0.5s between calls          │
+└────────────────────────────────────────┘
 ```
 
 ---
 
-## 3. Component Interaction Flow
+## GPU Path Detail
 
 ```
-Complete Pipeline Execution Flow
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 ┌─────────────────────────────────────────────────────────────────┐
-│ USER CODE                                                        │
-├─────────────────────────────────────────────────────────────────┤
-│ from src.pipeline import AudioTranscriptionPipeline             │
-│ from src.config import PipelineConfig                           │
+│           GPUTranscriptionPipeline (Context Manager)            │
 │                                                                  │
-│ config = PipelineConfig(enable_diarization=True)                │
-│ pipeline = AudioTranscriptionPipeline(config)                   │
-│ result = pipeline.process("therapy_session.mp3")                │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ PIPELINE INITIALIZATION                                          │
-├─────────────────────────────────────────────────────────────────┤
-│ 1. PipelineConfig validates settings                            │
-│    ├─ Check API keys (if needed)                                │
-│    ├─ Check GPU availability                                    │
-│    └─ Validate parameters                                       │
-│                                                                  │
-│ 2. BackendSelector.select_backend()                             │
-│    ├─ Check torch.cuda.is_available()                           │
-│    ├─ Check for faster-whisper                                  │
-│    ├─ Check for OPENAI_API_KEY                                  │
-│    └─ Return: "gpu" | "cpu" | "cloud"                           │
-│                                                                  │
-│ 3. BackendSelector.create_components(backend)                   │
-│    ├─ Create Preprocessor instance                              │
-│    ├─ Create Transcriber instance                               │
-│    └─ Create Diarizer instance                                  │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 1: AUDIO VALIDATION                                         │
-├─────────────────────────────────────────────────────────────────┤
-│ preprocessor.validate("therapy_session.mp3")                     │
-│    ↓                                                             │
-│ Return: AudioMetadata                                            │
-│    ├─ duration_seconds: 1380.0                                  │
-│    ├─ sample_rate: 44100                                        │
-│    ├─ channels: 2 (stereo)                                      │
-│    ├─ format: "mp3"                                             │
-│    ├─ file_size_mb: 15.2                                        │
-│    └─ valid: True                                               │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 2: PREPROCESSING                                            │
-├─────────────────────────────────────────────────────────────────┤
-│ preprocessor.preprocess("therapy_session.mp3")                   │
-│    ↓                                                             │
-│ Sub-steps:                                                       │
-│    1. Load audio file                                            │
-│       └─ CPUPreprocessor: pydub.AudioSegment.from_file()        │
-│       └─ GPUPreprocessor: torchaudio.load() → GPU tensor        │
-│                                                                  │
-│    2. Trim silence                                               │
-│       └─ CPU: detect_leading_silence()                          │
-│       └─ GPU: Vectorized dB threshold on GPU                    │
-│                                                                  │
-│    3. Normalize volume                                           │
-│       └─ CPU: effects.normalize()                               │
-│       └─ GPU: Peak detection + scaling on GPU                   │
-│                                                                  │
-│    4. Convert to mono 16kHz                                      │
-│       └─ CPU: set_channels(1).set_frame_rate(16000)            │
-│       └─ GPU: torch.mean() + julius.resample_frac()            │
-│                                                                  │
-│    5. Export to temp file                                        │
-│       └─ Both: Save as WAV or MP3                               │
-│    ↓                                                             │
-│ Return: "/tmp/processed_audio.wav"                              │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 3: TRANSCRIPTION                                            │
-├─────────────────────────────────────────────────────────────────┤
-│ transcriber.transcribe("/tmp/processed_audio.wav")               │
-│    ↓                                                             │
-│ WhisperAPITranscriber (Cloud):                                   │
-│    1. Check file size (< 25MB?)                                 │
-│    2. If > 25MB: chunk into 10-min segments                     │
-│    3. Upload to OpenAI API                                       │
-│    4. Receive response (JSON)                                    │
-│    5. Parse segments with timestamps                             │
-│                                                                  │
-│ FasterWhisperTranscriber (GPU/CPU):                              │
-│    1. Load model (if not cached)                                 │
-│       └─ WhisperModel("large-v3", device="cuda")                │
-│    2. Run inference                                              │
-│       └─ model.transcribe(audio, vad_filter=True)               │
-│    3. Convert generator to list                                  │
-│    4. Extract segments with timestamps                           │
-│    ↓                                                             │
-│ Return: TranscriptionData                                        │
-│    ├─ segments: [                                                │
-│    │     {start: 0.0, end: 3.2, text: "Hello, how are you?"},  │
-│    │     {start: 3.5, end: 7.8, text: "I've been okay..."},    │
-│    │     ...                                                     │
-│    │   ]                                                         │
-│    ├─ full_text: "Hello, how are you? I've been okay..."        │
-│    ├─ language: "en"                                             │
-│    └─ duration: 1380.0                                           │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 4: SPEAKER DIARIZATION (if enabled)                         │
-├─────────────────────────────────────────────────────────────────┤
-│ diarizer.diarize("/tmp/processed_audio.wav", num_speakers=2)    │
-│    ↓                                                             │
-│ PyAnnoteDiarizer:                                                │
-│    1. Load pyannote model (if not cached)                        │
-│       └─ Pipeline.from_pretrained("speaker-diarization-3.1")    │
-│    2. Move to GPU if available                                   │
-│       └─ pipeline.to(torch.device("cuda"))                       │
-│    3. Load audio with torchaudio                                 │
-│    4. Run diarization inference                                  │
-│       └─ diarization = pipeline(audio, num_speakers=2)          │
-│    5. Extract speaker turns                                      │
-│    ↓                                                             │
-│ Return: List[SpeakerTurn]                                        │
-│    [                                                             │
-│      {speaker: "SPEAKER_00", start: 0.0, end: 3.5},            │
-│      {speaker: "SPEAKER_01", start: 3.8, end: 8.2},            │
-│      {speaker: "SPEAKER_00", start: 8.5, end: 12.1},           │
-│      ...                                                         │
-│    ]                                                             │
-│                                                                  │
-│ NullDiarizer:                                                    │
-│    └─ Return: [] (empty list)                                   │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 5: SPEAKER ALIGNMENT                                        │
-├─────────────────────────────────────────────────────────────────┤
-│ utils.alignment.align_speakers(segments, speaker_turns)          │
-│    ↓                                                             │
-│ For each transcription segment:                                  │
-│    1. Find all overlapping speaker turns                         │
-│    2. Calculate overlap duration for each turn                   │
-│    3. Select speaker with maximum overlap                        │
-│    4. If overlap < 50% of segment → "UNKNOWN"                   │
-│    5. Assign speaker label to segment                            │
-│                                                                  │
-│ CPU Implementation:                                               │
-│    └─ Nested loops (Python)                                     │
-│                                                                  │
-│ GPU Implementation (for large datasets):                         │
-│    └─ Vectorized operations on GPU (torch)                      │
-│    ↓                                                             │
-│ Return: List[TranscriptionSegment]                               │
-│    [                                                             │
-│      {start: 0.0, end: 3.2, text: "Hello...", speaker: "00"},  │
-│      {start: 3.5, end: 7.8, text: "I've...", speaker: "01"},   │
-│      ...                                                         │
-│    ]                                                             │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ STEP 6: RESULT COMPILATION                                       │
-├─────────────────────────────────────────────────────────────────┤
-│ Build TranscriptionResult:                                        │
-│    ├─ segments: Original transcription segments                  │
-│    ├─ aligned_segments: Segments with speaker labels             │
-│    ├─ speaker_turns: Raw diarization output                      │
-│    ├─ full_text: Complete transcription                          │
-│    ├─ language: Detected language                                │
-│    ├─ duration: Audio duration                                   │
-│    ├─ metadata: Processing info                                  │
-│    └─ performance_metrics: Timing data (if enabled)              │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ CLEANUP                                                           │
-├─────────────────────────────────────────────────────────────────┤
-│ 1. Delete temp files                                             │
-│ 2. Clear GPU cache (if applicable)                               │
-│ 3. Generate performance report (if enabled)                      │
-└─────────────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────────────┐
-│ RETURN TO USER                                                    │
-├─────────────────────────────────────────────────────────────────┤
-│ result: TranscriptionResult                                       │
-│    .full_text                                                    │
-│    .aligned_segments                                             │
-│    .speaker_turns                                                │
-│    .performance_metrics (if enabled)                             │
-└─────────────────────────────────────────────────────────────────┘
+│  __enter__() → Returns self for 'with' block                   │
+│  __exit__()  → Guarantees cleanup even on exception            │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+                      ▼
+        ┌─────────────────────────────────┐
+        │  GPU Provider Auto-Detection    │
+        │  (gpu_config.py)                │
+        ├─────────────────────────────────┤
+        │ Check environment:              │
+        │ • /content + COLAB_GPU         │ → Colab
+        │ • VAST_CONTAINERLABEL          │ → Vast.ai
+        │ • RUNPOD_POD_ID                │ → RunPod
+        │ • PAPERSPACE_METRIC_URL        │ → Paperspace
+        │ • hostname patterns            │ → Lambda/local
+        │                                 │
+        │ Optimize:                       │
+        │ • Detect GPU model              │
+        │ • Query VRAM                    │
+        │ • Select compute type           │
+        │ • Set cache directory           │
+        └──────────┬────────────────────┘
+                   │
+                   ▼
+    ┌──────────────────────────────────────┐
+    │  Stage 1: GPU Audio Preprocessing    │
+    │  (GPUAudioProcessor)                 │
+    ├──────────────────────────────────────┤
+    │ • Load audio → GPU tensors           │
+    │ • Trim silence (GPU convolution)     │
+    │ • Normalize (GPU peak detection)     │
+    │ • Resample 16kHz (julius sinc)       │
+    │ • Save preprocessed audio            │
+    └──────────┬───────────────────────────┘
+               │
+               ▼
+    ┌──────────────────────────────────────┐
+    │  Stage 2: GPU Transcription          │
+    │  (faster-whisper)                    │
+    ├──────────────────────────────────────┤
+    │ • Load Whisper large-v3 (~6GB VRAM) │
+    │ • Inference with VAD filter          │
+    │ • Extract segments + timestamps      │
+    │ • Delete model (free ~6GB)           │
+    │ • torch.cuda.empty_cache()           │
+    └──────────┬───────────────────────────┘
+               │
+               ▼
+    ┌──────────────────────────────────────┐
+    │  Stage 3: GPU Diarization            │
+    │  (pyannote-audio 3.1)                │
+    ├──────────────────────────────────────┤
+    │ • Load diarization model (~3GB)      │
+    │ • Load audio waveform → GPU          │
+    │ • Run pyannote pipeline              │
+    │ • Extract speaker turns              │
+    │ • Extract Annotation (compat layer)  │
+    │ • Delete waveform (free ~2GB)        │
+    │ • Delete model (free ~3GB)           │
+    └──────────┬───────────────────────────┘
+               │
+               ▼
+    ┌──────────────────────────────────────┐
+    │  Stage 4: GPU Speaker Alignment      │
+    │  (GPU tensor operations)             │
+    ├──────────────────────────────────────┤
+    │ • Create GPU tensors for timings    │
+    │ • Vectorized overlap calculation     │
+    │ • Apply 50% threshold                │
+    │ • Label segments with speakers       │
+    │ • Delete tensors (free < 1GB)        │
+    └──────────┬───────────────────────────┘
+               │
+               ▼ (Finally block)
+    ┌──────────────────────────────────────┐
+    │  GPU Memory Cleanup                  │
+    │  (__exit__ guarantee)                │
+    ├──────────────────────────────────────┤
+    │ • Delete transcriber reference       │
+    │ • Delete diarizer reference          │
+    │ • torch.cuda.empty_cache()           │
+    │ • Log memory recovery                │
+    │ • Always executed, even on error     │
+    └──────────────────────────────────────┘
 ```
 
 ---
 
-## 4. Backend Selection Decision Tree
+## Performance Logging Architecture
 
 ```
-Backend Auto-Selection Algorithm
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-START
-  │
-  ├─ Backend explicitly specified in config?
-  │    ├─ YES → Use specified backend (skip auto-detection)
-  │    │         └─ Validate: Is backend valid? ("cpu", "gpu", "cloud")
-  │    │              ├─ YES → Proceed
-  │    │              └─ NO → Raise ValueError
-  │    │
-  │    └─ NO → Auto-detect optimal backend
-  │              │
-  │              ├─ Check: GPU available?
-  │              │    └─ torch.cuda.is_available() == True?
-  │              │         │
-  │              │         ├─ YES (GPU available)
-  │              │         │    │
-  │              │         │    ├─ Check: faster-whisper installed?
-  │              │         │    │    └─ try: import faster_whisper
-  │              │         │    │         │
-  │              │         │    │         ├─ YES → ✅ SELECT: GPU BACKEND
-  │              │         │    │         │         (Best option: local GPU inference)
-  │              │         │    │         │         - Fast preprocessing
-  │              │         │    │         │         - Fast transcription (10-30x real-time)
-  │              │         │    │         │         - Fast diarization
-  │              │         │    │         │
-  │              │         │    │         └─ NO (import fails)
-  │              │         │    │              │
-  │              │         │    │              ├─ Check: OpenAI API key?
-  │              │         │    │              │    └─ os.getenv("OPENAI_API_KEY") exists?
-  │              │         │    │              │         │
-  │              │         │    │              │         ├─ YES → ✅ SELECT: CLOUD BACKEND
-  │              │         │    │              │         │         (Good option: API for transcription)
-  │              │         │    │              │         │         - GPU preprocessing
-  │              │         │    │              │         │         - Cloud transcription
-  │              │         │    │              │         │         - GPU diarization
-  │              │         │    │              │         │
-  │              │         │    │              │         └─ NO → ❌ RAISE ERROR
-  │              │         │    │              │                   "GPU available but no faster-whisper
-  │              │         │    │              │                    and no OPENAI_API_KEY. Please install
-  │              │         │    │              │                    faster-whisper or set API key."
-  │              │         │    │              │
-  │              │         └─ NO (no GPU)
-  │              │              │
-  │              │              ├─ Check: OpenAI API key?
-  │              │              │    └─ os.getenv("OPENAI_API_KEY") exists?
-  │              │              │         │
-  │              │              │         ├─ YES → ✅ SELECT: CLOUD BACKEND
-  │              │              │         │         (Acceptable: API transcription)
-  │              │              │         │         - CPU preprocessing
-  │              │              │         │         - Cloud transcription
-  │              │              │         │         - CPU/GPU diarization (if available)
-  │              │              │         │
-  │              │              │         └─ NO → ⚠️  SELECT: CPU BACKEND
-  │              │              │                   (Slow but works)
-  │              │              │                   - CPU preprocessing
-  │              │              │                   - No transcription available!
-  │              │              │                   - CPU diarization (if enabled)
-  │              │              │                   + WARN: "No GPU and no API key.
-  │              │              │                     Performance will be very slow.
-  │              │              │                     Consider setting OPENAI_API_KEY."
-  │              │              │
-  │              └─ Validate components can be created
-  │                    │
-  │                    ├─ Diarization enabled?
-  │                    │    └─ Check: HF_TOKEN available?
-  │                    │         ├─ YES → OK
-  │                    │         └─ NO → WARN: "HF_TOKEN not set.
-  │                    │                  Diarization will fail."
-  │                    │
-  │                    └─ Return selected backend
-  │
-END
-
-BACKEND CHARACTERISTICS:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-GPU Backend:
-  ✅ Best performance (all operations GPU-accelerated)
-  ✅ No API costs
-  ✅ Privacy (all local)
-  ⚠️  Requires GPU + CUDA
-  ⚠️  Requires faster-whisper installation
-  ⚠️  Requires model downloads (~3GB)
-
-Cloud Backend:
-  ✅ Good performance (API transcription is fast)
-  ✅ No GPU required
-  ✅ No model downloads
-  ⚠️  API costs (pay per minute)
-  ⚠️  Requires internet connection
-  ⚠️  Data sent to OpenAI (privacy concern)
-
-CPU Backend:
-  ✅ No dependencies (besides pydub)
-  ✅ Works everywhere
-  ❌ Very slow (0.1x real-time)
-  ❌ No transcription (needs API key)
-  ⚠️  Only use as fallback
+┌─────────────────────────────────────────────────────────┐
+│          PerformanceLogger (Hierarchical)               │
+│                                                          │
+│  Pipeline Level (start → end)                          │
+│     │                                                   │
+│     ├─ Stage 1 (duration, GPU stats)                   │
+│     │    │                                              │
+│     │    ├─ Subprocess 1A (duration, memory delta)     │
+│     │    ├─ Subprocess 1B (duration, memory delta)     │
+│     │    └─ Subprocess 1C (duration, memory delta)     │
+│     │                                                   │
+│     ├─ Stage 2 (duration, GPU stats)                   │
+│     │    │                                              │
+│     │    ├─ Subprocess 2A (duration, memory delta)     │
+│     │    └─ Subprocess 2B (duration, memory delta)     │
+│     │                                                   │
+│     └─ Stage 3 (duration, GPU stats)                   │
+│          │                                              │
+│          └─ Subprocess 3A (duration, memory delta)     │
+│                                                          │
+│  GPU Monitor (background thread):                      │
+│  • Samples every 0.1s                                  │
+│  • Tracks utilization %, memory, temperature           │
+│  • Aggregates: min, max, avg                           │
+│                                                          │
+│  Output:                                                │
+│  • JSON report: metrics, timings, system info          │
+│  • Text report: human-readable breakdown               │
+│  • Log buffer: recent log entries                      │
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 5. Data Flow Diagram
+## Data Structures
+
+### Pipeline Input/Output
 
 ```
-Data Structures Through Pipeline
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INPUT:
+  audio_path: str (path to audio file)
+  num_speakers: int (for diarization, typically 2)
+  language: str (language code, default "en")
+  enable_diarization: bool (whether to run speaker ID)
 
-INPUT: audio_path (str)
-   "therapy_session.mp3"
-       │
-       ↓
-┌──────────────────────────────────────────────────────────┐
-│ VALIDATION                                                │
-└──────────────────────────────────────────────────────────┘
-       │
-       ↓
-   AudioMetadata {
-       duration_seconds: 1380.0,
-       sample_rate: 44100,
-       channels: 2,
-       format: "mp3",
-       file_size_mb: 15.2,
-       valid: true
-   }
-       │
-       ↓
-┌──────────────────────────────────────────────────────────┐
-│ PREPROCESSING                                             │
-└──────────────────────────────────────────────────────────┘
-       │
-       ↓
-   Processed Audio File (str)
-   "/tmp/processed_audio.wav"
-       - Mono (1 channel)
-       - 16kHz sample rate
-       - Silence trimmed
-       - Volume normalized
-       │
-       ↓
-┌──────────────────────────────────────────────────────────┐
-│ TRANSCRIPTION                                             │
-└──────────────────────────────────────────────────────────┘
-       │
-       ↓
-   TranscriptionData {
-       segments: [
-           TranscriptionSegment {
-               start: 0.0,
-               end: 3.2,
-               text: "Hello, how are you feeling today?",
-               speaker: None  // Not assigned yet
-           },
-           TranscriptionSegment {
-               start: 3.5,
-               end: 7.8,
-               text: "I've been having a difficult week.",
-               speaker: None
-           },
-           ...
-       ],
-       full_text: "Hello, how are you feeling today? I've been...",
-       language: "en",
-       duration: 1380.0
-   }
-       │
-       ↓
-┌──────────────────────────────────────────────────────────┐
-│ DIARIZATION (if enabled)                                  │
-└──────────────────────────────────────────────────────────┘
-       │
-       ↓
-   List[SpeakerTurn] [
-       SpeakerTurn {
-           speaker: "SPEAKER_00",
-           start: 0.0,
-           end: 3.5
-       },
-       SpeakerTurn {
-           speaker: "SPEAKER_01",
-           start: 3.8,
-           end: 8.2
-       },
-       SpeakerTurn {
-           speaker: "SPEAKER_00",
-           start: 8.5,
-           end: 12.1
-       },
-       ...
-   ]
-       │
-       ↓
-┌──────────────────────────────────────────────────────────┐
-│ SPEAKER ALIGNMENT                                         │
-│ (Combine segments + speaker_turns)                       │
-└──────────────────────────────────────────────────────────┘
-       │
-       ↓
-   List[TranscriptionSegment] [
-       TranscriptionSegment {
-           start: 0.0,
-           end: 3.2,
-           text: "Hello, how are you feeling today?",
-           speaker: "SPEAKER_00"  // ← Assigned
-       },
-       TranscriptionSegment {
-           start: 3.5,
-           end: 7.8,
-           text: "I've been having a difficult week.",
-           speaker: "SPEAKER_01"  // ← Assigned
-       },
-       ...
-   ]
-       │
-       ↓
-┌──────────────────────────────────────────────────────────┐
-│ RESULT COMPILATION                                        │
-└──────────────────────────────────────────────────────────┘
-       │
-       ↓
-OUTPUT: TranscriptionResult {
-    segments: [Original segments without speakers],
-    aligned_segments: [Segments with speaker labels],
-    speaker_turns: [Raw diarization output],
-    full_text: "Hello, how are you feeling today? I've been...",
-    language: "en",
-    duration: 1380.0,
-    metadata: {
-        source_file: "therapy_session.mp3",
-        backend_used: "gpu",
-        processing_time_seconds: 45.2,
-        num_segments: 142,
-        num_speaker_turns: 87
-    },
-    performance_metrics: {  // If enabled
-        stages: {
-            "preprocessing": {duration: 2.1, ...},
-            "transcription": {duration: 38.5, ...},
-            "diarization": {duration: 3.8, ...},
-            "alignment": {duration: 0.8, ...}
-        },
-        ...
+OUTPUT:
+{
+  "segments": [
+    {
+      "start": 0.5,           # Segment start time (seconds)
+      "end": 2.3,             # Segment end time
+      "text": "Hello there",  # Transcribed text
+      "speaker": "Speaker 0"  # Only in aligned_segments
     }
+  ],
+  "full_text": "Hello there how are you",  # Complete transcription
+  "language": "en",                       # Detected language
+  "duration": 45.6,                       # Total audio duration
+  "speaker_turns": [
+    {
+      "speaker": "Speaker 0",
+      "start": 0.0,
+      "end": 2.5
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.5,
+      "end": 2.3,
+      "text": "Hello there",
+      "speaker": "Speaker 0"
+    }
+  ],
+  "provider": "vast_ai",  # GPU provider
+  "performance_metrics": {
+    "total_duration": 15.3,
+    "stages": {
+      "GPU Audio Preprocessing": {
+        "duration": 2.1,
+        "gpu_stats": {...}
+      },
+      "GPU Transcription": {
+        "duration": 8.5,
+        "gpu_stats": {...}
+      },
+      ...
+    }
+  }
 }
 ```
 
 ---
 
-## 6. File Organization (Before vs. After)
+## Module Dependencies
 
 ```
-File Structure Comparison
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-BEFORE (Current):                    AFTER (Proposed):
-───────────────────────────────      ─────────────────────────────────
-
-audio-transcription-pipeline/        audio-transcription-pipeline/
-├── src/                              ├── src/
-│   ├── pipeline.py           289 LOC│   ├── pipeline.py          NEW
-│   ├── pipeline_gpu.py       442 LOC│   ├── config.py            NEW
-│   ├── pipeline_enhanced.py  656 LOC│   ├── interfaces.py        NEW
-│   ├── pipeline_colab.py     322 LOC│   ├── models.py            NEW
-│   ├── gpu_audio_ops.py      196 LOC│   │
-│   ├── performance_logger.py 535 LOC│   ├── backends/            NEW
-│   └── gpu_config.py         153 LOC│   │   ├── preprocessing/
-│                                     │   │   │   ├── cpu.py
-│                                     │   │   │   └── gpu.py
-│                                     │   │   ├── transcription/
-│                                     │   │   │   ├── whisper_api.py
-│                                     │   │   │   └── faster_whisper.py
-│                                     │   │   └── diarization/
-│                                     │   │       ├── pyannote.py
-│                                     │   │       └── null.py
-│                                     │   │
-│                                     │   ├── utils/             NEW
-│                                     │   │   ├── alignment.py
-│                                     │   │   └── chunking.py
-│                                     │   │
-│                                     │   ├── gpu_audio_ops.py   KEEP
-│                                     │   ├── performance_logger.py KEEP
-│                                     │   └── gpu_config.py      KEEP
-│                                     │
-├── tests/                            ├── tests/
-│   ├── test_full_pipeline.py         │   ├── unit/             NEW
-│   ├── test_performance_logging.py   │   │   ├── test_interfaces.py
-│   ├── test_diarization.py           │   │   ├── test_config.py
-│   └── ...                           │   │   └── test_models.py
-│                                     │   ├── integration/       NEW
-│                                     │   │   ├── test_cpu_backend.py
-│                                     │   │   ├── test_gpu_backend.py
-│                                     │   │   └── test_cloud_backend.py
-│                                     │   ├── regression/        NEW
-│                                     │   │   └── test_output_parity.py
-│                                     │   └── e2e/              NEW
-│                                     │       └── test_full_pipeline.py
-│                                     │
-├── transcribe_gpu.py                 ├── transcribe.py          NEW
-└── ...                               └── ...
-
-LOC REDUCTION:                        ESTIMATED FINAL:
-  Total: ~1,709 LOC (4 pipelines)       Core: ~800 LOC
-  Duplicated: ~1,200 LOC (70%)          Backends: ~400 LOC
-                                        Utils: ~200 LOC
-                                        ─────────────────
-                                        Total: ~1,400 LOC
-
-                                      Reduction: ~18% total LOC
-                                      But 70% duplication eliminated!
-                                      (Maintenance burden reduced by 4x)
+┌────────────────────────────────────────────────────────────┐
+│                    Pipeline Variants                       │
+├────────────────────────────────────────────────────────────┤
+│                                                             │
+│  pipeline.py (CPU/API)                                     │
+│  ├─ AudioPreprocessor                                     │
+│  └─ WhisperTranscriber                                    │
+│     ├─ pydub (audio loading)                              │
+│     ├─ openai (API client)                                │
+│     ├─ tenacity (retry logic)                             │
+│     └─ python-dotenv (env vars)                           │
+│                                                             │
+│  pipeline_gpu.py (GPU)                                     │
+│  ├─ GPUTranscriptionPipeline                              │
+│  ├─ GPUAudioProcessor                                     │
+│  ├─ gpu_config (provider detection)                       │
+│  ├─ performance_logger (monitoring)                       │
+│  └─ pyannote_compat (version compatibility)               │
+│     ├─ torch (GPU operations)                             │
+│     ├─ torchaudio (audio loading)                         │
+│     ├─ julius (resampling)                                │
+│     ├─ faster-whisper (local transcription)               │
+│     └─ pyannote.audio (diarization)                       │
+│                                                             │
+│  pipeline_enhanced.py (CPU with logging)                  │
+│  ├─ AudioPreprocessor (with logger)                       │
+│  ├─ WhisperTranscriber (with logger)                      │
+│  ├─ SpeakerDiarizer                                       │
+│  └─ performance_logger (detailed metrics)                 │
+│                                                             │
+│  youtube_to_transcript.py (End-to-end)                    │
+│  ├─ YouTubeSessionDownloader                              │
+│  ├─ GPUTranscriptionPipeline                              │
+│  └─ (handles download + transcription + diarization)      │
+│                                                             │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-*These diagrams illustrate the transformation from 4 duplicate implementations to a unified, extensible architecture with pluggable backends.*
+## GPU Memory Timeline
+
+```
+Time ──────────────────────────────────────────────────────────>
+
+Init:
+  [Free: 24GB] ─────────────────────────────────────────────
+
+Load Whisper:
+  [Whisper 6GB][Free: 18GB] ─────────────────────────────────
+
+Transcribe:
+  [Whisper 6GB][Audio tensors 1GB][Free: 17GB] ─────────────
+
+Delete Whisper:
+  [Free: 24GB] ──────────────────────────────────────────────
+
+Load Diarizer:
+  [Diarizer 3GB][Free: 21GB] ────────────────────────────────
+
+Load waveform:
+  [Diarizer 3GB][Waveform 2GB][Free: 19GB] ──────────────────
+
+Diarize:
+  [Diarizer 3GB][Waveform 2GB][Tensors 1GB][Free: 18GB] ─────
+
+Delete waveform:
+  [Diarizer 3GB][Free: 21GB] ────────────────────────────────
+
+Delete Diarizer:
+  [Free: 24GB] ──────────────────────────────────────────────
+
+Alignment:
+  [Alignment tensors 0.5GB][Free: 23.5GB] ───────────────────
+
+Final cleanup:
+  [Free: 24GB] ──────────────────────────────────────────────
+```
+
+---
+
+## Error Handling Flow
+
+```
+API Call (Whisper)
+    │
+    ▼
+Try API Request
+    │
+    ├─ Success ──────────────────────> Return result
+    │
+    └─ Exception
+        │
+        ├─ RateLimitError (429)
+        │   │
+        │   ├─ Attempt 1: Wait 1s → Retry
+        │   ├─ Attempt 2: Wait 2s → Retry
+        │   ├─ Attempt 3: Wait 4s → Retry
+        │   ├─ Attempt 4: Wait 8s → Retry
+        │   ├─ Attempt 5: Wait 16s → Retry
+        │   │
+        │   └─ Max retries exceeded ──────> Raise RateLimitError
+        │
+        ├─ APIConnectionError
+        │   └─ Exponential backoff × 5 ──> Raise APIConnectionError
+        │
+        ├─ APITimeoutError
+        │   └─ Exponential backoff × 5 ──> Raise APITimeoutError
+        │
+        └─ Other Exception
+            └──────────────────────────> Raise immediately
+
+GPU Operations
+    │
+    ├─ OOM (Out of Memory)
+    │   │
+    │   ├─ Is memory > 85%?
+    │   │   └─ Yes: Log CRITICAL warning
+    │   │
+    │   └─ Exception propagates ──> Caught by finally block
+    │
+    └─ Model load failure
+        └─ Exception propagates ──> Caught by context manager __exit__
+```
+
+---
+
+## Quality Assurance Points
+
+```
+┌─────────────────────────────────────────┐
+│  Input Validation                       │
+├─────────────────────────────────────────┤
+│ • File exists check                     │
+│ • Audio format validation               │
+│ • File size < 25MB (API only)           │
+│ • Language code validation              │
+│ • num_speakers > 0                      │
+└─────────────────────────────────────────┘
+        │
+        ▼
+┌─────────────────────────────────────────┐
+│  Processing Stages                      │
+├─────────────────────────────────────────┤
+│ • Stage timing verification             │
+│ • GPU memory monitoring                 │
+│ • API response validation               │
+│ • Model loading success check           │
+│ • Diarization output validation         │
+└─────────────────────────────────────────┘
+        │
+        ▼
+┌─────────────────────────────────────────┐
+│  Output Validation                      │
+├─────────────────────────────────────────┤
+│ • Segments have valid timestamps        │
+│ • Segments sorted chronologically       │
+│ • Speaker labels not empty              │
+│ • Full text matches segment concatenation
+│ • Performance metrics present           │
+└─────────────────────────────────────────┘
+```
+

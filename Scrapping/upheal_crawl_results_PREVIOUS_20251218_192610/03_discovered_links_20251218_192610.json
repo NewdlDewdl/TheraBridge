@@ -1,0 +1,96 @@
+{
+  "timestamp": "20251218_192610",
+  "source_url": "https://app.upheal.io/",
+  "discovered_urls": [
+    "https://app.upheal.io/",
+    "https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071",
+    "https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244",
+    "https://app.upheal.io/settings/referral-program"
+  ],
+  "raw_links": [
+    {
+      "href": "https://app.upheal.io/",
+      "text": "",
+      "title": "",
+      "base_domain": "upheal.io",
+      "head_data": null,
+      "head_extraction_status": null,
+      "head_extraction_error": null,
+      "intrinsic_score": 0.0,
+      "contextual_score": null,
+      "total_score": null
+    },
+    {
+      "href": "https://app.upheal.io/settings/referral-program",
+      "text": "Give 50% off, get $300Refer a friend, get a reward.",
+      "title": "",
+      "base_domain": "upheal.io",
+      "head_data": null,
+      "head_extraction_status": null,
+      "head_extraction_error": null,
+      "intrinsic_score": 0.0,
+      "contextual_score": null,
+      "total_score": null
+    },
+    {
+      "href": "https://www.upheal.io/webinars",
+      "text": "Book a free webinar",
+      "title": "",
+      "base_domain": "upheal.io",
+      "head_data": null,
+      "head_extraction_status": null,
+      "head_extraction_error": null,
+      "intrinsic_score": 0.0,
+      "contextual_score": null,
+      "total_score": null
+    },
+    {
+      "href": "https://support.upheal.io",
+      "text": "Support Center",
+      "title": "",
+      "base_domain": "upheal.io",
+      "head_data": null,
+      "head_extraction_status": null,
+      "head_extraction_error": null,
+      "intrinsic_score": 0.0,
+      "contextual_score": null,
+      "total_score": null
+    },
+    {
+      "href": "https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244",
+      "text": "Apr 29, 2023, 8:30 AMHeld by YouRGRhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.ioHistory of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school.Edit",
+      "title": "",
+      "base_domain": "upheal.io",
+      "head_data": null,
+      "head_extraction_status": null,
+      "head_extraction_error": null,
+      "intrinsic_score": 0.0,
+      "contextual_score": null,
+      "total_score": null
+    },
+    {
+      "href": "https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071",
+      "text": "Jul 29, 2022, 11:03 AM28 mins · Held by YouTPTony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.ioSurgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age.Edit",
+      "title": "",
+      "base_domain": "upheal.io",
+      "head_data": null,
+      "head_extraction_status": null,
+      "head_extraction_error": null,
+      "intrinsic_score": 0.0,
+      "contextual_score": null,
+      "total_score": null
+    },
+    {
+      "href": "https://support.upheal.io/",
+      "text": "Support",
+      "title": "",
+      "base_domain": "upheal.io",
+      "head_data": null,
+      "head_extraction_status": null,
+      "head_extraction_error": null,
+      "intrinsic_score": 0.0,
+      "contextual_score": null,
+      "total_score": null
+    }
+  ]
+}

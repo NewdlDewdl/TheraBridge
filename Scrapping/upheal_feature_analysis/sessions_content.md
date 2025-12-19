@@ -1,12 +1,56 @@
-#### Welcome back
-​
-​
-Remember me
-Forgot password?
-Log in
+[](https://app.upheal.io/)
+OS
+  * Home
+  * Calendar
+  * Sessions
+  * Clients
+  * Payments
+
+
+  * Templates & forms
+  * Note templates
+  * Forms
+
+
+  * Tools
+  * Telehealth
+  * Session capture
+  * Compliance Checker
+
+
 * * *
-ArtboardLog in with Google
-Don't have an account? [Sign up for free](https://upheal.io/signup)
-© 2025 Upheal, Inc.
-|
-[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)
+  * Practice settings
+
+
+30days left in free trial
+C
+Carl JungCarl Jung's Practice
+  1. Sessions
+
+
+# Sessions
+[Upcoming sessions](https://app.upheal.io/calendar)
+Schedule
+[ Apr 29, 2023, 8:30 AMHeld by You RG Rhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.io History of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school. Edit](https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244)[ Jul 29, 2022, 11:03 AM28 mins · Held by You TP Tony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.io Surgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age. Edit](https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071)
+Carl Jung's Practice
+  * Settings
+[Support](https://support.upheal.io/)
+  * Test Upheal’s notes —   
+Talk to our AI client.
+  * Log out
+
+
+  * Reassign session
+* * *
+  * Delete recording
+  * Delete transcript
+  * Delete session
+
+
+  * Reassign session
+* * *
+  * Delete recording
+  * Delete transcript
+  * Delete session
+
+

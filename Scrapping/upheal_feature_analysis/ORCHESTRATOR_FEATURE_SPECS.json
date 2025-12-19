@@ -1,7 +1,7 @@
 {
   "project_name": "TherapyBridge_Upheal_Clone",
   "source_application": "Upheal.io",
-  "analysis_date": "20251218_185601",
+  "analysis_date": "20251218_193414",
   "features_to_implement": [
     {
       "feature_name": "Home",
@@ -9,24 +9,46 @@
       "url_pattern": "https://app.upheal.io/",
       "user_story": "As a therapist, I want to dashboard and overview",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display Welcome, Carl",
+        "Should display Test Upheal's notes",
+        "Should display Move clients from EHR",
+        "Should display Download our apps",
+        "Should display Take a 3-minute video tour"
       ],
       "ui_components": [
-        "Form",
-        "Input",
         "List",
         "Button",
-        "Table"
+        "Form",
+        "Input"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "note",
+        "[Move clients from EHR preview](https://app.upheal.io/assets/chart-migration@2x-BmHftiMs.png)",
+        "[ Jul 29, 2022, 11:03 AM28 mins · Held by You TP Tony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.io Surgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age. Edit](https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071)",
+        "[Book a free webinar](https://www.upheal.io/webinars)",
+        "[Take a 3-minute video tour preview](https://app.upheal.io/assets/video-tour@2x-BC17s0JY.png)",
+        "[ Apr 29, 2023, 8:30 AMHeld by You RG Rhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.io History of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school. Edit](https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244)",
+        "[ Give 50% off, get $300Refer a friend, get a reward. ](https://app.upheal.io/settings/referral-program)",
+        "[Download our apps preview](https://app.upheal.io/assets/apple-apps@2x-6n9jVx7p.png)",
+        "Phone",
+        "[Join the Uphealer Community](https://www.facebook.com/groups/upheal)",
+        "[](https://app.upheal.io/assets/upheal-os-announcement-blob-KvyVbr7a.png)",
+        "time",
+        "[](https://app.upheal.io/)",
+        "[Support](https://support.upheal.io/)",
+        "[Support Center](https://support.upheal.io)",
+        "[Test Upheal's notes preview](https://app.upheal.io/assets/ai-client@2x-DFkkDOWU.png)",
+        "Note"
       ],
       "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
+        "",
+        "Give 50% off, get $300Refer a friend, get a reward.",
+        "Book a free webinar",
+        "Support Center",
+        "Apr 29, 2023, 8:30 AMHeld by YouRGRhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.ioHistory of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school.Edit",
+        "Jul 29, 2022, 11:03 AM28 mins · Held by YouTPTony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.ioSurgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age.Edit",
+        "Support"
       ],
       "implementation_priority": "high"
     },
@@ -36,24 +58,30 @@
       "url_pattern": "https://app.upheal.io/sessions",
       "user_story": "As a therapist, I want to session management and list",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display Sessions"
       ],
       "ui_components": [
-        "Form",
-        "Input",
         "List",
         "Button",
-        "Table"
+        "Form",
+        "Input"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "note",
+        "[ Apr 29, 2023, 8:30 AMHeld by You RG Rhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.io History of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school. Edit](https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244)",
+        "[Upcoming sessions](https://app.upheal.io/calendar)",
+        "[Support](https://support.upheal.io/)",
+        "[](https://app.upheal.io/)",
+        "[ Jul 29, 2022, 11:03 AM28 mins · Held by You TP Tony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.io Surgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age. Edit](https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071)",
+        "Note"
       ],
       "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
+        "",
+        "Upcoming sessions",
+        "Apr 29, 2023, 8:30 AMHeld by YouRGRhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.ioHistory of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school.Edit",
+        "Jul 29, 2022, 11:03 AM28 mins · Held by YouTPTony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.ioSurgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age.Edit",
+        "Support"
       ],
       "implementation_priority": "high"
     },
@@ -63,24 +91,46 @@
       "url_pattern": "https://app.upheal.io/patients",
       "user_story": "As a therapist, I want to client/patient management",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display Welcome, Carl",
+        "Should display Test Upheal's notes",
+        "Should display Move clients from EHR",
+        "Should display Download our apps",
+        "Should display Take a 3-minute video tour"
       ],
       "ui_components": [
-        "Form",
-        "Input",
         "List",
         "Button",
-        "Table"
+        "Form",
+        "Input"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "note",
+        "[Move clients from EHR preview](https://app.upheal.io/assets/chart-migration@2x-BmHftiMs.png)",
+        "[ Jul 29, 2022, 11:03 AM28 mins · Held by You TP Tony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.io Surgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age. Edit](https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071)",
+        "[Book a free webinar](https://www.upheal.io/webinars)",
+        "[Take a 3-minute video tour preview](https://app.upheal.io/assets/video-tour@2x-BC17s0JY.png)",
+        "[ Apr 29, 2023, 8:30 AMHeld by You RG Rhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.io History of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school. Edit](https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244)",
+        "[ Give 50% off, get $300Refer a friend, get a reward. ](https://app.upheal.io/settings/referral-program)",
+        "[Download our apps preview](https://app.upheal.io/assets/apple-apps@2x-6n9jVx7p.png)",
+        "Phone",
+        "[Join the Uphealer Community](https://www.facebook.com/groups/upheal)",
+        "[](https://app.upheal.io/assets/upheal-os-announcement-blob-KvyVbr7a.png)",
+        "time",
+        "[](https://app.upheal.io/)",
+        "[Support](https://support.upheal.io/)",
+        "[Support Center](https://support.upheal.io)",
+        "[Test Upheal's notes preview](https://app.upheal.io/assets/ai-client@2x-DFkkDOWU.png)",
+        "Note"
       ],
       "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
+        "",
+        "Give 50% off, get $300Refer a friend, get a reward.",
+        "Book a free webinar",
+        "Support Center",
+        "Apr 29, 2023, 8:30 AMHeld by YouRGRhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.ioHistory of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school.Edit",
+        "Jul 29, 2022, 11:03 AM28 mins · Held by YouTPTony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.ioSurgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age.Edit",
+        "Support"
       ],
       "implementation_priority": "high"
     },
@@ -90,24 +140,29 @@
       "url_pattern": "https://app.upheal.io/calendar",
       "user_story": "As a therapist, I want to scheduling and appointments",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display Services",
+        "Should display Calendars"
       ],
       "ui_components": [
-        "Form",
+        "Button",
         "Input",
         "List",
-        "Button",
-        "Table"
+        "Table",
+        "Form"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "note",
+        "[Calendar integrations logos](https://app.upheal.io/assets/calendar-integrations-logos-U6Uc8pUq.png)",
+        "[Learn more](https://upheal.io/support/en/articles/10539443)",
+        "[Support](https://support.upheal.io/)",
+        "[](https://app.upheal.io/)",
+        "Note"
       ],
       "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
+        "",
+        "Learn more",
+        "Support"
       ],
       "implementation_priority": "medium"
     },
@@ -117,24 +172,46 @@
       "url_pattern": "https://app.upheal.io/notes",
       "user_story": "As a therapist, I want to clinical notes and documentation",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display Welcome, Carl",
+        "Should display Test Upheal's notes",
+        "Should display Move clients from EHR",
+        "Should display Download our apps",
+        "Should display Take a 3-minute video tour"
       ],
       "ui_components": [
-        "Form",
-        "Input",
         "List",
         "Button",
-        "Table"
+        "Form",
+        "Input"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "note",
+        "[Move clients from EHR preview](https://app.upheal.io/assets/chart-migration@2x-BmHftiMs.png)",
+        "[ Jul 29, 2022, 11:03 AM28 mins · Held by You TP Tony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.io Surgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age. Edit](https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071)",
+        "[Book a free webinar](https://www.upheal.io/webinars)",
+        "[Take a 3-minute video tour preview](https://app.upheal.io/assets/video-tour@2x-BC17s0JY.png)",
+        "[ Apr 29, 2023, 8:30 AMHeld by You RG Rhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.io History of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school. Edit](https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244)",
+        "[ Give 50% off, get $300Refer a friend, get a reward. ](https://app.upheal.io/settings/referral-program)",
+        "[Download our apps preview](https://app.upheal.io/assets/apple-apps@2x-6n9jVx7p.png)",
+        "Phone",
+        "[Join the Uphealer Community](https://www.facebook.com/groups/upheal)",
+        "[](https://app.upheal.io/assets/upheal-os-announcement-blob-KvyVbr7a.png)",
+        "time",
+        "[](https://app.upheal.io/)",
+        "[Support](https://support.upheal.io/)",
+        "[Support Center](https://support.upheal.io)",
+        "[Test Upheal's notes preview](https://app.upheal.io/assets/ai-client@2x-DFkkDOWU.png)",
+        "Note"
       ],
       "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
+        "",
+        "Give 50% off, get $300Refer a friend, get a reward.",
+        "Book a free webinar",
+        "Support Center",
+        "Apr 29, 2023, 8:30 AMHeld by YouRGRhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.ioHistory of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school.Edit",
+        "Jul 29, 2022, 11:03 AM28 mins · Held by YouTPTony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.ioSurgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age.Edit",
+        "Support"
       ],
       "implementation_priority": "medium"
     },
@@ -144,24 +221,46 @@
       "url_pattern": "https://app.upheal.io/templates",
       "user_story": "As a therapist, I want to note templates",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display Welcome, Carl",
+        "Should display Test Upheal's notes",
+        "Should display Move clients from EHR",
+        "Should display Download our apps",
+        "Should display Take a 3-minute video tour"
       ],
       "ui_components": [
-        "Form",
-        "Input",
         "List",
         "Button",
-        "Table"
+        "Form",
+        "Input"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "note",
+        "[Move clients from EHR preview](https://app.upheal.io/assets/chart-migration@2x-BmHftiMs.png)",
+        "[ Jul 29, 2022, 11:03 AM28 mins · Held by You TP Tony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.io Surgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age. Edit](https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071)",
+        "[Book a free webinar](https://www.upheal.io/webinars)",
+        "[Take a 3-minute video tour preview](https://app.upheal.io/assets/video-tour@2x-BC17s0JY.png)",
+        "[ Apr 29, 2023, 8:30 AMHeld by You RG Rhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.io History of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school. Edit](https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244)",
+        "[ Give 50% off, get $300Refer a friend, get a reward. ](https://app.upheal.io/settings/referral-program)",
+        "[Download our apps preview](https://app.upheal.io/assets/apple-apps@2x-6n9jVx7p.png)",
+        "Phone",
+        "[Join the Uphealer Community](https://www.facebook.com/groups/upheal)",
+        "[](https://app.upheal.io/assets/upheal-os-announcement-blob-KvyVbr7a.png)",
+        "time",
+        "[](https://app.upheal.io/)",
+        "[Support](https://support.upheal.io/)",
+        "[Support Center](https://support.upheal.io)",
+        "[Test Upheal's notes preview](https://app.upheal.io/assets/ai-client@2x-DFkkDOWU.png)",
+        "Note"
       ],
       "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
+        "",
+        "Give 50% off, get $300Refer a friend, get a reward.",
+        "Book a free webinar",
+        "Support Center",
+        "Apr 29, 2023, 8:30 AMHeld by YouRGRhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.ioHistory of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school.Edit",
+        "Jul 29, 2022, 11:03 AM28 mins · Held by YouTPTony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.ioSurgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age.Edit",
+        "Support"
       ],
       "implementation_priority": "medium"
     },
@@ -171,25 +270,28 @@
       "url_pattern": "https://app.upheal.io/settings",
       "user_story": "As a therapist, I want to account and practice settings",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display My profile",
+        "Should display Time zone",
+        "Should display Password"
       ],
       "ui_components": [
-        "Form",
-        "Input",
         "List",
         "Button",
-        "Table"
+        "Form",
+        "Input"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "Note",
+        "name",
+        "Time",
+        "[](https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1fa-1f1f8.svg)",
+        "Email",
+        "Password",
+        "phone",
+        "address"
       ],
-      "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
-      ],
+      "navigation_items": [],
       "implementation_priority": "medium"
     },
     {
@@ -198,24 +300,46 @@
       "url_pattern": "https://app.upheal.io/profile",
       "user_story": "As a therapist, I want to user profile",
       "acceptance_criteria": [
-        "Should display Welcome back"
+        "Should display Welcome, Carl",
+        "Should display Test Upheal's notes",
+        "Should display Move clients from EHR",
+        "Should display Download our apps",
+        "Should display Take a 3-minute video tour"
       ],
       "ui_components": [
-        "Form",
-        "Input",
         "List",
         "Button",
-        "Table"
+        "Form",
+        "Input"
       ],
       "api_endpoints": [],
       "data_fields": [
-        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-        "[Sign up for free](https://upheal.io/signup)",
-        "password"
+        "note",
+        "[Move clients from EHR preview](https://app.upheal.io/assets/chart-migration@2x-BmHftiMs.png)",
+        "[ Jul 29, 2022, 11:03 AM28 mins · Held by You TP Tony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.io Surgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age. Edit](https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071)",
+        "[Book a free webinar](https://www.upheal.io/webinars)",
+        "[Take a 3-minute video tour preview](https://app.upheal.io/assets/video-tour@2x-BC17s0JY.png)",
+        "[ Apr 29, 2023, 8:30 AMHeld by You RG Rhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.io History of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school. Edit](https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244)",
+        "[ Give 50% off, get $300Refer a friend, get a reward. ](https://app.upheal.io/settings/referral-program)",
+        "[Download our apps preview](https://app.upheal.io/assets/apple-apps@2x-6n9jVx7p.png)",
+        "Phone",
+        "[Join the Uphealer Community](https://www.facebook.com/groups/upheal)",
+        "[](https://app.upheal.io/assets/upheal-os-announcement-blob-KvyVbr7a.png)",
+        "time",
+        "[](https://app.upheal.io/)",
+        "[Support](https://support.upheal.io/)",
+        "[Support Center](https://support.upheal.io)",
+        "[Test Upheal's notes preview](https://app.upheal.io/assets/ai-client@2x-DFkkDOWU.png)",
+        "Note"
       ],
       "navigation_items": [
-        "Sign up for free",
-        "Privacy and Compliance"
+        "",
+        "Give 50% off, get $300Refer a friend, get a reward.",
+        "Book a free webinar",
+        "Support Center",
+        "Apr 29, 2023, 8:30 AMHeld by YouRGRhonda García Sánchez (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_1@upheal.ioHistory of violence - intake note demo The client has concerns about their daughter’s behavioral issues, including bullying and aggression towards other children at school.Edit",
+        "Jul 29, 2022, 11:03 AM28 mins · Held by YouTPTony Pasano (demo)no-reply+demo__4443ea51-59b8-404f-a7fb-e93026fc4029_0@upheal.ioSurgeon's perfectionism trauma - progress note demo The client experienced trauma related to the death of their patient and father at a young age.Edit",
+        "Support"
       ],
       "implementation_priority": "medium"
     }

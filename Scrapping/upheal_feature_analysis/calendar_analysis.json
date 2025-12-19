@@ -4,36 +4,47 @@
   "description": "Scheduling and appointments",
   "actual_url": "https://app.upheal.io/calendar",
   "title": "Upheal App",
-  "content_length": 254,
-  "timestamp": "20251218_185601",
+  "content_length": 1572,
+  "timestamp": "20251218_193414",
   "navigation": [
     {
-      "text": "Sign up for free",
-      "href": "https://upheal.io/signup",
+      "text": "",
+      "href": "https://app.upheal.io/",
       "title": ""
     },
     {
-      "text": "Privacy and Compliance",
-      "href": "https://www.upheal.io/privacy-and-compliance",
+      "text": "Learn more",
+      "href": "https://upheal.io/support/en/articles/10539443",
+      "title": ""
+    },
+    {
+      "text": "Support",
+      "href": "https://support.upheal.io/",
       "title": ""
     }
   ],
   "api_endpoints": [],
   "form_fields": [
-    "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
-    "[Sign up for free](https://upheal.io/signup)",
-    "password"
+    "note",
+    "[Calendar integrations logos](https://app.upheal.io/assets/calendar-integrations-logos-U6Uc8pUq.png)",
+    "[Learn more](https://upheal.io/support/en/articles/10539443)",
+    "[Support](https://support.upheal.io/)",
+    "[](https://app.upheal.io/)",
+    "Note"
   ],
   "ui_patterns": {
     "headings": [
-      "Welcome back"
+      "Services",
+      "Calendars"
     ],
     "buttons": [
-      "Sign up for free",
-      "_Privacy and Compliance_"
+      "",
+      "Calendar integrations logos",
+      "Learn more",
+      "Support"
     ],
-    "lists": 1,
-    "tables": 1,
+    "lists": 20,
+    "tables": 82,
     "images": 0
   }
 }

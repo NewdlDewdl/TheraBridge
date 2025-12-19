@@ -1,19 +1,35 @@
 {
-  "total_pages": 2,
+  "total_pages": 9,
   "pages_by_category": {
     "sessions": [],
     "clients": [],
-    "settings": [],
+    "settings": [
+      "https://app.upheal.io/settings/referral-program"
+    ],
     "templates": [],
-    "calendar": [],
+    "calendar": [
+      "https://app.upheal.io/calendar"
+    ],
     "notes": [],
     "other": [
-      "https://www.upheal.io/privacy-and-compliance",
-      "https://upheal.io/signup"
+      "https://app.upheal.io/",
+      "https://support.upheal.io",
+      "https://support.upheal.io/",
+      "https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071",
+      "https://upheal.io/support/en/articles/10539443",
+      "https://www.upheal.io/webinars",
+      "https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244"
     ]
   },
   "all_urls": [
-    "https://upheal.io/signup",
-    "https://www.upheal.io/privacy-and-compliance"
+    "https://app.upheal.io/",
+    "https://app.upheal.io/calendar",
+    "https://app.upheal.io/detail/b83dc32e-58c9-4c43-ad16-338a5f331c95/5b4aa0cb-9f10-405a-b7ff-e34ea54e5071",
+    "https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244",
+    "https://app.upheal.io/settings/referral-program",
+    "https://support.upheal.io",
+    "https://support.upheal.io/",
+    "https://upheal.io/support/en/articles/10539443",
+    "https://www.upheal.io/webinars"
   ]
 }

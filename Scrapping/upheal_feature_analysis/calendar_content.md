@@ -1,12 +1,112 @@
-#### Welcome back
-​
-​
-Remember me
-Forgot password?
-Log in
+[](https://app.upheal.io/)
+OS
+  * Home
+  * Calendar
+  * Sessions
+  * Clients
+  * Payments
+
+
+  * Templates & forms
+  * Note templates
+  * Forms
+
+
+  * Tools
+  * Telehealth
+  * Session capture
+  * Compliance Checker
+
+
 * * *
-ArtboardLog in with Google
-Don't have an account? [Sign up for free](https://upheal.io/signup)
-© 2025 Upheal, Inc.
-|
-[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)
+  * Practice settings
+
+
+30days left in free trial
+C
+Carl JungCarl Jung's Practice
+  1. Calendar
+
+
+Today
+December 2025
+Week
+New event
+| W51 | Mon 15 | Tue 16 | Wed 17 |  Thu 18 | Fri 19  
+---|---|---|---|---|---  
+| All day |  |  |  |  |   
+---|---|---|---|---|---  
+| 12am |   
+---|---  
+|   
+1am |   
+|   
+2am |   
+|   
+3am |   
+|   
+4am |   
+|   
+5am |   
+|   
+6am |   
+|   
+7am |   
+|   
+8am |   
+|   
+9am |   
+|   
+10am |   
+|   
+11am |   
+|   
+12pm |   
+|   
+1pm |   
+|   
+2pm |   
+|   
+3pm |   
+|   
+4pm |   
+|   
+5pm |   
+|   
+6pm |   
+|   
+7pm |   
+|   
+8pm |   
+|   
+9pm |   
+|   
+10pm |   
+|   
+11pm |   
+|   
+19:35 |  |  |  | 19:35 |   
+---|---|---|---|---|---  
+### 
+Services
+New
+  * Therapy Session50 min
+  * Intake Session75 min
+
+
+Meet self-schedulingSkip the back-and-forth. Set up services so clients can schedule sessions on their own.Manage services
+### 
+Calendars
+  * Upheal calendar
+
+
+![Calendar integrations logos](https://app.upheal.io/assets/calendar-integrations-logos-U6Uc8pUq.png)
+Connect your calendarsSecurely connect personal and work calendars to manage your appointments and prevent scheduling conflicts. [Learn more](https://upheal.io/support/en/articles/10539443)Manage calendars
+Carl Jung's Practice
+  * Settings
+[Support](https://support.upheal.io/)
+  * Test Upheal’s notes —   
+Talk to our AI client.
+  * Log out
+
+
