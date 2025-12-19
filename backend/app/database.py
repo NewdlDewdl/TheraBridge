@@ -49,7 +49,7 @@ engine = create_async_engine(
     pool_timeout=DB_POOL_TIMEOUT,  # Seconds to wait for available connection
     pool_recycle=DB_POOL_RECYCLE,  # Seconds before recycling connections
     pool_pre_ping=True,  # Verify connections before using
-    connect_args={"ssl": "require"}  # Enable SSL for Neon
+    connect_args={"ssl": True}  # Enable SSL for Neon (asyncpg requires boolean, not "require" string)
 )
 
 # Create async session factory

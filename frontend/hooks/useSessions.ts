@@ -40,7 +40,7 @@ export function useSessions(
   if (options?.patientId) params.set('patient_id', options.patientId);
   if (options?.status) params.set('status', options.status);
   const queryString = params.toString();
-  const endpoint = `/api/sessions/${queryString ? `?${queryString}` : ''}`;
+  const endpoint = `/api/v1/sessions/${queryString ? `?${queryString}` : ''}`;
 
   // Determine refresh interval:
   // - Processed/failed sessions: no refresh (they don't change)

@@ -19,7 +19,7 @@ EMAIL_FROM = os.getenv("EMAIL_FROM", "noreply@therapybridge.com")
 EMAIL_API_KEY = os.getenv("EMAIL_API_KEY", "")
 SMTP_HOST = os.getenv("SMTP_HOST", "localhost")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-SMTP_USER = os.getenv("SMTP_USER", "")
+SMTP_USERNAME = os.getenv("SMTP_USERNAME", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 
@@ -172,9 +172,9 @@ class EmailService:
                 msg.attach(MIMEText(html_body, 'html'))
 
             with smtplib.SMTP(SMTP_HOST, SMTP_PORT) as server:
-                if SMTP_USER and SMTP_PASSWORD:
+                if SMTP_USERNAME and SMTP_PASSWORD:
                     server.starttls()
-                    server.login(SMTP_USER, SMTP_PASSWORD)
+                    server.login(SMTP_USERNAME, SMTP_PASSWORD)
                 server.send_message(msg)
 
             logger.info(f"Email sent via SMTP: {to}")

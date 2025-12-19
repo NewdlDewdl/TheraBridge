@@ -31,7 +31,7 @@ from app.middleware.security_headers import SecurityHeadersMiddleware
 from app.routers import session_security, audit, access_requests, emergency, consent
 
 # Analytics scheduler imports
-from app.scheduler import start_scheduler, shutdown_scheduler
+from app.scheduler import start_scheduler, shutdown_scheduler, scheduler
 from app.tasks.aggregation import register_analytics_jobs
 
 load_dotenv()
@@ -75,7 +75,7 @@ async def lifespan(app: FastAPI):
         # Start analytics scheduler and register background jobs
         logger.info("Starting analytics scheduler...")
         start_scheduler()
-        register_analytics_jobs()
+        register_analytics_jobs(scheduler)
         logger.info("✅ Analytics scheduler started and jobs registered")
     else:
         logger.info("🧪 Running under pytest - skipping production startup tasks")

@@ -531,17 +531,36 @@ cat data/UPHEAL_COMPETITIVE_ANALYSIS.md
 
 ## Next Steps Checklist
 
-- [ ] Build `upheal_session_detail_scraper.py`
-- [ ] Extract session overview tab
-- [ ] Extract transcript tab (conversation UI)
-- [ ] Extract analytics tab (charts and visualizations)
-- [ ] Extract session map tab (timeline view)
-- [ ] Capture screenshots of all 4 tabs
-- [ ] Generate `UPHEAL_SESSION_DETAIL_ANALYSIS.md` report
-- [ ] Update TherapyBridge roadmap with implementation guidance
+- [x] ~~Build `upheal_session_detail_scraper.py`~~ ❌ WRONG APPROACH
+- [ ] **CORRECT APPROACH:** Just scrape session detail page directly (no script building)
+- [ ] Login to Upheal → Click first session → Extract all visible content
+- [ ] Navigate through all 4 tabs and capture content + screenshots
+- [ ] Generate analysis report from scraped data
+
+---
+
+## ⚠️ Session 2025-12-18 - Phase 2 RESTART Required
+
+### What Went Wrong
+**Misunderstood task:** Built 4 tab extraction scripts (3,310 lines) instead of just scraping.
+- Created: `overview_tab_extractor.py`, `transcript_tab_extractor.py`, `analytics_tab_extractor.py`, `session_map_tab_extractor.py`
+- **Problem:** User wanted DATA extraction, not script development
+
+### Correct Approach (Next Session)
+1. Use existing `upheal_authenticated_scraper.py` to login
+2. Navigate to first session detail page
+3. Click through each tab (Overview, Transcript, Analytics, Session Map)
+4. Extract markdown + screenshots from each tab
+5. Analyze scraped content to generate competitive analysis report
+6. **NO script building** - just scraping and analysis
+
+### Files to Delete/Ignore
+- `Scrapping/upheal_tab_extractors/` directory (4 extractors - not needed)
+- `Scrapping/upheal_session_detail_scraper.py` (660 lines - can keep for URL discovery)
 
 ---
 
 **Session End:** 2025-12-18
-**Next Session Focus:** Session Detail Deep Dive - Extract all 4 tabs from individual session pages
-**Estimated Time:** 20-30 minutes (parallel orchestration with 4-6 agents)
+**Status:** Phase 2 needs restart with correct approach
+**Next Session Focus:** Simple scraping - Login → Click session → Extract all tabs → Analyze
+**Estimated Time:** 10-15 minutes (direct scraping, no development)

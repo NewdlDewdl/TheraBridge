@@ -33,7 +33,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }): React.ReactNode {
+export function AuthProvider({ children }: { children: React.ReactNode }): React.ReactElement {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

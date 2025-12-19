@@ -5,10 +5,9 @@ Upheal Session Detail URL Discovery Script
 Wave 1 of the Upheal Session Detail Deep Dive orchestration.
 
 This script:
-1. Authenticates to Upheal.io using crawl4ai browser automation
-2. Navigates to the sessions list page
-3. Discovers session detail URLs from the page
-4. Returns the first available session detail URL for Wave 2 agents
+1. Discovers session detail URLs from Upheal
+2. Returns the first available session detail URL for Wave 2 agents
+3. Saves structured output to data/session_detail_url.json
 
 The session detail URL is saved to data/session_detail_url.json for
 subsequent Wave 2 agents to extract the 4 tabs (Overview, Transcript,
@@ -16,10 +15,18 @@ AI Notes, Audio).
 
 Authentication Engineer (Instance I1) - Wave 1
 
-Usage:
-    python upheal_session_detail_scraper.py           # Headless mode
-    python upheal_session_detail_scraper.py --visible # Show browser
-    python upheal_session_detail_scraper.py --cached  # Use existing crawl data
+RECOMMENDED USAGE:
+    python upheal_session_detail_scraper.py --cached  # Use existing crawl data (FAST)
+
+This uses session URLs already discovered by the interactive scraper
+(upheal_authenticated_scraper.py in .claude/skills/crawl4ai/scripts/).
+
+ALTERNATIVE (requires manual login):
+    python upheal_session_detail_scraper.py --visible # Opens browser for manual login
+
+Note: Automated headless authentication has reliability issues with crawl4ai's
+JavaScript execution timing. Use --cached for production or --visible for
+manual authentication.
 """
 
 import asyncio
@@ -47,12 +54,27 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Load environment variables
-env_path = Path(__file__).parent / ".env"
-if not env_path.exists():
-    # Try the skills directory env
-    env_path = Path(__file__).parent.parent / ".claude" / "skills" / "crawl4ai" / ".env"
-load_dotenv(env_path)
+# Load environment variables - check multiple locations
+def find_credentials_file() -> Path:
+    """Find the .env file with Upheal credentials."""
+    possible_paths = [
+        Path(__file__).parent / ".env",  # Scrapping/.env
+        Path(__file__).parent.parent / ".claude" / "skills" / "crawl4ai" / ".env",  # .claude/skills/crawl4ai/.env
+        Path(__file__).parent.parent / ".env",  # Root .env
+    ]
+
+    for path in possible_paths:
+        if path.exists():
+            # Check if it has the credentials we need
+            content = path.read_text()
+            if "UPHEAL_EMAIL" in content and "UPHEAL_PASSWORD" in content:
+                return path
+
+    # Return the most likely location
+    return possible_paths[1]  # .claude/skills/crawl4ai/.env
+
+env_path = find_credentials_file()
+load_dotenv(env_path, override=True)
 
 
 @dataclass
@@ -158,54 +180,51 @@ class SessionDetailDiscovery:
         )
 
     def _build_login_js(self) -> str:
-        """Build JavaScript to fill and submit the login form."""
+        """
+        Build JavaScript to fill and submit the login form.
+
+        Uses setTimeout for delays since crawl4ai doesn't await async functions.
+        Uses native setter to trigger React's value tracking.
+        """
         return f'''
-        (async () => {{
-            // Wait for React to render
-            await new Promise(r => setTimeout(r, 1500));
-
+        // Use setTimeout chain for proper timing (no async/await)
+        setTimeout(function() {{
             // Find email field
-            const emailField = document.querySelector('input[type="email"]') ||
-                               document.querySelector('input[name="email"]') ||
-                               document.querySelector('#email');
+            var emailField = document.querySelector('input[type="email"]') ||
+                             document.querySelector('input[name="email"]');
+
             if (!emailField) {{
-                console.error('EMAIL_FIELD_NOT_FOUND');
+                console.error('EMAIL_NOT_FOUND');
                 return;
             }}
 
-            // Fill email with native events for React
-            emailField.focus();
-            emailField.value = '{self.email}';
+            // Use Object.getOwnPropertyDescriptor to set value properly for React
+            var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value'
+            ).set;
+
+            // Fill email
+            nativeInputValueSetter.call(emailField, '{self.email}');
             emailField.dispatchEvent(new Event('input', {{ bubbles: true }}));
-            emailField.dispatchEvent(new Event('change', {{ bubbles: true }}));
 
-            // Find password field
-            const passwordField = document.querySelector('input[type="password"]');
-            if (!passwordField) {{
-                console.error('PASSWORD_FIELD_NOT_FOUND');
-                return;
-            }}
+            // Find and fill password
+            setTimeout(function() {{
+                var passwordField = document.querySelector('input[type="password"]');
+                if (passwordField) {{
+                    nativeInputValueSetter.call(passwordField, '{self.password}');
+                    passwordField.dispatchEvent(new Event('input', {{ bubbles: true }}));
+                }}
 
-            // Fill password
-            passwordField.focus();
-            passwordField.value = '{self.password}';
-            passwordField.dispatchEvent(new Event('input', {{ bubbles: true }}));
-            passwordField.dispatchEvent(new Event('change', {{ bubbles: true }}));
-
-            // Wait before submit
-            await new Promise(r => setTimeout(r, 500));
-
-            // Find and click submit
-            const submitBtn = document.querySelector('button[type="submit"]') ||
-                              document.querySelector('input[type="submit"]');
-            if (submitBtn) {{
-                submitBtn.click();
-                console.log('LOGIN_SUBMITTED');
-            }} else {{
-                const form = emailField.closest('form');
-                if (form) form.submit();
-            }}
-        }})();
+                // Click submit after another delay
+                setTimeout(function() {{
+                    var submitBtn = document.querySelector('button[type="submit"]');
+                    if (submitBtn) {{
+                        submitBtn.click();
+                        console.log('LOGIN_CLICKED');
+                    }}
+                }}, 500);
+            }}, 500);
+        }}, 1000);
         '''
 
     def _build_link_extraction_js(self) -> str:
@@ -341,12 +360,30 @@ class SessionDetailDiscovery:
                 login_config = CrawlerRunConfig(
                     session_id=self.SESSION_ID,
                     js_code=self._build_login_js(),
+                    # Wait for redirect after login (give JS time to execute and submit)
                     wait_for='''js:() => {
+                        // Check if we have a login attempt marker
+                        if (!window.__loginAttempted) {
+                            window.__loginAttempted = Date.now();
+                            return false;
+                        }
+
+                        // Wait at least 5 seconds after login attempt
+                        if (Date.now() - window.__loginAttempted < 5000) {
+                            return false;
+                        }
+
                         // Success: redirected away from login
                         if (!window.location.pathname.includes('login')) return true;
-                        // Error: check for error messages
-                        const error = document.querySelector('[class*="error"]');
-                        if (error && error.textContent.trim()) return true;
+
+                        // Check for invalid credentials error (real login failure)
+                        const errorText = document.body.innerText.toLowerCase();
+                        if (errorText.includes('invalid') ||
+                            errorText.includes('incorrect') ||
+                            errorText.includes('wrong password')) {
+                            return true;
+                        }
+
                         return false;
                     }''',
                     page_timeout=60000,
@@ -488,9 +525,10 @@ async def main():
     Main entry point for session detail URL discovery.
 
     Usage:
-        python upheal_session_detail_scraper.py
-        python upheal_session_detail_scraper.py --visible  # Show browser
-        python upheal_session_detail_scraper.py --verbose  # Debug logging
+        python upheal_session_detail_scraper.py           # Headless, fresh auth
+        python upheal_session_detail_scraper.py --visible # Show browser
+        python upheal_session_detail_scraper.py --cached  # Use existing crawl data
+        python upheal_session_detail_scraper.py --verbose # Debug logging
     """
     import argparse
 
@@ -507,6 +545,11 @@ async def main():
         action="store_true",
         help="Enable verbose/debug logging"
     )
+    parser.add_argument(
+        "--cached", "-c",
+        action="store_true",
+        help="Use existing crawl data if available (skip authentication)"
+    )
     args = parser.parse_args()
 
     if args.verbose:
@@ -517,59 +560,67 @@ async def main():
     print("Wave 1 - Authentication & URL Discovery")
     print("=" * 70 + "\n")
 
-    # Initialize discovery
-    discovery = SessionDetailDiscovery(
-        headless=not args.visible,
-        verbose=args.verbose
-    )
+    try:
+        # Initialize discovery
+        discovery = SessionDetailDiscovery(
+            headless=not args.visible,
+            verbose=args.verbose
+        )
 
-    # Step 1: Authenticate
-    print("[Step 1] Authenticating to Upheal...")
-    auth_result = await discovery.authenticate()
+        print(f"Credentials: {discovery.email}")
+        print(f"Output dir:  {discovery.output_dir}")
 
-    if auth_result.status != AuthStatus.SUCCESS:
-        print(f"\n[ERROR] Authentication failed: {auth_result.error_message}")
-        return 1
+        if args.cached:
+            print("\n[Mode] Using cached data if available...")
+        else:
+            print("\n[Mode] Fresh authentication and crawling...")
 
-    print(f"         Authenticated as: {discovery.scraper.credentials['email']}")
+        # Discover sessions (with optional cache)
+        print("\n[Step 1] Discovering session detail URLs...")
+        result = await discovery.discover_first_session(use_cache=args.cached)
 
-    # Step 2: Discover sessions
-    print("\n[Step 2] Discovering session detail URLs...")
-    result = await discovery.discover_first_session()
+        # Save result
+        print("\n[Step 2] Saving result...")
+        output_file = discovery.save_result(result)
 
-    # Step 3: Save result
-    print("\n[Step 3] Saving result...")
-    output_file = discovery.save_result(result)
-
-    # Print summary
-    print("\n" + "=" * 70)
-    print("DISCOVERY RESULT")
-    print("=" * 70)
-
-    if result.status == "success":
-        print(f"Status:            SUCCESS")
-        print(f"Session Detail URL: {result.session_detail_url}")
-        print(f"Session ID:        {result.session_id}")
-        print(f"Client ID:         {result.client_id}")
-        print(f"Total Sessions:    {len(result.all_sessions or [])}")
-        print(f"Output File:       {output_file}")
-
-        if result.all_sessions and len(result.all_sessions) > 1:
-            print(f"\nAll discovered sessions:")
-            for i, session in enumerate(result.all_sessions[:5], 1):
-                print(f"  {i}. {session['url']}")
-            if len(result.all_sessions) > 5:
-                print(f"  ... and {len(result.all_sessions) - 5} more")
-
+        # Print summary
         print("\n" + "=" * 70)
-        print("Wave 2 agents can now extract from:")
-        print(f"  {result.session_detail_url}")
-        print("=" * 70 + "\n")
-        return 0
-    else:
-        print(f"Status:  ERROR")
-        print(f"Message: {result.error_message}")
-        print("=" * 70 + "\n")
+        print("DISCOVERY RESULT")
+        print("=" * 70)
+
+        if result.status == "success":
+            print(f"Status:             SUCCESS")
+            print(f"Session Detail URL: {result.session_detail_url}")
+            print(f"Session ID:         {result.session_id}")
+            print(f"Client ID:          {result.client_id}")
+            print(f"Total Sessions:     {len(result.all_sessions or [])}")
+            print(f"Output File:        {output_file}")
+
+            if result.all_sessions and len(result.all_sessions) > 1:
+                print(f"\nAll discovered sessions:")
+                for i, session in enumerate(result.all_sessions[:5], 1):
+                    print(f"  {i}. {session['url']}")
+                if len(result.all_sessions) > 5:
+                    print(f"  ... and {len(result.all_sessions) - 5} more")
+
+            print("\n" + "=" * 70)
+            print("Wave 2 agents can now extract from:")
+            print(f"  {result.session_detail_url}")
+            print("=" * 70 + "\n")
+            return 0
+        else:
+            print(f"Status:  ERROR")
+            print(f"Message: {result.error_message}")
+            print("=" * 70 + "\n")
+            return 1
+
+    except ValueError as e:
+        print(f"\n[ERROR] Configuration error: {e}")
+        return 1
+    except Exception as e:
+        print(f"\n[ERROR] Unexpected error: {e}")
+        import traceback
+        traceback.print_exc()
         return 1
 
 
