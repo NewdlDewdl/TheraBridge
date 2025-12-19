@@ -1,0 +1,39 @@
+{
+  "name": "Calendar",
+  "url": "https://app.upheal.io/calendar",
+  "description": "Scheduling and appointments",
+  "actual_url": "https://app.upheal.io/calendar",
+  "title": "Upheal App",
+  "content_length": 254,
+  "timestamp": "20251218_185601",
+  "navigation": [
+    {
+      "text": "Sign up for free",
+      "href": "https://upheal.io/signup",
+      "title": ""
+    },
+    {
+      "text": "Privacy and Compliance",
+      "href": "https://www.upheal.io/privacy-and-compliance",
+      "title": ""
+    }
+  ],
+  "api_endpoints": [],
+  "form_fields": [
+    "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+    "[Sign up for free](https://upheal.io/signup)",
+    "password"
+  ],
+  "ui_patterns": {
+    "headings": [
+      "Welcome back"
+    ],
+    "buttons": [
+      "Sign up for free",
+      "_Privacy and Compliance_"
+    ],
+    "lists": 1,
+    "tables": 1,
+    "images": 0
+  }
+}

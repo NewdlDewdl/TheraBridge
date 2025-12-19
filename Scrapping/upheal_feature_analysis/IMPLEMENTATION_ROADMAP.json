@@ -1,0 +1,281 @@
+{
+  "metadata": {
+    "generated_at": "20251218_185601",
+    "source": "Upheal.io",
+    "purpose": "Feature cloning for TherapyBridge"
+  },
+  "feature_categories": {
+    "Home": {
+      "description": "Dashboard and overview",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Home"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Home"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Home"
+        }
+      ],
+      "complexity_score": 3
+    },
+    "Sessions": {
+      "description": "Session management and list",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Sessions"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Sessions"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Sessions"
+        }
+      ],
+      "complexity_score": 3
+    },
+    "Clients": {
+      "description": "Client/patient management",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Clients"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Clients"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Clients"
+        }
+      ],
+      "complexity_score": 3
+    },
+    "Calendar": {
+      "description": "Scheduling and appointments",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Calendar"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Calendar"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Calendar"
+        }
+      ],
+      "complexity_score": 3
+    },
+    "Notes": {
+      "description": "Clinical notes and documentation",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Notes"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Notes"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Notes"
+        }
+      ],
+      "complexity_score": 3
+    },
+    "Templates": {
+      "description": "Note templates",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Templates"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Templates"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Templates"
+        }
+      ],
+      "complexity_score": 3
+    },
+    "Settings": {
+      "description": "Account and practice settings",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Settings"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Settings"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Settings"
+        }
+      ],
+      "complexity_score": 3
+    },
+    "Profile": {
+      "description": "User profile",
+      "features_count": 3,
+      "features": [
+        {
+          "name": "Welcome back",
+          "type": "section",
+          "page": "Profile"
+        },
+        {
+          "name": "Sign up for free",
+          "type": "navigation_item",
+          "link": "https://upheal.io/signup",
+          "page": "Profile"
+        },
+        {
+          "name": "Privacy and Compliance",
+          "type": "navigation_item",
+          "link": "https://www.upheal.io/privacy-and-compliance",
+          "page": "Profile"
+        }
+      ],
+      "complexity_score": 3
+    }
+  },
+  "implementation_phases": [
+    {
+      "phase": 1,
+      "name": "Foundation",
+      "description": "Core authentication, navigation, and basic UI",
+      "features": [
+        "Login",
+        "Dashboard",
+        "Navigation",
+        "User Profile"
+      ],
+      "estimated_weeks": 2
+    },
+    {
+      "phase": 2,
+      "name": "Client Management",
+      "description": "Client/patient data management",
+      "features": [
+        "Clients",
+        "Client Detail",
+        "Client Forms"
+      ],
+      "estimated_weeks": 3
+    },
+    {
+      "phase": 3,
+      "name": "Session Management",
+      "description": "Session scheduling, recording, and notes",
+      "features": [
+        "Sessions",
+        "Calendar",
+        "Session Detail",
+        "Notes"
+      ],
+      "estimated_weeks": 4
+    },
+    {
+      "phase": 4,
+      "name": "AI & Automation",
+      "description": "Transcription, AI notes, templates",
+      "features": [
+        "Transcription",
+        "AI Notes",
+        "Templates"
+      ],
+      "estimated_weeks": 3
+    },
+    {
+      "phase": 5,
+      "name": "Advanced Features",
+      "description": "Telehealth, compliance, payments",
+      "features": [
+        "Telehealth",
+        "Compliance",
+        "Payments",
+        "Forms"
+      ],
+      "estimated_weeks": 4
+    }
+  ],
+  "technical_requirements": {
+    "frontend": {
+      "framework": "React (assumed from modern SPA patterns)",
+      "styling": "Modern CSS framework (Tailwind/Material-UI assumed)",
+      "state_management": "Required for session data",
+      "routing": "Client-side routing (/sessions, /clients, etc.)"
+    },
+    "backend": {
+      "api_style": "RESTful API (assumed from endpoints)",
+      "authentication": "JWT or session-based (login required)",
+      "database": "Relational DB for users, sessions, clients",
+      "ai_integration": "Transcription API, LLM for notes"
+    },
+    "infrastructure": {
+      "storage": "Audio file storage (sessions)",
+      "cdn": "For static assets",
+      "realtime": "Possibly WebSockets for live sessions"
+    }
+  },
+  "api_endpoints_discovered": []
+}

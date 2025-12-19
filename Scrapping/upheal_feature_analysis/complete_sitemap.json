@@ -1,0 +1,19 @@
+{
+  "total_pages": 2,
+  "pages_by_category": {
+    "sessions": [],
+    "clients": [],
+    "settings": [],
+    "templates": [],
+    "calendar": [],
+    "notes": [],
+    "other": [
+      "https://www.upheal.io/privacy-and-compliance",
+      "https://upheal.io/signup"
+    ]
+  },
+  "all_urls": [
+    "https://upheal.io/signup",
+    "https://www.upheal.io/privacy-and-compliance"
+  ]
+}

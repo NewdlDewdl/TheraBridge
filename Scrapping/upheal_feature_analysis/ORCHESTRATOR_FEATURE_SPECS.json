@@ -1,0 +1,290 @@
+{
+  "project_name": "TherapyBridge_Upheal_Clone",
+  "source_application": "Upheal.io",
+  "analysis_date": "20251218_185601",
+  "features_to_implement": [
+    {
+      "feature_name": "Home",
+      "description": "Dashboard and overview",
+      "url_pattern": "https://app.upheal.io/",
+      "user_story": "As a therapist, I want to dashboard and overview",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "high"
+    },
+    {
+      "feature_name": "Sessions",
+      "description": "Session management and list",
+      "url_pattern": "https://app.upheal.io/sessions",
+      "user_story": "As a therapist, I want to session management and list",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "high"
+    },
+    {
+      "feature_name": "Clients",
+      "description": "Client/patient management",
+      "url_pattern": "https://app.upheal.io/patients",
+      "user_story": "As a therapist, I want to client/patient management",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "high"
+    },
+    {
+      "feature_name": "Calendar",
+      "description": "Scheduling and appointments",
+      "url_pattern": "https://app.upheal.io/calendar",
+      "user_story": "As a therapist, I want to scheduling and appointments",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "medium"
+    },
+    {
+      "feature_name": "Notes",
+      "description": "Clinical notes and documentation",
+      "url_pattern": "https://app.upheal.io/notes",
+      "user_story": "As a therapist, I want to clinical notes and documentation",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "medium"
+    },
+    {
+      "feature_name": "Templates",
+      "description": "Note templates",
+      "url_pattern": "https://app.upheal.io/templates",
+      "user_story": "As a therapist, I want to note templates",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "medium"
+    },
+    {
+      "feature_name": "Settings",
+      "description": "Account and practice settings",
+      "url_pattern": "https://app.upheal.io/settings",
+      "user_story": "As a therapist, I want to account and practice settings",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "medium"
+    },
+    {
+      "feature_name": "Profile",
+      "description": "User profile",
+      "url_pattern": "https://app.upheal.io/profile",
+      "user_story": "As a therapist, I want to user profile",
+      "acceptance_criteria": [
+        "Should display Welcome back"
+      ],
+      "ui_components": [
+        "Form",
+        "Input",
+        "List",
+        "Button",
+        "Table"
+      ],
+      "api_endpoints": [],
+      "data_fields": [
+        "[_Privacy and Compliance_](https://www.upheal.io/privacy-and-compliance)",
+        "[Sign up for free](https://upheal.io/signup)",
+        "password"
+      ],
+      "navigation_items": [
+        "Sign up for free",
+        "Privacy and Compliance"
+      ],
+      "implementation_priority": "medium"
+    }
+  ],
+  "data_models_required": {
+    "User": {
+      "fields": [
+        "id",
+        "email",
+        "password",
+        "name",
+        "practice_name",
+        "created_at"
+      ],
+      "source": "Login and Profile pages"
+    },
+    "Client": {
+      "fields": [
+        "id",
+        "name",
+        "email",
+        "phone",
+        "created_at",
+        "therapist_id"
+      ],
+      "source": "Clients page"
+    },
+    "Session": {
+      "fields": [
+        "id",
+        "client_id",
+        "therapist_id",
+        "date",
+        "duration",
+        "recording_url",
+        "transcript",
+        "notes",
+        "created_at"
+      ],
+      "source": "Sessions page and detail pages"
+    },
+    "Note": {
+      "fields": [
+        "id",
+        "session_id",
+        "content",
+        "template_id",
+        "ai_generated",
+        "created_at"
+      ],
+      "source": "Notes page and session details"
+    },
+    "Template": {
+      "fields": [
+        "id",
+        "name",
+        "content",
+        "category",
+        "created_at"
+      ],
+      "source": "Templates page"
+    }
+  },
+  "api_endpoints_required": [],
+  "ui_components_required": [
+    "Button",
+    "Form",
+    "Input",
+    "List",
+    "Table"
+  ]
+}
