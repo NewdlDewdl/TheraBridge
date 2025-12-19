@@ -251,36 +251,56 @@ def mock_classify_page(page: dict) -> PageRelevance:
     """
     Rule-based mock classification for testing without OpenAI API.
     Uses URL patterns and category to determine relevance.
+
+    This mock classifier aims to filter 40-60% of pages to match LLM behavior.
+    It's more selective than a naive approach, excluding general/marketing pages.
     """
     url = page.get("url", "").lower()
     link_text = (page.get("link_text") or "").lower()
     original_category = page.get("original_category", "unknown").lower()
 
-    # Exclusion patterns (marketing, pricing, etc.)
+    # Exclusion patterns (marketing, pricing, payment, general info)
     exclude_patterns = [
         r"pricing", r"billing", r"payment", r"checkout", r"subscribe",
         r"about", r"careers", r"press", r"contact", r"blog",
         r"terms", r"privacy-policy", r"cookie", r"legal",
-        r"login", r"signup", r"register", r"forgot"
+        r"login", r"signup", r"register", r"forgot",
+        r"help(?!.*feature)", r"support(?!.*feature)",  # Help/support unless feature-related
+        r"faq", r"demo", r"webinar", r"event"
     ]
 
-    # High priority patterns (direct feature matches)
+    # Original categories that should be excluded
+    exclude_categories = ["excluded", "help", "settings"]
+
+    # High priority patterns (direct feature matches) - STRICT matching
     high_priority_patterns = {
-        "notes": [r"soap", r"dap", r"girp", r"birp", r"ai-notes", r"progress-notes", r"templates"],
-        "sessions": [r"session", r"transcript", r"recording", r"upload"],
-        "analytics": [r"analytics", r"insights", r"dashboard", r"reports", r"metrics"],
-        "patients": [r"patient", r"client", r"portal"],
-        "goals": [r"goal", r"treatment-plan", r"progress", r"milestone"],
+        "notes": [r"soap-notes", r"dap-notes", r"girp", r"birp", r"ai-notes", r"progress-notes", r"templates"],
+        "sessions": [r"sessions?/", r"transcript", r"recording"],
+        "analytics": [r"analytics", r"insights", r"reports", r"metrics"],
+        "patients": [r"patients?/", r"client/", r"portal"],
+        "goals": [r"goals?", r"treatment-plan", r"milestones?"],
         "compliance": [r"hipaa", r"security", r"audit", r"compliance"]
     }
 
     # Medium priority patterns (related features)
     medium_priority_patterns = {
-        "settings": [r"settings", r"account", r"profile"],
-        "features": [r"features", r"integrations"]
+        "features": [r"features$", r"features/ai", r"features/transcription"],
+        "analytics": [r"dashboard"]  # Dashboard is medium, not high
     }
 
-    # Check exclusions first
+    # Check exclusions first (including excluded categories)
+    if original_category in exclude_categories:
+        return PageRelevance(
+            url=page.get("url", ""),
+            original_category=original_category,
+            link_text=page.get("link_text"),
+            relevant=False,
+            category="excluded",
+            priority="low",
+            reason=f"Excluded: category '{original_category}' not relevant to TherapyBridge",
+            classified_at=datetime.now().isoformat()
+        )
+
     for pattern in exclude_patterns:
         if re.search(pattern, url) or re.search(pattern, link_text):
             return PageRelevance(
@@ -290,7 +310,7 @@ def mock_classify_page(page: dict) -> PageRelevance:
                 relevant=False,
                 category="excluded",
                 priority="low",
-                reason=f"Excluded: matches '{pattern}' pattern",
+                reason=f"Excluded: matches '{pattern}' pattern (marketing/general)",
                 classified_at=datetime.now().isoformat()
             )
 
@@ -324,42 +344,55 @@ def mock_classify_page(page: dict) -> PageRelevance:
                     classified_at=datetime.now().isoformat()
                 )
 
-    # Check if original category suggests relevance
-    relevant_categories = ["features", "sessions", "analytics", "patients", "notes", "compliance", "dashboard"]
-    if original_category in relevant_categories:
+    # Check if original category strongly suggests relevance
+    strong_categories = ["sessions", "analytics", "notes", "patients", "compliance"]
+    if original_category in strong_categories:
         return PageRelevance(
             url=page.get("url", ""),
             original_category=original_category,
             link_text=page.get("link_text"),
             relevant=True,
-            category=original_category if original_category in ["sessions", "analytics", "notes", "patients", "compliance"] else "other",
+            category=original_category,
             priority="medium",
-            reason=f"Relevant by category: original category '{original_category}'",
+            reason=f"Medium priority: original category '{original_category}' relevant to TherapyBridge",
             classified_at=datetime.now().isoformat()
         )
 
-    # Default: exclude help/support, include everything else as low priority
-    if original_category in ["help", "support"]:
+    # Features category gets medium priority (general features page)
+    if original_category == "features":
         return PageRelevance(
             url=page.get("url", ""),
             original_category=original_category,
             link_text=page.get("link_text"),
             relevant=True,
-            category="other",
-            priority="low",
-            reason="Low priority: help/support documentation",
+            category="features",
+            priority="medium",
+            reason="Medium priority: features overview page",
             classified_at=datetime.now().isoformat()
         )
 
-    # Default fallback
+    # Dashboard category gets low priority (could be marketing dashboard page)
+    if original_category == "dashboard":
+        return PageRelevance(
+            url=page.get("url", ""),
+            original_category=original_category,
+            link_text=page.get("link_text"),
+            relevant=True,
+            category="analytics",
+            priority="low",
+            reason="Low priority: dashboard (may be marketing or actual analytics)",
+            classified_at=datetime.now().isoformat()
+        )
+
+    # Default: exclude unknown/other categories to be more selective
     return PageRelevance(
         url=page.get("url", ""),
         original_category=original_category,
         link_text=page.get("link_text"),
-        relevant=True,
-        category="other",
+        relevant=False,
+        category="excluded",
         priority="low",
-        reason="Included by default (may contain relevant info)",
+        reason="Excluded: no strong feature match found",
         classified_at=datetime.now().isoformat()
     )
 
