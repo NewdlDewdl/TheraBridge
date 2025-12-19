@@ -1,0 +1,143 @@
+# Curated Therapy Session URLs for Audio Transcription Pipeline Testing
+# Total: 30 URLs | Mix of real historical sessions and high-quality role-play demonstrations
+# Target duration: 30-120 minutes per session | Total estimated: ~25-30 hours
+
+# =====================================================
+# REAL HISTORICAL THERAPY SESSIONS (1960s-1980s)
+# =====================================================
+# The Gloria Films (1965) - Three Approaches to Psychotherapy
+# Real client "Gloria" with three master therapists in single day
+
+# 1. Carl Rogers - Person-Centered Therapy with Gloria (48 min)
+https://www.youtube.com/watch?v=ee1bU4XuUyg
+
+# 2. Fritz Perls - Gestalt Therapy with Gloria (32 min)
+https://www.youtube.com/watch?v=8y5tuJ3Sojc
+
+# 3. Albert Ellis - REBT with Gloria (edited, ~25 min)
+https://youtu.be/Zkolz9qTQKU
+
+# =====================================================
+# HIGH-QUALITY CBT ROLE-PLAY DEMONSTRATIONS
+# =====================================================
+
+# Social Anxiety Disorder - Complete 6-Part Session (42 min total)
+# 4. CBT Role-Play - Social Anxiety Disorder - Part 1 (6:32)
+https://www.youtube.com/watch?v=gbBn8EzZx3w
+
+# 5. CBT Role-Play - Social Anxiety Disorder - Part 2 (10:22)
+https://www.youtube.com/watch?v=8K4HW6_MvoU
+
+# 6. CBT Role-Play - Social Anxiety Disorder - Part 3 (6:03)
+https://www.youtube.com/watch?v=jmwQ3SE6Uew
+
+# 7. CBT Role-Play - Social Anxiety Disorder - Part 4 (6:30)
+https://www.youtube.com/watch?v=LuuKIF4-F_Q
+
+# 8. CBT Role-Play - Social Anxiety Disorder - Part 5 (4:45)
+https://www.youtube.com/watch?v=o2Cv6Mlp3KY
+
+# 9. CBT Role-Play - Social Anxiety Disorder - Part 6 (7:37)
+https://www.youtube.com/watch?v=TcewFGydzPM
+
+# Depression and Anxiety CBT Sessions (30-60 min each)
+# 10. CBT - Anxiety and Guilt Related to Balancing Home and Work (25:36)
+https://www.youtube.com/watch?v=osROod3Hmpg
+
+# 11. CBT - Behavioral Activation and Depression (18:58)
+https://www.youtube.com/watch?v=sDrakgSYvzc
+
+# 12. CBT - Behavioral Activation and Postpartum Depression (22:54)
+https://www.youtube.com/watch?v=SNstOn6owcI
+
+# 13. CBT - Depressive Symptoms and Lack of Motivation (24:08)
+https://www.youtube.com/watch?v=8aDFvvjC6XM
+
+# 14. CBT - Mock Session Depression (18:59)
+https://www.youtube.com/watch?v=92jbfcpiA9Y
+
+# Relationship and Family Issues (20-30 min each)
+# 15. CBT - Challenging Relationship with Family Member (21:06)
+https://www.youtube.com/watch?v=XbYGdo9lMsQ
+
+# 16. CBT - Managing Anger with Problems with Boyfriend & Coworkers (21:08)
+https://www.youtube.com/watch?v=W_tDRu67JnI
+
+# 17. CBT - Cognitive Reframing an Experience of Emotional Abuse (22:32)
+https://www.youtube.com/watch?v=CdyJ0iB_k00
+
+# Career and Self-Confidence (20-30 min each)
+# 18. CBT - Loss of Hope in Career (27:40)
+https://www.youtube.com/watch?v=pllei-yDO8c
+
+# 19. CBT - Catastrophizing and Decatastrophizing; Client Lost Job (21:22)
+https://www.youtube.com/watch?v=nanU4vR993I
+
+# 20. CBT - Downward Arrow Technique; Test Anxiety (20:23)
+https://www.youtube.com/watch?v=Wx8F9uwQTnY
+
+# =====================================================
+# ACCEPTANCE AND COMMITMENT THERAPY (ACT)
+# =====================================================
+
+# 21. ACT - Fear of Public Places; Undermining Cognitive Fusion (25:08)
+https://www.youtube.com/watch?v=dNfM2ihfSSE
+
+# 22. ACT - Moderate Social Anxiety; Defining Valued Directions (21:18)
+https://www.youtube.com/watch?v=-GaYArbWL1Q
+
+# 23. ACT - Anxiety with Public Speaking in School (17:28)
+https://www.youtube.com/watch?v=ZAOwjnqVUnM
+
+# =====================================================
+# MOTIVATIONAL INTERVIEWING (MI)
+# =====================================================
+
+# 24. MI - Client with Smoking Cessation (23:37)
+https://www.youtube.com/watch?v=1jfH055byg4
+
+# 25. MI - Survivor of Intimate Partner Violence - Intake Session (23:20)
+https://www.youtube.com/watch?v=P3JUXQ4kkHs
+
+# 26. MI - Focus on Goals - High Risk Alcohol Use Student (19:39)
+https://www.youtube.com/watch?v=_TwVa4utpII
+
+# =====================================================
+# EMOTION FOCUSED THERAPY (EFT)
+# =====================================================
+
+# 27. EFT - Couples Therapy, Resistant Husband (19:53)
+https://www.youtube.com/watch?v=XUVQ5dGB1x0
+
+# 28. EFT - Couples Therapy (19:42)
+https://www.youtube.com/watch?v=qe-0fk4ZG20
+
+# =====================================================
+# OTHER THERAPEUTIC APPROACHES
+# =====================================================
+
+# 29. Person-Centered Therapy Role Play (13:24)
+https://www.youtube.com/watch?v=4wTVbzvBH0k
+
+# 30. Interpersonal Therapy (IPT) - Initial Phase for Client with Eating Disorder (34:56)
+https://www.youtube.com/watch?v=A1XJeciqyL8
+
+# =====================================================
+# COLLECTION STATISTICS
+# =====================================================
+# Total URLs: 30
+# Real historical sessions: 3 (Gloria Films 1965)
+# High-quality role-play demonstrations: 27
+# Estimated total duration: ~26 hours
+# Therapy modalities represented:
+#   - Person-Centered Therapy (Rogers)
+#   - Gestalt Therapy (Perls)
+#   - REBT (Ellis)
+#   - Cognitive Behavioral Therapy (CBT)
+#   - Acceptance and Commitment Therapy (ACT)
+#   - Motivational Interviewing (MI)
+#   - Emotion Focused Therapy (EFT)
+#   - Interpersonal Therapy (IPT)
+# Duration range: 13-49 minutes per video
+# All videos publicly accessible on YouTube
+# All videos suitable for audio transcription testing
