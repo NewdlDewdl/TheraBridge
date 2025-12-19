@@ -1,0 +1,127 @@
+{
+  "timestamp": "20251219_025658",
+  "email": "rohinagrawal@gmail.com",
+  "total_pages_crawled": 12,
+  "pages": [
+    {
+      "name": "Dashboard",
+      "url": "https://app.upheal.io/dashboard",
+      "actual_url": "https://app.upheal.io/dashboard",
+      "title": "Upheal App",
+      "content_length": 2909,
+      "links_count": 8,
+      "markdown_file": "page_dashboard_20251219_025658.md",
+      "screenshot_file": "page_dashboard_20251219_025658.png"
+    },
+    {
+      "name": "Sessions",
+      "url": "https://app.upheal.io/sessions",
+      "actual_url": "https://app.upheal.io/sessions",
+      "title": "Upheal App",
+      "content_length": 1931,
+      "links_count": 6,
+      "markdown_file": "page_sessions_20251219_025658.md",
+      "screenshot_file": "page_sessions_20251219_025658.png"
+    },
+    {
+      "name": "Patients/Clients",
+      "url": "https://app.upheal.io/patients",
+      "actual_url": "https://app.upheal.io/patients",
+      "title": "Upheal App",
+      "content_length": 2909,
+      "links_count": 8,
+      "markdown_file": "page_patients_clients_20251219_025658.md",
+      "screenshot_file": "page_patients_clients_20251219_025658.png"
+    },
+    {
+      "name": "Calendar",
+      "url": "https://app.upheal.io/calendar",
+      "actual_url": "https://app.upheal.io/calendar",
+      "title": "Upheal App",
+      "content_length": 1625,
+      "links_count": 3,
+      "markdown_file": "page_calendar_20251219_025658.md",
+      "screenshot_file": "page_calendar_20251219_025658.png"
+    },
+    {
+      "name": "Notes",
+      "url": "https://app.upheal.io/notes",
+      "actual_url": "https://app.upheal.io/notes",
+      "title": "Upheal App",
+      "content_length": 2909,
+      "links_count": 8,
+      "markdown_file": "page_notes_20251219_025658.md",
+      "screenshot_file": "page_notes_20251219_025658.png"
+    },
+    {
+      "name": "Settings",
+      "url": "https://app.upheal.io/settings",
+      "actual_url": "https://app.upheal.io/settings",
+      "title": "Upheal App",
+      "content_length": 843,
+      "links_count": 0,
+      "markdown_file": "page_settings_20251219_025658.md",
+      "screenshot_file": "page_settings_20251219_025658.png"
+    },
+    {
+      "name": "Profile",
+      "url": "https://app.upheal.io/profile",
+      "actual_url": "https://app.upheal.io/profile",
+      "title": "Upheal App",
+      "content_length": 2909,
+      "links_count": 8,
+      "markdown_file": "page_profile_20251219_025658.md",
+      "screenshot_file": "page_profile_20251219_025658.png"
+    },
+    {
+      "name": "Templates",
+      "url": "https://app.upheal.io/templates",
+      "actual_url": "https://app.upheal.io/templates",
+      "title": "Upheal App",
+      "content_length": 2909,
+      "links_count": 8,
+      "markdown_file": "page_templates_20251219_025658.md",
+      "screenshot_file": "page_templates_20251219_025658.png"
+    },
+    {
+      "name": "Discovered: ",
+      "url": "https://app.upheal.io/",
+      "actual_url": "https://app.upheal.io/",
+      "title": "Upheal App",
+      "content_length": 1,
+      "markdown_file": "discovered__20251219_025658.md",
+      "screenshot_file": "discovered__20251219_025658.png"
+    },
+    {
+      "name": "Discovered: detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244",
+      "url": "https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244",
+      "actual_url": "https://app.upheal.io/detail/c9289f16-7f34-4d07-9497-96243334f68f/b88886ba-f023-49d0-9972-9a51fb6e9244",
+      "title": "Upheal App",
+      "content_length": 1,
+      "markdown_file": "discovered_detail_c9289f16-7f34-4d07-9497-96243334f68f_b88886_20251219_025658.md",
+      "screenshot_file": "discovered_detail_c9289f16-7f34-4d07-9497-96243334f68f_b88886_20251219_025658.png"
+    },
+    {
+      "name": "Discovered: detail/unassigned/1f098d62-8551-4efc-808e-243340e57de7",
+      "url": "https://app.upheal.io/detail/unassigned/1f098d62-8551-4efc-808e-243340e57de7",
+      "actual_url": "https://app.upheal.io/detail/unassigned/1f098d62-8551-4efc-808e-243340e57de7",
+      "title": "Upheal App",
+      "content_length": 1,
+      "markdown_file": "discovered_detail_unassigned_1f098d62-8551-4efc-808e-243340e5_20251219_025658.md",
+      "screenshot_file": "discovered_detail_unassigned_1f098d62-8551-4efc-808e-243340e5_20251219_025658.png"
+    },
+    {
+      "name": "Discovered: settings/referral-program",
+      "url": "https://app.upheal.io/settings/referral-program",
+      "actual_url": "https://app.upheal.io/settings/referral-program",
+      "title": "Upheal App",
+      "content_length": 1,
+      "markdown_file": "discovered_settings_referral-program_20251219_025658.md",
+      "screenshot_file": "discovered_settings_referral-program_20251219_025658.png"
+    }
+  ],
+  "statistics": {
+    "total_content_chars": 18948,
+    "average_content_length": 1579.0
+  }
+}
