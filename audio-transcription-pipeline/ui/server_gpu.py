@@ -25,7 +25,7 @@ from pydantic import BaseModel
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 # Configuration
-UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR = Path(__file__).parent / "uploads"  # Make it absolute
 TEMP_DIR = UPLOAD_DIR / "temp"
 RESULTS_DIR = UPLOAD_DIR / "results"
 MAX_FILE_SIZE = 500 * 1024 * 1024  # 500MB
