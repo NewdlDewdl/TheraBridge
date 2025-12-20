@@ -397,9 +397,9 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
         jobs[job_id]["progress"] = 10
         jobs[job_id]["step"] = f"Connecting to Vast.ai instance {VAST_INSTANCE_ID}"
 
-        # Get SSH connection details
+        # Get SSH connection details using vastai ssh-url
         result = subprocess.run(
-            ["vastai", "show", "instances"],
+            ["vastai", "ssh-url", VAST_INSTANCE_ID],
             capture_output=True,
             text=True,
             timeout=5,
@@ -409,14 +409,16 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
         ssh_host = None
         ssh_port = None
 
-        if result.returncode == 0:
-            for line in result.stdout.split('\n'):
-                if line.startswith(VAST_INSTANCE_ID):
-                    parts = line.split()
-                    if len(parts) > 11:
-                        ssh_host = parts[9]  # SSH host
-                        ssh_port = parts[10]  # SSH port
-                        break
+        if result.returncode == 0 and result.stdout.strip():
+            # Parse ssh://root@host:port format
+            ssh_url = result.stdout.strip()
+            if ssh_url.startswith("ssh://"):
+                # Extract host and port from ssh://root@host:port
+                import re
+                match = re.match(r'ssh://root@([^:]+):(\d+)', ssh_url)
+                if match:
+                    ssh_host = match.group(1)
+                    ssh_port = match.group(2)
 
         if not ssh_host or not ssh_port:
             jobs[job_id]["status"] = "failed"
@@ -429,6 +431,7 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
         # Upload audio file via SCP
         upload_cmd = [
             "scp",
+            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
             "-P", ssh_port,
@@ -437,12 +440,19 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
         ]
 
         print(f"[Vast.ai] Uploading audio to instance...")
+        print(f"[Vast.ai] Upload command: {' '.join(upload_cmd)}")
         upload_process = await asyncio.create_subprocess_exec(
             *upload_cmd,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE
         )
-        await upload_process.communicate()
+        stdout, stderr = await upload_process.communicate()
+
+        if upload_process.returncode != 0:
+            print(f"[Vast.ai] Upload failed: {stderr.decode()}")
+            jobs[job_id]["status"] = "failed"
+            jobs[job_id]["error"] = f"Failed to upload audio: {stderr.decode()}"
+            return
 
         jobs[job_id]["progress"] = 40
         jobs[job_id]["step"] = "Running GPU pipeline on Vast.ai"
@@ -497,6 +507,7 @@ EOF
         # Upload script
         script_upload_cmd = [
             "scp",
+            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
             "-P", ssh_port,
@@ -504,11 +515,18 @@ EOF
             f"root@{ssh_host}:/root/process.sh"
         ]
 
-        await asyncio.create_subprocess_exec(
+        script_upload_process = await asyncio.create_subprocess_exec(
             *script_upload_cmd,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE
         )
+        stdout, stderr = await script_upload_process.communicate()
+
+        if script_upload_process.returncode != 0:
+            print(f"[Vast.ai] Script upload failed: {stderr.decode()}")
+            jobs[job_id]["status"] = "failed"
+            jobs[job_id]["error"] = f"Failed to upload script: {stderr.decode()}"
+            return
 
         jobs[job_id]["progress"] = 50
         jobs[job_id]["step"] = "Processing audio on GPU"
@@ -516,6 +534,7 @@ EOF
         # Execute script on remote
         ssh_cmd = [
             "ssh",
+            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
             "-p", ssh_port,
@@ -524,6 +543,7 @@ EOF
         ]
 
         print(f"[Vast.ai] Executing pipeline on remote GPU...")
+        print(f"[Vast.ai] SSH command: {' '.join(ssh_cmd)}")
         process = await asyncio.create_subprocess_exec(
             *ssh_cmd,
             stdout=asyncio.subprocess.PIPE,
@@ -545,6 +565,7 @@ EOF
         output_file = RESULTS_DIR / f"{job_id}.json"
         download_cmd = [
             "scp",
+            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
             "-P", ssh_port,
@@ -573,6 +594,7 @@ EOF
         # Cleanup remote files
         cleanup_cmd = [
             "ssh",
+            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
             "-p", ssh_port,
