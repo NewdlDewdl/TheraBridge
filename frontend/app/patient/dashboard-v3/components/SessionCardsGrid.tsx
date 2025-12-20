@@ -1,0 +1,75 @@
+'use client';
+
+/**
+ * Session cards grid component
+ * - 4x2 grid (8 cards per page)
+ * - Pagination with slide animation
+ * - Click card to open fullscreen detail
+ */
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { sessions } from '../lib/mockData';
+import { SessionCard } from './SessionCard';
+import { SessionDetail } from './SessionDetail';
+import { Session } from '../lib/types';
+
+export function SessionCardsGrid() {
+  const [currentPage, setCurrentPage] = useState(0);
+  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+
+  const cardsPerPage = 8;
+  const totalPages = Math.ceil(sessions.length / cardsPerPage);
+  const currentSessions = sessions.slice(
+    currentPage * cardsPerPage,
+    (currentPage + 1) * cardsPerPage
+  );
+
+  return (
+    <>
+      <div className="flex flex-col h-full">
+        {/* Grid */}
+        <motion.div
+          key={currentPage}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-4 auto-rows-fr gap-4"
+        >
+          {currentSessions.map((session) => (
+            <SessionCard
+              key={session.id}
+              session={session}
+              onClick={() => setSelectedSession(session)}
+            />
+          ))}
+        </motion.div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-6">
+            {Array.from({ length: totalPages }).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentPage(idx)}
+                className={`transition-all rounded-full ${
+                  idx === currentPage
+                    ? 'bg-[#5AB9B4] dark:bg-[#a78bfa] w-6 h-2'
+                    : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 w-2 h-2'
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Session Detail Fullscreen */}
+      {selectedSession && (
+        <SessionDetail
+          session={selectedSession}
+          onClose={() => setSelectedSession(null)}
+        />
+      )}
+    </>
+  );
+}
