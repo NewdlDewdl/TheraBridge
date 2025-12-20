@@ -144,8 +144,8 @@ def check_vast_connection():
             for line in result.stdout.split('\n'):
                 if line.startswith(VAST_INSTANCE_ID):
                     parts = line.split()
-                    if len(parts) > 7:
-                        status = parts[7]
+                    if len(parts) > 2:
+                        status = parts[2]  # Status is at index 2
                         if status == "running":
                             return {
                                 "available": True,
