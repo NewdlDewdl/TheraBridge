@@ -49,11 +49,11 @@ export function NotesGoalsCard() {
       >
         <h2 className="text-xl font-serif font-semibold text-gray-800 dark:text-gray-200 mb-4">Notes / Goals</h2>
 
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{notesGoalsContent.summary}</p>
+        <p className="text-sm font-light text-gray-600 dark:text-gray-400 mb-4">{notesGoalsContent.summary}</p>
 
         <ul className="space-y-2">
           {notesGoalsContent.achievements.slice(0, 3).map((achievement, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+            <li key={idx} className="flex items-start gap-2 text-sm font-light text-gray-700 dark:text-gray-300">
               <span className="w-1.5 h-1.5 rounded-full bg-[#5AB9B4] dark:bg-[#a78bfa] mt-1.5 flex-shrink-0" />
               <span>{achievement}</span>
             </li>
@@ -62,7 +62,7 @@ export function NotesGoalsCard() {
 
         <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#3d3548]">
           <p className="text-xs text-gray-500 dark:text-gray-500 font-medium">Current focus:</p>
-          <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">{notesGoalsContent.currentFocus.join(', ')}</p>
+          <p className="text-sm font-light text-gray-700 dark:text-gray-300 mt-1">{notesGoalsContent.currentFocus.join(', ')}</p>
         </div>
       </motion.div>
 

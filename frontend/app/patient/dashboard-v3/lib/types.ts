@@ -89,7 +89,9 @@ export interface ChatMessage {
 export interface TimelineEntry {
   sessionId: string;
   date: string;
+  duration: string;  // e.g., "45 min"
   topic: string;
+  strategy: string;  // Therapeutic technique used
   mood: MoodType;
   milestone?: Milestone;
 }

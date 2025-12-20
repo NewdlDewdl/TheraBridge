@@ -52,7 +52,7 @@ export function ToDoCard() {
         transition={{ duration: 0.2 }}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-medium text-gray-800 dark:text-gray-200">To-Do</h2>
+          <h2 className="text-lg font-light text-gray-800 dark:text-gray-200">To-Do</h2>
           <span className="text-sm text-gray-600 dark:text-gray-400">
             {progressPercent}% ({completedCount}/{totalCount})
           </span>
@@ -92,7 +92,7 @@ export function ToDoCard() {
                 )}
               </div>
               <span
-                className={`text-sm ${
+                className={`text-sm font-light ${
                   task.completed
                     ? 'line-through text-gray-400 dark:text-gray-600'
                     : 'text-gray-700 dark:text-gray-300'

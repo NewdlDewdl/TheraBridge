@@ -3,14 +3,14 @@
 /**
  * Progress Patterns Card - Premium Data Visualization
  * - Compact state: Carousel with 4 metric pages
- * - Expanded modal: All 4 metrics with interactive charts
+ * - Expanded modal: Centered modal with collapsible sections for all 4 metrics
  * - FIXED: Dark mode support + gray border on modal
  * - FIXED: Accessibility - focus trap, Escape key, focus restoration
  */
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Maximize2, TrendingUp, Activity, Calendar, Target } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ChevronDown, Maximize2, TrendingUp, Activity, Calendar, Target } from 'lucide-react';
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   AreaChart, Area, CartesianGrid
@@ -39,7 +39,21 @@ const COLORS = {
 export function ProgressPatternsCard() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  // Track which sections are expanded in the modal (first one open by default)
+  const [expandedSections, setExpandedSections] = useState<Set<number>>(new Set([0]));
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const toggleSection = (index: number) => {
+    setExpandedSections(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
 
   // Accessibility: focus trap, Escape key, scroll lock
   useModalAccessibility({
@@ -211,10 +225,10 @@ export function ProgressPatternsCard() {
                 <CurrentIcon size={18} />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 tracking-wide uppercase font-mono opacity-80">
+                <h3 className="text-sm font-light text-gray-800 dark:text-gray-200 tracking-wide uppercase font-mono opacity-80">
                   {currentMetric.title}
                 </h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-gray-400 font-light mt-0.5">
                   {currentMetric.description}
                 </p>
               </div>
@@ -254,7 +268,7 @@ export function ProgressPatternsCard() {
             >
               <div className="flex items-center gap-2">
                 <span className="text-base">{currentMetric.emoji}</span>
-                <p className="text-xs font-medium text-gray-700 dark:text-gray-300 leading-snug">
+                <p className="text-xs font-light text-gray-700 dark:text-gray-300 leading-snug">
                   {currentMetric.insight}
                 </p>
               </div>
@@ -295,7 +309,7 @@ export function ProgressPatternsCard() {
         </div>
       </motion.div>
 
-      {/* Expanded Modal - FIXED: Gray border added */}
+      {/* Expanded Modal - Centered with collapsible sections */}
       <AnimatePresence>
         {isExpanded && (
           <>
@@ -304,114 +318,109 @@ export function ProgressPatternsCard() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-[1000]"
               onClick={() => setIsExpanded(false)}
             />
             <motion.div
               ref={modalRef}
-              layoutId="progress-card"
-              className="fixed inset-4 md:inset-10 z-50 bg-[#F7F5F3] dark:bg-[#1a1625] rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row border-2 border-gray-300 dark:border-gray-600"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              variants={modalVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed w-[800px] max-h-[85vh] bg-white dark:bg-[#2a2435] rounded-3xl shadow-2xl p-8 z-[1001] overflow-y-auto border-2 border-gray-300 dark:border-gray-600"
+              style={{
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                margin: 0
+              }}
               role="dialog"
               aria-modal="true"
               aria-labelledby="progress-patterns-title"
+              onClick={(e) => e.stopPropagation()}
             >
-              {/* Sidebar / Navigation List */}
-              <div className="w-full md:w-80 bg-white dark:bg-[#2a2435] border-r border-gray-100 dark:border-[#3d3548] p-6 flex flex-col overflow-y-auto">
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 tracking-tight font-mono">
-                    Progress<br/>Patterns
-                  </h2>
-                  <button
-                    onClick={() => setIsExpanded(false)}
-                    className="md:hidden p-2 bg-gray-100 dark:bg-[#3d3548] rounded-full"
-                  >
-                    <X size={20} className="dark:text-gray-200" />
-                  </button>
-                </div>
-
-                <div className="space-y-3">
-                  {progressMetrics.map((metric, idx) => {
-                    const Icon = iconMap[metric.emoji] || TrendingUp;
-                    const isActive = idx === currentIndex;
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => setCurrentIndex(idx)}
-                        className={`
-                          w-full text-left p-4 rounded-xl transition-all duration-200 flex items-start gap-3
-                          ${isActive
-                            ? 'bg-gradient-to-r from-[#5AB9B4]/10 to-[#B8A5D6]/10 dark:from-[#a78bfa]/20 dark:to-[#c084fc]/20 border border-[#5AB9B4]/20 dark:border-[#a78bfa]/30 shadow-sm'
-                            : 'hover:bg-gray-50 dark:hover:bg-[#3d3548] border border-transparent'
-                          }
-                        `}
-                      >
-                        <div className={`
-                          p-2 rounded-lg shrink-0
-                          ${isActive ? 'bg-[#5AB9B4] dark:bg-[#a78bfa] text-white' : 'bg-gray-100 dark:bg-[#3d3548] text-gray-500 dark:text-gray-400'}
-                        `}>
-                          <Icon size={18} />
-                        </div>
-                        <div>
-                          <h4 className={`font-semibold text-sm ${isActive ? 'text-gray-900 dark:text-gray-100' : 'text-gray-600 dark:text-gray-400'}`}>
-                            {metric.title}
-                          </h4>
-                          <p className="text-xs text-gray-500 dark:text-gray-500 mt-0.5 line-clamp-1">
-                            {metric.description}
-                          </p>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Main Content Area */}
-              <div className="flex-1 bg-gradient-to-br from-[#F7F5F3] to-white dark:from-[#1a1625] dark:to-[#2a2435] p-6 md:p-10 overflow-y-auto relative">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <h2 id="progress-patterns-title" className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+                  Progress Patterns
+                </h2>
                 <button
                   onClick={() => setIsExpanded(false)}
-                  className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#3d3548] text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors hidden md:block"
+                  className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-[#3d3548] transition-colors"
                 >
-                  <X size={24} />
+                  <X className="w-6 h-6 text-gray-600 dark:text-gray-400" />
                 </button>
+              </div>
 
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="max-w-4xl mx-auto"
-                >
-                  <div className="mb-8">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5AB9B4]/10 dark:bg-[#a78bfa]/20 text-[#5AB9B4] dark:text-[#a78bfa] text-xs font-semibold uppercase tracking-wider mb-3">
-                      {currentMetric.emoji} Analysis
-                    </span>
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                      {currentMetric.title}
-                    </h2>
-                    <p className="text-lg text-gray-500 dark:text-gray-400">
-                      {currentMetric.description}
-                    </p>
-                  </div>
+              {/* Collapsible Metric Sections */}
+              <div className="space-y-4">
+                {progressMetrics.map((metric, idx) => {
+                  const Icon = iconMap[metric.emoji] || TrendingUp;
+                  const isOpen = expandedSections.has(idx);
 
-                  {/* Chart Container */}
-                  <div className="bg-white dark:bg-[#2a2435] rounded-[24px] p-6 md:p-8 shadow-sm border border-gray-100 dark:border-[#3d3548] mb-8">
-                    {renderChart(currentMetric, false)}
-                  </div>
+                  return (
+                    <div
+                      key={idx}
+                      className="border border-gray-200 dark:border-[#3d3548] rounded-2xl overflow-hidden"
+                    >
+                      {/* Section Header */}
+                      <button
+                        onClick={() => toggleSection(idx)}
+                        className="w-full flex items-center justify-between p-4 hover:bg-gray-50 dark:hover:bg-[#3d3548]/50 transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-[#5AB9B4]/10 dark:bg-[#a78bfa]/20 text-[#5AB9B4] dark:text-[#a78bfa]">
+                            <Icon size={20} />
+                          </div>
+                          <div className="text-left">
+                            <h3 className="font-semibold text-gray-800 dark:text-gray-200">
+                              {metric.title}
+                            </h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                              {metric.description}
+                            </p>
+                          </div>
+                        </div>
+                        <motion.div
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronDown className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                        </motion.div>
+                      </button>
 
-                  {/* Insight Box */}
-                  <div className="bg-gradient-to-br from-[#5AB9B4]/10 to-[#B8A5D6]/10 dark:from-[#a78bfa]/20 dark:to-[#c084fc]/20 rounded-2xl p-6 border border-[#5AB9B4]/20 dark:border-[#a78bfa]/30">
-                    <h3 className="text-[#5AB9B4] dark:text-[#a78bfa] font-semibold uppercase tracking-wider text-xs mb-2">
-                      Key Insight
-                    </h3>
-                    <p className="text-gray-800 dark:text-gray-200 text-lg font-medium">
-                      {currentMetric.insight}
-                    </p>
-                  </div>
-                </motion.div>
+                      {/* Section Content - Collapsible */}
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-4 pb-4">
+                              {/* Chart Container */}
+                              <div className="bg-gray-50 dark:bg-[#1a1625] rounded-xl p-4 mb-4">
+                                {renderChart(metric, false)}
+                              </div>
+
+                              {/* Insight Box */}
+                              <div className="bg-gradient-to-br from-[#5AB9B4]/10 to-[#B8A5D6]/10 dark:from-[#a78bfa]/20 dark:to-[#c084fc]/20 rounded-xl p-4 border border-[#5AB9B4]/20 dark:border-[#a78bfa]/30">
+                                <h4 className="text-[#5AB9B4] dark:text-[#a78bfa] font-semibold uppercase tracking-wider text-xs mb-1">
+                                  Key Insight
+                                </h4>
+                                <p className="text-gray-700 dark:text-gray-300 text-sm">
+                                  {metric.insight}
+                                </p>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
               </div>
             </motion.div>
           </>

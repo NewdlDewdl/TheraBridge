@@ -267,7 +267,9 @@ export const chatPrompts: string[] = [
 export const timelineData: TimelineEntry[] = sessions.map(s => ({
   sessionId: s.id,
   date: s.date,
-  topic: s.topics[0],
+  duration: s.duration,
+  topic: s.topics.join(', '),
+  strategy: s.strategy,
   mood: s.mood,
   milestone: s.milestone
 }));

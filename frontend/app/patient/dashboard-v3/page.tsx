@@ -7,9 +7,11 @@
  * - Warm cream background with therapy-appropriate aesthetics
  * - FIXED: Full dark mode support across entire page
  * - State lifted for Header "Ask AI" button to control chat fullscreen
+ * - State lifted for Timeline → Session integration
  */
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import './styles.css';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Header } from './components/Header';
 import { NotesGoalsCard } from './components/NotesGoalsCard';
@@ -23,6 +25,22 @@ import { TimelineSidebar } from './components/TimelineSidebar';
 export default function DashboardV3Page() {
   // Lifted state: controls fullscreen chat from both Header and AIChatCard
   const [isChatFullscreen, setIsChatFullscreen] = useState(false);
+
+  // Lifted state: controls which session is opened in fullscreen from Timeline
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+
+  // Scroll to a session card in the grid (triggered by timeline entry click)
+  const handleScrollToSession = useCallback((sessionId: string) => {
+    const element = document.getElementById(`session-${sessionId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Add a brief highlight effect
+      element.classList.add('ring-2', 'ring-[#5AB9B4]', 'dark:ring-[#a78bfa]');
+      setTimeout(() => {
+        element.classList.remove('ring-2', 'ring-[#5AB9B4]', 'dark:ring-[#a78bfa]');
+      }, 2000);
+    }
+  }, []);
 
   return (
     <ThemeProvider>
@@ -51,10 +69,16 @@ export default function DashboardV3Page() {
           {/* Bottom Row - 80/20 Split */}
           <div className="grid grid-cols-[1fr_250px] gap-6">
             <div className="min-h-[650px]">
-              <SessionCardsGrid />
+              <SessionCardsGrid
+                externalSelectedSessionId={selectedSessionId}
+                onSessionClose={() => setSelectedSessionId(null)}
+              />
             </div>
             <div className="h-[650px] sticky top-[84px]">
-              <TimelineSidebar />
+              <TimelineSidebar
+                onViewSession={(sessionId) => setSelectedSessionId(sessionId)}
+                onScrollToSession={handleScrollToSession}
+              />
             </div>
           </div>
         </main>

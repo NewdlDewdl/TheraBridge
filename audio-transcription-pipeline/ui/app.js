@@ -179,7 +179,7 @@ function handleDrop(e) {
 // API Configuration
 // ========================================
 const API_CONFIG = {
-    baseUrl: 'http://localhost:5000',  // Python bridge server
+    baseUrl: 'http://localhost:8000',  // Python bridge server (FastAPI)
     endpoints: {
         upload: '/api/upload',
         status: '/api/status',

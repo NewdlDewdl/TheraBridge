@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Heart } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 
@@ -7,6 +10,15 @@ export default function PatientLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
+  // Dashboard-v3 has its own complete layout with header - skip parent wrapper
+  const isDashboardV3 = pathname?.startsWith('/patient/dashboard-v3');
+
+  if (isDashboardV3) {
+    return <>{children}</>;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b">

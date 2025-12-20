@@ -55,7 +55,7 @@ class ErrorHandler {
             return {
                 type: 'SERVER_NOT_RUNNING',
                 message: 'Server not running',
-                userMessage: 'Cannot connect to server. Please start the backend server on localhost:5000.',
+                userMessage: 'Cannot connect to server. Please start the backend server on localhost:8000.',
                 retryable: true,
                 showRetry: true,
                 icon: 'server'

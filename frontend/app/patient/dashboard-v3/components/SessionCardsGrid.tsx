@@ -5,16 +5,27 @@
  * - 4x2 grid (8 cards per page)
  * - Pagination with slide animation
  * - Click card to open fullscreen detail
+ * - Supports external session selection (from Timeline sidebar)
  */
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { sessions } from '../lib/mockData';
 import { SessionCard } from './SessionCard';
 import { SessionDetail } from './SessionDetail';
 import { Session } from '../lib/types';
 
-export function SessionCardsGrid() {
+interface SessionCardsGridProps {
+  /** Session ID to open in fullscreen (controlled externally, e.g., from Timeline) */
+  externalSelectedSessionId?: string | null;
+  /** Callback when SessionDetail is closed (to sync external state) */
+  onSessionClose?: () => void;
+}
+
+export function SessionCardsGrid({
+  externalSelectedSessionId,
+  onSessionClose
+}: SessionCardsGridProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
 
@@ -24,6 +35,27 @@ export function SessionCardsGrid() {
     currentPage * cardsPerPage,
     (currentPage + 1) * cardsPerPage
   );
+
+  // Handle external session selection (e.g., from Timeline "View Full Session")
+  useEffect(() => {
+    if (externalSelectedSessionId) {
+      const session = sessions.find(s => s.id === externalSelectedSessionId);
+      if (session) {
+        setSelectedSession(session);
+        // Navigate to the page containing this session
+        const sessionIndex = sessions.findIndex(s => s.id === externalSelectedSessionId);
+        if (sessionIndex !== -1) {
+          setCurrentPage(Math.floor(sessionIndex / cardsPerPage));
+        }
+      }
+    }
+  }, [externalSelectedSessionId]);
+
+  // Handle closing the session detail
+  const handleClose = useCallback(() => {
+    setSelectedSession(null);
+    onSessionClose?.();
+  }, [onSessionClose]);
 
   return (
     <>
@@ -39,6 +71,7 @@ export function SessionCardsGrid() {
           {currentSessions.map((session) => (
             <SessionCard
               key={session.id}
+              id={`session-${session.id}`}
               session={session}
               onClick={() => setSelectedSession(session)}
             />
@@ -69,7 +102,7 @@ export function SessionCardsGrid() {
       {selectedSession && (
         <SessionDetail
           session={selectedSession}
-          onClose={() => setSelectedSession(null)}
+          onClose={handleClose}
         />
       )}
     </>

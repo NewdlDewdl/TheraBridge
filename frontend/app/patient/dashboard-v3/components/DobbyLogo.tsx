@@ -6,6 +6,7 @@
  * - Dark mode: Purple (#8B6AAE) - matches dark theme
  * - Animated ears wiggle + eyes blink on hover
  * - Scalable SVG via viewBox
+ * - FIXED: Color transitions smoothly when theme changes
  */
 
 import { useTheme } from '../contexts/ThemeContext';
@@ -17,7 +18,7 @@ interface DobbyLogoProps {
 export function DobbyLogo({ size = 48 }: DobbyLogoProps) {
   const { isDark } = useTheme();
 
-  // Color based on theme
+  // Color based on theme - derived from isDark state
   const mainColor = isDark ? '#8B6AAE' : '#5AB9B4';
   const pupilColor = isDark ? '#1a1625' : '#1a1a1a';
 
@@ -27,12 +28,13 @@ export function DobbyLogo({ size = 48 }: DobbyLogoProps) {
       style={{ width: size, height: size }}
     >
       <svg
+        key={isDark ? 'dark' : 'light'}
         width={size}
         height={size}
         viewBox="0 0 120 120"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="transition-transform duration-300"
+        className="transition-all duration-300"
       >
         {/* Left Ear - Triangle */}
         <polygon
