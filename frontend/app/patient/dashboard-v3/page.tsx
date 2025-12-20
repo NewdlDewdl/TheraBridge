@@ -6,8 +6,10 @@
  * - Grid-based responsive layout
  * - Warm cream background with therapy-appropriate aesthetics
  * - FIXED: Full dark mode support across entire page
+ * - State lifted for Header "Ask AI" button to control chat fullscreen
  */
 
+import { useState } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Header } from './components/Header';
 import { NotesGoalsCard } from './components/NotesGoalsCard';
@@ -19,18 +21,24 @@ import { SessionCardsGrid } from './components/SessionCardsGrid';
 import { TimelineSidebar } from './components/TimelineSidebar';
 
 export default function DashboardV3Page() {
+  // Lifted state: controls fullscreen chat from both Header and AIChatCard
+  const [isChatFullscreen, setIsChatFullscreen] = useState(false);
+
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-[#F7F5F3] dark:bg-[#1a1625] transition-colors duration-300">
         {/* Header */}
-        <Header />
+        <Header onAskAIClick={() => setIsChatFullscreen(true)} />
 
         {/* Main Container */}
         <main className="w-full max-w-[1400px] mx-auto px-12 py-12">
           {/* Top Row - 50/50 Split */}
           <div className="grid grid-cols-2 gap-6 mb-10">
             <NotesGoalsCard />
-            <AIChatCard />
+            <AIChatCard
+              isFullscreen={isChatFullscreen}
+              onFullscreenChange={setIsChatFullscreen}
+            />
           </div>
 
           {/* Middle Row - 3 Equal Cards */}

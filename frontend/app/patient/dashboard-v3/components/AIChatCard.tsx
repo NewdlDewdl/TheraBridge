@@ -87,10 +87,28 @@ function ModeToggle({ mode, setMode }: ModeToggleProps) {
   );
 }
 
+// Props for external control of fullscreen state
+interface AIChatCardProps {
+  isFullscreen?: boolean;
+  onFullscreenChange?: (isFullscreen: boolean) => void;
+}
+
 // Main Component
-export function AIChatCard() {
+export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChange }: AIChatCardProps) {
   const { isDark } = useTheme();
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  // Use external state if provided, otherwise use internal state
+  const [internalFullscreen, setInternalFullscreen] = useState(false);
+
+  // Controlled vs uncontrolled pattern: prefer external state if provided
+  const isFullscreen = externalFullscreen !== undefined ? externalFullscreen : internalFullscreen;
+  const setIsFullscreen = (value: boolean) => {
+    if (onFullscreenChange) {
+      onFullscreenChange(value);
+    } else {
+      setInternalFullscreen(value);
+    }
+  };
+
   const [mode, setMode] = useState<ChatMode>('ai');
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
@@ -171,51 +189,71 @@ export function AIChatCard() {
   const charCount = inputValue.length;
 
   // Sub-component: Input Area
+  // In compact mode, clicking the input opens fullscreen instead of typing
   const InputArea = ({ isCompact }: { isCompact: boolean }) => (
     <div className={`flex flex-col gap-2 ${isCompact ? '' : 'w-full'}`}>
       <div className={`
         flex items-end gap-2 bg-white dark:bg-[#2a2435] rounded-3xl border border-gray-200 dark:border-[#3d3548]
         focus-within:border-[#5AB9B4] focus-within:ring-2 focus-within:ring-[#5AB9B4]/20
         transition-all shadow-sm
-        ${isCompact ? 'p-2' : 'p-3'}
+        ${isCompact ? 'p-2 cursor-pointer hover:border-[#5AB9B4] hover:shadow-md' : 'p-3'}
         ${isCompact ? '' : 'w-full'}
-      `}>
+      `}
+      onClick={isCompact ? () => setIsFullscreen(true) : undefined}
+      >
         <div className="flex-1 flex flex-col gap-1.5">
-          <textarea
-            ref={textareaRef}
-            placeholder={mode === 'ai' ? "Ask Dobby anything..." : "Message your therapist..."}
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value.slice(0, MAX_CHARS))}
-            onKeyPress={handleKeyPress}
-            className={`
-              font-mono font-[350] outline-none bg-transparent text-gray-800 dark:text-gray-200
-              placeholder:text-gray-400 dark:placeholder:text-gray-500 resize-none w-full
-              ${isCompact ? 'text-[12px] min-h-[20px]' : 'text-[14px] min-h-[48px]'}
-            `}
-            style={{ maxHeight: isCompact ? '60px' : '120px' }}
-          />
+          {isCompact ? (
+            // Compact mode: Fake input that triggers fullscreen
+            <div
+              className="font-mono font-[350] text-[12px] text-gray-400 dark:text-gray-500 min-h-[20px] flex items-center"
+            >
+              Ask Dobby anything...
+            </div>
+          ) : (
+            // Fullscreen mode: Real textarea
+            <textarea
+              ref={textareaRef}
+              placeholder={mode === 'ai' ? "Ask Dobby anything..." : "Message your therapist..."}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value.slice(0, MAX_CHARS))}
+              onKeyPress={handleKeyPress}
+              className="font-mono font-[350] outline-none bg-transparent text-gray-800 dark:text-gray-200 placeholder:text-gray-400 dark:placeholder:text-gray-500 resize-none w-full text-[14px] min-h-[48px]"
+              style={{ maxHeight: '120px' }}
+            />
+          )}
           <div className="flex items-center justify-between">
             <ModeToggle mode={mode} setMode={setMode} />
-            <span
-              className="font-mono text-[10px] font-[350] text-gray-400 dark:text-gray-500"
-              aria-live="polite"
-              aria-label={`${charCount} of ${MAX_CHARS} characters`}
-            >
-              {charCount}/{MAX_CHARS}
-            </span>
+            {!isCompact && (
+              <span
+                className="font-mono text-[10px] font-[350] text-gray-400 dark:text-gray-500"
+                aria-live="polite"
+                aria-label={`${charCount} of ${MAX_CHARS} characters`}
+              >
+                {charCount}/{MAX_CHARS}
+              </span>
+            )}
           </div>
         </div>
         <button
-          onClick={handleSend}
-          disabled={!inputValue.trim()}
-          aria-label="Send message"
+          onClick={(e) => {
+            if (isCompact) {
+              e.stopPropagation();
+              setIsFullscreen(true);
+            } else {
+              handleSend();
+            }
+          }}
+          disabled={!isCompact && !inputValue.trim()}
+          aria-label={isCompact ? "Open chat" : "Send message"}
           className={`
             flex items-center justify-center rounded-full flex-shrink-0
             transition-all shadow-md
             ${isCompact ? 'w-10 h-10' : 'w-12 h-12'}
-            ${inputValue.trim()
+            ${isCompact
               ? 'bg-gradient-to-br from-[#5AB9B4] to-[#4A9D99] text-white hover:shadow-lg hover:scale-105'
-              : 'bg-gray-100 dark:bg-[#3d3548] text-gray-400 cursor-not-allowed'
+              : inputValue.trim()
+                ? 'bg-gradient-to-br from-[#5AB9B4] to-[#4A9D99] text-white hover:shadow-lg hover:scale-105'
+                : 'bg-gray-100 dark:bg-[#3d3548] text-gray-400 cursor-not-allowed'
             }
           `}
         >

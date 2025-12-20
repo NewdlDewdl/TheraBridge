@@ -39,6 +39,9 @@ export const springTransition = {
   damping: 30
 };
 
+// Spring bounce cubic-bezier as const for proper TypeScript typing
+const springBounce = [0.34, 1.56, 0.64, 1] as const;
+
 export const modalVariants = {
   hidden: {
     opacity: 0,
@@ -49,7 +52,7 @@ export const modalVariants = {
     scale: 1,
     transition: {
       duration: 0.4,
-      ease: [0.34, 1.56, 0.64, 1] // cubic-bezier for spring bounce
+      ease: springBounce
     }
   },
   exit: {
@@ -57,7 +60,7 @@ export const modalVariants = {
     scale: 0.9,
     transition: {
       duration: 0.3,
-      ease: 'easeOut'
+      ease: 'easeOut' as const
     }
   }
 };
@@ -72,7 +75,7 @@ export const fullscreenVariants = {
     scale: 1,
     transition: {
       duration: 0.4,
-      ease: [0.34, 1.56, 0.64, 1]
+      ease: springBounce
     }
   },
   exit: {
@@ -80,7 +83,7 @@ export const fullscreenVariants = {
     scale: 0.95,
     transition: {
       duration: 0.3,
-      ease: 'easeOut'
+      ease: 'easeOut' as const
     }
   }
 };
@@ -95,7 +98,7 @@ export const popoverVariants = {
     scale: 1,
     transition: {
       duration: 0.2,
-      ease: 'easeOut'
+      ease: 'easeOut' as const
     }
   },
   exit: {
@@ -103,7 +106,7 @@ export const popoverVariants = {
     scale: 0.95,
     transition: {
       duration: 0.15,
-      ease: 'easeIn'
+      ease: 'easeIn' as const
     }
   }
 };

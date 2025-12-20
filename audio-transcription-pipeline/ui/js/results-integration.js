@@ -6,7 +6,9 @@
 // Initialize global instances
 let waveformVisualizer = null;
 let resultsDisplay = null;
+let exportManager = null;
 let currentAudioFile = null;
+let currentResultsData = null;
 let currentZoomLevel = 0;
 
 /**
@@ -21,8 +23,14 @@ function initializeResultsComponents() {
     resultsDisplay = new ResultsDisplay();
     window.resultsDisplay = resultsDisplay; // Make globally accessible
 
+    // Initialize export manager
+    exportManager = new ExportManager();
+    window.exportManager = exportManager; // Make globally accessible
+
     // Set up event listeners
     setupResultsEventListeners();
+    setupExportListeners();
+    setupExportKeyboardShortcuts();
 
     console.log('Results components initialized');
 }
@@ -67,22 +75,6 @@ function setupResultsEventListeners() {
         });
     }
 
-    // Export transcript button
-    const exportTranscriptBtn = document.getElementById('exportTranscriptBtn');
-    if (exportTranscriptBtn) {
-        exportTranscriptBtn.addEventListener('click', () => {
-            resultsDisplay.exportTranscript();
-        });
-    }
-
-    // Export JSON button
-    const exportJSONBtn = document.getElementById('exportJSONBtn');
-    if (exportJSONBtn) {
-        exportJSONBtn.addEventListener('click', () => {
-            resultsDisplay.exportJSON();
-        });
-    }
-
     // New upload button
     const newUploadBtn = document.getElementById('newUploadBtn');
     if (newUploadBtn) {
@@ -104,14 +96,115 @@ function setupResultsEventListeners() {
 }
 
 /**
+ * Set up export menu and button listeners
+ */
+function setupExportListeners() {
+    const exportMenuBtn = document.getElementById('exportMenuBtn');
+    const exportMenu = document.getElementById('exportMenu');
+    const exportDropdown = document.querySelector('.export-dropdown');
+
+    // Toggle dropdown menu
+    if (exportMenuBtn && exportMenu) {
+        exportMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            exportMenu.classList.toggle('hidden');
+            exportDropdown?.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!exportDropdown?.contains(e.target)) {
+                exportMenu.classList.add('hidden');
+                exportDropdown?.classList.remove('active');
+            }
+        });
+    }
+
+    // Export format button listeners
+    const exportButtons = document.querySelectorAll('.dropdown-item[data-export]');
+    exportButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const format = button.dataset.export;
+            handleExport(format);
+            exportMenu?.classList.add('hidden');
+            exportDropdown?.classList.remove('active');
+        });
+    });
+}
+
+/**
+ * Set up keyboard shortcuts for export
+ */
+function setupExportKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        // Only trigger when results are visible
+        const resultsVisible = document.getElementById('resultsContainer')?.style.display !== 'none';
+        if (!resultsVisible) return;
+
+        // Check for Ctrl/Cmd key combinations
+        if (e.ctrlKey || e.metaKey) {
+            switch(e.key.toLowerCase()) {
+                case 's':
+                    e.preventDefault();
+                    handleExport('pdf');
+                    break;
+                case 't':
+                    e.preventDefault();
+                    handleExport('txt');
+                    break;
+                case 'c':
+                    e.preventDefault();
+                    handleExport('csv');
+                    break;
+                case 'j':
+                    e.preventDefault();
+                    handleExport('json');
+                    break;
+            }
+        }
+    });
+}
+
+/**
+ * Handle export based on format
+ */
+function handleExport(format) {
+    if (!currentResultsData || !exportManager) {
+        console.error('No results data or export manager available');
+        alert('No results to export');
+        return;
+    }
+
+    const audioFilename = currentAudioFile?.name || 'audio.mp3';
+
+    switch(format) {
+        case 'pdf':
+            exportManager.exportToPDF(currentResultsData, audioFilename);
+            break;
+        case 'txt':
+            exportManager.exportToTXT(currentResultsData, audioFilename);
+            break;
+        case 'csv':
+            exportManager.exportToCSV(currentResultsData, audioFilename);
+            break;
+        case 'json':
+            exportManager.exportToJSON(currentResultsData, audioFilename);
+            break;
+        default:
+            console.error('Unknown export format:', format);
+    }
+}
+
+/**
  * Display results from pipeline output
  * @param {Object} resultsData - Pipeline output JSON
  * @param {File} audioFile - Original audio file
  */
 async function displayPipelineResults(resultsData, audioFile) {
     try {
-        // Store audio file reference
+        // Store audio file and results data reference
         currentAudioFile = audioFile;
+        currentResultsData = resultsData;
 
         // Initialize waveform
         await waveformVisualizer.initialize();
@@ -187,8 +280,9 @@ function resetToUpload() {
         resultsDisplay.reset();
     }
 
-    // Clear current file
+    // Clear current file and data
     currentAudioFile = null;
+    currentResultsData = null;
     currentZoomLevel = 0;
 
     // Show upload section, hide results

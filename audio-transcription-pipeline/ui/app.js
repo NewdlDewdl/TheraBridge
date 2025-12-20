@@ -176,7 +176,231 @@ function handleDrop(e) {
 }
 
 // ========================================
-// Processing Simulation
+// API Configuration
+// ========================================
+const API_CONFIG = {
+    baseUrl: 'http://localhost:5000',  // Python bridge server
+    endpoints: {
+        upload: '/api/upload',
+        status: '/api/status',
+        results: '/api/results',
+        cancel: '/api/cancel'
+    },
+    pollInterval: 1000  // Poll status every 1 second
+};
+
+// ========================================
+// API Integration
+// ========================================
+let currentJobId = null;
+let statusPollInterval = null;
+
+async function uploadAndProcess(file) {
+    try {
+        // 1. Upload file to server
+        const formData = new FormData();
+        formData.append('audio', file);
+
+        const uploadResponse = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.upload}`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!uploadResponse.ok) {
+            const error = await uploadResponse.json();
+            throw new Error(error.error || 'Upload failed');
+        }
+
+        const uploadData = await uploadResponse.json();
+        currentJobId = uploadData.job_id;
+
+        console.log('Upload successful. Job ID:', currentJobId);
+
+        // 2. Start polling for status updates
+        pollProcessingStatus();
+
+    } catch (error) {
+        console.error('Upload error:', error);
+        state.isProcessing = false;
+
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            showError('Cannot connect to server. Please ensure the server is running on ' + API_CONFIG.baseUrl);
+        } else {
+            showError('Upload failed: ' + error.message);
+        }
+
+        // Reset to upload view
+        elements.processingSection.style.display = 'none';
+        elements.uploadSection.style.display = 'block';
+    }
+}
+
+async function pollProcessingStatus() {
+    if (!currentJobId || !state.isProcessing) {
+        return;
+    }
+
+    try {
+        const statusResponse = await fetch(
+            `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.status}/${currentJobId}`
+        );
+
+        if (!statusResponse.ok) {
+            throw new Error('Failed to get status');
+        }
+
+        const statusData = await statusResponse.json();
+
+        // Update UI with current status
+        updateProcessingUI(statusData);
+
+        // Check if processing is complete
+        if (statusData.status === 'completed') {
+            clearInterval(statusPollInterval);
+            await fetchAndDisplayResults();
+        } else if (statusData.status === 'failed') {
+            clearInterval(statusPollInterval);
+            state.isProcessing = false;
+            showError('Processing failed: ' + (statusData.error || 'Unknown error'));
+
+            // Reset to upload view
+            setTimeout(() => {
+                elements.processingSection.style.display = 'none';
+                elements.uploadSection.style.display = 'block';
+            }, 3000);
+        } else {
+            // Continue polling
+            statusPollInterval = setTimeout(pollProcessingStatus, API_CONFIG.pollInterval);
+        }
+
+    } catch (error) {
+        console.error('Status polling error:', error);
+        clearInterval(statusPollInterval);
+        state.isProcessing = false;
+        showError('Lost connection to server. Please check if the server is still running.');
+
+        // Reset to upload view
+        setTimeout(() => {
+            elements.processingSection.style.display = 'none';
+            elements.uploadSection.style.display = 'block';
+        }, 3000);
+    }
+}
+
+function updateProcessingUI(statusData) {
+    // Update progress bar
+    const progress = statusData.progress || 0;
+    updateProgress(progress);
+
+    // Map API step to UI step
+    const stepMapping = {
+        'uploading': { element: elements.steps.step1, status: 'Uploading...' },
+        'transcribing': { element: elements.steps.step2, status: 'Transcribing...' },
+        'diarizing': { element: elements.steps.step3, status: 'Analyzing speakers...' },
+        'aligning': { element: elements.steps.step4, status: 'Finalizing...' }
+    };
+
+    const currentStep = statusData.step || 'uploading';
+
+    // Update step indicators
+    Object.entries(stepMapping).forEach(([stepName, stepInfo]) => {
+        const stepElement = stepInfo.element;
+        const statusElement = stepElement.querySelector('.step-status');
+
+        if (stepName === currentStep) {
+            // Current step - mark as active
+            stepElement.classList.remove('completed');
+            stepElement.classList.add('active');
+            statusElement.textContent = stepInfo.status;
+        } else if (shouldMarkCompleted(stepName, currentStep)) {
+            // Previous steps - mark as completed
+            stepElement.classList.remove('active');
+            stepElement.classList.add('completed');
+            statusElement.textContent = 'Completed';
+        } else {
+            // Future steps - waiting
+            stepElement.classList.remove('active', 'completed');
+            statusElement.textContent = 'Waiting...';
+        }
+    });
+}
+
+function shouldMarkCompleted(stepName, currentStep) {
+    const stepOrder = ['uploading', 'transcribing', 'diarizing', 'aligning'];
+    const currentIndex = stepOrder.indexOf(currentStep);
+    const stepIndex = stepOrder.indexOf(stepName);
+    return stepIndex < currentIndex;
+}
+
+async function fetchAndDisplayResults() {
+    try {
+        const resultsResponse = await fetch(
+            `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.results}/${currentJobId}`
+        );
+
+        if (!resultsResponse.ok) {
+            throw new Error('Failed to fetch results');
+        }
+
+        const resultsData = await resultsResponse.json();
+
+        console.log('Results fetched successfully:', resultsData);
+
+        // Complete processing and show results
+        completeProcessing(resultsData);
+
+    } catch (error) {
+        console.error('Error fetching results:', error);
+        state.isProcessing = false;
+        showError('Failed to retrieve results: ' + error.message);
+
+        // Reset to upload view
+        setTimeout(() => {
+            elements.processingSection.style.display = 'none';
+            elements.uploadSection.style.display = 'block';
+        }, 3000);
+    }
+}
+
+async function cancelProcessing() {
+    if (!currentJobId) {
+        state.isProcessing = false;
+        elements.processingSection.style.display = 'none';
+        elements.uploadSection.style.display = 'block';
+        return;
+    }
+
+    try {
+        // Attempt to cancel the job on the server
+        await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.cancel}/${currentJobId}`, {
+            method: 'POST'
+        });
+
+        console.log('Job cancelled:', currentJobId);
+    } catch (error) {
+        console.error('Error cancelling job:', error);
+        // Continue with client-side cleanup even if server cancellation fails
+    }
+
+    // Clear polling interval
+    if (statusPollInterval) {
+        clearTimeout(statusPollInterval);
+        statusPollInterval = null;
+    }
+
+    // Reset state
+    state.isProcessing = false;
+    currentJobId = null;
+
+    // Hide processing section, show upload section
+    elements.processingSection.style.display = 'none';
+    elements.uploadSection.style.display = 'block';
+
+    showError('Processing cancelled by user');
+}
+
+// ========================================
+// Processing Flow
 // ========================================
 function startProcessing() {
     if (!state.selectedFile) {
@@ -200,49 +424,8 @@ function startProcessing() {
         status.textContent = 'Waiting...';
     });
 
-    // Start processing steps
-    simulateProcessing();
-}
-
-function simulateProcessing() {
-    const steps = [
-        { element: elements.steps.step1, duration: 2000, status: 'Uploading...', progress: 25 },
-        { element: elements.steps.step2, duration: 4000, status: 'Transcribing...', progress: 50 },
-        { element: elements.steps.step3, duration: 3000, status: 'Analyzing speakers...', progress: 75 },
-        { element: elements.steps.step4, duration: 2000, status: 'Finalizing...', progress: 100 }
-    ];
-
-    function processStep(index) {
-        if (index >= steps.length || !state.isProcessing) {
-            if (state.isProcessing) {
-                completeProcessing();
-            }
-            return;
-        }
-
-        const step = steps[index];
-        state.currentStep = index;
-
-        // Mark step as active
-        step.element.classList.add('active');
-        step.element.querySelector('.step-status').textContent = step.status;
-
-        // Update progress
-        updateProgress(step.progress);
-
-        // Wait for step duration
-        setTimeout(() => {
-            // Mark step as completed
-            step.element.classList.remove('active');
-            step.element.classList.add('completed');
-            step.element.querySelector('.step-status').textContent = 'Completed';
-
-            // Process next step
-            processStep(index + 1);
-        }, step.duration);
-    }
-
-    processStep(0);
+    // Start upload and processing
+    uploadAndProcess(state.selectedFile);
 }
 
 function updateProgress(percent) {
@@ -251,23 +434,26 @@ function updateProgress(percent) {
     elements.progressText.textContent = `${percent}%`;
 }
 
-function cancelProcessing() {
-    state.isProcessing = false;
-
-    // Hide processing section, show upload section
-    elements.processingSection.style.display = 'none';
-    elements.uploadSection.style.display = 'block';
-
-    showError('Processing cancelled by user');
-}
-
-function completeProcessing() {
+async function completeProcessing(resultsData) {
     state.isProcessing = false;
 
     // Hide processing section, show results section
     elements.processingSection.style.display = 'none';
     elements.resultsSection.style.display = 'block';
     elements.resultsSection.classList.add('fade-in');
+
+    // Display results using the results-integration module
+    try {
+        if (typeof displayPipelineResults === 'function') {
+            await displayPipelineResults(resultsData, state.selectedFile);
+            console.log('Results displayed successfully');
+        } else {
+            console.warn('displayPipelineResults function not found. Make sure results-integration.js is loaded.');
+        }
+    } catch (error) {
+        console.error('Error displaying results:', error);
+        showError('Failed to display results: ' + error.message);
+    }
 }
 
 function resetToUpload() {

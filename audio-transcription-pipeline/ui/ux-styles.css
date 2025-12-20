@@ -1,0 +1,811 @@
+/* ========================================
+   UX Enhancements Styles
+   Toast Notifications, Loading States, Dialogs, etc.
+   ======================================== */
+
+/* ========================================
+   Toast Notifications
+   ======================================== */
+.toast-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+    width: calc(100% - 40px);
+    pointer-events: none;
+}
+
+.toast {
+    background-color: var(--bg-primary);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-left: 4px solid var(--primary-color);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: auto;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast.hide {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.toast-success {
+    border-left-color: var(--success-color);
+}
+
+.toast-error {
+    border-left-color: var(--error-color);
+}
+
+.toast-warning {
+    border-left-color: var(--warning-color);
+}
+
+.toast-info {
+    border-left-color: var(--primary-color);
+}
+
+.toast-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.toast-success .toast-icon {
+    color: var(--success-color);
+}
+
+.toast-error .toast-icon {
+    color: var(--error-color);
+}
+
+.toast-warning .toast-icon {
+    color: var(--warning-color);
+}
+
+.toast-info .toast-icon {
+    color: var(--primary-color);
+}
+
+.toast-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.toast-message {
+    flex: 1;
+    color: var(--text-primary);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+}
+
+.toast-action {
+    padding: 6px 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toast-action:hover {
+    background-color: var(--primary-hover);
+}
+
+.toast-close {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toast-close:hover {
+    color: var(--text-primary);
+}
+
+.toast-close svg {
+    width: 100%;
+    height: 100%;
+}
+
+.toast-progress {
+    height: 4px;
+    background-color: var(--bg-tertiary);
+    overflow: hidden;
+}
+
+.toast-progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-color);
+    animation: progressBar 4s linear;
+}
+
+@keyframes progressBar {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+/* ========================================
+   Skeleton Loading States
+   ======================================== */
+.skeleton-results {
+    animation: fadeIn 0.3s ease;
+}
+
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--bg-secondary) 0%,
+        var(--bg-tertiary) 50%,
+        var(--bg-secondary) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.skeleton-title {
+    width: 200px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+.skeleton-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.skeleton-button {
+    width: 120px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.skeleton-button-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.skeleton-player {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.skeleton-waveform {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.skeleton-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.skeleton-time {
+    width: 80px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.skeleton-slider {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+}
+
+.skeleton-transcript {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.skeleton-segment {
+    margin-bottom: 20px;
+}
+
+.skeleton-segment:last-child {
+    margin-bottom: 0;
+}
+
+.skeleton-segment-header {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.skeleton-badge {
+    width: 80px;
+    height: 24px;
+    border-radius: 12px;
+}
+
+.skeleton-timestamp {
+    width: 100px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.skeleton-text {
+    height: 20px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.skeleton-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.skeleton-stat-card {
+    height: 120px;
+    border-radius: 12px;
+}
+
+/* ========================================
+   Processing Loader
+   ======================================== */
+.processing-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.processing-animation {
+    text-align: center;
+    max-width: 400px;
+}
+
+.processing-spinner {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 32px;
+}
+
+.processing-spinner svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.spinner-track {
+    fill: none;
+    stroke: var(--bg-tertiary);
+    stroke-width: 4;
+}
+
+.spinner-progress {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 4;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 0;
+    animation: spinnerRotate 2s linear infinite;
+}
+
+@keyframes spinnerRotate {
+    0% { stroke-dashoffset: 283; }
+    50% { stroke-dashoffset: 75; }
+    100% { stroke-dashoffset: 283; }
+}
+
+.processing-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    color: var(--primary-color);
+}
+
+.processing-icon svg {
+    width: 100%;
+    height: 100%;
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.processing-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.processing-message {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.processing-estimate {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--bg-secondary);
+    border-radius: 20px;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.processing-estimate svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ========================================
+   Inline Loader
+   ======================================== */
+.inline-loader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+}
+
+.inline-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--bg-tertiary);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.inline-loader-text {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* ========================================
+   Button Loading State
+   ======================================== */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* ========================================
+   Progress Bar
+   ======================================== */
+.progress-bar-container {
+    margin: 16px 0;
+}
+
+.progress-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar.indeterminate .progress-fill {
+    width: 30%;
+    animation: indeterminateProgress 1.5s ease-in-out infinite;
+}
+
+@keyframes indeterminateProgress {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0); }
+    100% { transform: translateX(333%); }
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-percentage {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 8px;
+    text-align: right;
+}
+
+/* ========================================
+   File Size Warning
+   ======================================== */
+.file-size-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning-color);
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+.warning-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    color: var(--warning-color);
+}
+
+.warning-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.warning-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.warning-content p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* ========================================
+   Confirmation Dialog
+   ======================================== */
+.confirm-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.confirm-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.confirm-content {
+    position: relative;
+    background-color: var(--bg-primary);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    max-width: 480px;
+    width: calc(100% - 32px);
+    padding: 32px;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+}
+
+.confirm-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 24px;
+    padding: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-warning .confirm-icon {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning-color);
+}
+
+.confirm-danger .confirm-icon {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--error-color);
+}
+
+.confirm-info .confirm-icon {
+    background-color: rgba(79, 70, 229, 0.1);
+    color: var(--primary-color);
+}
+
+.confirm-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.confirm-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.confirm-message {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirm-actions .btn {
+    min-width: 120px;
+}
+
+.btn-error {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.btn-error:hover {
+    background-color: var(--error-hover);
+}
+
+/* ========================================
+   Error Display
+   ======================================== */
+.error-display {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.error-display-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.error-display .error-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    color: var(--error-color);
+}
+
+.error-display .error-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.error-text {
+    flex: 1;
+}
+
+.error-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.error-description {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.error-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn-retry svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ========================================
+   Screen Reader Only
+   ======================================== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* ========================================
+   Accessibility - Focus Styles
+   ======================================== */
+*:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   High Contrast Mode Support
+   ======================================== */
+@media (prefers-contrast: high) {
+    .toast {
+        border-width: 2px;
+    }
+
+    .btn {
+        border: 2px solid currentColor;
+    }
+
+    .progress-bar {
+        border: 1px solid var(--border-color);
+    }
+}
+
+/* ========================================
+   Reduced Motion Support
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+@media (max-width: 768px) {
+    .toast-container {
+        top: 70px;
+        right: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .toast-content {
+        padding: 12px;
+    }
+
+    .confirm-content {
+        padding: 24px;
+    }
+
+    .confirm-icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 20px;
+    }
+
+    .confirm-title {
+        font-size: 1.25rem;
+    }
+
+    .confirm-actions {
+        flex-direction: column-reverse;
+    }
+
+    .confirm-actions .btn {
+        width: 100%;
+    }
+
+    .processing-spinner {
+        width: 100px;
+        height: 100px;
+    }
+
+    .processing-icon {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .toast-container {
+        top: 60px;
+        right: 8px;
+        left: 8px;
+        width: auto;
+    }
+
+    .skeleton-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .error-display-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .error-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .error-actions .btn {
+        width: 100%;
+    }
+}

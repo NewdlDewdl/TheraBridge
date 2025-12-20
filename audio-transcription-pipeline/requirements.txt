@@ -18,5 +18,9 @@ tenacity>=8.2.0
 # Environment management
 python-dotenv>=1.0.0
 
+# Web server for UI integration
+flask>=3.0.0
+flask-cors>=4.0.0
+
 # Note: ffmpeg is required for pydub audio processing
 # Install via: brew install ffmpeg (macOS) or apt-get install ffmpeg (Ubuntu)

@@ -4,12 +4,13 @@
  * Individual session card component
  * - Two-column layout with implicit hierarchy
  * - Mood-based left border accent
- * - Milestone badge (if applicable)
+ * - Milestone indicator (corner ribbon style - no overlap)
  * - FIXED: Dark mode support
+ * - FIXED: Milestone badge no longer overlaps with title
  */
 
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, Sparkles } from 'lucide-react';
 import { Session } from '../lib/types';
 import { getMoodColor, getMoodEmoji } from '../lib/utils';
 
@@ -25,14 +26,18 @@ export function SessionCard({ session, onClick }: SessionCardProps) {
   return (
     <motion.div
       onClick={onClick}
-      className="relative bg-gradient-to-br from-white to-[#FEFDFB] dark:from-[#2a2435] dark:to-[#1a1625] rounded-xl p-5 cursor-pointer overflow-visible flex flex-col min-h-[280px] transition-colors duration-300 border border-gray-200/50 dark:border-[#3d3548]"
+      className={`relative bg-gradient-to-br from-white to-[#FEFDFB] dark:from-[#2a2435] dark:to-[#1a1625] rounded-xl p-5 cursor-pointer overflow-hidden flex flex-col min-h-[280px] transition-colors duration-300 border border-gray-200/50 dark:border-[#3d3548] ${session.milestone ? 'ring-2 ring-amber-300/50 dark:ring-amber-500/30' : ''}`}
       style={{
         borderLeft: `3px solid ${moodColor}`,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+        boxShadow: session.milestone
+          ? '0 2px 8px rgba(0,0,0,0.08), 0 0 20px rgba(251,191,36,0.15)'
+          : '0 2px 8px rgba(0,0,0,0.08)'
       }}
       whileHover={{
         y: -4,
-        boxShadow: '0 6px 16px rgba(0,0,0,0.12)'
+        boxShadow: session.milestone
+          ? '0 6px 16px rgba(0,0,0,0.12), 0 0 30px rgba(251,191,36,0.2)'
+          : '0 6px 16px rgba(0,0,0,0.12)'
       }}
       transition={{ duration: 0.2 }}
       role="button"
@@ -45,18 +50,20 @@ export function SessionCard({ session, onClick }: SessionCardProps) {
         }
       }}
     >
-      {/* Milestone Badge */}
+      {/* Milestone Corner Ribbon - positioned inside card, top-right corner */}
       {session.milestone && (
-        <div
-          className="absolute -top-2.5 left-4 px-3 py-1 bg-[#FEF3C7] rounded-full flex items-center gap-1.5 z-10"
-          style={{
-            boxShadow: '0 0 12px rgba(251,191,36,0.4)'
-          }}
-        >
-          <Star className="w-3 h-3 text-[#92400E] fill-[#92400E]" />
-          <span className="text-[10px] uppercase font-medium text-[#92400E] tracking-wide">
-            {session.milestone.title.split(':')[0]}
-          </span>
+        <div className="absolute top-0 right-0 overflow-hidden w-24 h-24 pointer-events-none">
+          {/* Ribbon background */}
+          <div
+            className="absolute top-[12px] right-[-32px] w-[120px] py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 dark:from-amber-500 dark:to-amber-600 transform rotate-45 shadow-md"
+          >
+            <div className="flex items-center justify-center gap-1">
+              <Sparkles className="w-3 h-3 text-amber-900" />
+              <span className="text-[9px] uppercase font-bold text-amber-900 tracking-wide">
+                Breakthrough
+              </span>
+            </div>
+          </div>
         </div>
       )}
 
@@ -67,6 +74,10 @@ export function SessionCard({ session, onClick }: SessionCardProps) {
         <span className="text-lg font-bold text-gray-800 dark:text-gray-200">{session.date}</span>
         <span className="text-gray-400 dark:text-gray-600">•</span>
         <span className="text-xl">{moodEmoji}</span>
+        {/* Inline star indicator for milestone */}
+        {session.milestone && (
+          <Star className="w-4 h-4 text-amber-500 fill-amber-400 ml-1" />
+        )}
       </div>
 
       {/* Two-column Layout */}

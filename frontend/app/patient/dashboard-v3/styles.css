@@ -78,3 +78,15 @@ button, a {
     backdrop-filter: blur(8px);
   }
 }
+
+/* Dobby Logo Animations */
+@keyframes earWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes blink {
+  0%, 85%, 100% { transform: scaleY(1); }
+  90% { transform: scaleY(0.1); }
+}

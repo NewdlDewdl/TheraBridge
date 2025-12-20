@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Audio diarization pipeline for identifying and separating different speakers in audio recordings">
     <title>Audio Diarization Pipeline</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="results-styles.css">
+    <link rel="stylesheet" href="ux-styles.css">
     <!-- WaveSurfer.js for waveform visualization -->
     <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body data-theme="dark">
     <!-- Header -->
@@ -53,11 +57,12 @@
                     </p>
 
                     <!-- Drag & Drop Area -->
-                    <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Upload audio file area. Click or press Enter to select a file, or drag and drop a file here.">
                         <input
                             type="file"
                             id="fileInput"
                             accept=".mp3,.wav,.m4a,.aac,.ogg,.flac,.wma,.aiff"
+                            aria-label="Audio file upload input"
                             hidden
                         >
 
@@ -106,8 +111,8 @@
                     </div>
 
                     <!-- Upload Button -->
-                    <button class="btn btn-success btn-large" id="uploadBtn" disabled>
-                        <svg class="btn-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button class="btn btn-success btn-large" id="uploadBtn" disabled aria-label="Process audio file. Upload and start transcription and speaker identification.">
+                        <svg class="btn-icon-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                             <polyline points="7 10 12 15 17 10"/>
                             <line x1="12" y1="15" x2="12" y2="3"/>
@@ -118,18 +123,18 @@
             </section>
 
             <!-- Processing Section (hidden initially) -->
-            <section class="processing-section" id="processingSection" style="display: none;">
+            <section class="processing-section" id="processingSection" style="display: none;" role="status" aria-live="polite" aria-atomic="true">
                 <div class="processing-card">
                     <div class="processing-header">
                         <h2 class="section-title">Processing Audio</h2>
-                        <div class="processing-spinner"></div>
+                        <div class="processing-spinner" role="presentation" aria-label="Processing indicator"></div>
                     </div>
 
                     <div class="progress-container">
-                        <div class="progress-bar">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Processing progress">
                             <div class="progress-fill" id="progressFill"></div>
                         </div>
-                        <p class="progress-text" id="progressText">0%</p>
+                        <p class="progress-text" id="progressText" aria-live="polite">0%</p>
                     </div>
 
                     <div class="processing-steps">
@@ -179,7 +184,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-secondary" id="cancelBtn">
+                    <button class="btn btn-secondary" id="cancelBtn" aria-label="Cancel audio processing. This will stop the current operation.">
                         Cancel Processing
                     </button>
                 </div>
@@ -191,22 +196,57 @@
                 <div class="results-header">
                     <h2>Diarization Results</h2>
                     <div class="results-actions">
-                        <button id="exportTranscriptBtn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="12" y1="18" x2="12" y2="12"/>
-                                <line x1="9" y1="15" x2="15" y2="15"/>
-                            </svg>
-                            Export Transcript
-                        </button>
-                        <button id="exportJSONBtn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                            </svg>
-                            Export JSON
-                        </button>
+                        <!-- Export Dropdown -->
+                        <div class="export-dropdown">
+                            <button id="exportMenuBtn" class="dropdown-toggle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Export
+                                <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </button>
+                            <div id="exportMenu" class="dropdown-menu hidden">
+                                <button class="dropdown-item" data-export="pdf">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg>
+                                    Export as PDF
+                                    <span class="shortcut-hint">Ctrl+S</span>
+                                </button>
+                                <button class="dropdown-item" data-export="txt">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                        <line x1="12" y1="18" x2="12" y2="12"/>
+                                        <line x1="9" y1="15" x2="15" y2="15"/>
+                                    </svg>
+                                    Export as TXT
+                                    <span class="shortcut-hint">Ctrl+T</span>
+                                </button>
+                                <button class="dropdown-item" data-export="csv">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                        <line x1="3" y1="9" x2="21" y2="9"/>
+                                        <line x1="9" y1="21" x2="9" y2="9"/>
+                                    </svg>
+                                    Export as CSV
+                                    <span class="shortcut-hint">Ctrl+C</span>
+                                </button>
+                                <button class="dropdown-item" data-export="json">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg>
+                                    Export as JSON
+                                    <span class="shortcut-hint">Ctrl+J</span>
+                                </button>
+                            </div>
+                        </div>
                         <button id="newUploadBtn" class="primary">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -216,6 +256,73 @@
                             New Upload
                         </button>
                     </div>
+                </div>
+
+                <!-- Audio Player Controls -->
+                <div class="player-controls-section">
+                    <div class="audio-controls">
+                        <button id="playPauseBtn" class="btn btn-icon" title="Play/Pause (Space)">
+                            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <svg id="pauseIcon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="4" width="4" height="16"/>
+                                <rect x="14" y="4" width="4" height="16"/>
+                            </svg>
+                        </button>
+
+                        <div class="time-display">
+                            <span id="currentTime">0:00</span>
+                            <span class="time-separator">/</span>
+                            <span id="totalDuration">0:00</span>
+                        </div>
+
+                        <div class="control-spacer"></div>
+
+                        <div class="volume-control">
+                            <button id="muteBtn" class="btn btn-icon" title="Mute (M)">
+                                <svg id="volumeIcon" viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                                </svg>
+                                <svg id="muteIcon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                                    <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </button>
+                            <input type="range" id="volumeSlider" min="0" max="100" value="100" class="volume-slider">
+                        </div>
+
+                        <div class="speed-control">
+                            <label for="speedSelect">Speed:</label>
+                            <select id="speedSelect" class="speed-select">
+                                <option value="0.5">0.5x</option>
+                                <option value="0.75">0.75x</option>
+                                <option value="1" selected>1x</option>
+                                <option value="1.25">1.25x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="2">2x</option>
+                            </select>
+                        </div>
+
+                        <button id="shortcutsBtn" class="btn btn-icon" title="Keyboard Shortcuts">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h8M6 16h12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Speaker Timeline -->
+                <div class="timeline-section">
+                    <h3>Speaker Timeline</h3>
+                    <div class="timeline-container">
+                        <canvas id="timelineCanvas"></canvas>
+                    </div>
+                    <div id="segmentTooltip" class="segment-tooltip hidden"></div>
                 </div>
 
                 <!-- Waveform Visualization -->
@@ -334,8 +441,110 @@
         </div>
     </footer>
 
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="shortcutsModal" class="modal hidden">
+        <div class="modal-overlay" id="shortcutsModalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Keyboard Shortcuts</h3>
+                <button id="closeShortcutsBtn" class="btn-icon" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcuts-grid">
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Space</kbd> <span class="or">or</span> <kbd>K</kbd>
+                        </div>
+                        <div class="shortcut-desc">Play/Pause</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>←</kbd>
+                        </div>
+                        <div class="shortcut-desc">Skip back 5 seconds</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>→</kbd>
+                        </div>
+                        <div class="shortcut-desc">Skip forward 5 seconds</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>J</kbd>
+                        </div>
+                        <div class="shortcut-desc">Skip back 10 seconds</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>L</kbd>
+                        </div>
+                        <div class="shortcut-desc">Skip forward 10 seconds</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>M</kbd>
+                        </div>
+                        <div class="shortcut-desc">Toggle mute</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>0</kbd> - <kbd>9</kbd>
+                        </div>
+                        <div class="shortcut-desc">Jump to 0%-90% of audio</div>
+                    </div>
+                    <div class="shortcut-divider"></div>
+                    <div class="shortcut-section-title">Export Shortcuts</div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>S</kbd>
+                        </div>
+                        <div class="shortcut-desc">Export as PDF</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>T</kbd>
+                        </div>
+                        <div class="shortcut-desc">Export as TXT</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>C</kbd>
+                        </div>
+                        <div class="shortcut-desc">Export as CSV</div>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>J</kbd>
+                        </div>
+                        <div class="shortcut-desc">Export as JSON</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UX Enhancement Modules -->
+    <script src="js/error-handler.js"></script>
+    <script src="js/toast-notifications.js"></script>
+    <script src="js/loading-states.js"></script>
+    <script src="js/confirm-dialog.js"></script>
+    <script src="js/performance-monitor.js"></script>
+    <script src="js/ux-manager.js"></script>
+
+    <!-- Core Application Modules -->
+    <script src="js/export.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/timeline.js"></script>
+    <script src="js/player-integration.js"></script>
     <script src="js/waveform.js"></script>
     <script src="js/results.js"></script>
+    <script src="js/results-integration.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

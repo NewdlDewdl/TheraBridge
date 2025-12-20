@@ -162,7 +162,7 @@ export function ProgressPatternsCard() {
               fill={COLORS.primary}
               radius={[0, 4, 4, 0]}
               barSize={isCompact ? 12 : 24}
-              background={{ fill: 'rgba(0,0,0,0.05)', radius: [0, 4, 4, 0] }}
+              background={{ fill: 'rgba(0,0,0,0.05)' }}
             />
           </BarChart>
         </ResponsiveContainer>
