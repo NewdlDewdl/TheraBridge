@@ -5,16 +5,26 @@
  * - Compact state: 3 sections visible
  * - Expanded modal: Full details for each section (read-only)
  * - FIXED: Dark mode support + gray border on modal
+ * - FIXED: Accessibility - focus trap, Escape key, focus restoration
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { therapistBridgeContent } from '../lib/mockData';
 import { modalVariants, backdropVariants } from '../lib/utils';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export function TherapistBridgeCard() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Accessibility: focus trap, Escape key, scroll lock
+  useModalAccessibility({
+    isOpen: isExpanded,
+    onClose: () => setIsExpanded(false),
+    modalRef,
+  });
 
   return (
     <>
@@ -89,11 +99,15 @@ export function TherapistBridgeCard() {
             />
 
             <motion.div
+              ref={modalRef}
               variants={modalVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
               className="fixed w-[700px] max-h-[80vh] bg-white dark:bg-[#2a2435] rounded-3xl shadow-2xl p-8 z-[1001] overflow-y-auto border-2 border-gray-300 dark:border-gray-600"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="therapist-bridge-title"
               style={{
                 top: '50%',
                 left: '50%',

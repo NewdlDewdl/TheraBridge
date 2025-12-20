@@ -47,11 +47,13 @@ export function SessionCardsGrid() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-6">
+          <nav aria-label="Session pages" className="flex justify-center items-center gap-2 mt-6">
             {Array.from({ length: totalPages }).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentPage(idx)}
+                aria-label={`Go to page ${idx + 1}`}
+                aria-current={idx === currentPage ? 'page' : undefined}
                 className={`transition-all rounded-full ${
                   idx === currentPage
                     ? 'bg-[#5AB9B4] dark:bg-[#a78bfa] w-6 h-2'
@@ -59,7 +61,7 @@ export function SessionCardsGrid() {
                 }`}
               />
             ))}
-          </div>
+          </nav>
         )}
       </div>
 

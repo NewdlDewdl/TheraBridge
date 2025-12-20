@@ -5,12 +5,15 @@
  * - Two-column layout (transcript left, analysis right)
  * - Top bar with navigation
  * - FIXED: Dark mode support + gray border
+ * - FIXED: Accessibility - focus trap, Escape key, focus restoration
  */
 
+import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowLeft, Star } from 'lucide-react';
 import { Session } from '../lib/types';
 import { getMoodEmoji, fullscreenVariants } from '../lib/utils';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 interface SessionDetailProps {
   session: Session | null;
@@ -18,6 +21,15 @@ interface SessionDetailProps {
 }
 
 export function SessionDetail({ session, onClose }: SessionDetailProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Accessibility: focus trap, Escape key, scroll lock
+  useModalAccessibility({
+    isOpen: !!session,
+    onClose,
+    modalRef,
+  });
+
   if (!session) return null;
 
   const moodEmoji = getMoodEmoji(session.mood);
@@ -25,12 +37,16 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
   return (
     <AnimatePresence>
       <motion.div
+        ref={modalRef}
         variants={fullscreenVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
         className="fixed top-0 left-0 right-0 bottom-0 bg-white dark:bg-[#1a1625] z-[2000] flex flex-col border-2 border-gray-300 dark:border-gray-600"
         style={{ margin: 0 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="session-detail-title"
       >
         {/* Top Bar */}
         <div className="h-[60px] border-b border-gray-200 dark:border-[#3d3548] flex items-center justify-between px-6 flex-shrink-0 bg-white dark:bg-[#1a1625]">
@@ -43,7 +59,7 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
           </button>
 
           <div className="text-center">
-            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+            <h2 id="session-detail-title" className="text-lg font-semibold text-gray-800 dark:text-gray-200">
               Session {session.id.replace('s', '')} - {session.date}, 2024
             </h2>
             {session.milestone && (

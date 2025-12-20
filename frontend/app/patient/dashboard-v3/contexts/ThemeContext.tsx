@@ -7,7 +7,7 @@
  * - Applies dark class to document root
  */
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 
 interface ThemeContextType {
   isDark: boolean;
@@ -43,7 +43,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [isDark, mounted]);
 
-  const toggleTheme = () => setIsDark(prev => !prev);
+  const toggleTheme = useCallback(() => setIsDark(prev => !prev), []);
 
   // Prevent flash of wrong theme
   if (!mounted) {

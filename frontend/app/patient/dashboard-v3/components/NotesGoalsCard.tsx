@@ -6,17 +6,27 @@
  * - Expanded modal: Collapsible sections with full details
  * - Spring animation on expansion
  * - FIXED: Dark mode support + gray border on modal
+ * - FIXED: Accessibility - focus trap, Escape key, focus restoration
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronDown } from 'lucide-react';
 import { notesGoalsContent } from '../lib/mockData';
 import { modalVariants, backdropVariants } from '../lib/utils';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export function NotesGoalsCard() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [openSections, setOpenSections] = useState<Set<number>>(new Set([0]));
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Accessibility: focus trap, Escape key, scroll lock
+  useModalAccessibility({
+    isOpen: isExpanded,
+    onClose: () => setIsExpanded(false),
+    modalRef,
+  });
 
   const toggleSection = (index: number) => {
     const newOpenSections = new Set(openSections);
@@ -72,6 +82,7 @@ export function NotesGoalsCard() {
 
             {/* Modal */}
             <motion.div
+              ref={modalRef}
               variants={modalVariants}
               initial="hidden"
               animate="visible"
@@ -84,6 +95,9 @@ export function NotesGoalsCard() {
                 margin: 0
               }}
               onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="notes-goals-title"
             >
               {/* Close button */}
               <button

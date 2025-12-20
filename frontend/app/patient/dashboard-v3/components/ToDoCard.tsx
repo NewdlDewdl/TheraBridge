@@ -6,18 +6,28 @@
  * - Expanded modal: Full task list with sections
  * - Checkbox completion animations
  * - FIXED: Dark mode support + gray border on modal
+ * - FIXED: Accessibility - focus trap, Escape key, focus restoration
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus } from 'lucide-react';
 import { Task } from '../lib/types';
 import { tasks as initialTasks } from '../lib/mockData';
 import { modalVariants, backdropVariants } from '../lib/utils';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export function ToDoCard() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Accessibility: focus trap, Escape key, scroll lock
+  useModalAccessibility({
+    isOpen: isExpanded,
+    onClose: () => setIsExpanded(false),
+    modalRef,
+  });
 
   const completedCount = tasks.filter(t => t.completed).length;
   const totalCount = tasks.length;
@@ -122,11 +132,15 @@ export function ToDoCard() {
             />
 
             <motion.div
+              ref={modalRef}
               variants={modalVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
               className="fixed w-[600px] max-h-[80vh] bg-white dark:bg-[#2a2435] rounded-3xl shadow-2xl p-8 z-[1001] overflow-y-auto border-2 border-gray-300 dark:border-gray-600"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="todo-title"
               style={{
                 top: '50%',
                 left: '50%',

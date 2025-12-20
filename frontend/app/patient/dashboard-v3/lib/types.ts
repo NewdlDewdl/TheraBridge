@@ -39,10 +39,42 @@ export interface Task {
   sessionDate: string;
 }
 
+/**
+ * Chart data point types for different progress metrics.
+ * Each metric type has a specific data structure for Recharts.
+ */
+export interface MoodTrendDataPoint {
+  session: string;
+  mood: number;
+}
+
+export interface HomeworkImpactDataPoint {
+  week: string;
+  completion: number;
+  mood: number;
+}
+
+export interface SessionConsistencyDataPoint {
+  week: string;
+  attended: number;
+}
+
+export interface StrategyEffectivenessDataPoint {
+  strategy: string;
+  effectiveness: number;
+}
+
+// Union type for all chart data point types
+export type ChartDataPoint =
+  | MoodTrendDataPoint
+  | HomeworkImpactDataPoint
+  | SessionConsistencyDataPoint
+  | StrategyEffectivenessDataPoint;
+
 export interface ProgressMetric {
   title: string;
   description: string;
-  chartData: any[];
+  chartData: ChartDataPoint[];
   insight: string;
   emoji: string;
 }

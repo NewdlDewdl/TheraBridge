@@ -5,9 +5,10 @@
  * - Compact state: Carousel with 4 metric pages
  * - Expanded modal: All 4 metrics with interactive charts
  * - FIXED: Dark mode support + gray border on modal
+ * - FIXED: Accessibility - focus trap, Escape key, focus restoration
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Maximize2, TrendingUp, Activity, Calendar, Target } from 'lucide-react';
 import {
@@ -16,6 +17,7 @@ import {
 } from 'recharts';
 import { progressMetrics } from '../lib/mockData';
 import { modalVariants, backdropVariants } from '../lib/utils';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 // Icons mapping
 const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
@@ -37,6 +39,14 @@ const COLORS = {
 export function ProgressPatternsCard() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Accessibility: focus trap, Escape key, scroll lock
+  useModalAccessibility({
+    isOpen: isExpanded,
+    onClose: () => setIsExpanded(false),
+    modalRef,
+  });
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % progressMetrics.length);
@@ -298,12 +308,16 @@ export function ProgressPatternsCard() {
               onClick={() => setIsExpanded(false)}
             />
             <motion.div
+              ref={modalRef}
               layoutId="progress-card"
               className="fixed inset-4 md:inset-10 z-50 bg-[#F7F5F3] dark:bg-[#1a1625] rounded-[32px] overflow-hidden shadow-2xl flex flex-col md:flex-row border-2 border-gray-300 dark:border-gray-600"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="progress-patterns-title"
             >
               {/* Sidebar / Navigation List */}
               <div className="w-full md:w-80 bg-white dark:bg-[#2a2435] border-r border-gray-100 dark:border-[#3d3548] p-6 flex flex-col overflow-y-auto">
