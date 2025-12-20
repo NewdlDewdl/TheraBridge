@@ -1,11 +1,11 @@
 {
-  "test_date": "2025-12-19T12:27:01.863290",
+  "test_date": "2025-12-19T12:54:24.787796",
   "performance_target": "< 60 seconds for 1hr audio",
   "tests": [
     {
       "duration_label": "1min",
       "duration_seconds": 60,
-      "processing_time": 10.51,
+      "processing_time": 10.52,
       "target_time": 12.0,
       "target_met": true,
       "stage_delays": {
@@ -35,7 +35,7 @@
     {
       "duration_label": "10min",
       "duration_seconds": 600,
-      "processing_time": 15.01,
+      "processing_time": 15.02,
       "target_time": 25.0,
       "target_met": true,
       "stage_delays": {
@@ -65,7 +65,7 @@
     {
       "duration_label": "1hr",
       "duration_seconds": 3600,
-      "processing_time": 40.08,
+      "processing_time": 40.07,
       "target_time": 60.0,
       "target_met": true,
       "stage_delays": {
@@ -79,7 +79,7 @@
     }
   ],
   "parallel_speedup": {
-    "sequential_time": 42.0,
+    "sequential_time": 42.01,
     "parallel_time": 24.0,
     "speedup_factor": 1.75,
     "target_speedup": 1.5,

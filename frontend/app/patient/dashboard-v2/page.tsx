@@ -1,100 +1,162 @@
 'use client';
 
-import { useState } from 'react';
-import DashboardMockupSerene from './mockup-1-serene';
-import DashboardMockupWarmGrid from './mockup-2-warm-grid';
+import { Suspense, useState, useEffect } from 'react';
 
+// ============================================================================
+// Dashboard V2 Widget Imports
+// ============================================================================
+import { NotesGoalsPanel } from '@/components/dashboard-v2/NotesGoalsPanel';
+import { AIChatWidget } from '@/components/dashboard-v2/AIChatWidget';
+import { ToDoCard } from '@/components/dashboard-v2/ToDoCard';
+import { ProgressPatternsCard } from '@/components/dashboard-v2/ProgressPatternsCard';
+import { TherapistBridgeCard } from '@/components/dashboard-v2/TherapistBridgeCard';
+import { SessionCardsGrid } from '@/components/dashboard-v2/SessionCardsGrid';
+import TimelineSidebar from '@/components/dashboard-v2/TimelineSidebar';
+import { DashboardV2Skeleton } from '@/components/dashboard-v2/skeletons/DashboardV2Skeletons';
+
+// ============================================================================
+// Constants
+// ============================================================================
+const DESKTOP_MIN_WIDTH = 1024;
+
+// ============================================================================
+// Dashboard V2 Page Component
+// ============================================================================
 /**
- * Dashboard Mockup Viewer
+ * Dashboard V2 - Widget-Based Therapy Progress Dashboard
  *
- * View both dashboard design prototypes:
- * - Mockup 1: "Serene Analytics" - Refined minimalism with soft gradients
- * - Mockup 2: "Warm Grid" - Masonry-style with warmer, approachable colors
+ * Grid Layout Structure:
+ * ┌────────────────────────────────────────────────┐
+ * │  TOP ROW (2 large panels - 50/50 split)        │
+ * │  ┌──────────────┐  ┌──────────────┐            │
+ * │  │ Notes/Goals  │  │ AI Chat      │            │
+ * │  │ (50%)        │  │ (50%)        │            │
+ * │  └──────────────┘  └──────────────┘            │
+ * ├────────────────────────────────────────────────┤
+ * │  MIDDLE ROW (3 equal cards - 33/33/33)         │
+ * │  ┌─────┐ ┌─────┐ ┌─────┐                       │
+ * │  │ToDo │ │Prog.│ │Bridge│                      │
+ * │  │(33%)│ │(33%)│ │(33%) │                      │
+ * │  └─────┘ └─────┘ └─────┘                       │
+ * ├────────────────────────────────────────────────┤
+ * │  BOTTOM ROW (80/20 split)                      │
+ * │  ┌────────────────────┐ ┌─────────┐            │
+ * │  │ Session Cards      │ │Timeline │            │
+ * │  │ (80%)              │ │ (20%)   │            │
+ * │  └────────────────────┘ └─────────┘            │
+ * └────────────────────────────────────────────────┘
  *
- * Toggle between them to compare layouts, color schemes, and data presentation
+ * Spacing:
+ * - Gap between cards: 24px (gap-6)
+ * - Section spacing: 40px vertical (space-y-10)
+ * - Container max-width: 1400px (spec requirement)
  */
+export default function DashboardV2Page() {
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
 
-export default function DashboardMockupsPage() {
-  const [activeView, setActiveView] = useState<'serene' | 'warm'>('serene');
+  // Desktop-only gate: Check window width on mount and resize
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= DESKTOP_MIN_WIDTH);
+    };
+
+    // Initial check
+    checkDesktop();
+
+    // Listen for resize events
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  // Show nothing while checking (prevents flash)
+  if (isDesktop === null) {
+    return null;
+  }
+
+  // Mobile/tablet gate: Show message for screens < 1024px
+  if (!isDesktop) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-6">
+        <div className="text-center max-w-md">
+          <div className="mb-4">
+            <svg
+              className="mx-auto h-16 w-16 text-muted-foreground"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+              />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-foreground mb-2">
+            Desktop Required
+          </h2>
+          <p className="text-muted-foreground">
+            This dashboard is optimized for desktop viewing. Please use a larger screen.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      {/* Toggle Controls - Fixed at top */}
-      <div className="sticky top-0 z-50 bg-gray-900 border-b border-gray-700 shadow-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-white mb-1">Dashboard Prototypes</h1>
-              <p className="text-sm text-gray-400">Compare two dashboard design approaches</p>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setActiveView('serene')}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                  activeView === 'serene'
-                    ? 'bg-teal-500 text-white shadow-lg shadow-teal-500/50'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                Mockup 1: Serene Analytics
-              </button>
-              <button
-                onClick={() => setActiveView('warm')}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                  activeView === 'warm'
-                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/50'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                Mockup 2: Warm Grid
-              </button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-background">
+      {/* Main Dashboard Container - 1400px max width per spec */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Suspense boundary with skeleton fallback */}
+        <Suspense fallback={<DashboardV2Skeleton />}>
+          {/* Dashboard Content - 40px vertical spacing between rows */}
+          <div className="space-y-10">
 
-          {/* Design Details */}
-          <div className="mt-4 p-4 bg-gray-800 rounded-lg">
-            {activeView === 'serene' ? (
-              <div className="text-sm text-gray-300 space-y-1">
-                <p className="font-semibold text-white mb-2">Mockup 1: "Serene Analytics"</p>
-                <ul className="space-y-1 text-gray-400">
-                  <li>• <strong>Style:</strong> Refined minimalism with generous spacing</li>
-                  <li>• <strong>Colors:</strong> Soft teal (#5AB9B4), warm lavender (#B8A5D6), gentle coral (#F4A69D)</li>
-                  <li>• <strong>Typography:</strong> Crimson Pro (serif headings) + Inter (body)</li>
-                  <li>• <strong>Layout:</strong> 2-column clinical progress card + stats, vertical timeline, stacked sections</li>
-                  <li>• <strong>Vibe:</strong> Editorial, calm, clinical-but-warm, trust-building</li>
-                </ul>
+            {/* ============================================================ */}
+            {/* TOP ROW - Notes/Goals & AI Chat (50/50 split)               */}
+            {/* ============================================================ */}
+            <section aria-label="Primary widgets">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Notes/Goals Panel - Left (50%) */}
+                <NotesGoalsPanel className="min-h-[280px]" />
+
+                {/* AI Chat Widget - Right (50%) */}
+                <AIChatWidget className="min-h-[280px]" />
               </div>
-            ) : (
-              <div className="text-sm text-gray-300 space-y-1">
-                <p className="font-semibold text-white mb-2">Mockup 2: "Warm Grid"</p>
-                <ul className="space-y-1 text-gray-400">
-                  <li>• <strong>Style:</strong> Masonry grid with organic card sizes, compact spacing</li>
-                  <li>• <strong>Colors:</strong> Warm peach (#FFB499), sage green (#A8C69F), soft blue (#8FB8DE)</li>
-                  <li>• <strong>Typography:</strong> DM Sans (rounded, friendly) + Space Mono (data)</li>
-                  <li>• <strong>Layout:</strong> Responsive grid, session cards as individual tiles, timeline at bottom</li>
-                  <li>• <strong>Vibe:</strong> Approachable, warmer, more casual, encouraging</li>
-                </ul>
+            </section>
+
+            {/* ============================================================ */}
+            {/* MIDDLE ROW - ToDo, Progress, Bridge (33/33/33 split)        */}
+            {/* ============================================================ */}
+            <section aria-label="Action widgets">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* ToDo Card - Left (33%) */}
+                <ToDoCard className="min-h-[320px]" />
+
+                {/* Progress Patterns Card - Center (33%) */}
+                <ProgressPatternsCard className="min-h-[320px]" />
+
+                {/* Therapist Bridge Card - Right (33%) */}
+                <TherapistBridgeCard className="min-h-[320px]" />
               </div>
-            )}
+            </section>
+
+            {/* ============================================================ */}
+            {/* BOTTOM ROW - Session Cards & Timeline (80/20 split)         */}
+            {/* ============================================================ */}
+            <section aria-label="Session history">
+              <div className="grid grid-cols-1 md:grid-cols-[4fr_1fr] gap-6">
+                {/* Session Cards Grid - Left (80%) */}
+                <SessionCardsGrid className="min-h-[400px]" />
+
+                {/* Timeline Sidebar - Right (20%) */}
+                <TimelineSidebar className="min-h-[400px] sticky top-8" />
+              </div>
+            </section>
+
           </div>
-        </div>
-      </div>
-
-      {/* Dashboard Preview */}
-      <div className="transition-opacity duration-300">
-        {activeView === 'serene' ? <DashboardMockupSerene /> : <DashboardMockupWarmGrid />}
-      </div>
-
-      {/* Bottom Instructions */}
-      <div className="bg-gray-900 border-t border-gray-700 py-8">
-        <div className="max-w-4xl mx-auto px-6 text-center text-gray-400 space-y-3">
-          <p className="text-sm">
-            <strong className="text-white">Next steps:</strong> Choose your preferred design or identify elements to combine from both.
-          </p>
-          <p className="text-xs">
-            These are interactive prototypes with real React components. Session cards are clickable and will route to full session detail pages when implemented.
-          </p>
-        </div>
+        </Suspense>
       </div>
     </div>
   );

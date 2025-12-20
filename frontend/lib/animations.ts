@@ -210,3 +210,283 @@ export const transitionConfig = {
   normal: { duration: 0.3, ease: 'easeOut' as const },
   slow: { duration: 0.5, ease: 'easeOut' as const },
 };
+
+// ============================================================================
+// Dashboard-v2 Expansion State Animations
+// ============================================================================
+
+/**
+ * Custom spring easing curve for modal/fullscreen animations.
+ * cubic-bezier(0.34, 1.56, 0.64, 1) - slight overshoot for bouncy feel
+ */
+export const SPRING_EASING = [0.34, 1.56, 0.64, 1] as const;
+
+/**
+ * Spring transition config for opening animations (400ms)
+ */
+export const springOpenTransition = {
+  type: 'spring' as const,
+  stiffness: 300,
+  damping: 22,
+  mass: 0.8,
+  duration: 0.4,
+};
+
+/**
+ * Spring transition config for closing animations (300ms)
+ */
+export const springCloseTransition = {
+  type: 'spring' as const,
+  stiffness: 400,
+  damping: 30,
+  mass: 0.6,
+  duration: 0.3,
+};
+
+/**
+ * Ease-out transition for subtle animations (200ms)
+ */
+export const easeOutTransition = {
+  duration: 0.2,
+  ease: 'easeOut' as const,
+};
+
+/**
+ * Spring pop animation for modal dialogs.
+ * Opens with bounce effect (400ms), closes smoothly (300ms).
+ */
+export const modalVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.85,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: springOpenTransition,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.92,
+    y: 10,
+    transition: {
+      duration: 0.3,
+      ease: [0.32, 0, 0.67, 0] as const,
+    },
+  },
+};
+
+/**
+ * Backdrop fade animation for modal overlays.
+ */
+export const backdropVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.25 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.2 },
+  },
+};
+
+/**
+ * Fullscreen expansion animation.
+ * Scales from widget position to full viewport.
+ */
+export const fullscreenVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.9,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: springOpenTransition,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    transition: {
+      duration: 0.25,
+      ease: [0.32, 0, 0.67, 0] as const,
+    },
+  },
+};
+
+/**
+ * Popover fade + scale animation.
+ * Quick fade in with subtle scale (200ms ease-out).
+ */
+export const popoverVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.95,
+    y: -4,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: easeOutTransition,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    y: -4,
+    transition: { duration: 0.15, ease: 'easeIn' as const },
+  },
+};
+
+/**
+ * Slide in from right animation (for side panels, drawers).
+ */
+export const slideFromRightVariants = {
+  hidden: {
+    opacity: 0,
+    x: 40,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: 'spring' as const,
+      stiffness: 350,
+      damping: 30,
+    },
+  },
+  exit: {
+    opacity: 0,
+    x: 40,
+    transition: { duration: 0.2, ease: 'easeIn' as const },
+  },
+};
+
+/**
+ * Slide in from bottom animation (for bottom sheets, mobile modals).
+ */
+export const slideFromBottomVariants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: springOpenTransition,
+  },
+  exit: {
+    opacity: 0,
+    y: 40,
+    transition: { duration: 0.25, ease: 'easeIn' as const },
+  },
+};
+
+/**
+ * Simple fade in/out animation.
+ */
+export const fadeVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.2 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.15 },
+  },
+};
+
+/**
+ * Staggered children animation for lists.
+ */
+export const staggerContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.2 },
+  },
+};
+
+/**
+ * Individual item animation for staggered lists.
+ */
+export const staggerItemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 10,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.2, ease: 'easeOut' as const },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    transition: { duration: 0.15 },
+  },
+};
+
+/**
+ * Subtle hover effect for interactive cards.
+ */
+export const cardHoverVariants = {
+  initial: {
+    scale: 1,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  },
+  hover: {
+    scale: 1.01,
+    boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+    transition: { duration: 0.2, ease: 'easeOut' as const },
+  },
+  tap: {
+    scale: 0.99,
+    transition: { duration: 0.1 },
+  },
+};
+
+/**
+ * Collapsible content animation (height 0 to auto).
+ */
+export const collapseVariants = {
+  collapsed: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      height: { duration: 0.2 },
+      opacity: { duration: 0.15 },
+    },
+  },
+  expanded: {
+    height: 'auto',
+    opacity: 1,
+    transition: {
+      height: { duration: 0.25, ease: 'easeOut' as const },
+      opacity: { duration: 0.2, delay: 0.05 },
+    },
+  },
+};
+
+// ============================================================================
+// Type Exports
+// ============================================================================
+
+export type AnimationVariantKey = 'hidden' | 'visible' | 'exit';
+export type CollapseVariantKey = 'collapsed' | 'expanded';
+export type CardVariantKey = 'initial' | 'hover' | 'tap';
