@@ -1,22 +1,40 @@
 # GPU Pipeline Dependencies
-# For Vast.ai and other GPU cloud providers
+# For Vast.ai and other GPU cloud providers with CUDA 12.4 + cuDNN 9
+# Last updated: 2024-12-20
 
-# Core ML frameworks (PyTorch usually pre-installed in PyTorch Docker images)
-torch>=2.0.0
-torchaudio>=2.0.0
+# CRITICAL COMPATIBILITY MATRIX:
+# - PyTorch 2.5.1 requires ctranslate2 >= 4.6.1 (both use cuDNN 9)
+# - ctranslate2 >= 4.5.0 ONLY supports cuDNN 9 (NOT compatible with cuDNN 8)
+# - pyannote.audio 4.x uses 'token=' parameter (NOT 'use_auth_token=')
 
-# GPU-accelerated transcription
-faster-whisper>=1.0.0
-ctranslate2>=4.0.0
+# Core ML frameworks - MUST install with CUDA 12.4 support
+# Install command: pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+torch==2.5.1
+torchaudio==2.5.1
 
-# Speaker diarization
-pyannote.audio>=3.1.0
+# GPU-accelerated transcription - MUST be compatible with cuDNN 9
+ctranslate2>=4.6.1
+faster-whisper>=1.2.0
+
+# NVIDIA CUDA libraries for cuDNN 9 (REQUIRED for ctranslate2 4.6+)
+nvidia-cublas-cu12
+nvidia-cudnn-cu12==9.*
+
+# Speaker diarization - Latest version with 'token=' parameter
+pyannote.audio>=4.0.0
 
 # GPU audio processing
 julius>=0.2.7
 
+# Audio manipulation
+pydub>=0.25.1
+
 # Environment management
 python-dotenv>=1.0.0
 
-# Note: These requirements are optimized for GPU environments with CUDA
-# The PyTorch Docker image typically includes torch, torchaudio already
+# IMPORTANT: After installation, set library path:
+# export LD_LIBRARY_PATH=`python3 -c 'import os; import nvidia.cublas.lib; import nvidia.cudnn.lib; print(os.path.dirname(nvidia.cublas.lib.__file__) + ":" + os.path.dirname(nvidia.cudnn.lib.__file__))'`
+
+# Verification commands:
+# python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, cuDNN: {torch.backends.cudnn.version()}')"
+# python -c "import ctranslate2; print(f'ctranslate2 CUDA devices: {ctranslate2.get_cuda_device_count()}')"
