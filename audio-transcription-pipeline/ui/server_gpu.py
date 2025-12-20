@@ -20,6 +20,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
@@ -441,6 +445,10 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
 
         print(f"[Vast.ai] Uploading audio to instance...")
         print(f"[Vast.ai] Upload command: {' '.join(upload_cmd)}")
+
+        jobs[job_id]["progress"] = 30
+        jobs[job_id]["step"] = "Transferring audio file to GPU instance"
+
         upload_process = await asyncio.create_subprocess_exec(
             *upload_cmd,
             stdout=asyncio.subprocess.PIPE,
@@ -455,7 +463,7 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
             return
 
         jobs[job_id]["progress"] = 40
-        jobs[job_id]["step"] = "Running GPU pipeline on Vast.ai"
+        jobs[job_id]["step"] = "Audio uploaded to GPU instance"
 
         # Create remote processing script
         remote_script = f"""#!/bin/bash
@@ -529,7 +537,7 @@ EOF
             return
 
         jobs[job_id]["progress"] = 50
-        jobs[job_id]["step"] = "Processing audio on GPU"
+        jobs[job_id]["step"] = "Starting remote GPU pipeline"
 
         # Execute script on remote
         ssh_cmd = [
@@ -550,16 +558,69 @@ EOF
             stderr=asyncio.subprocess.PIPE
         )
 
-        stdout, stderr = await process.communicate()
+        # Read stdout line-by-line (non-blocking)
+        stdout_lines = []
+        while True:
+            line = await process.stdout.readline()
+            if not line:
+                break
+
+            line_str = line.decode().strip()
+            stdout_lines.append(line_str)
+            print(f"[Vast.ai] {line_str}")
+
+            # Parse output for progress indicators
+            if "Checking environment" in line_str:
+                jobs[job_id]["progress"] = 55
+                jobs[job_id]["step"] = "Checking environment on GPU instance"
+            elif "Cloning repository" in line_str:
+                jobs[job_id]["progress"] = 60
+                jobs[job_id]["step"] = "Cloning pipeline repository"
+            elif "Installing dependencies" in line_str:
+                jobs[job_id]["progress"] = 65
+                jobs[job_id]["step"] = "Installing GPU dependencies"
+            elif "Processing audio with GPU pipeline" in line_str:
+                jobs[job_id]["progress"] = 70
+                jobs[job_id]["step"] = "Running GPU transcription pipeline"
+            elif "GPU Audio Preprocessing" in line_str:
+                jobs[job_id]["progress"] = 75
+                jobs[job_id]["step"] = "Preprocessing audio on GPU"
+            elif "GPU Transcription" in line_str or "Transcribing" in line_str:
+                jobs[job_id]["progress"] = 80
+                jobs[job_id]["step"] = "Transcribing with Whisper large-v3"
+            elif "GPU Speaker Diarization" in line_str or "Diarization" in line_str:
+                jobs[job_id]["progress"] = 85
+                jobs[job_id]["step"] = "Running pyannote speaker diarization"
+            elif "Speaker Alignment" in line_str or "Aligning" in line_str:
+                jobs[job_id]["progress"] = 90
+                jobs[job_id]["step"] = "Aligning speakers with transcript"
+            elif "Processing complete" in line_str:
+                jobs[job_id]["progress"] = 93
+                jobs[job_id]["step"] = "GPU processing complete, preparing results"
+
+        # Read stderr
+        stderr_lines = []
+        while True:
+            line = await process.stderr.readline()
+            if not line:
+                break
+            stderr_lines.append(line.decode().strip())
+
+        # Wait for process to complete
+        await process.wait()
+
+        # Join for error checking
+        stdout = '\n'.join(stdout_lines)
+        stderr = '\n'.join(stderr_lines)
 
         if process.returncode != 0:
             jobs[job_id]["status"] = "failed"
-            jobs[job_id]["error"] = f"Remote execution failed: {stderr.decode()}"
-            print(f"[Vast.ai] Failed: {stderr.decode()}")
+            jobs[job_id]["error"] = f"Remote execution failed: {stderr}"
+            print(f"[Vast.ai] Failed: {stderr}")
             return
 
-        jobs[job_id]["progress"] = 80
-        jobs[job_id]["step"] = "Downloading results"
+        jobs[job_id]["progress"] = 95
+        jobs[job_id]["step"] = "Downloading results from GPU instance"
 
         # Download results
         output_file = RESULTS_DIR / f"{job_id}.json"
