@@ -8,21 +8,21 @@
    ======================================== */
 .toast-container {
     position: fixed;
-    top: 80px;
-    right: 20px;
+    top: 5rem;
+    right: 1.25rem;
     z-index: 10000;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-width: 420px;
-    width: calc(100% - 40px);
+    gap: 0.75rem;
+    max-width: 26.25rem;
+    width: calc(100% - 2.5rem);
     pointer-events: none;
 }
 
 .toast {
     background-color: var(--bg-primary);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
     border-left: 4px solid var(--primary-color);
     opacity: 0;
     transform: translateX(100%);
@@ -59,14 +59,14 @@
 .toast-content {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    padding: 16px;
+    gap: 0.75rem;
+    padding: 1rem;
 }
 
 .toast-icon {
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .toast-success .toast-icon {
@@ -93,16 +93,16 @@
 .toast-message {
     flex: 1;
     color: var(--text-primary);
-    font-size: 0.9375rem;
+    font-size: 1rem;
     line-height: 1.5;
 }
 
 .toast-action {
-    padding: 6px 12px;
+    padding: 0.375rem 0.75rem;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
@@ -115,8 +115,8 @@
 
 .toast-close {
     flex-shrink: 0;
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     padding: 0;
     background: none;
     border: none;
@@ -135,7 +135,7 @@
 }
 
 .toast-progress {
-    height: 4px;
+    height: 0.25rem;
     background-color: var(--bg-tertiary);
     overflow: hidden;
 }
@@ -179,73 +179,73 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 }
 
 .skeleton-title {
-    width: 200px;
-    height: 32px;
-    border-radius: 8px;
+    width: 12.5rem;
+    height: 2rem;
+    border-radius: 0.5rem;
 }
 
 .skeleton-actions {
     display: flex;
-    gap: 12px;
+    gap: 0.75rem;
 }
 
 .skeleton-button {
-    width: 120px;
-    height: 40px;
-    border-radius: 8px;
+    width: 7.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
 }
 
 .skeleton-button-circle {
-    width: 48px;
-    height: 48px;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
 }
 
 .skeleton-player {
     background-color: var(--bg-secondary);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 24px;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .skeleton-waveform {
     width: 100%;
-    height: 120px;
-    border-radius: 8px;
-    margin-bottom: 16px;
+    height: 7.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .skeleton-controls {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 1rem;
 }
 
 .skeleton-time {
-    width: 80px;
-    height: 24px;
-    border-radius: 4px;
+    width: 5rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
 }
 
 .skeleton-slider {
     flex: 1;
-    height: 8px;
-    border-radius: 4px;
+    height: 0.5rem;
+    border-radius: 0.25rem;
 }
 
 .skeleton-transcript {
     background-color: var(--bg-secondary);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 24px;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .skeleton-segment {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .skeleton-segment:last-child {
@@ -254,37 +254,37 @@
 
 .skeleton-segment-header {
     display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
 }
 
 .skeleton-badge {
-    width: 80px;
-    height: 24px;
-    border-radius: 12px;
+    width: 5rem;
+    height: 1.5rem;
+    border-radius: 0.75rem;
 }
 
 .skeleton-timestamp {
-    width: 100px;
-    height: 24px;
-    border-radius: 4px;
+    width: 6.25rem;
+    height: 1.5rem;
+    border-radius: 0.25rem;
 }
 
 .skeleton-text {
-    height: 20px;
-    border-radius: 4px;
-    margin-bottom: 8px;
+    height: 1.25rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
 }
 
 .skeleton-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
+    gap: 1rem;
 }
 
 .skeleton-stat-card {
-    height: 120px;
-    border-radius: 12px;
+    height: 7.5rem;
+    border-radius: 0.75rem;
 }
 
 /* ========================================
@@ -294,19 +294,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 60px 20px;
+    padding: 3.75rem 1.25rem;
 }
 
 .processing-animation {
     text-align: center;
-    max-width: 400px;
+    max-width: 25rem;
 }
 
 .processing-spinner {
     position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 32px;
+    width: 7.5rem;
+    height: 7.5rem;
+    margin: 0 auto 2rem;
 }
 
 .processing-spinner svg {
@@ -341,8 +341,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 48px;
-    height: 48px;
+    width: 3rem;
+    height: 3rem;
     color: var(--primary-color);
 }
 
@@ -361,20 +361,20 @@
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
 }
 
 .processing-message {
     font-size: 1rem;
     color: var(--text-secondary);
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 }
 
 .processing-estimate {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
     background-color: var(--bg-secondary);
     border-radius: 20px;
     color: var(--text-secondary);
@@ -382,8 +382,8 @@
 }
 
 .processing-estimate svg {
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
 }
 
 /* ========================================
@@ -392,13 +392,13 @@
 .inline-loader {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px;
+    gap: 0.75rem;
+    padding: 0.75rem;
 }
 
 .inline-spinner {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     border: 3px solid var(--bg-tertiary);
     border-top-color: var(--primary-color);
     border-radius: 50%;
@@ -419,8 +419,8 @@
 }
 
 .btn-spinner {
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-top-color: white;
     border-radius: 50%;
@@ -431,21 +431,21 @@
    Progress Bar
    ======================================== */
 .progress-bar-container {
-    margin: 16px 0;
+    margin: 1rem 0;
 }
 
 .progress-label {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .progress-bar {
     width: 100%;
-    height: 8px;
+    height: 0.5rem;
     background-color: var(--bg-tertiary);
-    border-radius: 4px;
+    border-radius: 0.25rem;
     overflow: hidden;
     position: relative;
 }
@@ -464,7 +464,7 @@
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--primary-color), var(--success-color));
-    border-radius: 4px;
+    border-radius: 0.25rem;
     transition: width 0.3s ease;
 }
 
@@ -472,7 +472,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-top: 8px;
+    margin-top: 0.5rem;
     text-align: right;
 }
 
@@ -482,18 +482,18 @@
 .file-size-warning {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    padding: 16px;
+    gap: 1rem;
+    padding: 1rem;
     background-color: rgba(245, 158, 11, 0.1);
     border: 1px solid var(--warning-color);
-    border-radius: 8px;
-    margin: 16px 0;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
 }
 
 .warning-icon {
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     color: var(--warning-color);
 }
 
@@ -506,7 +506,7 @@
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
 }
 
 .warning-content p {
@@ -543,20 +543,20 @@
 .confirm-content {
     position: relative;
     background-color: var(--bg-primary);
-    border-radius: 12px;
+    border-radius: 0.75rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    max-width: 480px;
-    width: calc(100% - 32px);
-    padding: 32px;
+    max-width: 30rem;
+    width: calc(100% - 2rem);
+    padding: 2rem;
     text-align: center;
     animation: slideUp 0.3s ease;
 }
 
 .confirm-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 24px;
-    padding: 16px;
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1.5rem;
+    padding: 1rem;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -587,24 +587,24 @@
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem;
 }
 
 .confirm-message {
     font-size: 1rem;
     color: var(--text-secondary);
     line-height: 1.5;
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 }
 
 .confirm-actions {
     display: flex;
-    gap: 12px;
+    gap: 0.75rem;
     justify-content: center;
 }
 
 .confirm-actions .btn {
-    min-width: 120px;
+    min-width: 7.5rem;
 }
 
 .btn-error {
@@ -622,22 +622,22 @@
 .error-display {
     background-color: rgba(239, 68, 68, 0.1);
     border: 1px solid var(--error-color);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin: 1.25rem 0;
 }
 
 .error-display-content {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .error-display .error-icon {
     flex-shrink: 0;
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     color: var(--error-color);
 }
 
@@ -654,24 +654,24 @@
     font-size: 1.125rem;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .error-description {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     line-height: 1.5;
 }
 
 .error-actions {
     display: flex;
-    gap: 12px;
+    gap: 0.75rem;
     justify-content: flex-end;
 }
 
 .btn-retry svg {
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
 }
 
 /* ========================================
@@ -740,23 +740,23 @@ select:focus-visible {
    ======================================== */
 @media (max-width: 768px) {
     .toast-container {
-        top: 70px;
-        right: 10px;
-        max-width: calc(100% - 20px);
+        top: 4.375rem;
+        right: 0.625rem;
+        max-width: calc(100% - 1.25rem);
     }
 
     .toast-content {
-        padding: 12px;
+        padding: 0.75rem;
     }
 
     .confirm-content {
-        padding: 24px;
+        padding: 1.5rem;
     }
 
     .confirm-icon {
-        width: 56px;
-        height: 56px;
-        margin-bottom: 20px;
+        width: 3.5rem;
+        height: 3.5rem;
+        margin-bottom: 1.25rem;
     }
 
     .confirm-title {
@@ -772,21 +772,21 @@ select:focus-visible {
     }
 
     .processing-spinner {
-        width: 100px;
-        height: 100px;
+        width: 6.25rem;
+        height: 6.25rem;
     }
 
     .processing-icon {
-        width: 40px;
-        height: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }
 
 @media (max-width: 480px) {
     .toast-container {
-        top: 60px;
-        right: 8px;
-        left: 8px;
+        top: 3.75rem;
+        right: 0.5rem;
+        left: 0.5rem;
         width: auto;
     }
 

@@ -375,10 +375,6 @@ async def delete_job(job_id: str):
 # Static File Serving
 # ========================================
 
-# Serve static files (HTML, CSS, JS)
-app.mount("/static", StaticFiles(directory=str(Path(__file__).parent)), name="static")
-
-
 @app.get("/")
 async def serve_index():
     """
@@ -388,6 +384,10 @@ async def serve_index():
     if not index_path.exists():
         raise HTTPException(status_code=404, detail="UI not found")
     return FileResponse(index_path)
+
+# Serve static files from root - MUST be mounted after specific routes
+# This allows serving CSS, JS files directly from the UI directory
+app.mount("/", StaticFiles(directory=str(Path(__file__).parent)), name="static")
 
 
 @app.get("/health")

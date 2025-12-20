@@ -191,7 +191,7 @@
             </section>
 
             <!-- Results Section (hidden initially) -->
-            <section id="resultsContainer" style="display: none;">
+            <section id="resultsContainer" class="results-section" style="display: none;">
                 <!-- Results Header -->
                 <div class="results-header">
                     <h2>Diarization Results</h2>
@@ -254,64 +254,6 @@
                                 <line x1="12" y1="3" x2="12" y2="15"/>
                             </svg>
                             New Upload
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Audio Player Controls -->
-                <div class="player-controls-section">
-                    <div class="audio-controls">
-                        <button id="playPauseBtn" class="btn btn-icon" title="Play/Pause (Space)">
-                            <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor">
-                                <polygon points="5 3 19 12 5 21 5 3"/>
-                            </svg>
-                            <svg id="pauseIcon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
-                                <rect x="6" y="4" width="4" height="16"/>
-                                <rect x="14" y="4" width="4" height="16"/>
-                            </svg>
-                        </button>
-
-                        <div class="time-display">
-                            <span id="currentTime">0:00</span>
-                            <span class="time-separator">/</span>
-                            <span id="totalDuration">0:00</span>
-                        </div>
-
-                        <div class="control-spacer"></div>
-
-                        <div class="volume-control">
-                            <button id="muteBtn" class="btn btn-icon" title="Mute (M)">
-                                <svg id="volumeIcon" viewBox="0 0 24 24" fill="currentColor">
-                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-                                </svg>
-                                <svg id="muteIcon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
-                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                                    <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2"/>
-                                    <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2"/>
-                                </svg>
-                            </button>
-                            <input type="range" id="volumeSlider" min="0" max="100" value="100" class="volume-slider">
-                        </div>
-
-                        <div class="speed-control">
-                            <label for="speedSelect">Speed:</label>
-                            <select id="speedSelect" class="speed-select">
-                                <option value="0.5">0.5x</option>
-                                <option value="0.75">0.75x</option>
-                                <option value="1" selected>1x</option>
-                                <option value="1.25">1.25x</option>
-                                <option value="1.5">1.5x</option>
-                                <option value="2">2x</option>
-                            </select>
-                        </div>
-
-                        <button id="shortcutsBtn" class="btn btn-icon" title="Keyboard Shortcuts">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h8M6 16h12"/>
-                            </svg>
                         </button>
                     </div>
                 </div>
