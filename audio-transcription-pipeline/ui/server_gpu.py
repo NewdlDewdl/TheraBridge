@@ -438,6 +438,7 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
             "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
+            "-o", "IdentitiesOnly=yes",
             "-P", ssh_port,
             str(audio_path),
             f"root@{ssh_host}:/root/audio_input.mp3"
@@ -549,6 +550,7 @@ EOF
             "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
+            "-o", "IdentitiesOnly=yes",
             "-P", ssh_port,
             str(script_path),
             f"root@{ssh_host}:/root/process.sh"
@@ -576,6 +578,7 @@ EOF
             "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
+            "-o", "IdentitiesOnly=yes",
             "-p", ssh_port,
             f"root@{ssh_host}",
             "bash /root/process.sh"
@@ -660,6 +663,7 @@ EOF
             "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
+            "-o", "IdentitiesOnly=yes",
             "-P", ssh_port,
             f"root@{ssh_host}:/root/results.json",
             str(output_file)
@@ -689,6 +693,7 @@ EOF
             "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
+            "-o", "IdentitiesOnly=yes",
             "-p", ssh_port,
             f"root@{ssh_host}",
             "rm -f /root/audio_input.mp3 /root/results.json /root/process.sh"
