@@ -185,13 +185,13 @@ export default function AudioPlayer({ audioUrl, filename, segments, duration: to
             onClick={handlePlayPause}
             disabled={!isReady}
             size="lg"
-            className="w-12 h-12 rounded-full"
+            className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg disabled:bg-gray-400"
             title={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? (
-              <Pause className="h-5 w-5" />
+              <Pause className="h-6 w-6" />
             ) : (
-              <Play className="h-5 w-5 ml-0.5" />
+              <Play className="h-6 w-6 ml-0.5" />
             )}
           </Button>
 
