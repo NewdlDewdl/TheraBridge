@@ -501,7 +501,9 @@ pip install --no-cache-dir -q faster-whisper>=1.2.0
 pip install --no-cache-dir --upgrade -q "pyannote.audio>=4.0.0"
 
 # Force reinstall PyTorch 2.5.1 (pyannote may have upgraded it to 2.8.0)
-pip install --force-reinstall --no-cache-dir -q torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+# Uninstall first to avoid hash checking issues with --force-reinstall
+pip uninstall -y torch torchvision torchaudio 2>/dev/null || true
+pip install --no-cache-dir -q torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu124
 
 # Install additional dependencies
 pip install --no-cache-dir -q pydub julius python-dotenv
