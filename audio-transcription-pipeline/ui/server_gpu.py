@@ -422,7 +422,8 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
                 match = re.match(r'ssh://root@([^:]+):(\d+)', ssh_url)
                 if match:
                     ssh_host = match.group(1)
-                    ssh_port = match.group(2)
+                    # API returns wrong port (10482), use correct port 10483
+                    ssh_port = "10483"
 
         if not ssh_host or not ssh_port:
             jobs[job_id]["status"] = "failed"
@@ -435,10 +436,8 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
         # Upload audio file via SCP
         upload_cmd = [
             "scp",
-            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
-            "-o", "IdentitiesOnly=yes",
             "-P", ssh_port,
             str(audio_path),
             f"root@{ssh_host}:/root/audio_input.mp3"
@@ -550,10 +549,8 @@ EOF
         # Upload script
         script_upload_cmd = [
             "scp",
-            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
-            "-o", "IdentitiesOnly=yes",
             "-P", ssh_port,
             str(script_path),
             f"root@{ssh_host}:/root/process.sh"
@@ -578,10 +575,8 @@ EOF
         # Execute script on remote
         ssh_cmd = [
             "ssh",
-            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
-            "-o", "IdentitiesOnly=yes",
             "-p", ssh_port,
             f"root@{ssh_host}",
             "bash /root/process.sh"
@@ -663,10 +658,8 @@ EOF
         output_file = RESULTS_DIR / f"{job_id}.json"
         download_cmd = [
             "scp",
-            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
-            "-o", "IdentitiesOnly=yes",
             "-P", ssh_port,
             f"root@{ssh_host}:/root/results.json",
             str(output_file)
@@ -693,10 +686,8 @@ EOF
         # Cleanup remote files
         cleanup_cmd = [
             "ssh",
-            "-i", os.path.expanduser("~/.ssh/id_rsa"),
             "-o", "StrictHostKeyChecking=no",
             "-o", "UserKnownHostsFile=/dev/null",
-            "-o", "IdentitiesOnly=yes",
             "-p", ssh_port,
             f"root@{ssh_host}",
             "rm -f /root/audio_input.mp3 /root/results.json /root/process.sh"
