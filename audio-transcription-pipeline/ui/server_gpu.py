@@ -459,17 +459,40 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
         jobs[job_id]["progress"] = 30
         jobs[job_id]["step"] = "Transferring audio file to GPU instance"
 
-        upload_process = await asyncio.create_subprocess_exec(
-            *upload_cmd,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE
-        )
-        stdout, stderr = await upload_process.communicate()
+        # Retry logic for SSH connection (handles rate limiting)
+        max_retries = 3
+        retry_delay = 2  # seconds
+        upload_success = False
 
-        if upload_process.returncode != 0:
-            print(f"[Vast.ai] Upload failed: {stderr.decode()}")
+        for attempt in range(max_retries):
+            if attempt > 0:
+                print(f"[Vast.ai] Retry attempt {attempt + 1}/{max_retries} after {retry_delay}s...")
+                await asyncio.sleep(retry_delay)
+                retry_delay *= 2  # Exponential backoff
+
+            upload_process = await asyncio.create_subprocess_exec(
+                *upload_cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            stdout, stderr = await upload_process.communicate()
+
+            if upload_process.returncode == 0:
+                upload_success = True
+                break
+            else:
+                error_msg = stderr.decode()
+                print(f"[Vast.ai] Upload attempt {attempt + 1} failed: {error_msg[:200]}")
+
+                # Check if it's a rate limit error
+                if "Permission denied (publickey)" in error_msg or "Connection closed" in error_msg:
+                    continue  # Retry
+                else:
+                    break  # Different error, don't retry
+
+        if not upload_success:
             jobs[job_id]["status"] = "failed"
-            jobs[job_id]["error"] = f"Failed to upload audio: {stderr.decode()}"
+            jobs[job_id]["error"] = f"Failed to upload audio after {max_retries} attempts: {stderr.decode()}"
             return
 
         jobs[job_id]["progress"] = 40
@@ -499,24 +522,25 @@ echo "==> Installing dependencies with CUDA 12.4 + cuDNN 9 support..."
 echo "Purging pip cache..."
 pip cache purge 2>/dev/null || true
 
-# Install pyannote.audio 4.x first (will install PyTorch 2.8.0 as dependency)
+# Install NVIDIA CUDA libraries FIRST (required by PyTorch)
+echo "Installing CUDA libraries (cuDNN 9)..."
+pip install --no-cache-dir nvidia-cublas-cu12 nvidia-cudnn-cu12==9.* 2>&1 | grep -v "WARNING: Running pip as"
+
+# Set library path for cuDNN 9 (with error handling)
+echo "Setting CUDA library path..."
+export LD_LIBRARY_PATH=$(python3 -c 'import os; import nvidia.cublas.lib; import nvidia.cudnn.lib; print(os.path.dirname(nvidia.cublas.lib.__file__) + ":" + os.path.dirname(nvidia.cudnn.lib.__file__))' 2>/dev/null || echo "/usr/local/lib/python3.12/dist-packages/nvidia/cudnn/lib:/usr/local/lib/python3.12/dist-packages/nvidia/cublas/lib")
+
+# Install pyannote.audio 4.x (will install PyTorch 2.8.0 as dependency)
 echo "Installing pyannote.audio 4.x with PyTorch 2.8.0..."
-pip install --no-cache-dir --upgrade "pyannote.audio>=4.0.0"
+pip install --no-cache-dir --upgrade "pyannote.audio>=4.0.0" 2>&1 | grep -v "WARNING: Running pip as"
 
 # Install faster-whisper (compatible with PyTorch 2.8.0)
 echo "Installing faster-whisper..."
-pip install --no-cache-dir faster-whisper>=1.2.0
-
-# Install NVIDIA CUDA libraries for cuDNN 9 (REQUIRED)
-echo "Installing CUDA libraries..."
-pip install --no-cache-dir nvidia-cublas-cu12 nvidia-cudnn-cu12==9.*
-
-# Set library path for cuDNN 9
-export LD_LIBRARY_PATH=$(python3 -c 'import os; import nvidia.cublas.lib; import nvidia.cudnn.lib; print(os.path.dirname(nvidia.cublas.lib.__file__) + ":" + os.path.dirname(nvidia.cudnn.lib.__file__))')
+pip install --no-cache-dir faster-whisper>=1.2.0 2>&1 | grep -v "WARNING: Running pip as"
 
 # Install additional dependencies
 echo "Installing additional dependencies..."
-pip install --no-cache-dir pydub julius python-dotenv
+pip install --no-cache-dir pydub julius python-dotenv 2>&1 | grep -v "WARNING: Running pip as"
 
 # Verify CUDA setup
 echo "==> Verifying CUDA/cuDNN installation..."
