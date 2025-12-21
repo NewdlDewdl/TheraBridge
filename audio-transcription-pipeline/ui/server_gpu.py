@@ -410,20 +410,14 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
             env={**os.environ, "VAST_API_KEY": VAST_API_KEY}
         )
 
-        ssh_host = None
-        ssh_port = None
+        # Always use Vast.ai proxy, never direct IP
+        ssh_host = "ssh1.vast.ai"
+        ssh_port = "10483"
 
-        if result.returncode == 0 and result.stdout.strip():
-            # Parse ssh://root@host:port format
-            ssh_url = result.stdout.strip()
-            if ssh_url.startswith("ssh://"):
-                # Extract host and port from ssh://root@host:port
-                import re
-                match = re.match(r'ssh://root@([^:]+):(\d+)', ssh_url)
-                if match:
-                    ssh_host = match.group(1)
-                    # API returns wrong port (10482), use correct port 10483
-                    ssh_port = "10483"
+        # Verify instance is available (ignore the host/port from API)
+        if result.returncode != 0 or not result.stdout.strip():
+            ssh_host = None
+            ssh_port = None
 
         if not ssh_host or not ssh_port:
             jobs[job_id]["status"] = "failed"
