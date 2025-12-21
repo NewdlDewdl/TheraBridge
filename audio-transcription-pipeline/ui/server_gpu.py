@@ -410,18 +410,26 @@ async def run_vast_pipeline(job_id: str, audio_path: Path, num_speakers: int = 2
             env={**os.environ, "VAST_API_KEY": VAST_API_KEY}
         )
 
-        # Always use Vast.ai proxy, never direct IP
-        ssh_host = "ssh1.vast.ai"
-        ssh_port = "10483"
+        # Parse SSH connection details from API response
+        # API returns: ssh://root@ssh1.vast.ai:PORT or ssh://root@DIRECT_IP:PORT
+        # We always use the proxy hostname (ssh1.vast.ai) but extract the dynamic port
+        ssh_host = None
+        ssh_port = None
 
-        # Verify instance is available (ignore the host/port from API)
-        if result.returncode != 0 or not result.stdout.strip():
-            ssh_host = None
-            ssh_port = None
+        if result.returncode == 0 and result.stdout.strip():
+            ssh_url = result.stdout.strip()
+            if ssh_url.startswith("ssh://"):
+                import re
+                match = re.match(r'ssh://root@([^:]+):(\d+)', ssh_url)
+                if match:
+                    # Always use Vast.ai proxy hostname, but extract the dynamic port
+                    ssh_host = "ssh1.vast.ai"
+                    ssh_port = match.group(2)  # Extract port from API response
+                    print(f"[Vast.ai] Using proxy: {ssh_host}:{ssh_port}")
 
         if not ssh_host or not ssh_port:
             jobs[job_id]["status"] = "failed"
-            jobs[job_id]["error"] = "Could not get SSH details for Vast.ai instance"
+            jobs[job_id]["error"] = f"Could not get SSH details for Vast.ai instance. API response: {result.stdout}"
             return
 
         jobs[job_id]["progress"] = 20
