@@ -538,9 +538,9 @@ pip install --no-cache-dir --upgrade "pyannote.audio>=4.0.0"
 echo "✓ pyannote.audio installed"
 
 # Install torchvision compatible with PyTorch 2.8.0
-echo "==> [STEP 4/6] Installing torchvision 0.21.0 (compatible with PyTorch 2.8.0)..."
-pip install --no-cache-dir torchvision==0.21.0
-echo "✓ torchvision 0.21.0 installed"
+echo "==> [STEP 4/6] Installing torchvision 0.23.0 (compatible with PyTorch 2.8.0)..."
+pip install --no-cache-dir torchvision==0.23.0
+echo "✓ torchvision 0.23.0 installed"
 
 # Install faster-whisper (compatible with PyTorch 2.8.0)
 echo "==> [STEP 5/6] Installing faster-whisper..."
