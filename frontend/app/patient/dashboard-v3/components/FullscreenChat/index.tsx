@@ -6,12 +6,12 @@
  * Features:
  * - Shared message state with collapsed card
  * - Expandable sidebar with chat history
- * - Centered Dobby branding header (illuminating logo with face)
+ * - Centered Dobby branding header (static illuminating logo with face)
  * - Welcome view with Dobby intro
  * - Real chat with OpenAI integration
  * - Share modal with privacy options
  * - Light/Dark mode support
- * - Header logo click scrolls to top/bottom
+ * - Header logo click scrolls to top
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -115,6 +115,9 @@ interface FullscreenChatProps {
   setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>;
   mode: ChatMode;
   setMode: React.Dispatch<React.SetStateAction<ChatMode>>;
+  // Conversation tracking - shared with compact card
+  conversationId: string | undefined;
+  setConversationId: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 // Mock data for recent chats
@@ -152,6 +155,8 @@ export function FullscreenChat({
   setMessages,
   mode,
   setMode,
+  conversationId,
+  setConversationId,
 }: FullscreenChatProps) {
   const { isDark, toggleTheme } = useTheme();
   const { user, isLoading: authLoading } = useAuth();
@@ -161,14 +166,13 @@ export function FullscreenChat({
   const { conversations, loading: historyLoading, refresh: refreshHistory } = useConversationHistory(20);
   const { messages: loadedMessages, loadMessages } = useConversationMessages();
 
-  // State
+  // State (conversationId is now passed from parent)
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [promptsVisible, setPromptsVisible] = useState(true);
-  const [conversationId, setConversationId] = useState<string | undefined>(undefined);
 
   // Transform conversation history to ChatSession format for sidebar
   const recentChats: ChatSession[] = conversations.map(conv => ({
@@ -410,9 +414,6 @@ export function FullscreenChat({
 
   const charCount = inputValue.length;
   const hasMessages = messages.length > 0;
-  // Count user messages for logo hide logic (hide after 2 user messages)
-  const userMessageCount = messages.filter(m => m.role === 'user').length;
-  const shouldHideLogo = userMessageCount >= 2;
 
   return (
     <AnimatePresence>
@@ -432,6 +433,11 @@ export function FullscreenChat({
           onSelectChat={handleSelectChat}
           userName={USER.name}
           isDark={isDark}
+          onHomeClick={() => {
+            onClose();
+            router.push('/patient/dashboard-v3');
+          }}
+          onThemeToggle={toggleTheme}
         />
 
         {/* Main Content */}
@@ -474,7 +480,6 @@ export function FullscreenChat({
             </div>
 
             {/* Centered Dobby Logo + DOBBY text - illuminating, clickable */}
-            {/* Logo hides after 2 user messages, DOBBY text always visible */}
             <div
               className="cursor-pointer flex items-center gap-2"
               style={{
@@ -484,19 +489,8 @@ export function FullscreenChat({
               }}
               onClick={handleLogoClick}
             >
-              {/* Logo - hides after 2 user messages */}
-              <AnimatePresence>
-                {!shouldHideLogo && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <DobbyLogo size={50} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Logo - always visible */}
+              <DobbyLogo size={50} />
               {/* DOBBY text - always visible, clickable for scroll to top */}
               <span
                 className={`font-mono text-lg font-medium tracking-[4px] uppercase ${
@@ -546,13 +540,13 @@ export function FullscreenChat({
                 </h1>
               </div>
 
-              {/* Dobby Intro Chat Bubble */}
-              <div className={`flex gap-3 mb-8 max-w-[720px] mx-auto ${!hasMessages ? '-translate-x-[60px] mt-4' : ''}`}>
+              {/* Dobby Intro Chat Bubble - matches subsequent assistant messages */}
+              <div className="flex gap-3 mb-4">
                 <div className="flex-shrink-0">
-                  <DobbyLogo size={40} />
+                  <DobbyLogo size={37} />
                 </div>
                 <div
-                  className={`font-dm text-sm leading-relaxed p-4 rounded-2xl rounded-tl-sm ${
+                  className={`font-dm text-sm leading-relaxed max-w-[70%] p-4 rounded-2xl rounded-tl-sm ${
                     isDark
                       ? 'bg-[#2a2535] text-gray-300'
                       : 'bg-white text-gray-700 shadow-sm border border-gray-100'

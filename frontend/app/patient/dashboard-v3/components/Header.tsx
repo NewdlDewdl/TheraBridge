@@ -2,7 +2,7 @@
 
 /**
  * Dashboard sticky header component
- * - Navigation links (Dashboard, Ask AI, Upload)
+ * - Navigation links (Dashboard, Sessions, Ask AI, Upload)
  * - Custom Home icon + theme toggle (Sun/Moon) with glow effects
  * - Minimal height design (~60px)
  * - FIXED: Full dark mode support for entire header
@@ -12,7 +12,8 @@
 
 import { useState, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { CombinedLogo } from '@/components/TheraBridgeLogo';
 
 // Custom Home Icon with glow effect (matches fullscreen chat)
 function HomeIcon({ isDark }: { isDark: boolean }) {
@@ -84,6 +85,11 @@ interface HeaderProps {
 export function Header({ onAskAIClick }: HeaderProps) {
   const { isDark, toggleTheme } = useTheme();
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Determine active page
+  const isSessionsPage = pathname?.includes('/sessions');
+  const isDashboardPage = pathname === '/patient/dashboard-v3';
 
   // Triple-click detection for home icon (dev testing feature)
   const clickCountRef = useRef(0);
@@ -121,10 +127,20 @@ export function Header({ onAskAIClick }: HeaderProps) {
     router.push('/patient/dashboard-v3/upload');
   };
 
+  // Navigate to sessions page
+  const handleSessionsClick = () => {
+    router.push('/patient/dashboard-v3/sessions');
+  };
+
+  // Navigate to dashboard
+  const handleDashboardClick = () => {
+    router.push('/patient/dashboard-v3');
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-[#F8F7F4] dark:bg-[#1a1625] border-b border-[#E0DDD8] dark:border-[#3d3548] h-[60px] flex items-center transition-colors duration-300">
-      {/* Theme toggle - flush to left edge of screen */}
-      <div className="flex items-center gap-2 pl-3">
+    <header className="sticky top-0 z-50 bg-[#F8F7F4] dark:bg-[#1a1625] border-b border-[#E0DDD8] dark:border-[#3d3548] h-[60px] flex items-center justify-between transition-colors duration-300">
+      {/* Left section - Theme toggle (fixed width for centering) */}
+      <div className="flex items-center gap-2 pl-3 w-[200px]">
         <button
           onClick={toggleTheme}
           className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-[#3d3548] transition-colors"
@@ -132,39 +148,51 @@ export function Header({ onAskAIClick }: HeaderProps) {
         >
           <ThemeIcon isDark={isDark} />
         </button>
+      </div>
+
+      {/* Center section - Navigation (perfectly centered) */}
+      <nav className="flex items-center gap-8">
         <button
-          onClick={handleHomeClick}
-          className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-[#3d3548] transition-colors"
-          aria-label="Scroll to top"
+          onClick={handleDashboardClick}
+          className={`text-sm font-medium transition-colors pb-1 ${
+            isDashboardPage
+              ? 'text-[#5AB9B4] dark:text-[#a78bfa] border-b-2 border-[#5AB9B4] dark:border-[#a78bfa]'
+              : 'text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa]'
+          }`}
         >
-          <HomeIcon isDark={isDark} />
+          Dashboard
         </button>
+        <button
+          onClick={handleSessionsClick}
+          className={`text-sm font-medium transition-colors pb-1 ${
+            isSessionsPage
+              ? 'text-[#5AB9B4] dark:text-[#a78bfa] border-b-2 border-[#5AB9B4] dark:border-[#a78bfa]'
+              : 'text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa]'
+          }`}
+        >
+          Sessions
+        </button>
+        <button
+          onClick={onAskAIClick}
+          className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors"
+        >
+          Ask AI
+        </button>
+        <button
+          onClick={handleUploadClick}
+          className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors"
+        >
+          Upload
+        </button>
+      </nav>
+
+      {/* Right section - TheraBridge logo (fixed width matching left for centering) */}
+      <div className="flex items-center justify-end pr-6 w-[200px]">
+        <CombinedLogo
+          iconSize={28}
+          textClassName="text-base"
+        />
       </div>
-
-      <div className="flex-1 flex items-center justify-center">
-
-        {/* Center section - Navigation */}
-        <nav className="flex items-center gap-8">
-          <button className="text-sm font-medium text-[#5AB9B4] dark:text-[#a78bfa] border-b-2 border-[#5AB9B4] dark:border-[#a78bfa] pb-1">
-            Dashboard
-          </button>
-          <button
-            onClick={onAskAIClick}
-            className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors"
-          >
-            Ask AI
-          </button>
-          <button
-            onClick={handleUploadClick}
-            className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors"
-          >
-            Upload
-          </button>
-        </nav>
-      </div>
-
-      {/* Right section - Empty spacer for balance */}
-      <div className="w-[84px] pr-3" />
     </header>
   );
 }
