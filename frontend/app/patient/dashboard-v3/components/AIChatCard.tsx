@@ -6,7 +6,7 @@
  * Fullscreen State: Immersive Dobby chat interface with sidebar
  *
  * Features:
- * - Sticky DOBBY header with illuminating DobbyLogo (with face)
+ * - Sticky DOBBY header with static illuminating DobbyLogo (with face)
  * - Shared message state between collapsed and fullscreen
  * - Intro message with Dobby avatar
  * - Long-press (7 sec, Dobby enlarges at 5s) anywhere to expand to fullscreen
@@ -20,6 +20,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Maximize2 } from 'lucide-react';
 import { FullscreenChat, ChatMessage } from './FullscreenChat';
 import { useTheme } from '../contexts/ThemeContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { DobbyLogo } from './DobbyLogo';
 import { DobbyLogoGeometric } from './DobbyLogoGeometric';
 import { HeartSpeechIcon } from './HeartSpeechIcon';
@@ -140,6 +141,7 @@ interface AIChatCardProps {
 // Main Component
 export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChange }: AIChatCardProps) {
   const { isDark } = useTheme();
+  const { user } = useAuth();
 
   // Use external state if provided, otherwise use internal state
   const [internalFullscreen, setInternalFullscreen] = useState(false);
@@ -154,11 +156,12 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
     }
   };
 
-  // SHARED STATE: messages and mode are shared between collapsed and fullscreen
+  // SHARED STATE: messages, mode, and conversationId are shared between collapsed and fullscreen
   const [mode, setMode] = useState<ChatMode>('ai');
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [conversationId, setConversationId] = useState<string | undefined>(undefined);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -179,6 +182,9 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
   const handleSend = useCallback(async () => {
     if (!inputValue.trim() || isLoading) return;
 
+    // Get user ID - prefer real auth, fallback to dev-bypass for testing
+    const userId = user?.id || 'dev-bypass-user-id';
+
     const userMessage: ChatMessage = {
       id: `msg-${Date.now()}`,
       role: 'user',
@@ -190,47 +196,108 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
     setInputValue('');
     setIsLoading(true);
 
+    // Create placeholder for streaming response
+    const assistantMessageId = `msg-${Date.now()}-assistant`;
+    const assistantMessage: ChatMessage = {
+      id: assistantMessageId,
+      role: 'assistant',
+      content: '',
+      timestamp: new Date(),
+    };
+    setMessages(prev => [...prev, assistantMessage]);
+
+    let fullContent = ''; // Declare outside try block so it's accessible in catch
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: [...messages, userMessage].map(m => ({
-            role: m.role,
-            content: m.content,
-          })),
-          mode,
+          message: userMessage.content,
+          userId,
+          conversationId, // Pass current conversation ID (undefined for fresh chat)
+          // sessionId: undefined, // Optional: if chatting about specific session
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to get response');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to get response');
+      }
 
-      const data = await response.json();
+      // Handle streaming SSE response
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
 
-      const assistantMessage: ChatMessage = {
-        id: `msg-${Date.now()}-assistant`,
-        role: 'assistant',
-        content: data.message,
-        timestamp: new Date(),
-      };
+      if (!reader) throw new Error('No response body');
 
-      setMessages(prev => [...prev, assistantMessage]);
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n\n'); // SSE uses \n\n as delimiter
+        buffer = lines.pop() || ''; // Keep incomplete line in buffer
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+
+              if (data.content) {
+                fullContent += data.content;
+                // Update the assistant message with streaming content
+                setMessages(prev =>
+                  prev.map(msg =>
+                    msg.id === assistantMessageId
+                      ? { ...msg, content: fullContent }
+                      : msg
+                  )
+                );
+              }
+
+              if (data.done) {
+                // Store conversationId for subsequent messages in this session
+                if (data.conversationId && !conversationId) {
+                  setConversationId(data.conversationId);
+                }
+              }
+            } catch (parseError) {
+              console.warn('Failed to parse SSE data:', line);
+            }
+          }
+        }
+      }
     } catch (error) {
+      // Ignore network errors after successful streaming (common when SSE closes)
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const isStreamCloseError = errorMessage.includes('NetworkError') || errorMessage.includes('aborted');
+
+      if (isStreamCloseError && fullContent) {
+        // Stream closed successfully after receiving content - this is normal
+        console.log('Chat stream closed successfully');
+        return;
+      }
+
       console.error('Chat error:', error);
-      // Fallback response
-      const fallbackMessage: ChatMessage = {
-        id: `msg-${Date.now()}-assistant`,
-        role: 'assistant',
-        content: mode === 'ai'
-          ? "I understand. Let me help you with that. What specific aspect would you like to explore?"
-          : "I've noted your message for your therapist. Is there anything else?",
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, fallbackMessage]);
+      // Update with detailed error message only for real errors
+      const fallbackContent = mode === 'ai'
+        ? `I'm having trouble responding right now. Error: ${errorMessage}. Please check that your OpenAI API key is configured in .env.local`
+        : "I couldn't reach your therapist right now. Please try again later.";
+
+      setMessages(prev =>
+        prev.map(msg =>
+          msg.id === assistantMessageId
+            ? { ...msg, content: fallbackContent }
+            : msg
+        )
+      );
     } finally {
       setIsLoading(false);
     }
-  }, [inputValue, isLoading, messages, mode]);
+  }, [inputValue, isLoading, mode, user?.id, conversationId]);
 
   // Handle key press
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -247,9 +314,6 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
     : 'drop-shadow-[0_0_20px_rgba(90,185,180,0.7)] drop-shadow-[0_0_40px_rgba(90,185,180,0.4)] drop-shadow-[0_0_60px_rgba(90,185,180,0.2)]';
 
   const hasMessages = messages.length > 0;
-  // Count user messages for logo hide logic (hide after 2 user messages)
-  const userMessageCount = messages.filter(m => m.role === 'user').length;
-  const shouldHideLogo = userMessageCount >= 2;
 
   return (
     <>
@@ -258,7 +322,7 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
         {!isFullscreen && (
           <motion.div
             layoutId="dobby-chat-container"
-            className={`rounded-3xl flex flex-col relative overflow-hidden h-[525px] fullscreen-chat-container ${
+            className={`rounded-3xl flex flex-col relative overflow-hidden h-[400px] fullscreen-chat-container ${
               isDark
                 ? 'bg-[#1a1625] shadow-[0_8px_32px_rgba(0,0,0,0.4)]'
                 : 'bg-[#F8F7F4] shadow-[0_8px_32px_rgba(0,0,0,0.08)]'
@@ -343,7 +407,7 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
             </AnimatePresence>
 
             {/* Sticky Header with DOBBY branding - illuminating DobbyLogo with face */}
-            <div className={`flex-shrink-0 flex items-center justify-center py-3 ${
+            <div className={`flex-shrink-0 flex items-center justify-center py-1.5 ${
               isDark ? 'bg-[#1a1625]' : 'bg-[#F8F7F4]'
             }`}>
               {/* Fullscreen Button - absolute positioned */}
@@ -365,7 +429,6 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
               </button>
 
               {/* Centered Dobby Logo + DOBBY text - illuminating, clickable */}
-              {/* Logo hides after 2 user messages, DOBBY text always visible and clickable */}
               <div
                 className="cursor-pointer flex items-center gap-2"
                 style={{
@@ -381,19 +444,8 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
                   }
                 }}
               >
-                {/* Logo - hides after 2 user messages */}
-                <AnimatePresence>
-                  {!shouldHideLogo && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <DobbyLogo size={50} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Logo - always visible */}
+                <DobbyLogo size={50} />
                 {/* DOBBY text - always visible, clickable for scroll to top */}
                 <span
                   className={`font-mono text-lg font-medium tracking-[4px] uppercase ${
@@ -404,9 +456,6 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
                 </span>
               </div>
             </div>
-
-            {/* 20px spacing below header */}
-            <div className="h-5 flex-shrink-0" />
 
             {/* Content Area - Messages with intro */}
             <div className="flex-1 flex flex-col overflow-hidden px-4 pb-0 min-h-0">
@@ -607,6 +656,8 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
         setMessages={setMessages}
         mode={mode}
         setMode={setMode}
+        conversationId={conversationId}
+        setConversationId={setConversationId}
       />
     </>
   );

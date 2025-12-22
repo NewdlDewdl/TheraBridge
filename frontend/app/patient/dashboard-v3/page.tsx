@@ -11,7 +11,7 @@
  * - NOW CONNECTED: Uses real API data via SessionDataProvider
  */
 
-import { useState, useCallback, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import './styles.css';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { SessionDataProvider } from './contexts/SessionDataContext';
@@ -22,30 +22,12 @@ import { AIChatCard } from './components/AIChatCard';
 import { ToDoCard } from './components/ToDoCard';
 import { ProgressPatternsCard } from './components/ProgressPatternsCard';
 import { TherapistBridgeCard } from './components/TherapistBridgeCard';
-import { SessionCardsGrid } from './components/SessionCardsGrid';
-import { TimelineSidebar } from './components/TimelineSidebar';
 import { DashboardSkeleton } from './components/DashboardSkeleton';
 import { ProcessingRefreshBridge } from './components/ProcessingRefreshBridge';
 
 export default function DashboardV3Page() {
   // Lifted state: controls fullscreen chat from both Header and AIChatCard
   const [isChatFullscreen, setIsChatFullscreen] = useState(false);
-
-  // Lifted state: controls which session is opened in fullscreen from Timeline
-  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
-
-  // Scroll to a session card in the grid (triggered by timeline entry click)
-  const handleScrollToSession = useCallback((sessionId: string) => {
-    const element = document.getElementById(`session-${sessionId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Add a brief highlight effect
-      element.classList.add('ring-2', 'ring-[#5AB9B4]', 'dark:ring-[#a78bfa]');
-      setTimeout(() => {
-        element.classList.remove('ring-2', 'ring-[#5AB9B4]', 'dark:ring-[#a78bfa]');
-      }, 2000);
-    }
-  }, []);
 
   return (
     <ThemeProvider>
@@ -76,21 +58,7 @@ export default function DashboardV3Page() {
                 <TherapistBridgeCard />
               </div>
 
-              {/* Bottom Row - 80/20 Split */}
-              <div className="grid grid-cols-[1fr_250px] gap-6">
-                <div className="h-[650px]">
-                  <SessionCardsGrid
-                    externalSelectedSessionId={selectedSessionId}
-                    onSessionClose={() => setSelectedSessionId(null)}
-                  />
-                </div>
-                <div className="h-[650px]">
-                  <TimelineSidebar
-                    onViewSession={(sessionId) => setSelectedSessionId(sessionId)}
-                    onScrollToSession={handleScrollToSession}
-                  />
-                </div>
-              </div>
+              {/* Sessions and Timeline moved to /sessions page */}
             </main>
           </div>
         </Suspense>

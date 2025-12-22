@@ -7,8 +7,10 @@ import {
   detectCrisisIndicators,
 } from '@/lib/dobby-system-prompt';
 
+// Initialize OpenAI with fallback error handling
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || '',
+  dangerouslyAllowBrowser: false, // Server-side only
 });
 
 // Use the comprehensive system prompt from dobby-system-prompt.ts
@@ -31,6 +33,8 @@ export async function POST(req: NextRequest) {
     const body: ChatRequestBody = await req.json();
     const { message, conversationId, sessionId, userId } = body;
 
+    console.log('[Chat API] Request received:', { userId, hasMessage: !!message, conversationId });
+
     if (!message || !userId) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields: message, userId' }),
@@ -38,14 +42,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Check OpenAI API key
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('[Chat API] OPENAI_API_KEY not configured');
+      return new Response(
+        JSON.stringify({ error: 'OpenAI API key not configured' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Check if using dev bypass mode
     const isDevBypass = userId === 'dev-bypass-user-id';
+    console.log('[Chat API] Dev bypass mode:', isDevBypass);
 
     if (isDevBypass) {
       // In dev bypass mode, skip all database operations and just stream GPT-4o response
       console.log('🔓 Dev bypass mode: Skipping database operations, streaming only');
 
-      const stream = await openai.chat.completions.create({
+      try {
+        const stream = await openai.chat.completions.create({
         model: 'gpt-4o',
         messages: [
           { role: 'system', content: DOBBY_BASE_PROMPT },
@@ -84,13 +99,17 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      return new Response(readableStream, {
-        headers: {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
-        },
-      });
+        return new Response(readableStream, {
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+          },
+        });
+      } catch (bypassError) {
+        console.error('[Chat API] Dev bypass error:', bypassError);
+        throw bypassError; // Re-throw to be caught by main catch block
+      }
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -309,11 +328,16 @@ ${contextPrompt}
       },
     });
   } catch (error) {
-    console.error('Chat API error:', error);
+    console.error('[Chat API] Fatal error:', error);
+    console.error('[Chat API] Error details:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    });
     return new Response(
       JSON.stringify({
         error: 'Internal server error',
-        message: "I'm having trouble responding right now. Please try again in a moment.",
+        message: error instanceof Error ? error.message : "I'm having trouble responding right now. Please try again in a moment.",
       }),
       {
         status: 500,

@@ -27,69 +27,6 @@ import { DobbyLogo } from '../DobbyLogo';
 import { DobbyLogoGeometric } from '../DobbyLogoGeometric';
 import { HeartSpeechIcon } from '../HeartSpeechIcon';
 
-// Custom Home Icon with glow effect
-function HomeIcon({ isDark }: { isDark: boolean }) {
-  const stroke = isDark ? '#9B7AC4' : '#5AB9B4';
-  const glow = isDark
-    ? 'drop-shadow(0 0 3px rgba(155, 122, 196, 0.4))'
-    : 'drop-shadow(0 0 3px rgba(90, 185, 180, 0.4))';
-
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={stroke}
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="w-[22px] h-[22px]"
-      style={{ filter: glow }}
-    >
-      <path d="M4 10.5V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.5" />
-      <path d="M2.5 12L12 3l9.5 9" />
-      <rect x="9" y="14" width="6" height="7" rx="1" />
-    </svg>
-  );
-}
-
-// Custom Theme Toggle Icon with glow effect
-function ThemeIcon({ isDark }: { isDark: boolean }) {
-  if (isDark) {
-    // Moon icon for dark mode
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#93B4DC"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="w-[22px] h-[22px]"
-        style={{ filter: 'drop-shadow(0 0 4px rgba(147, 180, 220, 0.6)) drop-shadow(0 0 10px rgba(147, 180, 220, 0.3))' }}
-      >
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-      </svg>
-    );
-  }
-
-  // Sun icon for light mode
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#F5A623"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="w-[22px] h-[22px]"
-      style={{ filter: 'drop-shadow(0 0 4px rgba(245, 166, 35, 0.5)) drop-shadow(0 0 8px rgba(245, 166, 35, 0.25))' }}
-    >
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-    </svg>
-  );
-}
-
 // Types - exported for use in AIChatCard
 export type ChatMode = 'ai' | 'therapist';
 
@@ -452,33 +389,6 @@ export function FullscreenChat({
               isDark ? 'border-[#2a2535]' : 'border-[#E5E2DE]'
             }`}
           >
-            {/* Left Side Icons - Theme Toggle flush to sidebar, then Home */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 flex items-center gap-2 ml-[72px]">
-              {/* Theme Toggle Button - flush next to sidebar */}
-              <button
-                onClick={toggleTheme}
-                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-                className={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors group ${
-                  isDark ? 'hover:bg-white/5' : 'hover:bg-black/5'
-                }`}
-              >
-                <ThemeIcon isDark={isDark} />
-              </button>
-              {/* Home Button - next to theme toggle */}
-              <button
-                onClick={() => {
-                  onClose();
-                  router.push('/patient/dashboard-v3');
-                }}
-                aria-label="Go to dashboard"
-                className={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors group ${
-                  isDark ? 'hover:bg-white/5' : 'hover:bg-black/5'
-                }`}
-              >
-                <HomeIcon isDark={isDark} />
-              </button>
-            </div>
-
             {/* Centered Dobby Logo + DOBBY text - illuminating, clickable */}
             <div
               className="cursor-pointer flex items-center gap-2"
