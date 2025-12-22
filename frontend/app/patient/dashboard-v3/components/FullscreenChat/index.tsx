@@ -107,7 +107,7 @@ export interface ChatSession {
   timestamp: Date;
 }
 
-interface FullscreenChatProps {
+export interface FullscreenChatProps {
   isOpen: boolean;
   onClose: () => void;
   // Shared state from AIChatCard
