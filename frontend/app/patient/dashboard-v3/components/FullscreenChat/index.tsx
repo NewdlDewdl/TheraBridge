@@ -18,6 +18,9 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useConversationHistory } from '@/hooks/use-conversation-history';
+import { useConversationMessages } from '@/hooks/use-conversation-messages';
 import { ChatSidebar } from './ChatSidebar';
 import { ShareModal } from './ShareModal';
 import { DobbyLogo } from '../DobbyLogo';
@@ -151,16 +154,29 @@ export function FullscreenChat({
   setMode,
 }: FullscreenChatProps) {
   const { isDark, toggleTheme } = useTheme();
+  const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
+
+  // Conversation history hooks
+  const { conversations, loading: historyLoading, refresh: refreshHistory } = useConversationHistory(20);
+  const { messages: loadedMessages, loadMessages } = useConversationMessages();
 
   // State
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [recentChats, setRecentChats] = useState<ChatSession[]>(MOCK_RECENT_CHATS);
   const [isAtTop, setIsAtTop] = useState(true);
   const [promptsVisible, setPromptsVisible] = useState(true);
+  const [conversationId, setConversationId] = useState<string | undefined>(undefined);
+
+  // Transform conversation history to ChatSession format for sidebar
+  const recentChats: ChatSession[] = conversations.map(conv => ({
+    id: conv.id,
+    title: conv.title,
+    lastMessage: conv.lastMessage,
+    timestamp: conv.timestamp,
+  }));
 
   // Refs
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -215,9 +231,9 @@ export function FullscreenChat({
     }
   }, [isOpen]);
 
-  // Send message handler
+  // Send message handler with streaming support
   const handleSend = useCallback(async () => {
-    if (!inputValue.trim() || isLoading) return;
+    if (!inputValue.trim() || isLoading || authLoading || !user) return;
 
     const userMessage: ChatMessage = {
       id: `msg-${Date.now()}`,
@@ -230,48 +246,114 @@ export function FullscreenChat({
     setInputValue('');
     setIsLoading(true);
 
+    // Create temporary assistant message for streaming
+    const tempAssistantId = `msg-${Date.now()}-assistant`;
+    const tempAssistantMessage: ChatMessage = {
+      id: tempAssistantId,
+      role: 'assistant',
+      content: '',
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, tempAssistantMessage]);
+
     try {
-      // Call OpenAI API
+      // Get authenticated user ID
+      if (!user?.id) {
+        throw new Error('You must be logged in to chat');
+      }
+
+      const userId = user.id;
+
+      // Call streaming chat API
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: [...messages, userMessage].map(m => ({
-            role: m.role,
-            content: m.content,
-          })),
-          mode,
+          message: userMessage.content,
+          userId,
+          conversationId, // undefined for first message (API creates new conversation)
+          // sessionId is optional - add when viewing specific session
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to get response');
+      if (!response.ok) {
+        const errorData = await response.json();
 
-      const data = await response.json();
+        // Handle rate limiting specifically
+        if (response.status === 429) {
+          throw new Error(errorData.description || 'Daily message limit reached');
+        }
 
-      const assistantMessage: ChatMessage = {
-        id: `msg-${Date.now()}-assistant`,
-        role: 'assistant',
-        content: data.message,
-        timestamp: new Date(),
-      };
+        throw new Error(errorData.error || 'Failed to get response');
+      }
 
-      setMessages(prev => [...prev, assistantMessage]);
+      // Read streaming response (Server-Sent Events)
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+
+      if (!reader) throw new Error('No response body');
+
+      let fullContent = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = JSON.parse(line.slice(6));
+
+            if (data.content) {
+              // Append streamed content
+              fullContent += data.content;
+
+              // Update the assistant message with accumulated content
+              setMessages(prev =>
+                prev.map(msg =>
+                  msg.id === tempAssistantId
+                    ? { ...msg, content: fullContent }
+                    : msg
+                )
+              );
+            }
+
+            if (data.done) {
+              console.log('Stream complete, conversationId:', data.conversationId);
+              // Store conversationId for subsequent messages in this chat
+              if (data.conversationId && !conversationId) {
+                setConversationId(data.conversationId);
+                // Refresh conversation history to show the new chat
+                refreshHistory();
+              }
+            }
+          }
+        }
+      }
     } catch (error) {
       console.error('Chat error:', error);
-      // Fallback response
-      const fallbackMessage: ChatMessage = {
-        id: `msg-${Date.now()}-assistant`,
-        role: 'assistant',
-        content: mode === 'ai'
+
+      // Update temp message with error fallback
+      const fallbackContent = error instanceof Error && error.message.includes('limit')
+        ? "⚠️ You've reached your daily message limit (50 messages). The limit resets at midnight."
+        : mode === 'ai'
           ? "I understand you're working through that. Based on your recent sessions, this connects to the boundary-setting work you've been doing. Would you like to explore this further?"
-          : "I've forwarded your message to your therapist. They typically respond within 24 hours. Is there anything else I can help you with in the meantime?",
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, fallbackMessage]);
+          : "I've forwarded your message to your therapist. They typically respond within 24 hours. Is there anything else I can help you with in the meantime?";
+
+      setMessages(prev =>
+        prev.map(msg =>
+          msg.id === tempAssistantId
+            ? { ...msg, content: fallbackContent }
+            : msg
+        )
+      );
     } finally {
       setIsLoading(false);
     }
-  }, [inputValue, isLoading, messages, mode, setMessages]);
+  }, [inputValue, isLoading, authLoading, user, messages, mode, setMessages, conversationId, refreshHistory]);
 
   // Handle prompt click
   const handlePromptClick = (prompt: string) => {
@@ -287,11 +369,31 @@ export function FullscreenChat({
     }
   };
 
+  // Handle conversation selection from sidebar
+  const handleSelectChat = useCallback(async (chatId: string) => {
+    try {
+      // Load messages for the selected conversation
+      await loadMessages(chatId);
+      setConversationId(chatId);
+      setSidebarExpanded(false); // Close sidebar after selection
+    } catch (error) {
+      console.error('Failed to load conversation:', error);
+    }
+  }, [loadMessages]);
+
+  // Sync loaded messages to parent state when they change
+  useEffect(() => {
+    if (loadedMessages.length > 0) {
+      setMessages(loadedMessages);
+    }
+  }, [loadedMessages, setMessages]);
+
   // New chat handler
   const handleNewChat = () => {
     setMessages([]);
     setInputValue('');
     setSidebarExpanded(false);
+    setConversationId(undefined); // Clear conversation ID for fresh chat
   };
 
   // Logo/text click handler - scroll to top only
@@ -327,7 +429,7 @@ export function FullscreenChat({
           onToggle={() => setSidebarExpanded(!sidebarExpanded)}
           recentChats={recentChats}
           onNewChat={handleNewChat}
-          onSelectChat={(id) => console.log('Selected chat:', id)}
+          onSelectChat={handleSelectChat}
           userName={USER.name}
           isDark={isDark}
         />
@@ -637,10 +739,10 @@ export function FullscreenChat({
                 {/* Send Button - Arrow up icon matching collapsed card */}
                 <button
                   onClick={handleSend}
-                  disabled={!inputValue.trim() || isLoading}
+                  disabled={!inputValue.trim() || isLoading || authLoading || !user}
                   aria-label="Send message"
                   className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all flex-shrink-0 ${
-                    inputValue.trim() && !isLoading
+                    inputValue.trim() && !isLoading && !authLoading && user
                       ? isDark
                         ? 'bg-[#8B6AAE] text-white hover:bg-[#7B5A9E]'
                         : 'bg-[#5AB9B4] text-white hover:bg-[#4AA9A4]'

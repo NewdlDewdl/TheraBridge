@@ -1,11 +1,17 @@
 /**
  * Audio Processing API Endpoint
  * Transcribes audio using OpenAI Whisper API and performs speaker diarization
+ * NEW: Includes automatic Therapist/Client role detection
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import OpenAI from 'openai';
+import {
+  detectSpeakerRoles,
+  formatDetectionResult,
+  type DiarizedSegment,
+} from '@/lib/speaker-role-detection';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -136,7 +142,16 @@ export async function POST(request: NextRequest) {
     console.log('[Process] Got REAL diarized transcription with', backendResults.segments?.length || 0, 'segments');
 
     // Extract REAL pyannote diarized segments
-    const diarizedSegments = backendResults.segments || [];
+    const rawSegments: DiarizedSegment[] = backendResults.segments || [];
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // Speaker Role Detection: SPEAKER_XX → Therapist/Client
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const roleDetectionResult = detectSpeakerRoles(rawSegments);
+    const diarizedSegments = roleDetectionResult.segments;
+
+    console.log('[Process] Speaker role detection:');
+    console.log(formatDetectionResult(roleDetectionResult));
 
     // Update progress
     await supabase
@@ -144,8 +159,8 @@ export async function POST(request: NextRequest) {
       .update({ processing_progress: 85 })
       .eq('id', session_id);
 
-    // Extract key information using GPT-4
-    const fullTranscript = diarizedSegments.map((seg: any) =>
+    // Extract key information using GPT-4 (now with Therapist/Client labels)
+    const fullTranscript = diarizedSegments.map((seg: DiarizedSegment) =>
       `${seg.speaker}: ${seg.text}`
     ).join('\n');
 
@@ -179,12 +194,30 @@ Respond in JSON format:
     // Calculate duration from REAL backend results
     const durationMinutes = backendResults.duration_minutes || null;
 
+    // Build role detection metadata
+    const roleMetadata = {
+      method: roleDetectionResult.method,
+      confidence: roleDetectionResult.overallConfidence,
+      assignments: Object.fromEntries(
+        Array.from(roleDetectionResult.assignments.entries()).map(([key, value]) => [
+          key,
+          {
+            role: value.role,
+            confidence: value.confidence,
+            speakingTimeMinutes: Math.round(value.speakingTime / 60 * 10) / 10,
+            segmentCount: value.segmentCount,
+          },
+        ])
+      ),
+    };
+
     // Update session with results
     console.log('[Process] Updating session with results:', {
       session_id,
       hasTranscript: !!diarizedSegments,
       hasSummary: !!analysisResult.summary,
       mood: analysisResult.mood,
+      roleDetection: roleMetadata,
     });
 
     const { data: updateData, error: updateError } = await supabase
@@ -199,6 +232,8 @@ Respond in JSON format:
         duration_minutes: durationMinutes,
         processing_status: 'completed',
         processing_progress: 100,
+        // Store role detection metadata (JSONB field, may need migration)
+        // role_detection: roleMetadata,
       })
       .eq('id', session_id)
       .select();

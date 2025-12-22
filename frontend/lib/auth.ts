@@ -1,17 +1,21 @@
 /**
  * Authentication helper functions using Supabase Auth
  * Provides type-safe wrappers around Supabase auth methods
+ *
+ * NOTE: This version works WITHOUT a custom users table.
+ * User data is derived from Supabase Auth's built-in user object.
  */
 
 import { supabase } from './supabase';
 import type { User } from './supabase';
+import type { User as AuthUser } from '@supabase/supabase-js';
 
 export interface SignUpData {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
-  role: 'therapist' | 'patient';
+  firstName?: string;
+  lastName?: string;
+  role?: 'therapist' | 'patient';
 }
 
 export interface SignInData {
@@ -25,8 +29,28 @@ export interface AuthResponse {
 }
 
 /**
+ * Convert Supabase Auth user to our User type
+ * No database query needed - uses auth metadata
+ */
+function authUserToUser(authUser: AuthUser): User {
+  const metadata = authUser.user_metadata || {};
+  const fullName = metadata.full_name || metadata.name || '';
+  const nameParts = fullName.split(' ');
+
+  return {
+    id: authUser.id,
+    email: authUser.email || '',
+    first_name: metadata.first_name || nameParts[0] || '',
+    last_name: metadata.last_name || nameParts.slice(1).join(' ') || '',
+    role: metadata.role || 'patient',
+    created_at: authUser.created_at,
+    updated_at: authUser.updated_at || authUser.created_at,
+  };
+}
+
+/**
  * Sign up a new user
- * Creates both Supabase Auth user and custom user record via trigger
+ * Stores user metadata in Supabase Auth (no custom table needed)
  */
 export async function signUp(data: SignUpData): Promise<AuthResponse> {
   const { email, password, firstName, lastName, role } = data;
@@ -36,9 +60,9 @@ export async function signUp(data: SignUpData): Promise<AuthResponse> {
     password,
     options: {
       data: {
-        first_name: firstName,
-        last_name: lastName,
-        role: role,
+        first_name: firstName || '',
+        last_name: lastName || '',
+        role: role || 'patient',
       },
     },
   });
@@ -51,18 +75,7 @@ export async function signUp(data: SignUpData): Promise<AuthResponse> {
     return { user: null, error: 'Failed to create user' };
   }
 
-  // Fetch the custom user record that was created by the trigger
-  const { data: userData, error: userError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('auth_id', authData.user.id)
-    .single();
-
-  if (userError) {
-    return { user: null, error: userError.message };
-  }
-
-  return { user: userData, error: null };
+  return { user: authUserToUser(authData.user), error: null };
 }
 
 /**
@@ -84,18 +97,7 @@ export async function signIn(data: SignInData): Promise<AuthResponse> {
     return { user: null, error: 'Failed to sign in' };
   }
 
-  // Fetch the custom user record
-  const { data: userData, error: userError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('auth_id', authData.user.id)
-    .single();
-
-  if (userError) {
-    return { user: null, error: userError.message };
-  }
-
-  return { user: userData, error: null };
+  return { user: authUserToUser(authData.user), error: null };
 }
 
 /**
@@ -135,7 +137,7 @@ export async function getSession() {
 }
 
 /**
- * Get current user (both auth user and custom user record)
+ * Get current user from Supabase Auth (no database query)
  */
 export async function getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
   const { data: { user: authUser }, error: authError } = await supabase.auth.getUser();
@@ -144,17 +146,7 @@ export async function getCurrentUser(): Promise<{ user: User | null; error: stri
     return { user: null, error: authError?.message || 'No user found' };
   }
 
-  const { data: userData, error: userError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('auth_id', authUser.id)
-    .single();
-
-  if (userError) {
-    return { user: null, error: userError.message };
-  }
-
-  return { user: userData, error: null };
+  return { user: authUserToUser(authUser), error: null };
 }
 
 /**

@@ -3,30 +3,41 @@
 /**
  * Audio Upload Page - EXACT MATCH to original UI
  * Matches audio-transcription-pipeline/ui-web/frontend exactly
+ *
+ * NEW: Integrated with ProcessingContext for dashboard auto-refresh
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FileUploader from './components/FileUploader';
 import AudioRecorder from './components/AudioRecorder';
 import UploadProgress from './components/UploadProgress';
 import ResultsView from './components/ResultsView';
+import { ProcessingProvider, useProcessing } from '@/contexts/ProcessingContext';
 
 type ViewState = 'upload' | 'processing' | 'results';
 
-export default function UploadPage() {
+/**
+ * Inner component that uses ProcessingContext
+ */
+function UploadPageInner() {
   const [view, setView] = useState<ViewState>('upload');
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const { startTracking } = useProcessing();
 
   const handleUploadSuccess = (newSessionId: string, file: File) => {
     console.log('[Upload] Success - navigating to processing', { sessionId: newSessionId, filename: file.name });
     setSessionId(newSessionId);
     setUploadedFile(file);
     setView('processing');
+
+    // Start tracking this session for dashboard auto-refresh
+    startTracking(newSessionId);
   };
 
   const handleProcessingComplete = () => {
     setView('results');
+    // Note: ProcessingContext will auto-notify dashboard when status changes to 'completed'
   };
 
   const handleReset = () => {
@@ -71,5 +82,16 @@ export default function UploadPage() {
         )}
       </main>
     </div>
+  );
+}
+
+/**
+ * Wrapper that provides ProcessingContext
+ */
+export default function UploadPage() {
+  return (
+    <ProcessingProvider>
+      <UploadPageInner />
+    </ProcessingProvider>
   );
 }

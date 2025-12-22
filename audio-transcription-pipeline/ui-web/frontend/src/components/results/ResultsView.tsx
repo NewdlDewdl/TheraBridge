@@ -22,6 +22,7 @@ export default function ResultsView({ jobId, uploadedFile, onReset }: ResultsVie
   const [audioUrl, setAudioUrl] = useState<string>('');
   const [currentAudioTime, setCurrentAudioTime] = useState(0);
   const transcriptRef = useRef<TranscriptViewerRef>(null);
+  const [timestampOffset, setTimestampOffset] = useState(0);
 
   // Create audio URL from uploaded file
   useEffect(() => {
@@ -32,6 +33,34 @@ export default function ResultsView({ jobId, uploadedFile, onReset }: ResultsVie
       URL.revokeObjectURL(url);
     };
   }, [uploadedFile]);
+
+  // Detect and correct timestamp offset when result loads
+  useEffect(() => {
+    if (result && result.segments && result.segments.length > 0) {
+      // Check if first segment starts significantly after 0
+      const firstSegmentStart = result.segments[0].start;
+
+      // If first segment starts more than 10 seconds after audio start, we have an offset
+      if (firstSegmentStart > 10) {
+        console.warn(`[ResultsView] Detected timestamp offset: ${firstSegmentStart.toFixed(2)}s`);
+        console.warn('[ResultsView] Correcting all segment timestamps...');
+        setTimestampOffset(firstSegmentStart);
+      }
+    }
+  }, [result]);
+
+  // Apply offset correction to segments
+  const correctedSegments = result?.segments.map(seg => ({
+    ...seg,
+    start: Math.max(0, seg.start - timestampOffset),
+    end: Math.max(0, seg.end - timestampOffset),
+  })) || [];
+
+  const correctedAlignedSegments = result?.aligned_segments?.map(seg => ({
+    ...seg,
+    start: Math.max(0, seg.start - timestampOffset),
+    end: Math.max(0, seg.end - timestampOffset),
+  })) || [];
 
   // Handle timestamp click - seek audio player
   const handleTimestampClick = (time: number) => {
@@ -194,8 +223,7 @@ export default function ResultsView({ jobId, uploadedFile, onReset }: ResultsVie
         <CardContent>
           <AudioPlayer
             audioUrl={audioUrl}
-            filename={uploadedFile.name}
-            segments={result.segments}
+            segments={correctedSegments}
             duration={duration}
             onTimeUpdate={handleAudioTimeUpdate}
             onSeek={handleAudioSeek}
@@ -210,7 +238,7 @@ export default function ResultsView({ jobId, uploadedFile, onReset }: ResultsVie
         </CardHeader>
         <CardContent>
           <SpeakerTimeline
-            segments={result.segments}
+            segments={correctedSegments}
             speakers={result.speakers}
             duration={duration}
             onSegmentClick={handleTimelineSegmentClick}
@@ -228,9 +256,9 @@ export default function ResultsView({ jobId, uploadedFile, onReset }: ResultsVie
         <CardContent>
           <TranscriptViewer
             ref={transcriptRef}
-            segments={result.segments}
+            segments={correctedSegments}
             speakers={result.speakers}
-            alignedSegments={result.aligned_segments}
+            alignedSegments={correctedAlignedSegments}
             currentTime={currentAudioTime}
             onTimestampClick={handleTimestampClick}
           />

@@ -3,11 +3,13 @@
 /**
  * ThemeContext - Dark mode state management
  * - Provides dark mode toggle functionality
- * - Persists preference to localStorage
+ * - Persists preference to sessionStorage (shared with auth page)
  * - Applies dark class to document root
+ * - Syncs with auth page theme preference
  */
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { getTheme, setTheme as saveTheme } from '@/lib/theme-storage';
 
 interface ThemeContextType {
   isDark: boolean;
@@ -20,11 +22,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage after mount
+  // Initialize theme from sessionStorage (syncs with auth page)
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem('therapybridge-theme');
-    if (saved === 'dark') {
+    const storedTheme = getTheme();
+    if (storedTheme === 'dark') {
       setIsDark(true);
       document.documentElement.classList.add('dark');
     }
@@ -36,10 +38,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     if (isDark) {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('therapybridge-theme', 'dark');
+      saveTheme('dark');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('therapybridge-theme', 'light');
+      saveTheme('light');
     }
   }, [isDark, mounted]);
 

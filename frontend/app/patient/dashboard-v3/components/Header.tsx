@@ -7,8 +7,10 @@
  * - Minimal height design (~60px)
  * - FIXED: Full dark mode support for entire header
  * - Ask AI button triggers fullscreen chat via callback
+ * - Triple-click home icon navigates to auth page (dev testing)
  */
 
+import { useState, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useRouter } from 'next/navigation';
 
@@ -83,9 +85,35 @@ export function Header({ onAskAIClick }: HeaderProps) {
   const { isDark, toggleTheme } = useTheme();
   const router = useRouter();
 
-  // Scroll to top of dashboard
+  // Triple-click detection for home icon (dev testing feature)
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle home click with triple-click detection
   const handleHomeClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    clickCountRef.current += 1;
+
+    // Clear existing timer
+    if (clickTimerRef.current) {
+      clearTimeout(clickTimerRef.current);
+    }
+
+    // Check for triple-click
+    if (clickCountRef.current >= 3) {
+      clickCountRef.current = 0;
+      // Navigate to auth page on triple-click
+      router.push('/auth/login');
+      return;
+    }
+
+    // Reset click count after 500ms
+    clickTimerRef.current = setTimeout(() => {
+      // Single/double click behavior: scroll to top
+      if (clickCountRef.current > 0) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      clickCountRef.current = 0;
+    }, 500);
   };
 
   // Navigate to upload page

@@ -6,11 +6,13 @@
  * Provides real session data to all dashboard components.
  * This replaces the static mockData imports with live API data.
  *
+ * NEW: Auto-refreshes when audio processing completes via ProcessingContext.
+ *
  * Usage:
  *   const { sessions, tasks, isLoading } = useSessionData();
  */
 
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, useEffect, ReactNode, useCallback } from 'react';
 import { usePatientSessions } from '../lib/usePatientSessions';
 import { Session, Task, TimelineEntry, TimelineEvent, MajorEventEntry } from '../lib/types';
 
@@ -37,6 +39,9 @@ const SessionDataContext = createContext<SessionDataContextType | null>(null);
 
 /**
  * Provider component that fetches and distributes session data
+ *
+ * Note: For auto-refresh on processing complete, wrap this with ProcessingProvider
+ * and use the useProcessingRefresh hook in a child component.
  */
 export function SessionDataProvider({ children }: { children: ReactNode }) {
   const data = usePatientSessions();

@@ -1,6 +1,6 @@
 /**
  * Next.js Middleware for Auth Protection
- * Protects dashboard routes and redirects unauthenticated users
+ * Simple version - uses Supabase Auth only, no custom database tables
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -9,6 +9,12 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+
+  // 🔓 DEV BYPASS: Skip auth during development
+  const devBypass = process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true';
+  if (devBypass) {
+    return res;
+  }
 
   // Create Supabase client
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -22,7 +28,6 @@ export async function middleware(req: NextRequest) {
   // Protect dashboard routes
   if (req.nextUrl.pathname.startsWith('/patient') || req.nextUrl.pathname.startsWith('/therapist')) {
     if (!session) {
-      // Redirect to login if not authenticated
       const redirectUrl = new URL('/auth/login', req.url);
       redirectUrl.searchParams.set('redirectTo', req.nextUrl.pathname);
       return NextResponse.redirect(redirectUrl);
@@ -32,17 +37,8 @@ export async function middleware(req: NextRequest) {
   // Redirect authenticated users away from auth pages
   if (req.nextUrl.pathname.startsWith('/auth/login') || req.nextUrl.pathname.startsWith('/auth/signup')) {
     if (session) {
-      // Get user role and redirect to appropriate dashboard
-      const { data: userData } = await supabase
-        .from('users')
-        .select('role')
-        .eq('auth_id', session.user.id)
-        .single();
-
-      if (userData) {
-        const dashboardPath = userData.role === 'therapist' ? '/therapist' : '/patient/dashboard-v3';
-        return NextResponse.redirect(new URL(dashboardPath, req.url));
-      }
+      // All users go to patient dashboard (no role check needed without database)
+      return NextResponse.redirect(new URL('/patient/dashboard-v3', req.url));
     }
   }
 

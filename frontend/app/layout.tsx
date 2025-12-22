@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Crimson_Pro, Plus_Jakarta_Sans, DM_Sans, Nunito } from "next/font/google";
-import { AuthProvider } from "@/lib/auth-context";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ToasterProvider } from "@/components/providers/toaster-provider";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { EnvValidator } from "@/components/env-validator";
+import { DevToolsLoader } from "@/components/dev-tools-loader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -58,6 +59,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${crimsonPro.variable} ${plusJakartaSans.variable} ${dmSans.variable} ${nunito.variable} antialiased`}
       >
         <EnvValidator />
+        <DevToolsLoader />
         <ErrorBoundary>
           <ThemeProvider>
             <AuthProvider>

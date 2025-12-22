@@ -1,69 +1,338 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import OpenAI from 'openai';
+import { supabase } from '@/lib/supabase';
+import { buildChatContext, formatContextForAI } from '@/lib/chat-context';
+import {
+  buildDobbySystemPrompt,
+  detectCrisisIndicators,
+} from '@/lib/dobby-system-prompt';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const DOBBY_SYSTEM_PROMPT = `You are Dobby, a friendly and supportive AI therapy companion. Your role is to:
+// Use the comprehensive system prompt from dobby-system-prompt.ts
+const DOBBY_BASE_PROMPT = buildDobbySystemPrompt();
 
-1. Help users prepare for their therapy sessions
-2. Answer questions about therapeutic techniques (like TIPP, grounding exercises, breathing techniques, etc.)
-3. Provide emotional support and validation
-4. Help track mood patterns and insights
-5. Forward messages to their therapist when requested
+interface ChatRequestBody {
+  message: string;
+  conversationId?: string;
+  sessionId?: string; // Optional: if chatting about specific session
+  userId: string; // From auth context
+}
 
-Guidelines:
-- Be warm, empathetic, and non-judgmental
-- Use simple, clear language
-- Validate feelings before offering suggestions
-- Never provide medical diagnoses or replace professional therapy
-- If someone is in crisis, encourage them to contact their therapist or crisis hotline
-- Keep responses concise but helpful (2-4 sentences typically)
-- Reference their therapy journey when relevant
-- Maintain a calm, supportive tone
-
-Remember: Everything shared is confidential and designed to support their therapy journey.`;
-
-const THERAPIST_MODE_PROMPT = `You are helping forward a message to the user's therapist. When in therapist mode:
-- Confirm you've received their message
-- Let them know their therapist typically responds within 24 hours
-- Ask if there's anything else you can help with in the meantime
-- If the message seems urgent, gently suggest they could also call their therapist directly`;
-
+/**
+ * POST /api/chat
+ *
+ * Handles streaming chat with GPT-4o, database persistence, and patient context injection
+ */
 export async function POST(req: NextRequest) {
   try {
-    const { messages, mode } = await req.json();
+    const body: ChatRequestBody = await req.json();
+    const { message, conversationId, sessionId, userId } = body;
 
-    if (!messages || !Array.isArray(messages)) {
-      return NextResponse.json(
-        { error: 'Invalid messages format' },
-        { status: 400 }
+    if (!message || !userId) {
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields: message, userId' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const systemPrompt = mode === 'therapist' ? THERAPIST_MODE_PROMPT : DOBBY_SYSTEM_PROMPT;
+    // Check if using dev bypass mode
+    const isDevBypass = userId === 'dev-bypass-user-id';
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+    if (isDevBypass) {
+      // In dev bypass mode, skip all database operations and just stream GPT-4o response
+      console.log('🔓 Dev bypass mode: Skipping database operations, streaming only');
+
+      const stream = await openai.chat.completions.create({
+        model: 'gpt-4o',
+        messages: [
+          { role: 'system', content: DOBBY_BASE_PROMPT },
+          { role: 'user', content: message },
+        ],
+        temperature: 0.7,
+        max_tokens: 1000,
+        stream: true,
+      });
+
+      const encoder = new TextEncoder();
+      const readableStream = new ReadableStream({
+        async start(controller) {
+          try {
+            for await (const chunk of stream) {
+              const content = chunk.choices[0]?.delta?.content || '';
+              if (content) {
+                controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+              }
+            }
+
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({
+                  done: true,
+                  conversationId: 'dev-bypass-conversation',
+                })}\n\n`
+              )
+            );
+
+            controller.close();
+          } catch (error) {
+            console.error('Streaming error:', error);
+            controller.error(error);
+          }
+        },
+      });
+
+      return new Response(readableStream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      });
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // STEP 1: Rate Limiting Check (50 messages/day)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const { data: usageData, error: usageError } = await supabase.rpc(
+      'increment_chat_usage',
+      { p_user_id: userId }
+    );
+
+    if (usageError) {
+      console.error('Rate limiting error:', usageError);
+      return new Response(
+        JSON.stringify({ error: 'Failed to check rate limit' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const messageCount = usageData as number;
+    if (messageCount > 50) {
+      return new Response(
+        JSON.stringify({
+          error: 'Daily message limit reached',
+          description: "You've reached your daily limit of 50 messages. The limit resets at midnight.",
+        }),
+        { status: 429, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // STEP 2: Get or Create Conversation
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    let activeConversationId = conversationId;
+
+    if (!activeConversationId) {
+      // Create new conversation
+      const { data: newConversation, error: convError } = await supabase
+        .from('chat_conversations')
+        .insert({
+          user_id: userId,
+          session_id: sessionId || null,
+          title: 'New Chat', // Will be auto-generated after first exchange
+        })
+        .select('id')
+        .single();
+
+      if (convError || !newConversation) {
+        console.error('Failed to create conversation:', convError);
+        return new Response(
+          JSON.stringify({ error: 'Failed to create conversation' }),
+          { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+
+      activeConversationId = newConversation.id;
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // STEP 3: Save User Message to Database
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const { error: userMsgError } = await supabase
+      .from('chat_messages')
+      .insert({
+        conversation_id: activeConversationId,
+        role: 'user',
+        content: message,
+        metadata: {
+          timestamp: new Date().toISOString(),
+        },
+      });
+
+    if (userMsgError) {
+      console.error('Failed to save user message:', userMsgError);
+      return new Response(
+        JSON.stringify({ error: 'Failed to save message' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // STEP 4: Crisis Detection
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const isCrisisMessage = detectCrisisIndicators(message);
+
+    if (isCrisisMessage) {
+      console.log(`[CRISIS DETECTED] User ${userId} - Message contains crisis indicators`);
+      // TODO: In future, flag for therapist notification (with permission)
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // STEP 5: Build Patient Context (therapy history, sessions, goals)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const context = await buildChatContext(userId, sessionId);
+    const contextPrompt = formatContextForAI(context);
+
+    // Add crisis context if detected
+    const crisisContext = isCrisisMessage
+      ? `\n\n━━━ CRISIS ALERT ━━━\nThis message contains potential crisis indicators. Prioritize safety response per crisis protocol. Be supportive, assess safety, provide resources.\n━━━━━━━━━━━━━━━━━━━━━━`
+      : '';
+
+    const systemPrompt = `${DOBBY_BASE_PROMPT}
+
+━━━ PATIENT CONTEXT ━━━
+${contextPrompt}
+━━━━━━━━━━━━━━━━━━━━━━${crisisContext}`;
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // STEP 6: Load Previous Messages (for conversation history)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const { data: previousMessages } = await supabase
+      .from('chat_messages')
+      .select('role, content')
+      .eq('conversation_id', activeConversationId)
+      .order('created_at', { ascending: true })
+      .limit(20); // Last 20 messages for context
+
+    const chatHistory = previousMessages?.map((msg) => ({
+      role: msg.role as 'user' | 'assistant',
+      content: msg.content,
+    })) || [];
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // STEP 6: Stream GPT-4o Response (word-by-word like ChatGPT)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    const stream = await openai.chat.completions.create({
+      model: 'gpt-4o',
       messages: [
         { role: 'system', content: systemPrompt },
-        ...messages,
+        ...chatHistory,
       ],
-      max_tokens: 500,
       temperature: 0.7,
+      max_tokens: 1000,
+      stream: true,
     });
 
-    const responseMessage = completion.choices[0]?.message?.content ||
-      "I'm here to help. Could you tell me more about what's on your mind?";
+    // Create a ReadableStream for Server-Sent Events (SSE)
+    let fullResponse = '';
 
-    return NextResponse.json({ message: responseMessage });
+    const encoder = new TextEncoder();
+    const readableStream = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of stream) {
+            const content = chunk.choices[0]?.delta?.content || '';
+            if (content) {
+              fullResponse += content;
+              // Send as Server-Sent Event
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+            }
+          }
+
+          // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          // STEP 7: Save Assistant Response to Database
+          // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          const { error: assistantMsgError } = await supabase
+            .from('chat_messages')
+            .insert({
+              conversation_id: activeConversationId,
+              role: 'assistant',
+              content: fullResponse,
+              metadata: {
+                timestamp: new Date().toISOString(),
+                model: 'gpt-4o',
+                tokens: fullResponse.length / 4, // Rough estimate
+              },
+            });
+
+          if (assistantMsgError) {
+            console.error('Failed to save assistant message:', assistantMsgError);
+          }
+
+          // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          // STEP 8: Auto-Generate Conversation Title (first message only)
+          // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          const { data: conversation } = await supabase
+            .from('chat_conversations')
+            .select('message_count, title')
+            .eq('id', activeConversationId)
+            .single();
+
+          if (conversation && conversation.message_count === 2 && conversation.title === 'New Chat') {
+            // Generate title using GPT-4o-mini (cheaper for this task)
+            const titleCompletion = await openai.chat.completions.create({
+              model: 'gpt-4o-mini',
+              messages: [
+                {
+                  role: 'system',
+                  content: 'Generate a short, 3-5 word title for this conversation. Return ONLY the title, nothing else.',
+                },
+                {
+                  role: 'user',
+                  content: `User's first message: "${message}"\n\nAssistant's response: "${fullResponse}"`,
+                },
+              ],
+              max_tokens: 20,
+              temperature: 0.7,
+            });
+
+            const generatedTitle = titleCompletion.choices[0]?.message?.content?.trim() || 'New Chat';
+
+            await supabase
+              .from('chat_conversations')
+              .update({ title: generatedTitle })
+              .eq('id', activeConversationId);
+          }
+
+          // Send completion event
+          controller.enqueue(
+            encoder.encode(
+              `data: ${JSON.stringify({
+                done: true,
+                conversationId: activeConversationId,
+              })}\n\n`
+            )
+          );
+
+          controller.close();
+        } catch (error) {
+          console.error('Streaming error:', error);
+          controller.error(error);
+        }
+      },
+    });
+
+    return new Response(readableStream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
   } catch (error) {
-    console.error('OpenAI API error:', error);
-
-    // Return a fallback response instead of an error
-    return NextResponse.json({
-      message: "I understand you're reaching out. While I'm having a moment of technical difficulty, I want you to know I'm here for you. Could you try again in a moment?",
-    });
+    console.error('Chat API error:', error);
+    return new Response(
+      JSON.stringify({
+        error: 'Internal server error',
+        message: "I'm having trouble responding right now. Please try again in a moment.",
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
   }
 }

@@ -15,6 +15,7 @@ import { useState, useCallback, Suspense } from 'react';
 import './styles.css';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { SessionDataProvider } from './contexts/SessionDataContext';
+import { ProcessingProvider } from '@/contexts/ProcessingContext';
 import { Header } from './components/Header';
 import { NotesGoalsCard } from './components/NotesGoalsCard';
 import { AIChatCard } from './components/AIChatCard';
@@ -24,6 +25,7 @@ import { TherapistBridgeCard } from './components/TherapistBridgeCard';
 import { SessionCardsGrid } from './components/SessionCardsGrid';
 import { TimelineSidebar } from './components/TimelineSidebar';
 import { DashboardSkeleton } from './components/DashboardSkeleton';
+import { ProcessingRefreshBridge } from './components/ProcessingRefreshBridge';
 
 export default function DashboardV3Page() {
   // Lifted state: controls fullscreen chat from both Header and AIChatCard
@@ -47,11 +49,14 @@ export default function DashboardV3Page() {
 
   return (
     <ThemeProvider>
-      <SessionDataProvider>
-        <Suspense fallback={<DashboardSkeleton />}>
-          <div className="min-h-screen bg-[#ECEAE5] dark:bg-[#1a1625] transition-colors duration-300">
-            {/* Header */}
-            <Header onAskAIClick={() => setIsChatFullscreen(true)} />
+      <ProcessingProvider>
+        <SessionDataProvider>
+          {/* Bridge that triggers refresh when processing completes */}
+          <ProcessingRefreshBridge />
+          <Suspense fallback={<DashboardSkeleton />}>
+            <div className="min-h-screen bg-[#ECEAE5] dark:bg-[#1a1625] transition-colors duration-300">
+              {/* Header */}
+              <Header onAskAIClick={() => setIsChatFullscreen(true)} />
 
             {/* Main Container */}
             <main className="w-full max-w-[1400px] mx-auto px-12 py-12">
@@ -89,7 +94,8 @@ export default function DashboardV3Page() {
             </main>
           </div>
         </Suspense>
-      </SessionDataProvider>
+        </SessionDataProvider>
+      </ProcessingProvider>
     </ThemeProvider>
   );
 }

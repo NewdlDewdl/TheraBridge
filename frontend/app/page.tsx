@@ -1,9 +1,96 @@
+'use client';
+
+/**
+ * Smart Root Route - Redirects based on first-time status + auth state
+ *
+ * Flow:
+ * 1. Check if user is logged in → Dashboard
+ * 2. Check if account exists (localStorage + Supabase) → Login
+ * 3. Otherwise → Signup (first-time visitor)
+ */
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Brain, Mic, FileText, Shield, BarChart3, Users, ArrowRight, Heart } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { hasExistingAccount } from '@/lib/first-time-detection';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, Heart, Mic, Brain, FileText, ArrowRight } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
 export default function Home() {
+  const router = useRouter();
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    async function determineRoute() {
+      // Skip redirect if dev bypass is enabled
+      if (process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === 'true') {
+        console.log('🔓 Dev bypass enabled - showing landing page');
+        setIsChecking(false);
+        return;
+      }
+
+      try {
+        // Step 1: Check if user is already logged in
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (session?.user) {
+          // User is logged in - get their role and redirect to dashboard
+          const { data: userData } = await supabase
+            .from('users')
+            .select('role')
+            .eq('id', session.user.id)
+            .single();
+
+          const dashboardPath = userData?.role === 'therapist'
+            ? '/therapist'
+            : '/patient/dashboard-v3';
+
+          console.log(`✅ User logged in - redirecting to ${dashboardPath}`);
+          router.replace(dashboardPath);
+          return;
+        }
+
+        // Step 2: User not logged in - check if any account exists
+        const accountExists = await hasExistingAccount();
+
+        if (accountExists) {
+          // Account exists - send to login
+          console.log('📝 Account exists - redirecting to login');
+          router.replace('/auth/login');
+        } else {
+          // First-time visitor - send to signup
+          console.log('🆕 First-time visitor - redirecting to signup');
+          router.replace('/auth/signup');
+        }
+      } catch (error) {
+        console.error('❌ Route determination error:', error);
+        // On error, default to signup (safer than login)
+        router.replace('/auth/signup');
+      }
+    }
+
+    determineRoute();
+  }, [router]);
+
+  // Show loading state while determining route
+  if (isChecking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-background to-secondary">
+        <div className="text-center space-y-4">
+          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto animate-pulse">
+            <svg className="w-10 h-10 text-primary-foreground" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <p className="text-muted-foreground">Loading TherapyBridge...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // This will only show if dev bypass is enabled
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary">
       <div className="container mx-auto px-4 py-16">

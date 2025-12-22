@@ -275,6 +275,58 @@ python -m pytest  # Run tests
 
 ## Session Log
 
+### 2025-12-22 - AI Bot Enhancement: Context Injection, Real-Time Updates, Speaker Detection ✅
+**Comprehensive AI system upgrade making Dobby a medically-informed therapy companion:**
+
+1. **Real-Time Dashboard Updates (Phase 1):**
+   - Created `hooks/use-processing-status.ts` - Smart polling for audio processing status
+   - Created `contexts/ProcessingContext.tsx` - Global processing state management
+   - Created `ProcessingRefreshBridge.tsx` - Bridges processing completion to dashboard refresh
+   - Dashboard auto-refreshes when audio processing completes (no WebSockets needed)
+
+2. **Comprehensive System Prompt (Phase 2):**
+   - Created `lib/dobby-system-prompt.ts` - Full medical AI companion definition
+   - Medical knowledge scope: Medication education, symptom explanation, technique guidance
+   - Crisis protocol: Detection keywords, response pattern, hotline resources, escalation flags
+   - Technique library: TIPP, 5-4-3-2-1, Box Breathing, Wise Mind, Opposite Action
+   - Communication style: Validation-first, personalization rules, response length guidance
+
+3. **Enhanced Context Injection (Phase 3):**
+   - Mood trend analysis: Compares recent vs older sessions (improving/stable/declining/variable)
+   - Technique memory: Detects learned coping skills from session history
+   - Goal progress bars: Visual progress indicators in AI context
+   - Therapist name: Personalized references to their therapist
+   - Key insights extraction: Recent breakthroughs from sessions
+   - Rich session summaries: Topics, homework, action items
+
+4. **Crisis Detection (Phase 4):**
+   - Real-time keyword scanning in user messages
+   - Crisis context injection into system prompt when detected
+   - Logging for future therapist notification (with permission)
+
+5. **Speaker Role Detection (Phase 5):**
+   - Created `lib/speaker-role-detection.ts` - Multi-heuristic role assignment
+   - First-speaker heuristic: Therapist typically opens the session
+   - Speaking ratio heuristic: Therapists speak 30-40%, clients 60-70%
+   - Combined confidence scoring for reliable detection
+   - Transforms SPEAKER_00/SPEAKER_01 → Therapist/Client labels
+
+**Files created:**
+- `lib/dobby-system-prompt.ts` - Comprehensive AI system prompt
+- `lib/speaker-role-detection.ts` - Therapist/Client role detection
+- `hooks/use-processing-status.ts` - Processing status polling
+- `contexts/ProcessingContext.tsx` - Global processing context
+- `components/ProcessingRefreshBridge.tsx` - Dashboard refresh bridge
+
+**Files modified:**
+- `lib/chat-context.ts` - Enhanced with mood trends, techniques, goals
+- `app/api/chat/route.ts` - Integrated new system prompt + crisis detection
+- `app/api/process/route.ts` - Added speaker role detection
+- `app/patient/dashboard-v3/page.tsx` - Added ProcessingProvider
+- `app/patient/dashboard-v3/upload/page.tsx` - Triggers processing tracking
+
+**Next step:** Implement therapist mode (message routing to therapist)
+
 ### 2025-12-21 - Timeline Enhancement: Mixed Events, Search & Export (Dashboard v3) ✅
 **Implemented comprehensive timeline enhancement transforming it from session-only to mixed patient journey:**
 
