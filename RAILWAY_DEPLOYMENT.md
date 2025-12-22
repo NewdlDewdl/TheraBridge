@@ -113,23 +113,44 @@ OPENAI_API_KEY=sk-proj-...your-openai-key
 
 ---
 
-## Railway Configuration File (Optional)
+## Railway Configuration Files (REQUIRED)
 
-Create `railway.json` in frontend directory for advanced config:
+Railway uses **nixpacks** to build your app. To specify Node.js 20 (required for Next.js 16), you need these files:
+
+### 1. Create `nixpacks.toml` in frontend directory:
+
+```toml
+[phases.setup]
+nixPkgs = ['nodejs-20_x']
+
+[phases.install]
+cmds = ['npm install']
+
+[phases.build]
+cmds = ['npm run build']
+
+[start]
+cmd = 'npm start'
+```
+
+### 2. Create `.node-version` in frontend directory:
+
+```
+20.9.0
+```
+
+### 3. Add `engines` field to `package.json`:
 
 ```json
 {
-  "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "npm install && npm run build"
-  },
-  "deploy": {
-    "startCommand": "npm start",
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=10.0.0"
   }
 }
 ```
+
+**These files are already included in the repository.** Railway will automatically detect them and use Node.js 20.
 
 ---
 
