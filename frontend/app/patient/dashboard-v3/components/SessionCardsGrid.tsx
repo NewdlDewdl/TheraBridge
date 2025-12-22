@@ -2,7 +2,7 @@
 
 /**
  * Session cards grid component
- * - 4x2 grid (8 cards per page)
+ * - 3x2 grid (6 cards per page)
  * - Pagination with slide animation
  * - Click card to open fullscreen detail
  * - Supports external session selection (from Timeline sidebar)
@@ -30,11 +30,13 @@ export function SessionCardsGrid({
 }: SessionCardsGridProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [cardScale, setCardScale] = useState(1.0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Use real data from context instead of mock imports
   const { sessions, isLoading, isError, isEmpty } = useSessionData();
 
-  const cardsPerPage = 8;
+  const cardsPerPage = 6;
   const totalPages = Math.ceil(sessions.length / cardsPerPage);
   const currentSessions = sessions.slice(
     currentPage * cardsPerPage,
@@ -42,6 +44,30 @@ export function SessionCardsGrid({
   );
 
   // ALL HOOKS MUST BE BEFORE ANY CONDITIONAL RETURNS (Rules of Hooks)
+
+  // Calculate card scale based on available width
+  useEffect(() => {
+    const calculateScale = () => {
+      if (!containerRef.current) return;
+
+      const containerWidth = containerRef.current.offsetWidth;
+      const cardWidth = 329.3;
+      const gap = 21;
+      const cols = 3;
+
+      // Available width per card: (totalWidth - (gaps between cards)) / cols
+      // With 3 cards there are 2 gaps between them
+      const availableWidthPerCard = (containerWidth - (gap * (cols - 1))) / cols;
+      const scale = availableWidthPerCard / cardWidth;
+
+      // Set scale (capped at 1.5x for reasonable max size)
+      setCardScale(Math.min(scale, 1.5));
+    };
+
+    calculateScale();
+    window.addEventListener('resize', calculateScale);
+    return () => window.removeEventListener('resize', calculateScale);
+  }, []);
 
   // Handle external session selection (e.g., from Timeline "View Full Session")
   useEffect(() => {
@@ -111,8 +137,8 @@ export function SessionCardsGrid({
   // Show loading state
   if (isLoading) {
     return (
-      <div className="grid grid-cols-4 auto-rows-fr gap-4">
-        {Array.from({ length: 8 }).map((_, i) => (
+      <div style={{ gap: '21px' }} className="grid grid-cols-3 auto-rows-fr">
+        {Array.from({ length: 6 }).map((_, i) => (
           <CardSkeleton key={i} className="h-[150px]" />
         ))}
       </div>
@@ -151,16 +177,17 @@ export function SessionCardsGrid({
     <>
       {/* Container uses full height with flex layout - overflow-anchor:none prevents scroll jumping */}
       <div ref={swipeRef} className="h-full flex flex-col" style={{ overflowAnchor: 'none' }}>
-        {/* Grid area - fixed 2x4 grid with invisible placeholders for empty cells */}
-        <div className="flex-1 min-h-0">
+        {/* Grid area - fixed 3x2 grid with invisible placeholders for empty cells */}
+        <div ref={containerRef} className="flex-1 min-h-0">
           <motion.div
             key={currentPage}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid grid-cols-4 grid-rows-2 gap-4 h-full"
+            style={{ gap: '21px' }}
+            className="grid grid-cols-3 grid-rows-2 h-full"
           >
-            {/* Always render 8 cells - real cards + invisible placeholders */}
+            {/* Always render 6 cells - real cards + invisible placeholders */}
             {Array.from({ length: cardsPerPage }).map((_, idx) => {
               const session = currentSessions[idx];
               if (session) {
@@ -170,6 +197,7 @@ export function SessionCardsGrid({
                     id={`session-${session.id}`}
                     session={session}
                     onClick={() => setSelectedSession(session)}
+                    scale={cardScale}
                   />
                 );
               }

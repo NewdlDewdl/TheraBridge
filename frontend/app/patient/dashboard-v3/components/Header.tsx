@@ -7,7 +7,7 @@
  * - Minimal height design (~60px)
  * - FIXED: Full dark mode support for entire header
  * - Ask AI button triggers fullscreen chat via callback
- * - Triple-click home icon navigates to auth page (dev testing)
+ * - Triple-click theme toggle navigates to auth page (dev testing)
  */
 
 import { useState, useRef } from 'react';
@@ -91,34 +91,67 @@ export function Header({ onAskAIClick }: HeaderProps) {
   const isSessionsPage = pathname?.includes('/sessions');
   const isDashboardPage = pathname === '/patient/dashboard-v3';
 
-  // Triple-click detection for home icon (dev testing feature)
-  const clickCountRef = useRef(0);
-  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+  // Triple-click detection for home icon (dev testing feature) - Sessions page only
+  const homeClickCountRef = useRef(0);
+  const homeClickTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Handle home click with triple-click detection
+  // Handle home click with triple-click detection (Sessions page only)
   const handleHomeClick = () => {
-    clickCountRef.current += 1;
+    homeClickCountRef.current += 1;
 
     // Clear existing timer
-    if (clickTimerRef.current) {
-      clearTimeout(clickTimerRef.current);
+    if (homeClickTimerRef.current) {
+      clearTimeout(homeClickTimerRef.current);
     }
 
     // Check for triple-click
-    if (clickCountRef.current >= 3) {
-      clickCountRef.current = 0;
+    if (homeClickCountRef.current >= 3) {
+      homeClickCountRef.current = 0;
       // Navigate to auth page on triple-click
       router.push('/auth/login');
       return;
     }
 
+    // Single/double click behavior: navigate to dashboard
+    if (homeClickCountRef.current === 1) {
+      router.push('/patient/dashboard-v3');
+    }
+
     // Reset click count after 500ms
-    clickTimerRef.current = setTimeout(() => {
-      // Single/double click behavior: scroll to top
-      if (clickCountRef.current > 0) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-      clickCountRef.current = 0;
+    homeClickTimerRef.current = setTimeout(() => {
+      homeClickCountRef.current = 0;
+    }, 500);
+  };
+
+  // Triple-click detection for theme toggle (dev testing feature) - Sessions page only
+  const themeClickCountRef = useRef(0);
+  const themeClickTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle theme toggle with triple-click detection (Sessions page only)
+  const handleThemeToggle = () => {
+    themeClickCountRef.current += 1;
+
+    // Clear existing timer
+    if (themeClickTimerRef.current) {
+      clearTimeout(themeClickTimerRef.current);
+    }
+
+    // Check for triple-click
+    if (themeClickCountRef.current >= 3) {
+      themeClickCountRef.current = 0;
+      // Navigate to auth page on triple-click
+      router.push('/auth/login');
+      return;
+    }
+
+    // Single/double click behavior: toggle theme
+    if (themeClickCountRef.current === 1) {
+      toggleTheme();
+    }
+
+    // Reset click count after 500ms
+    themeClickTimerRef.current = setTimeout(() => {
+      themeClickCountRef.current = 0;
     }, 500);
   };
 
@@ -137,6 +170,76 @@ export function Header({ onAskAIClick }: HeaderProps) {
     router.push('/patient/dashboard-v3');
   };
 
+  // Sessions page layout: Logo left, Home/Theme right
+  if (isSessionsPage) {
+    return (
+      <header className="sticky top-0 z-50 bg-[#F8F7F4] dark:bg-[#1a1625] border-b border-[#E0DDD8] dark:border-[#3d3548] h-[60px] flex items-center justify-between transition-colors duration-300">
+        {/* Left section - TheraBridge logo */}
+        <div className="flex items-center pl-6 w-[200px]">
+          <CombinedLogo
+            iconSize={28}
+            textClassName="text-base"
+          />
+        </div>
+
+        {/* Center section - Navigation (perfectly centered) */}
+        <nav className="flex items-center gap-8">
+          <button
+            onClick={handleDashboardClick}
+            className={`text-sm font-medium transition-colors pb-1 ${
+              isDashboardPage
+                ? 'text-[#5AB9B4] dark:text-[#a78bfa] border-b-2 border-[#5AB9B4] dark:border-[#a78bfa]'
+                : 'text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa]'
+            }`}
+          >
+            Dashboard
+          </button>
+          <button
+            onClick={handleSessionsClick}
+            className={`text-sm font-medium transition-colors pb-1 ${
+              isSessionsPage
+                ? 'text-[#5AB9B4] dark:text-[#a78bfa] border-b-2 border-[#5AB9B4] dark:border-[#a78bfa]'
+                : 'text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa]'
+            }`}
+          >
+            Sessions
+          </button>
+          <button
+            onClick={onAskAIClick}
+            className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors pb-1"
+          >
+            Ask AI
+          </button>
+          <button
+            onClick={handleUploadClick}
+            className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors pb-1"
+          >
+            Upload
+          </button>
+        </nav>
+
+        {/* Right section - Home + Theme toggle (fixed width matching left) */}
+        <div className="flex items-center justify-end gap-2 pr-3 w-[200px]">
+          <button
+            onClick={handleHomeClick}
+            className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-[#3d3548] transition-colors"
+            aria-label="Go to dashboard"
+          >
+            <HomeIcon isDark={isDark} />
+          </button>
+          <button
+            onClick={handleThemeToggle}
+            className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100 dark:hover:bg-[#3d3548] transition-colors"
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            <ThemeIcon isDark={isDark} />
+          </button>
+        </div>
+      </header>
+    );
+  }
+
+  // Default layout (Dashboard page): Theme left, Logo right
   return (
     <header className="sticky top-0 z-50 bg-[#F8F7F4] dark:bg-[#1a1625] border-b border-[#E0DDD8] dark:border-[#3d3548] h-[60px] flex items-center justify-between transition-colors duration-300">
       {/* Left section - Theme toggle (fixed width for centering) */}
@@ -174,13 +277,13 @@ export function Header({ onAskAIClick }: HeaderProps) {
         </button>
         <button
           onClick={onAskAIClick}
-          className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors"
+          className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors pb-1"
         >
           Ask AI
         </button>
         <button
           onClick={handleUploadClick}
-          className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors"
+          className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-[#5AB9B4] dark:hover:text-[#a78bfa] transition-colors pb-1"
         >
           Upload
         </button>

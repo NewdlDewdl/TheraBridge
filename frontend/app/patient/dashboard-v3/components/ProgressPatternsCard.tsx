@@ -220,11 +220,11 @@ export function ProgressPatternsCard() {
         {/* Content Container */}
         <div className="relative z-10 p-5 flex flex-col h-full">
           {/* Header */}
-          <div className="flex flex-col items-center mb-3 flex-shrink-0">
-            <h3 className="text-lg font-light text-gray-800 dark:text-gray-200 text-center mb-1">
+          <div className="flex flex-col mb-3 flex-shrink-0">
+            <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 tracking-wide uppercase font-mono opacity-80">
               {currentMetric.title}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 font-light text-center">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-mono">
               {currentMetric.description}
             </p>
           </div>
@@ -358,7 +358,7 @@ export function ProgressPatternsCard() {
                             <Icon size={20} />
                           </div>
                           <div className="text-left">
-                            <h3 className="font-light text-gray-800 dark:text-gray-200">
+                            <h3 className="font-mono uppercase tracking-wide text-sm font-semibold text-gray-800 dark:text-gray-200">
                               {metric.title}
                             </h3>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">

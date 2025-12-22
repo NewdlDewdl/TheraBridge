@@ -2,11 +2,10 @@
  * Auth Callback Route
  * Handles OAuth redirects from Supabase (Google, etc.)
  *
- * Flow for first-time OAuth users:
- * 1. User completes OAuth with Google
- * 2. Check if email is verified
- * 3. If not verified (first time), send verification email and redirect to code entry
- * 4. If verified (returning user), go to dashboard
+ * Flow:
+ * 1. Exchange authorization code for session
+ * 2. Check if OAuth user (Google, etc.) - OAuth users are pre-verified, go directly to dashboard
+ * 3. Email/password users - go to dashboard (verified via email link)
  */
 
 import { NextResponse } from 'next/server';
@@ -47,36 +46,14 @@ export async function GET(request: Request) {
 
     const user = sessionData.user;
 
-    // Check if this is an OAuth user
+    // Check if this is an OAuth user (Google, etc.)
     const provider = user.app_metadata?.provider;
     const isOAuthUser = provider && provider !== 'email';
 
     if (isOAuthUser) {
-      // Check if user has verified their email before
-      // We use a custom metadata flag to track this
-      const hasVerifiedBefore = user.user_metadata?.oauth_verified === true;
-
-      if (!hasVerifiedBefore) {
-        // First-time OAuth user - needs to verify email
-        // Send verification email
-        const { error: verifyError } = await supabase.auth.resend({
-          type: 'signup',
-          email: user.email!,
-        });
-
-        if (verifyError) {
-          console.error('Failed to send verification email:', verifyError);
-        }
-
-        // Redirect to login page with instruction to check email
-        const loginUrl = new URL('/auth/login', requestUrl.origin);
-        loginUrl.searchParams.set('step', 'enterCode');
-        loginUrl.searchParams.set('email', user.email!);
-        loginUrl.searchParams.set('oauth', 'true');
-        return NextResponse.redirect(loginUrl);
-      }
-
-      // Returning OAuth user - already verified, go to dashboard
+      // OAuth users (Google, etc.) are pre-verified by their provider
+      // Always redirect directly to dashboard - no additional verification needed
+      console.log(`✅ OAuth login successful (${provider}):`, user.email);
       return NextResponse.redirect(new URL('/patient/dashboard-v3', requestUrl.origin));
     }
 

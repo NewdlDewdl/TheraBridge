@@ -51,7 +51,7 @@ export function ToDoCard() {
         whileHover={{ y: -2, boxShadow: '0 6px 16px rgba(0,0,0,0.12)' }}
         transition={{ duration: 0.2 }}
       >
-        <h2 className="text-lg font-light text-gray-800 dark:text-gray-200 mb-2 text-center">To-Do</h2>
+        <h2 className="text-lg font-medium text-gray-800 dark:text-gray-200 mb-2">To-Do</h2>
         <div className="flex items-center justify-center mb-4">
           <span className="text-sm font-light text-gray-600 dark:text-gray-400">
             {progressPercent}% ({completedCount}/{totalCount})
@@ -92,7 +92,7 @@ export function ToDoCard() {
                 )}
               </div>
               <span
-                className={`text-sm font-light ${
+                className={`text-sm font-medium ${
                   task.completed
                     ? 'line-through text-gray-400 dark:text-gray-600'
                     : 'text-gray-700 dark:text-gray-300'
@@ -108,13 +108,6 @@ export function ToDoCard() {
               +{tasks.length - 3} more tasks
             </p>
           )}
-        </div>
-
-        {/* Carousel Dots */}
-        <div className="flex justify-center gap-1.5 mt-4">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#5AB9B4] dark:bg-[#a78bfa]" />
-          <div className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600" />
-          <div className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-600" />
         </div>
       </motion.div>
 

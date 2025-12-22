@@ -104,7 +104,7 @@ export function TherapistBridgeCard() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed w-[700px] max-h-[80vh] bg-[#F8F7F4] dark:bg-[#2a2435] rounded-3xl shadow-2xl p-8 z-[1001] overflow-y-auto border-2 border-[#E0DDD8] dark:border-gray-600"
+              className="fixed w-[700px] max-h-[80vh] bg-gradient-to-br from-[#FFF5F0] to-[#FFF8F3] dark:from-[#2a2435] dark:to-[#1a1625] rounded-3xl shadow-2xl p-8 z-[1001] overflow-y-auto border-2 border-[#E0DDD8] dark:border-gray-600"
               role="dialog"
               aria-modal="true"
               aria-labelledby="therapist-bridge-title"
