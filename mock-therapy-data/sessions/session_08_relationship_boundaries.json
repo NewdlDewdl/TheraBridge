@@ -1,0 +1,1386 @@
+{
+  "id": "session_08_alex_chen",
+  "status": "completed",
+  "filename": "session_08_2025-04-18.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_08_2025-04-18.mp3",
+    "file_size_mb": 33.8,
+    "duration": 2700.0,
+    "language": "english",
+    "timestamp": "20250418_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 312.4,
+    "preprocessing_time_seconds": 4.8,
+    "transcription_time_seconds": 48.2,
+    "diarization_time_seconds": 257.9,
+    "alignment_time_seconds": 1.5
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1080.0,
+      "segment_count": 48
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1620.0,
+      "segment_count": 64
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.3,
+      "text": "Hey Alex! Good to see you. How have the past two weeks been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 52.8,
+      "text": "Dr. Mitchell, hi. Um, things have been... really good actually? Like, surprisingly good. I've been seeing someone. Jordan. We've been dating for like two weeks now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 53.0,
+      "end": 71.4,
+      "text": "Oh wow, that's exciting! Tell me about Jordan. How did you meet?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 71.7,
+      "end": 124.3,
+      "text": "We met at this queer grad student meetup that Sarah dragged me to. Jordan's doing a master's in environmental science. They're really cool, like really passionate about climate justice and stuff. We just kinda clicked, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 124.5,
+      "end": 145.2,
+      "text": "That sounds really nice. I'm glad Sarah encouraged you to go. How does it feel to be dating again?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 145.5,
+      "end": 218.9,
+      "text": "It feels... I mean, it's amazing. Jordan is so sweet and attentive. But also I'm kind of terrified? Like, things are moving really fast. We've been hanging out almost every day. And I keep catching myself wanting to like, say I love you already, which is totally ridiculous because it's been two weeks.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 219.2,
+      "end": 258.7,
+      "text": "It's good that you're catching yourself. That awareness we've been working on is really showing up here. What do you think is driving that urge to say it so soon?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 259.0,
+      "end": 325.4,
+      "text": "I don't know. I guess I just... when things feel good, I want to like, lock it down? Make sure they're not going anywhere. Like if I say it first, maybe they won't leave. Which I know is the anxious attachment thing we've been talking about.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 325.7,
+      "end": 372.3,
+      "text": "Exactly. That's really great awareness, Alex. You're recognizing that old pattern of trying to secure the relationship out of fear rather than genuine readiness. That's huge progress. How does it feel when you catch yourself having those thoughts?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 372.6,
+      "end": 438.2,
+      "text": "It's like... frustrating? Because I know it's not healthy, but the feeling is still there. Like my brain knows one thing, but my nervous system is freaking out. I've been using that TIPP skill when I notice the anxiety ramping up. The ice on my face thing? It actually helps.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 438.5,
+      "end": 478.9,
+      "text": "I'm so glad you're using those DBT skills. That's exactly what they're for - creating space between the feeling and the action. So you notice the urge, you use TIPP to calm your nervous system, and then you can choose a different response. That's really healthy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 479.2,
+      "end": 524.8,
+      "text": "Yeah. I mean, I haven't said it. I've been like, physically biting my tongue sometimes. Jordan probably thinks I'm weird. But I know it's too soon. I'm trying to do the secure attachment thing you talked about.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 525.1,
+      "end": 567.3,
+      "text": "You're doing great. And I want to acknowledge that this is hard work. Changing attachment patterns isn't easy. Let me ask you - has anything come up that's been challenging in the relationship? Any moments where you've had to navigate something difficult?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 567.6,
+      "end": 648.9,
+      "text": "Um, yeah actually. So Jordan asked me about my family the other day. Like, about my relationship with my parents, whether I'm out to them, that kind of stuff. And I totally deflected. I was like oh you know, typical immigrant parents, and then changed the subject to their research project.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 649.2,
+      "end": 678.4,
+      "text": "Okay. So you avoided a vulnerable conversation. What was happening for you in that moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 678.7,
+      "end": 762.3,
+      "text": "I just... I didn't want to get into all of it. Like, how do I explain that my parents don't know I'm non-binary, that they still use my deadname, that I basically have to pretend to be someone else every time I talk to them? It's too heavy. Too much. Jordan will think I'm a mess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 762.6,
+      "end": 812.8,
+      "text": "So there's fear there. Fear that if Jordan sees the full picture of your life, including the complicated parts, they'll... what? What's the fear?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 813.1,
+      "end": 894.7,
+      "text": "That they'll think I'm too damaged. Too complicated. That they'll realize I'm not worth the effort and leave. Which I know sounds dramatic, but like... that's what always happens. Once people really know me, they leave.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 895.0,
+      "end": 962.4,
+      "text": "So that core belief is showing up again - I'm unlovable, if people really know me they'll leave. Alex, I want to challenge that belief. What evidence do you have that it's true? Who in your life has left after getting to know you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 962.7,
+      "end": 1012.3,
+      "text": "I mean... Jamie left. And there was this person in undergrad, Sam. We were really close and then they just kinda ghosted me after I opened up about my family stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1012.6,
+      "end": 1087.9,
+      "text": "Okay. So two romantic relationships that didn't work out. And what about people who didn't leave? Sarah and Marcus - they know you pretty well, right? Have they left?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1088.2,
+      "end": 1142.6,
+      "text": "No. I mean, Sarah knows everything. She was the first person I came out to. She's been really solid. Marcus too, actually. He's dealt with family stuff too, so he gets it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1142.9,
+      "end": 1214.7,
+      "text": "So you have evidence that contradicts that belief. When you've been vulnerable with friends, they've stayed. They've supported you. The pattern you're describing seems more specific to romantic relationships. Does that resonate?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1215.0,
+      "end": 1278.4,
+      "text": "Yeah, I guess so. I don't know why romantic relationships feel so different. Like the stakes are higher or something. Like I need them in a way I don't need my friends, which probably isn't healthy either.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1278.7,
+      "end": 1358.2,
+      "text": "That's a really important insight. When we have anxious attachment patterns, we often look to romantic partners to meet needs that weren't met in childhood - that unconditional love and acceptance. But that can create a lot of pressure on the relationship. Does that fit for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1358.5,
+      "end": 1445.8,
+      "text": "Yeah, totally. Like... with Jordan, I keep wanting them to validate that I'm okay, that I'm lovable, that I'm not too much. But I know that's not their job. That's my work to do. I just don't always know how to do it in the moment, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1446.1,
+      "end": 1534.6,
+      "text": "That's exactly right. And the fact that you can articulate that shows so much growth. So let's talk about practical skills. We've been working on DBT interpersonal effectiveness - do you remember DEAR MAN? The skill for asking for what you need and setting boundaries?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1534.9,
+      "end": 1598.3,
+      "text": "Um, kind of? I remember you mentioned it but I don't remember what it stands for. I know it's some kind of acronym for like, communication or something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1598.6,
+      "end": 1734.2,
+      "text": "Let's review it. DEAR MAN stands for: Describe the situation, Express your feelings, Assert what you need, Reinforce why it matters. Then MAN is: be Mindful, Appear confident, and Negotiate if needed. It's a framework for expressing your needs without people-pleasing or shutting down. Want to practice it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1734.5,
+      "end": 1758.9,
+      "text": "Yeah, okay. I mean, I'll try. What would I be practicing?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1759.2,
+      "end": 1832.7,
+      "text": "Let's practice having a boundary conversation with Jordan. Something like asking for more time between hangouts, or being honest about needing space. What feels relevant for you right now?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1833.0,
+      "end": 1924.6,
+      "text": "Um... I guess the space thing? Like, we've been hanging out every single day and it's been great, but I'm also falling behind on my research. I need to have like, at least a couple nights a week to just focus. But I'm scared if I ask for that, they'll think I'm losing interest.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1924.9,
+      "end": 1982.3,
+      "text": "Perfect. That's a very reasonable boundary. Let's use DEAR MAN. First, Describe the situation. What would you say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1982.6,
+      "end": 2056.8,
+      "text": "Um, okay. I would say... Jordan, I've loved spending so much time with you these past two weeks. It's been really amazing getting to know you. But I've noticed I'm falling behind on my PhD work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2057.1,
+      "end": 2098.7,
+      "text": "Good start. That's describing the situation factually. Now Express how you feel about it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2099.0,
+      "end": 2187.4,
+      "text": "I feel... conflicted? Like, I want to see you all the time, but I also feel stressed about my deadlines. And I'm worried that if I don't say something, the stress is going to build up and affect how I show up in our relationship.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2187.7,
+      "end": 2238.9,
+      "text": "That's really good. You're being honest about your internal experience. Now Assert what you need.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2239.2,
+      "end": 2312.6,
+      "text": "I need to have a couple nights a week where I can focus on my work without making plans. Maybe like, Tuesday and Thursday could be my research nights?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2312.9,
+      "end": 2367.4,
+      "text": "Excellent. Very clear and specific. Now Reinforce why this matters for the relationship.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2367.7,
+      "end": 2456.3,
+      "text": "I think if I can stay on top of my work, I'll be way less stressed and I'll be able to be more present when we do hang out. Like, I want to be fully there with you, not distracted and anxious about deadlines.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2456.6,
+      "end": 2523.8,
+      "text": "Perfect. Alex, that was excellent. You described the situation, expressed your feelings, asserted your need clearly, and reinforced why it benefits both of you. How did that feel to practice?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2524.1,
+      "end": 2589.7,
+      "text": "It felt... weird but good? Like, when I say it out loud like that, it sounds really reasonable. But in my head I've been catastrophizing about it for days. Like Jordan's gonna be like, oh Alex doesn't want to hang out, they're pulling away, this is over.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2590.0,
+      "end": 2658.4,
+      "text": "Right. So that's your anxious attachment speaking. But what you actually said was loving, honest, and mature. You're not pulling away - you're creating sustainable conditions for the relationship. That's secure attachment in action.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2658.7,
+      "end": 2700.0,
+      "text": "Okay. Yeah. I can see that. I'm gonna try to have this conversation this week. Maybe tomorrow.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 4.2,
+      "text": "Hey Alex! Good to see you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 4.2,
+      "end": 18.3,
+      "text": "How have the past two weeks been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 24.8,
+      "text": "Dr. Mitchell, hi.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 24.8,
+      "end": 35.6,
+      "text": "Um, things have been... really good actually?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 35.6,
+      "end": 42.3,
+      "text": "Like, surprisingly good.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 42.3,
+      "end": 48.7,
+      "text": "I've been seeing someone. Jordan.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 48.7,
+      "end": 52.8,
+      "text": "We've been dating for like two weeks now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 53.0,
+      "end": 58.4,
+      "text": "Oh wow, that's exciting!",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 58.4,
+      "end": 71.4,
+      "text": "Tell me about Jordan. How did you meet?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 71.7,
+      "end": 87.2,
+      "text": "We met at this queer grad student meetup that Sarah dragged me to.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 87.2,
+      "end": 98.6,
+      "text": "Jordan's doing a master's in environmental science.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 98.6,
+      "end": 115.3,
+      "text": "They're really cool, like really passionate about climate justice and stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 115.3,
+      "end": 124.3,
+      "text": "We just kinda clicked, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 124.5,
+      "end": 132.8,
+      "text": "That sounds really nice.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 132.8,
+      "end": 145.2,
+      "text": "I'm glad Sarah encouraged you to go. How does it feel to be dating again?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 145.5,
+      "end": 156.8,
+      "text": "It feels... I mean, it's amazing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 156.8,
+      "end": 168.3,
+      "text": "Jordan is so sweet and attentive.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 168.3,
+      "end": 178.4,
+      "text": "But also I'm kind of terrified?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 178.4,
+      "end": 186.7,
+      "text": "Like, things are moving really fast.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 186.7,
+      "end": 195.2,
+      "text": "We've been hanging out almost every day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 195.2,
+      "end": 218.9,
+      "text": "And I keep catching myself wanting to like, say I love you already, which is totally ridiculous because it's been two weeks.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 219.2,
+      "end": 232.8,
+      "text": "It's good that you're catching yourself.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 232.8,
+      "end": 248.3,
+      "text": "That awareness we've been working on is really showing up here.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 248.3,
+      "end": 258.7,
+      "text": "What do you think is driving that urge to say it so soon?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 259.0,
+      "end": 267.4,
+      "text": "I don't know.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 267.4,
+      "end": 286.7,
+      "text": "I guess I just... when things feel good, I want to like, lock it down?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 286.7,
+      "end": 297.8,
+      "text": "Make sure they're not going anywhere.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 297.8,
+      "end": 315.2,
+      "text": "Like if I say it first, maybe they won't leave.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 315.2,
+      "end": 325.4,
+      "text": "Which I know is the anxious attachment thing we've been talking about.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 325.7,
+      "end": 332.4,
+      "text": "Exactly. That's really great awareness, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 332.4,
+      "end": 358.2,
+      "text": "You're recognizing that old pattern of trying to secure the relationship out of fear rather than genuine readiness. That's huge progress.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 358.2,
+      "end": 372.3,
+      "text": "How does it feel when you catch yourself having those thoughts?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 372.6,
+      "end": 384.3,
+      "text": "It's like... frustrating?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 384.3,
+      "end": 402.7,
+      "text": "Because I know it's not healthy, but the feeling is still there.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 402.7,
+      "end": 418.6,
+      "text": "Like my brain knows one thing, but my nervous system is freaking out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 418.6,
+      "end": 432.4,
+      "text": "I've been using that TIPP skill when I notice the anxiety ramping up.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 432.4,
+      "end": 438.2,
+      "text": "The ice on my face thing? It actually helps.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 438.5,
+      "end": 454.2,
+      "text": "I'm so glad you're using those DBT skills.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 454.2,
+      "end": 472.8,
+      "text": "That's exactly what they're for - creating space between the feeling and the action.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 472.8,
+      "end": 478.9,
+      "text": "So you notice the urge, you use TIPP to calm your nervous system, and then you can choose a different response. That's really healthy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 479.2,
+      "end": 486.7,
+      "text": "Yeah. I mean, I haven't said it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 486.7,
+      "end": 502.3,
+      "text": "I've been like, physically biting my tongue sometimes.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 502.3,
+      "end": 512.4,
+      "text": "Jordan probably thinks I'm weird.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 512.4,
+      "end": 518.9,
+      "text": "But I know it's too soon.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 518.9,
+      "end": 524.8,
+      "text": "I'm trying to do the secure attachment thing you talked about.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 525.1,
+      "end": 532.6,
+      "text": "You're doing great.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 532.6,
+      "end": 548.7,
+      "text": "And I want to acknowledge that this is hard work. Changing attachment patterns isn't easy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 548.7,
+      "end": 567.3,
+      "text": "Let me ask you - has anything come up that's been challenging in the relationship? Any moments where you've had to navigate something difficult?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 567.6,
+      "end": 578.4,
+      "text": "Um, yeah actually.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 578.4,
+      "end": 597.3,
+      "text": "So Jordan asked me about my family the other day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 597.3,
+      "end": 624.8,
+      "text": "Like, about my relationship with my parents, whether I'm out to them, that kind of stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 624.8,
+      "end": 632.4,
+      "text": "And I totally deflected.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 632.4,
+      "end": 648.9,
+      "text": "I was like oh you know, typical immigrant parents, and then changed the subject to their research project.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 649.2,
+      "end": 664.8,
+      "text": "Okay. So you avoided a vulnerable conversation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 664.8,
+      "end": 678.4,
+      "text": "What was happening for you in that moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 678.7,
+      "end": 692.3,
+      "text": "I just... I didn't want to get into all of it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 692.3,
+      "end": 729.4,
+      "text": "Like, how do I explain that my parents don't know I'm non-binary, that they still use my deadname, that I basically have to pretend to be someone else every time I talk to them?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 729.4,
+      "end": 738.6,
+      "text": "It's too heavy. Too much.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 738.6,
+      "end": 762.3,
+      "text": "Jordan will think I'm a mess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 762.6,
+      "end": 774.8,
+      "text": "So there's fear there.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 774.8,
+      "end": 802.4,
+      "text": "Fear that if Jordan sees the full picture of your life, including the complicated parts, they'll... what?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 802.4,
+      "end": 812.8,
+      "text": "What's the fear?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 813.1,
+      "end": 828.7,
+      "text": "That they'll think I'm too damaged. Too complicated.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 828.7,
+      "end": 852.3,
+      "text": "That they'll realize I'm not worth the effort and leave.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 852.3,
+      "end": 868.4,
+      "text": "Which I know sounds dramatic, but like... that's what always happens.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 868.4,
+      "end": 894.7,
+      "text": "Once people really know me, they leave.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 895.0,
+      "end": 928.6,
+      "text": "So that core belief is showing up again - I'm unlovable, if people really know me they'll leave.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 928.6,
+      "end": 944.8,
+      "text": "Alex, I want to challenge that belief.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 944.8,
+      "end": 962.4,
+      "text": "What evidence do you have that it's true? Who in your life has left after getting to know you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 962.7,
+      "end": 974.3,
+      "text": "I mean... Jamie left.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 974.3,
+      "end": 988.7,
+      "text": "And there was this person in undergrad, Sam.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 988.7,
+      "end": 1012.3,
+      "text": "We were really close and then they just kinda ghosted me after I opened up about my family stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1012.6,
+      "end": 1036.8,
+      "text": "Okay. So two romantic relationships that didn't work out.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1036.8,
+      "end": 1068.4,
+      "text": "And what about people who didn't leave? Sarah and Marcus - they know you pretty well, right?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1068.4,
+      "end": 1087.9,
+      "text": "Have they left?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1088.2,
+      "end": 1096.4,
+      "text": "No. I mean, Sarah knows everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1096.4,
+      "end": 1108.3,
+      "text": "She was the first person I came out to. She's been really solid.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1108.3,
+      "end": 1128.7,
+      "text": "Marcus too, actually. He's dealt with family stuff too, so he gets it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1128.7,
+      "end": 1142.6,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1142.9,
+      "end": 1168.4,
+      "text": "So you have evidence that contradicts that belief. When you've been vulnerable with friends, they've stayed. They've supported you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1168.4,
+      "end": 1204.2,
+      "text": "The pattern you're describing seems more specific to romantic relationships. Does that resonate?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1204.2,
+      "end": 1214.7,
+      "text": "",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1215.0,
+      "end": 1228.6,
+      "text": "Yeah, I guess so.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1228.6,
+      "end": 1248.3,
+      "text": "I don't know why romantic relationships feel so different.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1248.3,
+      "end": 1264.7,
+      "text": "Like the stakes are higher or something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1264.7,
+      "end": 1278.4,
+      "text": "Like I need them in a way I don't need my friends, which probably isn't healthy either.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1278.7,
+      "end": 1294.3,
+      "text": "That's a really important insight.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1294.3,
+      "end": 1336.8,
+      "text": "When we have anxious attachment patterns, we often look to romantic partners to meet needs that weren't met in childhood - that unconditional love and acceptance.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1336.8,
+      "end": 1348.2,
+      "text": "But that can create a lot of pressure on the relationship.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1348.2,
+      "end": 1358.2,
+      "text": "Does that fit for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1358.5,
+      "end": 1374.2,
+      "text": "Yeah, totally.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1374.2,
+      "end": 1408.6,
+      "text": "Like... with Jordan, I keep wanting them to validate that I'm okay, that I'm lovable, that I'm not too much.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1408.6,
+      "end": 1423.7,
+      "text": "But I know that's not their job. That's my work to do.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1423.7,
+      "end": 1445.8,
+      "text": "I just don't always know how to do it in the moment, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1446.1,
+      "end": 1468.3,
+      "text": "That's exactly right. And the fact that you can articulate that shows so much growth.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1468.3,
+      "end": 1486.7,
+      "text": "So let's talk about practical skills.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1486.7,
+      "end": 1524.2,
+      "text": "We've been working on DBT interpersonal effectiveness - do you remember DEAR MAN? The skill for asking for what you need and setting boundaries?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1524.2,
+      "end": 1534.6,
+      "text": "",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1534.9,
+      "end": 1548.3,
+      "text": "Um, kind of?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1548.3,
+      "end": 1572.6,
+      "text": "I remember you mentioned it but I don't remember what it stands for.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1572.6,
+      "end": 1598.3,
+      "text": "I know it's some kind of acronym for like, communication or something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1598.6,
+      "end": 1612.4,
+      "text": "Let's review it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1612.4,
+      "end": 1678.3,
+      "text": "DEAR MAN stands for: Describe the situation, Express your feelings, Assert what you need, Reinforce why it matters.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1678.3,
+      "end": 1714.8,
+      "text": "Then MAN is: be Mindful, Appear confident, and Negotiate if needed.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1714.8,
+      "end": 1729.6,
+      "text": "It's a framework for expressing your needs without people-pleasing or shutting down.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1729.6,
+      "end": 1734.2,
+      "text": "Want to practice it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1734.5,
+      "end": 1748.2,
+      "text": "Yeah, okay. I mean, I'll try.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1748.2,
+      "end": 1758.9,
+      "text": "What would I be practicing?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1759.2,
+      "end": 1788.4,
+      "text": "Let's practice having a boundary conversation with Jordan.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1788.4,
+      "end": 1822.3,
+      "text": "Something like asking for more time between hangouts, or being honest about needing space.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1822.3,
+      "end": 1832.7,
+      "text": "What feels relevant for you right now?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1833.0,
+      "end": 1848.6,
+      "text": "Um... I guess the space thing?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1848.6,
+      "end": 1878.3,
+      "text": "Like, we've been hanging out every single day and it's been great, but I'm also falling behind on my research.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1878.3,
+      "end": 1904.7,
+      "text": "I need to have like, at least a couple nights a week to just focus.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1904.7,
+      "end": 1924.6,
+      "text": "But I'm scared if I ask for that, they'll think I'm losing interest.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1924.9,
+      "end": 1948.7,
+      "text": "Perfect. That's a very reasonable boundary.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1948.7,
+      "end": 1964.8,
+      "text": "Let's use DEAR MAN. First, Describe the situation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1964.8,
+      "end": 1982.3,
+      "text": "What would you say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1982.6,
+      "end": 1996.4,
+      "text": "Um, okay. I would say...",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1996.4,
+      "end": 2024.7,
+      "text": "Jordan, I've loved spending so much time with you these past two weeks.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2024.7,
+      "end": 2042.3,
+      "text": "It's been really amazing getting to know you.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2042.3,
+      "end": 2056.8,
+      "text": "But I've noticed I'm falling behind on my PhD work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2057.1,
+      "end": 2074.8,
+      "text": "Good start. That's describing the situation factually.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2074.8,
+      "end": 2098.7,
+      "text": "Now Express how you feel about it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2099.0,
+      "end": 2116.4,
+      "text": "I feel... conflicted?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2116.4,
+      "end": 2142.7,
+      "text": "Like, I want to see you all the time, but I also feel stressed about my deadlines.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2142.7,
+      "end": 2187.4,
+      "text": "And I'm worried that if I don't say something, the stress is going to build up and affect how I show up in our relationship.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2187.7,
+      "end": 2208.3,
+      "text": "That's really good. You're being honest about your internal experience.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2208.3,
+      "end": 2238.9,
+      "text": "Now Assert what you need.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2239.2,
+      "end": 2278.6,
+      "text": "I need to have a couple nights a week where I can focus on my work without making plans.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2278.6,
+      "end": 2312.6,
+      "text": "Maybe like, Tuesday and Thursday could be my research nights?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2312.9,
+      "end": 2342.8,
+      "text": "Excellent. Very clear and specific.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2342.8,
+      "end": 2367.4,
+      "text": "Now Reinforce why this matters for the relationship.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2367.7,
+      "end": 2408.3,
+      "text": "I think if I can stay on top of my work, I'll be way less stressed and I'll be able to be more present when we do hang out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2408.3,
+      "end": 2456.3,
+      "text": "Like, I want to be fully there with you, not distracted and anxious about deadlines.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2456.6,
+      "end": 2478.4,
+      "text": "Perfect. Alex, that was excellent.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2478.4,
+      "end": 2513.2,
+      "text": "You described the situation, expressed your feelings, asserted your need clearly, and reinforced why it benefits both of you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2513.2,
+      "end": 2523.8,
+      "text": "How did that feel to practice?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2524.1,
+      "end": 2542.7,
+      "text": "It felt... weird but good?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2542.7,
+      "end": 2564.3,
+      "text": "Like, when I say it out loud like that, it sounds really reasonable.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2564.3,
+      "end": 2589.7,
+      "text": "But in my head I've been catastrophizing about it for days. Like Jordan's gonna be like, oh Alex doesn't want to hang out, they're pulling away, this is over.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2590.0,
+      "end": 2618.4,
+      "text": "Right. So that's your anxious attachment speaking.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2618.4,
+      "end": 2642.8,
+      "text": "But what you actually said was loving, honest, and mature.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2642.8,
+      "end": 2658.4,
+      "text": "You're not pulling away - you're creating sustainable conditions for the relationship. That's secure attachment in action.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2658.7,
+      "end": 2672.8,
+      "text": "Okay. Yeah. I can see that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2672.8,
+      "end": 2690.3,
+      "text": "I'm gonna try to have this conversation this week.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2690.3,
+      "end": 2700.0,
+      "text": "Maybe tomorrow.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "quality": {
+    "total_segments": 276,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 112,
+      "SPEAKER_01": 164
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-04-18T14:00:00Z",
+  "completed_at": "2025-04-18T14:50:13Z"
+}

@@ -1,0 +1,1225 @@
+{
+  "id": "session_07_alex_chen",
+  "status": "completed",
+  "filename": "session_07_2025-04-04.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_07_2025-04-04.mp3",
+    "file_size_mb": 38.7,
+    "duration": 3000.0,
+    "language": "english",
+    "timestamp": "20250404_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 398.3,
+    "preprocessing_time_seconds": 5.8,
+    "transcription_time_seconds": 62.1,
+    "diarization_time_seconds": 328.9,
+    "alignment_time_seconds": 1.5
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1185.0,
+      "segment_count": 72
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1815.0,
+      "segment_count": 98
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.3,
+      "text": "Hi Alex! Welcome back. It's been a few weeks since I saw you. How have you been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.3,
+      "end": 52.7,
+      "text": "Hi Dr. Mitchell! Yeah, sorry about missing last week. I went on this like, spontaneous spring break trip with some friends. But um, I'm actually doing okay? Like, better than I thought I'd be?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 52.7,
+      "end": 74.2,
+      "text": "That's really good to hear. A spontaneous trip sounds fun. So you're feeling okay? What's been going on?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 74.2,
+      "end": 158.6,
+      "text": "So, okay, I have to tell you something. I, um, I started using a dating app again. Like, just browsing at first, you know? And I matched with someone. Their name is Jordan, they're non-binary too, and we've been talking for like two weeks now and it's been really good. Like, really good.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 158.6,
+      "end": 186.4,
+      "text": "Oh wow, that's a big development! How are you feeling about it? I know we've talked about taking time to heal from the Jamie breakup, so I'm curious what prompted you to get back on the app.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 186.4,
+      "end": 264.8,
+      "text": "Yeah, I know. I wasn't planning on it, honestly. Sarah convinced me during spring break. She was like, you don't have to meet anyone, just like, see what's out there. And I was feeling pretty good, the Adderall is really helping with focus, so I was like okay, why not.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 264.8,
+      "end": 289.7,
+      "text": "Okay, so it sounds like you were in a good headspace when you decided to start browsing. And then you matched with Jordan. Tell me more about them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 289.7,
+      "end": 392.3,
+      "text": "They're like, really cool. They're 25, they work in graphic design, they're into gaming and like indie music. We've been texting constantly. Like, so much. And we have this really easy banter, you know? They're funny and like, they get my sense of humor. And they're also non-binary so we have that shared experience which feels really validating.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 392.3,
+      "end": 423.6,
+      "text": "That sounds really exciting. It's wonderful that you're connecting with someone who shares parts of your identity. How do you feel when you're talking to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 423.6,
+      "end": 512.8,
+      "text": "I feel like, really happy. Like butterflies and stuff. But also, um, really anxious? Like, I check my phone constantly. I'm like, refreshing the app every two minutes to see if they've responded. And if they don't text back right away, I start spiraling. Like, did I say something wrong? Are they losing interest already?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 512.8,
+      "end": 554.2,
+      "text": "Okay, so there's excitement but also a lot of anxiety. The constant phone checking and the spiraling when they don't respond immediately. That sounds exhausting. What are the thoughts that come up when you're spiraling?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 554.2,
+      "end": 647.9,
+      "text": "It's like, all the old stuff. Like, I'm too much, I'm too clingy, they're gonna figure out I'm not worth it and leave. Just like Jamie did. And I know, like rationally, I know we just started talking and they have a life and a job and everything. But my brain is like, no, if they cared they'd respond immediately.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 647.9,
+      "end": 698.3,
+      "text": "So that core belief we've talked about before, 'I'm too much' and 'people will leave,' is getting activated again. And you're aware that it's happening, which is actually really important progress. Can you tell me more about the physical experience of that anxiety?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 698.3,
+      "end": 781.6,
+      "text": "My chest gets tight, my heart races, I can't focus on anything else. Like yesterday I was supposed to be working on my research and I literally just stared at my phone for three hours. I kept typing and deleting messages. Like, should I text them first? Is that too much? What if I'm bothering them?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 781.6,
+      "end": 825.4,
+      "text": "That sounds really activating. So the anxiety is affecting your ability to function, similar to what we saw with the Jamie relationship. Have you sent multiple texts when Jordan hasn't responded?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 825.4,
+      "end": 912.7,
+      "text": "I've tried not to. Like, I'll type something out and then I force myself to wait. But it's so hard. And sometimes I do send like, a follow-up. Or I'll like, react to their Instagram story just to see if they'll respond there instead. I know it's like, exactly what I did with Jamie and I don't want to repeat that pattern.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 912.7,
+      "end": 967.8,
+      "text": "I'm really glad you're recognizing the pattern and trying to make different choices. That's significant. Let's talk about what's happening underneath this behavior. What do you think you're afraid will happen if you don't reach out?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 967.8,
+      "end": 1056.4,
+      "text": "That they'll forget about me. That like, if I'm not constantly engaging, they'll find someone else who's more interesting or less needy. Or they'll just ghost me because I'm not worth the effort. Like, I have to prove that I'm worth keeping around.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1056.4,
+      "end": 1124.8,
+      "text": "So there's this belief that you need to constantly earn their attention and affection, otherwise you'll be abandoned. Alex, this is a classic anxious attachment pattern. Does that term sound familiar to you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1124.8,
+      "end": 1178.3,
+      "text": "I think I've heard of it? Like, there's different attachment styles or something? I never really looked into it much.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1178.3,
+      "end": 1312.6,
+      "text": "Yes, exactly. Attachment theory describes how we learned to relate to caregivers as children and how those patterns show up in adult relationships. People with anxious attachment often fear abandonment, seek constant reassurance, and have difficulty trusting that they're worthy of love. Does that resonate with you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1312.6,
+      "end": 1387.9,
+      "text": "Yeah, that's literally me. Like, that's exactly what I do. I didn't know there was a name for it. So like, why am I like this? Is it because of my parents?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1387.9,
+      "end": 1523.7,
+      "text": "Attachment patterns are often formed in childhood based on our early relationships. Remember how we've talked about your parents showing love primarily through achievement? You had to perform well to get recognition and approval. Their affection was conditional. And you mentioned they weren't emotionally available when you were upset. So you learned that love has to be earned and that it might be withdrawn at any time.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1523.7,
+      "end": 1628.4,
+      "text": "Oh my god. That makes so much sense. Like, I'm doing the same thing in relationships that I did with my parents. Trying to be perfect so they won't leave. And when Jamie started pulling away, it felt exactly like when my dad would be disappointed in me. Like I failed somehow.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1628.4,
+      "end": 1702.8,
+      "text": "Yes, exactly. That's the connection. When Jamie pulled away, it triggered those old childhood wounds of feeling like you weren't good enough unless you were achieving or performing. And now with Jordan, your nervous system is on high alert trying to prevent that same abandonment from happening again.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1702.8,
+      "end": 1758.6,
+      "text": "But like, what if I actually am too much? What if Jamie was right to leave and Jordan will figure it out too?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1758.6,
+      "end": 1867.9,
+      "text": "Alex, I want you to hear this. You are not too much. Your need for connection and reassurance is not a character flaw. It's a nervous system response based on early experiences. Jamie leaving wasn't about you being too much. Relationships end for all kinds of reasons. What we need to work on is helping you feel secure within yourself, regardless of someone else's behavior.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1867.9,
+      "end": 1923.7,
+      "text": "That's really hard to believe right now. But I want to believe it. Like, how do I stop being so anxious? How do I not sabotage this thing with Jordan?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1923.7,
+      "end": 2036.8,
+      "text": "Great question. So first, we need to work on your relationship with the anxiety itself. In ACT, we call this willingness. Instead of trying to make the anxiety go away, which usually makes it worse, can you practice being willing to feel anxious without acting on it? So you notice, I'm feeling anxious, my chest is tight, I want to text Jordan. And then you just sit with that feeling.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2036.8,
+      "end": 2092.4,
+      "text": "Just sit with it? That sounds awful. Like, the whole point is I don't want to feel like this.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2092.4,
+      "end": 2198.6,
+      "text": "I know it sounds counterintuitive. But here's the thing: when you act on the anxiety by texting multiple times or constantly checking your phone, you're teaching your brain that the anxiety is dangerous and must be avoided. When you can sit with it and see that it's uncomfortable but not dangerous, the anxiety actually decreases over time.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2198.6,
+      "end": 2264.3,
+      "text": "Okay, that kind of makes sense. So like, I notice I'm anxious, I don't text, and then what? I just wait for it to go away?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2264.3,
+      "end": 2378.9,
+      "text": "You can notice it, name it, maybe even talk to it. Like, oh there's that anxious feeling again. I know you're trying to protect me from abandonment. Thank you, nervous system. And then you redirect your attention to something that matters to you. Your research, your friends, a hobby. Something that's aligned with your values, not your anxiety.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2378.9,
+      "end": 2447.6,
+      "text": "I can try that. It's gonna be hard though. Like, my brain is so loud when I'm anxious. I don't know if I can just redirect.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2447.6,
+      "end": 2534.2,
+      "text": "It is hard, and it takes practice. That's why we're going to work on it together. I also want you to start noticing your thoughts about Jordan and the relationship. Are you catastrophizing? Assuming the worst? We can challenge those thoughts using some CBT techniques.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2534.2,
+      "end": 2618.7,
+      "text": "Yeah, I definitely catastrophize. Like, if they take more than an hour to respond I'm convinced they're done with me. Even though they've never given me a reason to think that. They've been really consistent actually.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2618.7,
+      "end": 2692.3,
+      "text": "That's really important to notice. So the evidence actually contradicts your anxious thoughts. Jordan has been consistent. They keep responding. They're still engaging with you. But your anxiety is telling you a different story.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2692.3,
+      "end": 2754.8,
+      "text": "Yeah, exactly. So like, when I notice the catastrophic thought, what do I do?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2754.8,
+      "end": 2862.4,
+      "text": "You can ask yourself: what's the evidence for this thought? What's the evidence against it? What would I tell Sarah if she was having this thought? And what's a more balanced way to think about the situation? So instead of they're not responding, they must be done with me, you might think, they're not responding right now. They could be busy. They've been consistent before.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2862.4,
+      "end": 2912.6,
+      "text": "Okay, I can try that. It helps to like, have a script or something to follow when my brain is freaking out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2912.6,
+      "end": 2987.3,
+      "text": "Absolutely. I'm also going to suggest some homework. I want you to keep a journal specifically about your attachment patterns. When you feel anxious in the context of Jordan, write down what triggered it, what you were thinking, how you felt physically, and what you did in response.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2987.3,
+      "end": 3000.0,
+      "text": "Okay, I can do that. I actually think that'll be helpful to see the patterns more clearly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 6.4,
+      "text": "Hi Alex! Welcome back.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 6.4,
+      "end": 12.8,
+      "text": "It's been a few weeks since I saw you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 12.8,
+      "end": 18.3,
+      "text": "How have you been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.3,
+      "end": 22.7,
+      "text": "Hi Dr. Mitchell!",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 22.7,
+      "end": 32.4,
+      "text": "Yeah, sorry about missing last week. I went on this like, spontaneous spring break trip with some friends.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 32.4,
+      "end": 42.8,
+      "text": "But um, I'm actually doing okay?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 42.8,
+      "end": 52.7,
+      "text": "Like, better than I thought I'd be?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 52.7,
+      "end": 62.3,
+      "text": "That's really good to hear. A spontaneous trip sounds fun.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 62.3,
+      "end": 74.2,
+      "text": "So you're feeling okay? What's been going on?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 74.2,
+      "end": 82.6,
+      "text": "So, okay, I have to tell you something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 82.6,
+      "end": 98.3,
+      "text": "I, um, I started using a dating app again. Like, just browsing at first, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 98.3,
+      "end": 112.7,
+      "text": "And I matched with someone. Their name is Jordan, they're non-binary too,",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 112.7,
+      "end": 138.4,
+      "text": "and we've been talking for like two weeks now and it's been really good.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 138.4,
+      "end": 158.6,
+      "text": "Like, really good.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 158.6,
+      "end": 168.2,
+      "text": "Oh wow, that's a big development! How are you feeling about it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 168.2,
+      "end": 186.4,
+      "text": "I know we've talked about taking time to heal from the Jamie breakup, so I'm curious what prompted you to get back on the app.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 186.4,
+      "end": 196.8,
+      "text": "Yeah, I know. I wasn't planning on it, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 196.8,
+      "end": 216.4,
+      "text": "Sarah convinced me during spring break. She was like, you don't have to meet anyone, just like, see what's out there.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 216.4,
+      "end": 246.3,
+      "text": "And I was feeling pretty good, the Adderall is really helping with focus,",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 246.3,
+      "end": 264.8,
+      "text": "so I was like okay, why not.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 264.8,
+      "end": 278.6,
+      "text": "Okay, so it sounds like you were in a good headspace when you decided to start browsing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 278.6,
+      "end": 289.7,
+      "text": "And then you matched with Jordan. Tell me more about them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 289.7,
+      "end": 302.4,
+      "text": "They're like, really cool. They're 25, they work in graphic design,",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 302.4,
+      "end": 318.6,
+      "text": "they're into gaming and like indie music.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 318.6,
+      "end": 334.7,
+      "text": "We've been texting constantly. Like, so much.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 334.7,
+      "end": 358.2,
+      "text": "And we have this really easy banter, you know? They're funny and like, they get my sense of humor.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 358.2,
+      "end": 392.3,
+      "text": "And they're also non-binary so we have that shared experience which feels really validating.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 392.3,
+      "end": 406.8,
+      "text": "That sounds really exciting. It's wonderful that you're connecting with someone who shares parts of your identity.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 406.8,
+      "end": 423.6,
+      "text": "How do you feel when you're talking to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 423.6,
+      "end": 446.3,
+      "text": "I feel like, really happy. Like butterflies and stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 446.3,
+      "end": 462.7,
+      "text": "But also, um, really anxious?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 462.7,
+      "end": 486.4,
+      "text": "Like, I check my phone constantly. I'm like, refreshing the app every two minutes to see if they've responded.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 486.4,
+      "end": 512.8,
+      "text": "And if they don't text back right away, I start spiraling. Like, did I say something wrong? Are they losing interest already?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 512.8,
+      "end": 534.6,
+      "text": "Okay, so there's excitement but also a lot of anxiety. The constant phone checking and the spiraling when they don't respond immediately.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 534.6,
+      "end": 554.2,
+      "text": "That sounds exhausting. What are the thoughts that come up when you're spiraling?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 554.2,
+      "end": 572.6,
+      "text": "It's like, all the old stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 572.6,
+      "end": 598.3,
+      "text": "Like, I'm too much, I'm too clingy, they're gonna figure out I'm not worth it and leave. Just like Jamie did.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 598.3,
+      "end": 626.7,
+      "text": "And I know, like rationally, I know we just started talking and they have a life and a job and everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 626.7,
+      "end": 647.9,
+      "text": "But my brain is like, no, if they cared they'd respond immediately.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 647.9,
+      "end": 678.4,
+      "text": "So that core belief we've talked about before, 'I'm too much' and 'people will leave,' is getting activated again.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 678.4,
+      "end": 698.3,
+      "text": "And you're aware that it's happening, which is actually really important progress. Can you tell me more about the physical experience of that anxiety?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 698.3,
+      "end": 724.6,
+      "text": "My chest gets tight, my heart races, I can't focus on anything else.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 724.6,
+      "end": 756.8,
+      "text": "Like yesterday I was supposed to be working on my research and I literally just stared at my phone for three hours.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 756.8,
+      "end": 781.6,
+      "text": "I kept typing and deleting messages. Like, should I text them first? Is that too much? What if I'm bothering them?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 781.6,
+      "end": 806.2,
+      "text": "That sounds really activating. So the anxiety is affecting your ability to function, similar to what we saw with the Jamie relationship.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 806.2,
+      "end": 825.4,
+      "text": "Have you sent multiple texts when Jordan hasn't responded?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 825.4,
+      "end": 852.7,
+      "text": "I've tried not to. Like, I'll type something out and then I force myself to wait.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 852.7,
+      "end": 872.3,
+      "text": "But it's so hard. And sometimes I do send like, a follow-up.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 872.3,
+      "end": 896.8,
+      "text": "Or I'll like, react to their Instagram story just to see if they'll respond there instead.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 896.8,
+      "end": 912.7,
+      "text": "I know it's like, exactly what I did with Jamie and I don't want to repeat that pattern.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 912.7,
+      "end": 948.6,
+      "text": "I'm really glad you're recognizing the pattern and trying to make different choices. That's significant.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 948.6,
+      "end": 967.8,
+      "text": "Let's talk about what's happening underneath this behavior. What do you think you're afraid will happen if you don't reach out?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 967.8,
+      "end": 988.4,
+      "text": "That they'll forget about me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 988.4,
+      "end": 1024.6,
+      "text": "That like, if I'm not constantly engaging, they'll find someone else who's more interesting or less needy.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1024.6,
+      "end": 1044.8,
+      "text": "Or they'll just ghost me because I'm not worth the effort.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1044.8,
+      "end": 1056.4,
+      "text": "Like, I have to prove that I'm worth keeping around.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1056.4,
+      "end": 1098.6,
+      "text": "So there's this belief that you need to constantly earn their attention and affection, otherwise you'll be abandoned.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1098.6,
+      "end": 1124.8,
+      "text": "Alex, this is a classic anxious attachment pattern. Does that term sound familiar to you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1124.8,
+      "end": 1148.7,
+      "text": "I think I've heard of it? Like, there's different attachment styles or something?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1148.7,
+      "end": 1178.3,
+      "text": "I never really looked into it much.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1178.3,
+      "end": 1234.6,
+      "text": "Yes, exactly. Attachment theory describes how we learned to relate to caregivers as children and how those patterns show up in adult relationships.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1234.6,
+      "end": 1294.3,
+      "text": "People with anxious attachment often fear abandonment, seek constant reassurance, and have difficulty trusting that they're worthy of love.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1294.3,
+      "end": 1312.6,
+      "text": "Does that resonate with you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1312.6,
+      "end": 1338.2,
+      "text": "Yeah, that's literally me. Like, that's exactly what I do.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1338.2,
+      "end": 1362.7,
+      "text": "I didn't know there was a name for it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1362.7,
+      "end": 1387.9,
+      "text": "So like, why am I like this? Is it because of my parents?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1387.9,
+      "end": 1436.8,
+      "text": "Attachment patterns are often formed in childhood based on our early relationships.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1436.8,
+      "end": 1472.3,
+      "text": "Remember how we've talked about your parents showing love primarily through achievement? You had to perform well to get recognition and approval. Their affection was conditional.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1472.3,
+      "end": 1504.7,
+      "text": "And you mentioned they weren't emotionally available when you were upset.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1504.7,
+      "end": 1523.7,
+      "text": "So you learned that love has to be earned and that it might be withdrawn at any time.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1523.7,
+      "end": 1548.3,
+      "text": "Oh my god. That makes so much sense.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1548.3,
+      "end": 1578.6,
+      "text": "Like, I'm doing the same thing in relationships that I did with my parents. Trying to be perfect so they won't leave.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1578.6,
+      "end": 1614.8,
+      "text": "And when Jamie started pulling away, it felt exactly like when my dad would be disappointed in me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1614.8,
+      "end": 1628.4,
+      "text": "Like I failed somehow.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1628.4,
+      "end": 1648.7,
+      "text": "Yes, exactly. That's the connection.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1648.7,
+      "end": 1686.3,
+      "text": "When Jamie pulled away, it triggered those old childhood wounds of feeling like you weren't good enough unless you were achieving or performing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1686.3,
+      "end": 1702.8,
+      "text": "And now with Jordan, your nervous system is on high alert trying to prevent that same abandonment from happening again.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1702.8,
+      "end": 1734.6,
+      "text": "But like, what if I actually am too much?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1734.6,
+      "end": 1758.6,
+      "text": "What if Jamie was right to leave and Jordan will figure it out too?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1758.6,
+      "end": 1784.3,
+      "text": "Alex, I want you to hear this. You are not too much.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1784.3,
+      "end": 1812.6,
+      "text": "Your need for connection and reassurance is not a character flaw. It's a nervous system response based on early experiences.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1812.6,
+      "end": 1836.4,
+      "text": "Jamie leaving wasn't about you being too much. Relationships end for all kinds of reasons.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1836.4,
+      "end": 1867.9,
+      "text": "What we need to work on is helping you feel secure within yourself, regardless of someone else's behavior.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1867.9,
+      "end": 1902.3,
+      "text": "That's really hard to believe right now. But I want to believe it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1902.3,
+      "end": 1923.7,
+      "text": "Like, how do I stop being so anxious? How do I not sabotage this thing with Jordan?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1923.7,
+      "end": 1956.8,
+      "text": "Great question. So first, we need to work on your relationship with the anxiety itself.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1956.8,
+      "end": 1998.4,
+      "text": "In ACT, we call this willingness. Instead of trying to make the anxiety go away, which usually makes it worse,",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1998.4,
+      "end": 2023.6,
+      "text": "can you practice being willing to feel anxious without acting on it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2023.6,
+      "end": 2036.8,
+      "text": "So you notice, I'm feeling anxious, my chest is tight, I want to text Jordan. And then you just sit with that feeling.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2036.8,
+      "end": 2068.3,
+      "text": "Just sit with it? That sounds awful.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2068.3,
+      "end": 2092.4,
+      "text": "Like, the whole point is I don't want to feel like this.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2092.4,
+      "end": 2112.8,
+      "text": "I know it sounds counterintuitive. But here's the thing:",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2112.8,
+      "end": 2152.6,
+      "text": "when you act on the anxiety by texting multiple times or constantly checking your phone, you're teaching your brain that the anxiety is dangerous and must be avoided.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2152.6,
+      "end": 2198.6,
+      "text": "When you can sit with it and see that it's uncomfortable but not dangerous, the anxiety actually decreases over time.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2198.6,
+      "end": 2228.4,
+      "text": "Okay, that kind of makes sense.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2228.4,
+      "end": 2254.7,
+      "text": "So like, I notice I'm anxious, I don't text, and then what?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2254.7,
+      "end": 2264.3,
+      "text": "I just wait for it to go away?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2264.3,
+      "end": 2294.7,
+      "text": "You can notice it, name it, maybe even talk to it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2294.7,
+      "end": 2328.6,
+      "text": "Like, oh there's that anxious feeling again. I know you're trying to protect me from abandonment. Thank you, nervous system.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2328.6,
+      "end": 2362.4,
+      "text": "And then you redirect your attention to something that matters to you. Your research, your friends, a hobby.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2362.4,
+      "end": 2378.9,
+      "text": "Something that's aligned with your values, not your anxiety.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2378.9,
+      "end": 2408.3,
+      "text": "I can try that. It's gonna be hard though.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2408.3,
+      "end": 2434.6,
+      "text": "Like, my brain is so loud when I'm anxious.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2434.6,
+      "end": 2447.6,
+      "text": "I don't know if I can just redirect.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2447.6,
+      "end": 2478.4,
+      "text": "It is hard, and it takes practice. That's why we're going to work on it together.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2478.4,
+      "end": 2518.3,
+      "text": "I also want you to start noticing your thoughts about Jordan and the relationship. Are you catastrophizing? Assuming the worst?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2518.3,
+      "end": 2534.2,
+      "text": "We can challenge those thoughts using some CBT techniques.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2534.2,
+      "end": 2564.8,
+      "text": "Yeah, I definitely catastrophize.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2564.8,
+      "end": 2594.3,
+      "text": "Like, if they take more than an hour to respond I'm convinced they're done with me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2594.3,
+      "end": 2608.6,
+      "text": "Even though they've never given me a reason to think that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2608.6,
+      "end": 2618.7,
+      "text": "They've been really consistent actually.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2618.7,
+      "end": 2652.8,
+      "text": "That's really important to notice. So the evidence actually contradicts your anxious thoughts.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2652.8,
+      "end": 2678.4,
+      "text": "Jordan has been consistent. They keep responding. They're still engaging with you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2678.4,
+      "end": 2692.3,
+      "text": "But your anxiety is telling you a different story.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2692.3,
+      "end": 2728.6,
+      "text": "Yeah, exactly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2728.6,
+      "end": 2754.8,
+      "text": "So like, when I notice the catastrophic thought, what do I do?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2754.8,
+      "end": 2798.4,
+      "text": "You can ask yourself: what's the evidence for this thought? What's the evidence against it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2798.4,
+      "end": 2824.7,
+      "text": "What would I tell Sarah if she was having this thought?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2824.7,
+      "end": 2842.6,
+      "text": "And what's a more balanced way to think about the situation?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2842.6,
+      "end": 2862.4,
+      "text": "So instead of they're not responding, they must be done with me, you might think, they're not responding right now. They could be busy. They've been consistent before.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2862.4,
+      "end": 2892.8,
+      "text": "Okay, I can try that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2892.8,
+      "end": 2912.6,
+      "text": "It helps to like, have a script or something to follow when my brain is freaking out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2912.6,
+      "end": 2936.7,
+      "text": "Absolutely. I'm also going to suggest some homework.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2936.7,
+      "end": 2968.4,
+      "text": "I want you to keep a journal specifically about your attachment patterns.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2968.4,
+      "end": 2987.3,
+      "text": "When you feel anxious in the context of Jordan, write down what triggered it, what you were thinking, how you felt physically, and what you did in response.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2987.3,
+      "end": 3000.0,
+      "text": "Okay, I can do that. I actually think that'll be helpful to see the patterns more clearly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "quality": {
+    "total_segments": 170,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 72,
+      "SPEAKER_01": 98
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-04-04T14:00:00Z",
+  "completed_at": "2025-04-04T14:56:38Z"
+}

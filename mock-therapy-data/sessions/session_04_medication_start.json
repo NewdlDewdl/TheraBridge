@@ -1,0 +1,1428 @@
+{
+  "id": "session_04_alex_chen",
+  "status": "completed",
+  "filename": "session_04_2025-02-14.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_04_2025-02-14.mp3",
+    "file_size_mb": 33.8,
+    "duration": 2700.0,
+    "language": "english",
+    "timestamp": "20250214_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 308.6,
+    "preprocessing_time_seconds": 4.7,
+    "transcription_time_seconds": 48.9,
+    "diarization_time_seconds": 254.2,
+    "alignment_time_seconds": 0.8
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1080.0,
+      "segment_count": 62
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1620.0,
+      "segment_count": 78
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.3,
+      "text": "Hi Alex, good to see you. How have the past two weeks been? I know we left off talking about connecting with that psychiatrist for the ADHD evaluation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 53.2,
+      "text": "Hey. Um, yeah, so I actually saw Dr. Park last week. She prescribed me Adderall XR, 10 milligrams. I've been on it for like six days now. It's been... interesting.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 53.4,
+      "end": 78.6,
+      "text": "Oh wow, that's great that you followed through so quickly. Tell me about it. What's been interesting about starting the medication?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 78.8,
+      "end": 142.7,
+      "text": "Well, first of all, I can like... focus? It's kind of wild. Like yesterday I sat down to work on my research and I actually stayed focused for two hours straight. I've never done that before. My brain usually just ping-pongs between like fifteen different things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 143.0,
+      "end": 162.4,
+      "text": "That sounds like a really positive change. What's it like to experience that kind of sustained focus?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 162.7,
+      "end": 224.3,
+      "text": "It's honestly kind of emotional? Like, is this what neurotypical people feel like all the time? It's quieter in my head. The constant mental noise is just... turned down. I didn't realize how exhausting it was until it stopped.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 224.6,
+      "end": 251.8,
+      "text": "That's a profound realization, Alex. It makes sense that it would be emotional to suddenly experience what you've been missing. Have you noticed any side effects?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 252.1,
+      "end": 318.5,
+      "text": "Yeah, a few. My appetite is like, completely gone. I have to remind myself to eat. And my mouth is super dry all the time, I'm drinking water constantly. Oh, and the first couple days I felt kind of jittery, like I'd had way too much coffee. That's getting better though.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 318.9,
+      "end": 362.4,
+      "text": "Those are all pretty common side effects when starting stimulant medication. The jitteriness usually does improve as your body adjusts. Are you making sure to eat even when you're not hungry? That's really important.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 362.7,
+      "end": 401.3,
+      "text": "I'm trying. I set alarms on my phone to remind me. My roommate's been helping too, like making sure I eat breakfast before I take the pill. Dr. Park said that helps.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 401.6,
+      "end": 428.2,
+      "text": "That's really smart. I'm glad you have that support. How's your mood been since starting the medication?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 428.5,
+      "end": 512.8,
+      "text": "Um, honestly kind of all over the place. Like, on one hand, being able to focus and actually get work done has made me feel more hopeful about school. But on the other hand... it's been a rough week for other reasons.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 513.2,
+      "end": 532.6,
+      "text": "What's been rough about it? Tell me what's been going on.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 533.0,
+      "end": 608.4,
+      "text": "So, um, today is Valentine's Day. And this is my first Valentine's Day single in like three years. Jamie and I were together last year and the year before that. And I'm just... I'm really struggling with it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 608.8,
+      "end": 638.2,
+      "text": "That makes a lot of sense. Holidays and anniversaries can be really hard after a breakup. What's the struggle been like today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 638.6,
+      "end": 742.3,
+      "text": "It's like everywhere I look, there's couples. Like, I walked through campus this morning and there were people with flowers and chocolates and heart balloons. And my Instagram is full of people posting about their partners. And I'm just... alone. And it feels like I'm always gonna be alone.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 742.7,
+      "end": 782.5,
+      "text": "So you're feeling really lonely today, and seeing all these reminders of romantic love is making that loneliness feel even more intense. Did something specific trigger these feelings, or has it been building all day?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 782.9,
+      "end": 874.6,
+      "text": "It started last night honestly. I was scrolling through TikTok and there was this video of someone planning a surprise for their girlfriend, and I just started crying. Like ugly crying. Because Jamie used to do stuff like that for me, you know? And now that's just... gone.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 875.0,
+      "end": 918.4,
+      "text": "It sounds like you're grieving not just the relationship, but all those little moments of connection and thoughtfulness. That's a real loss, Alex. How long did you cry?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 918.8,
+      "end": 987.2,
+      "text": "I don't know, like an hour? My roommate heard me and came in and we talked for a while. They reminded me that Jamie wasn't actually that great to me, especially toward the end. But it's hard to remember that when I'm sad.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 987.6,
+      "end": 1032.8,
+      "text": "That's a really important observation. It's completely normal to romanticize a relationship after it ends, especially on a day like today. Can you tell me what your roommate meant when they said Jamie wasn't that great to you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1033.2,
+      "end": 1148.7,
+      "text": "I mean, like we talked about before, they were pulling away for months. They'd cancel plans last minute, not respond to my texts for hours or even days. And when we did hang out, they seemed distant. Like they were there physically but not mentally, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1149.1,
+      "end": 1184.3,
+      "text": "So toward the end, you weren't getting the connection and presence you needed from them. But earlier in the relationship, it was different?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1184.7,
+      "end": 1264.5,
+      "text": "Yeah, at the beginning it was amazing. They were so attentive and affectionate. We'd stay up all night talking. They made me feel like I was the most important person in the world. That's what I miss, I think.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1264.9,
+      "end": 1322.4,
+      "text": "So you're missing that feeling of being seen and prioritized and cared for. Those are fundamental human needs, Alex. It makes total sense that you're grieving the loss of that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1322.8,
+      "end": 1398.3,
+      "text": "Yeah. And like, part of me knows they weren't perfect. But another part of me is like, what if I never find that again? What if I'm unlovable and Jamie was my only chance?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1398.7,
+      "end": 1463.2,
+      "text": "Okay, I want to pause here because you just said something really important. You said 'I'm unlovable.' We talked about this belief a few weeks ago. Do you remember what we discussed about it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1463.6,
+      "end": 1522.8,
+      "text": "You said it's not true, and that we'd work on challenging it. But like, I know that intellectually, but it doesn't change how I feel, you know? It still feels true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1523.2,
+      "end": 1582.6,
+      "text": "I hear you. There's often a big gap between knowing something intellectually and feeling it emotionally. Let's try to bridge that gap a little bit. Can you tell me what evidence your brain is using to support this belief that you're unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1583.0,
+      "end": 1698.4,
+      "text": "I mean, Jamie left me. And before Jamie, there was Sam, and they left too. And before Sam there was Chris, and that ended badly too. Like, every relationship I've had ends with them leaving. So clearly I'm the common denominator, right? I must be the problem.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1698.8,
+      "end": 1764.3,
+      "text": "So your evidence is a pattern of relationships ending, and you're interpreting that pattern as proof that you're fundamentally unlovable. Is that right?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1764.7,
+      "end": 1792.5,
+      "text": "I mean, yeah. What else am I supposed to think?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1792.9,
+      "end": 1862.4,
+      "text": "Well, let's explore some alternative explanations. Most relationships do end, right? That's just statistically true. Most people date multiple people before finding a long-term partner, if they even want one. Does that mean everyone is unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1862.8,
+      "end": 1895.3,
+      "text": "No, I guess not. But it feels different when it's me, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1895.7,
+      "end": 1978.2,
+      "text": "I hear that. Our brains tend to apply much harsher standards to ourselves than we would to others. If your friend Sarah told you she'd had three relationships end, would you conclude she was unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1978.6,
+      "end": 2032.4,
+      "text": "No, of course not. I'd probably tell her that she just hasn't found the right person yet, or that those people didn't deserve her.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2032.8,
+      "end": 2078.5,
+      "text": "Exactly. So why is it different when it's you? What makes you uniquely unlovable compared to your friends who have also had breakups?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2079.0,
+      "end": 2156.8,
+      "text": "I... I don't know. I guess I just feel like I'm too much. Like I need too much reassurance, I'm too needy, I'm too anxious. And people get tired of dealing with that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2157.2,
+      "end": 2234.6,
+      "text": "Okay, so you're describing behaviors that stem from anxiety, specifically around attachment and abandonment. Those are things you're working on in therapy. Does having anxiety make someone unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2235.0,
+      "end": 2278.3,
+      "text": "No. I mean, I love my friends who have anxiety. I don't think they're unlovable.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2278.7,
+      "end": 2354.2,
+      "text": "Right. So what if instead of 'I'm unlovable,' we reframe this as 'I'm learning to manage my anxiety in relationships, and I'm learning what kind of partner is right for me'? How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2354.6,
+      "end": 2418.7,
+      "text": "I mean, it feels better I guess. Less like there's something fundamentally broken about me. But I still feel really lonely right now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2419.1,
+      "end": 2487.3,
+      "text": "And that's completely valid. You can work on challenging the thought 'I'm unlovable' and still feel lonely and sad about your breakup. Those things aren't mutually exclusive. In fact, let me ask you this: what would self-love look like for you today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2487.7,
+      "end": 2534.2,
+      "text": "What do you mean? Like, self-care stuff? I don't really feel like doing face masks or whatever.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2534.6,
+      "end": 2612.8,
+      "text": "Not necessarily. I mean, what would it look like to be compassionate toward yourself today? To treat yourself the way you'd treat a friend who was hurting on Valentine's Day?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2613.2,
+      "end": 2700.0,
+      "text": "Um, I guess I'd tell them it's okay to be sad. That breakups suck and it's okay to grieve. Maybe I'd suggest we do something fun together to distract them, like watch a movie or order their favorite food. I don't know.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 7.2,
+      "text": "Hi Alex, good to see you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 7.4,
+      "end": 10.8,
+      "text": "How have the past two weeks been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 10.8,
+      "end": 18.3,
+      "text": "I know we left off talking about connecting with that psychiatrist for the ADHD evaluation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 21.6,
+      "text": "Hey. Um, yeah, so I actually saw Dr. Park last week.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 21.8,
+      "end": 32.4,
+      "text": "She prescribed me Adderall XR, 10 milligrams.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 32.6,
+      "end": 39.8,
+      "text": "I've been on it for like six days now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 40.1,
+      "end": 53.2,
+      "text": "It's been... interesting.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 53.4,
+      "end": 62.8,
+      "text": "Oh wow, that's great that you followed through so quickly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 63.1,
+      "end": 65.4,
+      "text": "Tell me about it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 65.7,
+      "end": 78.6,
+      "text": "What's been interesting about starting the medication?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 78.8,
+      "end": 95.3,
+      "text": "Well, first of all, I can like... focus?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 95.6,
+      "end": 98.2,
+      "text": "It's kind of wild.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 98.5,
+      "end": 117.8,
+      "text": "Like yesterday I sat down to work on my research and I actually stayed focused for two hours straight.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 118.1,
+      "end": 121.4,
+      "text": "I've never done that before.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 121.7,
+      "end": 142.7,
+      "text": "My brain usually just ping-pongs between like fifteen different things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 143.0,
+      "end": 152.6,
+      "text": "That sounds like a really positive change.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 152.9,
+      "end": 162.4,
+      "text": "What's it like to experience that kind of sustained focus?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 162.7,
+      "end": 178.4,
+      "text": "It's honestly kind of emotional?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 178.7,
+      "end": 193.5,
+      "text": "Like, is this what neurotypical people feel like all the time?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 193.8,
+      "end": 203.2,
+      "text": "It's quieter in my head. The constant mental noise is just... turned down.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 203.5,
+      "end": 224.3,
+      "text": "I didn't realize how exhausting it was until it stopped.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 224.6,
+      "end": 238.4,
+      "text": "That's a profound realization, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 238.7,
+      "end": 251.8,
+      "text": "It makes sense that it would be emotional to suddenly experience what you've been missing. Have you noticed any side effects?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 252.1,
+      "end": 258.6,
+      "text": "Yeah, a few.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 258.9,
+      "end": 273.4,
+      "text": "My appetite is like, completely gone. I have to remind myself to eat.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 273.7,
+      "end": 288.2,
+      "text": "And my mouth is super dry all the time, I'm drinking water constantly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 288.5,
+      "end": 307.8,
+      "text": "Oh, and the first couple days I felt kind of jittery, like I'd had way too much coffee.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 308.1,
+      "end": 318.5,
+      "text": "That's getting better though.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 318.9,
+      "end": 342.6,
+      "text": "Those are all pretty common side effects when starting stimulant medication.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 342.9,
+      "end": 352.8,
+      "text": "The jitteriness usually does improve as your body adjusts.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 353.1,
+      "end": 362.4,
+      "text": "Are you making sure to eat even when you're not hungry? That's really important.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 362.7,
+      "end": 372.4,
+      "text": "I'm trying. I set alarms on my phone to remind me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 372.7,
+      "end": 391.8,
+      "text": "My roommate's been helping too, like making sure I eat breakfast before I take the pill.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 392.1,
+      "end": 401.3,
+      "text": "Dr. Park said that helps.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 401.6,
+      "end": 413.8,
+      "text": "That's really smart. I'm glad you have that support.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 414.1,
+      "end": 428.2,
+      "text": "How's your mood been since starting the medication?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 428.5,
+      "end": 446.3,
+      "text": "Um, honestly kind of all over the place.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 446.6,
+      "end": 482.7,
+      "text": "Like, on one hand, being able to focus and actually get work done has made me feel more hopeful about school.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 483.0,
+      "end": 512.8,
+      "text": "But on the other hand... it's been a rough week for other reasons.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 513.2,
+      "end": 521.4,
+      "text": "What's been rough about it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 521.7,
+      "end": 532.6,
+      "text": "Tell me what's been going on.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 533.0,
+      "end": 547.8,
+      "text": "So, um, today is Valentine's Day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 548.1,
+      "end": 567.4,
+      "text": "And this is my first Valentine's Day single in like three years.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 567.7,
+      "end": 588.3,
+      "text": "Jamie and I were together last year and the year before that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 588.6,
+      "end": 608.4,
+      "text": "And I'm just... I'm really struggling with it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 608.8,
+      "end": 618.6,
+      "text": "That makes a lot of sense.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 618.9,
+      "end": 628.4,
+      "text": "Holidays and anniversaries can be really hard after a breakup.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 628.7,
+      "end": 638.2,
+      "text": "What's the struggle been like today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 638.6,
+      "end": 653.4,
+      "text": "It's like everywhere I look, there's couples.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 653.7,
+      "end": 688.5,
+      "text": "Like, I walked through campus this morning and there were people with flowers and chocolates and heart balloons.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 688.8,
+      "end": 712.6,
+      "text": "And my Instagram is full of people posting about their partners.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 712.9,
+      "end": 728.4,
+      "text": "And I'm just... alone.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 728.7,
+      "end": 742.3,
+      "text": "And it feels like I'm always gonna be alone.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 742.7,
+      "end": 762.8,
+      "text": "So you're feeling really lonely today, and seeing all these reminders of romantic love is making that loneliness feel even more intense.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 763.1,
+      "end": 782.5,
+      "text": "Did something specific trigger these feelings, or has it been building all day?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 782.9,
+      "end": 798.4,
+      "text": "It started last night honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 798.7,
+      "end": 832.6,
+      "text": "I was scrolling through TikTok and there was this video of someone planning a surprise for their girlfriend, and I just started crying.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 832.9,
+      "end": 838.2,
+      "text": "Like ugly crying.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 838.5,
+      "end": 858.7,
+      "text": "Because Jamie used to do stuff like that for me, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 859.0,
+      "end": 874.6,
+      "text": "And now that's just... gone.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 875.0,
+      "end": 908.2,
+      "text": "It sounds like you're grieving not just the relationship, but all those little moments of connection and thoughtfulness.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 908.5,
+      "end": 913.8,
+      "text": "That's a real loss, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 914.1,
+      "end": 918.4,
+      "text": "How long did you cry?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 918.8,
+      "end": 933.5,
+      "text": "I don't know, like an hour?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 933.8,
+      "end": 952.7,
+      "text": "My roommate heard me and came in and we talked for a while.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 953.0,
+      "end": 974.3,
+      "text": "They reminded me that Jamie wasn't actually that great to me, especially toward the end.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 974.6,
+      "end": 987.2,
+      "text": "But it's hard to remember that when I'm sad.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 987.6,
+      "end": 1003.4,
+      "text": "That's a really important observation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1003.7,
+      "end": 1022.6,
+      "text": "It's completely normal to romanticize a relationship after it ends, especially on a day like today.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1022.9,
+      "end": 1032.8,
+      "text": "Can you tell me what your roommate meant when they said Jamie wasn't that great to you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1033.2,
+      "end": 1058.4,
+      "text": "I mean, like we talked about before, they were pulling away for months.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1058.7,
+      "end": 1082.6,
+      "text": "They'd cancel plans last minute, not respond to my texts for hours or even days.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1082.9,
+      "end": 1118.4,
+      "text": "And when we did hang out, they seemed distant.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1118.7,
+      "end": 1148.7,
+      "text": "Like they were there physically but not mentally, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1149.1,
+      "end": 1172.8,
+      "text": "So toward the end, you weren't getting the connection and presence you needed from them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1173.1,
+      "end": 1184.3,
+      "text": "But earlier in the relationship, it was different?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1184.7,
+      "end": 1198.5,
+      "text": "Yeah, at the beginning it was amazing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1198.8,
+      "end": 1212.4,
+      "text": "They were so attentive and affectionate.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1212.7,
+      "end": 1228.3,
+      "text": "We'd stay up all night talking.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1228.6,
+      "end": 1248.2,
+      "text": "They made me feel like I was the most important person in the world.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1248.5,
+      "end": 1264.5,
+      "text": "That's what I miss, I think.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1264.9,
+      "end": 1298.6,
+      "text": "So you're missing that feeling of being seen and prioritized and cared for.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1298.9,
+      "end": 1308.2,
+      "text": "Those are fundamental human needs, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1308.5,
+      "end": 1322.4,
+      "text": "It makes total sense that you're grieving the loss of that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1322.8,
+      "end": 1338.4,
+      "text": "Yeah. And like, part of me knows they weren't perfect.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1338.7,
+      "end": 1363.5,
+      "text": "But another part of me is like, what if I never find that again?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1363.8,
+      "end": 1398.3,
+      "text": "What if I'm unlovable and Jamie was my only chance?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1398.7,
+      "end": 1428.6,
+      "text": "Okay, I want to pause here because you just said something really important.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1428.9,
+      "end": 1443.2,
+      "text": "You said 'I'm unlovable.'",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1443.5,
+      "end": 1453.8,
+      "text": "We talked about this belief a few weeks ago.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1454.1,
+      "end": 1463.2,
+      "text": "Do you remember what we discussed about it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1463.6,
+      "end": 1488.4,
+      "text": "You said it's not true, and that we'd work on challenging it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1488.7,
+      "end": 1508.3,
+      "text": "But like, I know that intellectually, but it doesn't change how I feel, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1508.6,
+      "end": 1522.8,
+      "text": "It still feels true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1523.2,
+      "end": 1528.7,
+      "text": "I hear you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1529.0,
+      "end": 1553.8,
+      "text": "There's often a big gap between knowing something intellectually and feeling it emotionally.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1554.1,
+      "end": 1563.4,
+      "text": "Let's try to bridge that gap a little bit.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1563.7,
+      "end": 1582.6,
+      "text": "Can you tell me what evidence your brain is using to support this belief that you're unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1583.0,
+      "end": 1608.3,
+      "text": "I mean, Jamie left me. And before Jamie, there was Sam, and they left too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1608.6,
+      "end": 1638.7,
+      "text": "And before Sam there was Chris, and that ended badly too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1639.0,
+      "end": 1663.8,
+      "text": "Like, every relationship I've had ends with them leaving.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1664.1,
+      "end": 1683.2,
+      "text": "So clearly I'm the common denominator, right?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1683.5,
+      "end": 1698.4,
+      "text": "I must be the problem.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1698.8,
+      "end": 1738.6,
+      "text": "So your evidence is a pattern of relationships ending, and you're interpreting that pattern as proof that you're fundamentally unlovable.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1738.9,
+      "end": 1764.3,
+      "text": "Is that right?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1764.7,
+      "end": 1783.4,
+      "text": "I mean, yeah. What else am I supposed to think?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1783.7,
+      "end": 1792.5,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1792.9,
+      "end": 1818.4,
+      "text": "Well, let's explore some alternative explanations.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1818.7,
+      "end": 1838.6,
+      "text": "Most relationships do end, right? That's just statistically true.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1838.9,
+      "end": 1853.2,
+      "text": "Most people date multiple people before finding a long-term partner, if they even want one.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1853.5,
+      "end": 1862.4,
+      "text": "Does that mean everyone is unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1862.8,
+      "end": 1883.2,
+      "text": "No, I guess not. But it feels different when it's me, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1883.5,
+      "end": 1895.3,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1895.7,
+      "end": 1908.6,
+      "text": "I hear that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1908.9,
+      "end": 1938.4,
+      "text": "Our brains tend to apply much harsher standards to ourselves than we would to others.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1938.7,
+      "end": 1968.3,
+      "text": "If your friend Sarah told you she'd had three relationships end, would you conclude she was unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1968.6,
+      "end": 1978.2,
+      "text": "",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1978.6,
+      "end": 1988.3,
+      "text": "No, of course not.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1988.6,
+      "end": 2018.2,
+      "text": "I'd probably tell her that she just hasn't found the right person yet, or that those people didn't deserve her.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2018.5,
+      "end": 2032.4,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2032.8,
+      "end": 2038.2,
+      "text": "Exactly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2038.5,
+      "end": 2053.4,
+      "text": "So why is it different when it's you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2053.7,
+      "end": 2078.5,
+      "text": "What makes you uniquely unlovable compared to your friends who have also had breakups?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2079.0,
+      "end": 2098.3,
+      "text": "I... I don't know. I guess I just feel like I'm too much.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2098.6,
+      "end": 2128.4,
+      "text": "Like I need too much reassurance, I'm too needy, I'm too anxious.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2128.7,
+      "end": 2156.8,
+      "text": "And people get tired of dealing with that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2157.2,
+      "end": 2203.4,
+      "text": "Okay, so you're describing behaviors that stem from anxiety, specifically around attachment and abandonment.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2203.7,
+      "end": 2218.3,
+      "text": "Those are things you're working on in therapy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2218.6,
+      "end": 2234.6,
+      "text": "Does having anxiety make someone unlovable?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2235.0,
+      "end": 2243.8,
+      "text": "No.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2244.1,
+      "end": 2258.6,
+      "text": "I mean, I love my friends who have anxiety.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2258.9,
+      "end": 2278.3,
+      "text": "I don't think they're unlovable.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2278.7,
+      "end": 2288.4,
+      "text": "Right.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2288.7,
+      "end": 2323.8,
+      "text": "So what if instead of 'I'm unlovable,' we reframe this as 'I'm learning to manage my anxiety in relationships, and I'm learning what kind of partner is right for me'?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2324.1,
+      "end": 2354.2,
+      "text": "How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2354.6,
+      "end": 2373.4,
+      "text": "I mean, it feels better I guess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2373.7,
+      "end": 2398.2,
+      "text": "Less like there's something fundamentally broken about me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2398.5,
+      "end": 2418.7,
+      "text": "But I still feel really lonely right now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2419.1,
+      "end": 2433.6,
+      "text": "And that's completely valid.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2433.9,
+      "end": 2463.8,
+      "text": "You can work on challenging the thought 'I'm unlovable' and still feel lonely and sad about your breakup.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2464.1,
+      "end": 2477.2,
+      "text": "Those things aren't mutually exclusive.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2477.5,
+      "end": 2487.3,
+      "text": "In fact, let me ask you this: what would self-love look like for you today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2487.7,
+      "end": 2508.4,
+      "text": "What do you mean? Like, self-care stuff?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2508.7,
+      "end": 2534.2,
+      "text": "I don't really feel like doing face masks or whatever.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2534.6,
+      "end": 2548.3,
+      "text": "Not necessarily.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2548.6,
+      "end": 2573.4,
+      "text": "I mean, what would it look like to be compassionate toward yourself today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2573.7,
+      "end": 2612.8,
+      "text": "To treat yourself the way you'd treat a friend who was hurting on Valentine's Day?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2613.2,
+      "end": 2643.5,
+      "text": "Um, I guess I'd tell them it's okay to be sad.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2643.8,
+      "end": 2663.7,
+      "text": "That breakups suck and it's okay to grieve.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2664.0,
+      "end": 2687.4,
+      "text": "Maybe I'd suggest we do something fun together to distract them, like watch a movie or order their favorite food.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2687.7,
+      "end": 2700.0,
+      "text": "I don't know.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "quality": {
+    "total_segments": 140,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 62,
+      "SPEAKER_01": 78
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-02-14T14:00:00Z",
+  "completed_at": "2025-02-14T14:51:29Z"
+}

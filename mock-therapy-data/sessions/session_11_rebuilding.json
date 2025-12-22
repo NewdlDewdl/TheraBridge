@@ -1,0 +1,1267 @@
+{
+  "id": "session_11_alex_chen",
+  "status": "completed",
+  "filename": "session_11_2025-05-16.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_11_2025-05-16.mp3",
+    "file_size_mb": 38.4,
+    "duration": 3000.0,
+    "language": "english",
+    "timestamp": "20250516_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 385.6,
+    "preprocessing_time_seconds": 5.8,
+    "transcription_time_seconds": 62.1,
+    "diarization_time_seconds": 316.4,
+    "alignment_time_seconds": 1.3
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1200.0,
+      "segment_count": 72
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1800.0,
+      "segment_count": 98
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.7,
+      "text": "Hi Alex, come on in. How are you doing today? I can see something in your face - you look different. More peaceful maybe?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.9,
+      "end": 62.3,
+      "text": "Yeah, I... I think I am? Like, I'm still processing everything from last week, obviously. But something shifted. My mom texted me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 62.5,
+      "end": 78.4,
+      "text": "Your mom texted you? Tell me about that. What did she say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 78.6,
+      "end": 154.8,
+      "text": "It was actually kind of amazing. She said, um, 'We need time to understand. We love you.' That's it. Just those two sentences. But like, Dr. Mitchell, she used 'we.' She's never spoken for my dad like that before.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 155.0,
+      "end": 187.3,
+      "text": "That's significant. 'We need time to understand. We love you.' How did you feel when you read that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 187.5,
+      "end": 268.9,
+      "text": "I cried, honestly. Like, I just sat on my bed and cried for like twenty minutes. It wasn't the big acceptance speech I'd fantasized about, you know? But it was real. It was them trying. And that's... that's more than I expected a week ago.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 269.1,
+      "end": 312.6,
+      "text": "That makes so much sense. You're grieving the fantasy of instant acceptance while also honoring the reality of their effort. That's incredibly mature, Alex. Have you heard anything from your father directly?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 312.8,
+      "end": 398.2,
+      "text": "No, not from him. But my mom said he's been reading articles. Like, actual articles about gender identity and transgender and non-binary people. She sent me a screenshot - he has like fifteen tabs open on his phone. It's so dad of him, you know? He has to research everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 398.4,
+      "end": 437.8,
+      "text": "That's his way of trying to understand. He's approaching this the way he approaches his work - methodically, through research. That doesn't mean it's not coming from a place of love. What does that bring up for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 438.0,
+      "end": 528.6,
+      "text": "It's weird. Like, I'm not expecting him to suddenly get it or like, throw me a pride parade. But knowing he's trying? That's something. Jordan said I should lower my expectations, but I don't think that's what this is. I think this is just... accepting what is, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 528.8,
+      "end": 568.4,
+      "text": "That's a really important distinction. Acceptance isn't about lowering standards or giving up hope. It's about being present with reality as it is. How's Jordan been through all this?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 568.6,
+      "end": 648.9,
+      "text": "They've been incredible. Like, truly amazing. They took me to this LGBTQ+ support group on campus on Tuesday. I was so nervous, but everyone was so welcoming. There were other non-binary people there, and like, people whose families are still figuring things out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 649.1,
+      "end": 678.5,
+      "text": "How did it feel to be in that space with people who share similar experiences?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 678.7,
+      "end": 768.3,
+      "text": "It felt like breathing, honestly. Like I didn't have to explain myself or justify anything. Someone said their parents took three years to start using their pronouns consistently. Three years. And they survived. They're still in relationship with their family.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 768.5,
+      "end": 812.6,
+      "text": "That perspective - that change can be slow and non-linear but still meaningful - that seems really important for you to hear right now. Are you planning to keep going to the group?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 812.8,
+      "end": 873.4,
+      "text": "Yeah, definitely. It's every Tuesday at seven. Jordan's coming with me next week too. They said they want to understand my experience better, and like, meet people who get it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 873.6,
+      "end": 924.8,
+      "text": "That's wonderful. That shows real commitment and care from Jordan. I want to check in on how you're doing emotionally this week. Last session was really intense. Where are your depression and anxiety levels right now?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 925.0,
+      "end": 1012.7,
+      "text": "Better, actually. Not like, perfect or anything. But I've been doing the meditation every morning like we talked about. Just ten minutes. And it's helping. I can like, observe the grief without drowning in it, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1012.9,
+      "end": 1058.3,
+      "text": "That's exactly what mindfulness practice is about - observing without being consumed. That's a huge skill, Alex. Can you tell me more about what that's been like for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1058.5,
+      "end": 1178.9,
+      "text": "So like, I'll be sitting there and thoughts will come up. Like 'my dad hates me' or 'I ruined everything.' But instead of spiraling, I just notice it. Like, 'oh, there's that thought again.' And then I go back to my breath. It doesn't make the thought go away, but it makes it less... sharp? Less like it's the only truth.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1179.1,
+      "end": 1234.6,
+      "text": "That's profound work. You're creating space between yourself and your thoughts. That's cognitive defusion - a key ACT skill. You're not fighting the thoughts, you're changing your relationship to them. How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1234.8,
+      "end": 1298.5,
+      "text": "It feels like freedom, honestly. Like, I don't have to believe every scary thing my brain tells me. I can just let it pass through, like clouds in the sky.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1298.7,
+      "end": 1356.8,
+      "text": "That's beautiful imagery. Clouds in the sky - they're there, but they're not permanent, and they don't define the whole sky. I love that you're finding your own metaphors for this work. How about the gratitude journal we talked about?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1357.0,
+      "end": 1454.3,
+      "text": "I'm doing it. Every night before bed, three things. Some days it's hard, like really hard. But I'm finding things. Jordan's laugh. The way my advisor actually listened to me this week. My mom's text. The sunshine. Small things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1454.5,
+      "end": 1508.9,
+      "text": "Those small things are everything. Depression wants us to focus on what's broken or missing. Gratitude practice trains us to notice what's present, what's working. You're retraining your brain. How's your sleep been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1509.1,
+      "end": 1587.6,
+      "text": "Better. I'm sleeping like six to seven hours most nights now. Still wake up sometimes, but it's not the all-night panic spiral anymore. The Adderall wearing off routine is helping too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1587.8,
+      "end": 1624.7,
+      "text": "Good. Consistent sleep is so important for mood regulation. And your appetite? You were struggling with that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1624.9,
+      "end": 1698.4,
+      "text": "I'm eating more regularly. Jordan's been cooking with me - like, we made stir fry last night. It felt normal. It felt good. I'm not forcing myself, it just feels less impossible now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1698.6,
+      "end": 1752.3,
+      "text": "That's wonderful. That's your body saying it feels safer, more grounded. I want to ask you about something you said earlier. You mentioned realizing that progress isn't linear. Can you say more about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1752.5,
+      "end": 1867.8,
+      "text": "Yeah, like... I keep waiting for the moment where everything is fixed, you know? Where my parents fully accept me, where I never feel anxious again, where school is easy. But that's not how it works. Some days are hard. Some days are okay. And that doesn't mean I'm failing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1868.0,
+      "end": 1912.4,
+      "text": "That's such an important realization. You're letting go of the all-or-nothing thinking. What helped you get there?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1912.6,
+      "end": 2003.8,
+      "text": "Honestly? The support group. Hearing people talk about their journeys. One person said it took them five years to feel solid in their identity and their family relationships. Five years. And I've been out to my parents for like, a week and a half.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2004.0,
+      "end": 2068.5,
+      "text": "Right. And in that week and a half, your mom reached out. Your dad is researching. You're building community. You're practicing mindfulness. You're still showing up to therapy. That's not nothing, Alex. That's resilience.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2068.7,
+      "end": 2134.9,
+      "text": "I didn't think about it that way. I've just been so focused on what hasn't happened yet. But you're right. I survived. Like, I genuinely didn't know if I would, and I did.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2135.1,
+      "end": 2198.6,
+      "text": "You not only survived, you're actively building a life that aligns with your values. You came out even though it was terrifying. You're staying in relationship with your parents even though it's painful. You're letting Jordan support you. That's courage.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2198.8,
+      "end": 2267.4,
+      "text": "I guess I never thought of it as courage. I thought courage was like, not being scared. But I'm scared all the time. I'm just doing it anyway.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2267.6,
+      "end": 2324.8,
+      "text": "That's the definition of courage - doing what matters even when you're afraid. Fear isn't the opposite of courage, it's a prerequisite. Can I share something I've noticed about your language today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2325.0,
+      "end": 2342.3,
+      "text": "Sure, yeah.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2342.5,
+      "end": 2434.7,
+      "text": "You've used the word 'I' a lot - 'I survived,' 'I'm doing it anyway,' 'I can observe my thoughts.' You're owning your agency, your strength. Last week you were saying 'they left me,' 'this happened to me.' Do you notice the shift?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2434.9,
+      "end": 2523.6,
+      "text": "Whoa. Yeah. I... yeah, I do. I guess I'm realizing that I'm not just a victim of circumstances. I'm making choices. I'm showing up. I have some control here, even when things feel out of control.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2523.8,
+      "end": 2598.4,
+      "text": "Exactly. That's psychological flexibility - the ability to stay present, accept what you can't control, and commit to actions aligned with your values even in the face of difficulty. You're living it. You mentioned something earlier that really struck me. You said, quote, 'I don't need them to understand me to know who I am.' Can we talk about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2598.6,
+      "end": 2714.8,
+      "text": "Yeah. That's like, the biggest thing I've realized. For so long I thought I needed my parents' approval to be valid. Like, if they didn't accept me, then maybe I was wrong about myself. But I know who I am. Their journey to understanding is separate from my truth.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2715.0,
+      "end": 2768.9,
+      "text": "That's profound, Alex. That's differentiation - knowing where you end and they begin. Your identity isn't contingent on their understanding. Where did that insight come from?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2769.1,
+      "end": 2853.7,
+      "text": "I think from Jordan, honestly. They told me, 'Your parents' confusion doesn't make you less real.' And it just clicked. Like, the sky is still blue even if someone is colorblind, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2853.9,
+      "end": 2912.5,
+      "text": "That's a powerful metaphor. Jordan sounds like they have real wisdom. How does it feel to let yourself be supported by them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2912.7,
+      "end": 2986.4,
+      "text": "Scary sometimes. But good. I keep waiting for them to leave, you know? Like everyone else did. But they keep showing up. And I'm trying to just trust that instead of sabotaging it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2986.6,
+      "end": 3000.0,
+      "text": "That's the work. Letting yourself be loved is sometimes harder than loving. You're doing beautifully, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 7.2,
+      "text": "Hi Alex, come on in. How are you doing today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 7.2,
+      "end": 18.7,
+      "text": "I can see something in your face - you look different. More peaceful maybe?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.9,
+      "end": 26.4,
+      "text": "Yeah, I... I think I am?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 26.4,
+      "end": 44.8,
+      "text": "Like, I'm still processing everything from last week, obviously. But something shifted.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 44.8,
+      "end": 62.3,
+      "text": "My mom texted me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 62.5,
+      "end": 78.4,
+      "text": "Your mom texted you? Tell me about that. What did she say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 78.6,
+      "end": 89.3,
+      "text": "It was actually kind of amazing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 89.3,
+      "end": 112.7,
+      "text": "She said, um, 'We need time to understand. We love you.' That's it. Just those two sentences.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 112.7,
+      "end": 154.8,
+      "text": "But like, Dr. Mitchell, she used 'we.' She's never spoken for my dad like that before.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 155.0,
+      "end": 164.2,
+      "text": "That's significant.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 164.2,
+      "end": 178.5,
+      "text": "'We need time to understand. We love you.'",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 178.5,
+      "end": 187.3,
+      "text": "How did you feel when you read that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 187.5,
+      "end": 197.8,
+      "text": "I cried, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 197.8,
+      "end": 216.4,
+      "text": "Like, I just sat on my bed and cried for like twenty minutes.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 216.4,
+      "end": 238.6,
+      "text": "It wasn't the big acceptance speech I'd fantasized about, you know? But it was real.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 238.6,
+      "end": 268.9,
+      "text": "It was them trying. And that's... that's more than I expected a week ago.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 269.1,
+      "end": 285.7,
+      "text": "That makes so much sense.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 285.7,
+      "end": 302.1,
+      "text": "You're grieving the fantasy of instant acceptance while also honoring the reality of their effort.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 302.1,
+      "end": 312.6,
+      "text": "That's incredibly mature, Alex. Have you heard anything from your father directly?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 312.8,
+      "end": 324.5,
+      "text": "No, not from him.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 324.5,
+      "end": 364.9,
+      "text": "But my mom said he's been reading articles. Like, actual articles about gender identity and transgender and non-binary people.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 364.9,
+      "end": 398.2,
+      "text": "She sent me a screenshot - he has like fifteen tabs open on his phone. It's so dad of him, you know? He has to research everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 398.4,
+      "end": 417.8,
+      "text": "That's his way of trying to understand.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 417.8,
+      "end": 431.2,
+      "text": "He's approaching this the way he approaches his work - methodically, through research.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 431.2,
+      "end": 437.8,
+      "text": "That doesn't mean it's not coming from a place of love. What does that bring up for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 438.0,
+      "end": 444.6,
+      "text": "It's weird.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 444.6,
+      "end": 472.8,
+      "text": "Like, I'm not expecting him to suddenly get it or like, throw me a pride parade. But knowing he's trying? That's something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 472.8,
+      "end": 528.6,
+      "text": "Jordan said I should lower my expectations, but I don't think that's what this is. I think this is just... accepting what is, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 528.8,
+      "end": 547.3,
+      "text": "That's a really important distinction.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 547.3,
+      "end": 562.1,
+      "text": "Acceptance isn't about lowering standards or giving up hope. It's about being present with reality as it is.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 562.1,
+      "end": 568.4,
+      "text": "How's Jordan been through all this?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 568.6,
+      "end": 584.2,
+      "text": "They've been incredible. Like, truly amazing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 584.2,
+      "end": 612.8,
+      "text": "They took me to this LGBTQ+ support group on campus on Tuesday. I was so nervous, but everyone was so welcoming.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 612.8,
+      "end": 648.9,
+      "text": "There were other non-binary people there, and like, people whose families are still figuring things out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 649.1,
+      "end": 678.5,
+      "text": "How did it feel to be in that space with people who share similar experiences?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 678.7,
+      "end": 697.3,
+      "text": "It felt like breathing, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 697.3,
+      "end": 718.9,
+      "text": "Like I didn't have to explain myself or justify anything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 718.9,
+      "end": 752.4,
+      "text": "Someone said their parents took three years to start using their pronouns consistently. Three years.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 752.4,
+      "end": 768.3,
+      "text": "And they survived. They're still in relationship with their family.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 768.5,
+      "end": 806.8,
+      "text": "That perspective - that change can be slow and non-linear but still meaningful - that seems really important for you to hear right now.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 806.8,
+      "end": 812.6,
+      "text": "Are you planning to keep going to the group?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 812.8,
+      "end": 827.5,
+      "text": "Yeah, definitely. It's every Tuesday at seven.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 827.5,
+      "end": 873.4,
+      "text": "Jordan's coming with me next week too. They said they want to understand my experience better, and like, meet people who get it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 873.6,
+      "end": 888.4,
+      "text": "That's wonderful. That shows real commitment and care from Jordan.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 888.4,
+      "end": 912.7,
+      "text": "I want to check in on how you're doing emotionally this week. Last session was really intense.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 912.7,
+      "end": 924.8,
+      "text": "Where are your depression and anxiety levels right now?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 925.0,
+      "end": 938.6,
+      "text": "Better, actually. Not like, perfect or anything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 938.6,
+      "end": 978.3,
+      "text": "But I've been doing the meditation every morning like we talked about. Just ten minutes. And it's helping.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 978.3,
+      "end": 1012.7,
+      "text": "I can like, observe the grief without drowning in it, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1012.9,
+      "end": 1044.8,
+      "text": "That's exactly what mindfulness practice is about - observing without being consumed.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1044.8,
+      "end": 1058.3,
+      "text": "That's a huge skill, Alex. Can you tell me more about what that's been like for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1058.5,
+      "end": 1072.8,
+      "text": "So like, I'll be sitting there and thoughts will come up.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1072.8,
+      "end": 1094.3,
+      "text": "Like 'my dad hates me' or 'I ruined everything.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1094.3,
+      "end": 1124.6,
+      "text": "But instead of spiraling, I just notice it. Like, 'oh, there's that thought again.' And then I go back to my breath.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1124.6,
+      "end": 1178.9,
+      "text": "It doesn't make the thought go away, but it makes it less... sharp? Less like it's the only truth.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1179.1,
+      "end": 1197.4,
+      "text": "That's profound work. You're creating space between yourself and your thoughts.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1197.4,
+      "end": 1218.7,
+      "text": "That's cognitive defusion - a key ACT skill. You're not fighting the thoughts, you're changing your relationship to them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1218.7,
+      "end": 1234.6,
+      "text": "How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1234.8,
+      "end": 1254.2,
+      "text": "It feels like freedom, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1254.2,
+      "end": 1276.8,
+      "text": "Like, I don't have to believe every scary thing my brain tells me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1276.8,
+      "end": 1298.5,
+      "text": "I can just let it pass through, like clouds in the sky.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1298.7,
+      "end": 1333.4,
+      "text": "That's beautiful imagery. Clouds in the sky - they're there, but they're not permanent, and they don't define the whole sky.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1333.4,
+      "end": 1348.2,
+      "text": "I love that you're finding your own metaphors for this work.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1348.2,
+      "end": 1356.8,
+      "text": "How about the gratitude journal we talked about?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1357.0,
+      "end": 1382.4,
+      "text": "I'm doing it. Every night before bed, three things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1382.4,
+      "end": 1402.7,
+      "text": "Some days it's hard, like really hard. But I'm finding things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1402.7,
+      "end": 1454.3,
+      "text": "Jordan's laugh. The way my advisor actually listened to me this week. My mom's text. The sunshine. Small things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1454.5,
+      "end": 1472.8,
+      "text": "Those small things are everything.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1472.8,
+      "end": 1496.3,
+      "text": "Depression wants us to focus on what's broken or missing. Gratitude practice trains us to notice what's present, what's working.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1496.3,
+      "end": 1508.9,
+      "text": "You're retraining your brain. How's your sleep been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1509.1,
+      "end": 1538.7,
+      "text": "Better. I'm sleeping like six to seven hours most nights now. Still wake up sometimes, but it's not the all-night panic spiral anymore.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1538.7,
+      "end": 1587.6,
+      "text": "The Adderall wearing off routine is helping too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1587.8,
+      "end": 1612.4,
+      "text": "Good. Consistent sleep is so important for mood regulation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1612.4,
+      "end": 1624.7,
+      "text": "And your appetite? You were struggling with that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1624.9,
+      "end": 1642.3,
+      "text": "I'm eating more regularly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1642.3,
+      "end": 1673.8,
+      "text": "Jordan's been cooking with me - like, we made stir fry last night. It felt normal. It felt good.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1673.8,
+      "end": 1698.4,
+      "text": "I'm not forcing myself, it just feels less impossible now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1698.6,
+      "end": 1727.8,
+      "text": "That's wonderful. That's your body saying it feels safer, more grounded.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1727.8,
+      "end": 1752.3,
+      "text": "I want to ask you about something you said earlier. You mentioned realizing that progress isn't linear. Can you say more about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1752.5,
+      "end": 1782.4,
+      "text": "Yeah, like... I keep waiting for the moment where everything is fixed, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1782.4,
+      "end": 1823.7,
+      "text": "Where my parents fully accept me, where I never feel anxious again, where school is easy. But that's not how it works.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1823.7,
+      "end": 1867.8,
+      "text": "Some days are hard. Some days are okay. And that doesn't mean I'm failing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1868.0,
+      "end": 1898.6,
+      "text": "That's such an important realization. You're letting go of the all-or-nothing thinking.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1898.6,
+      "end": 1912.4,
+      "text": "What helped you get there?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1912.6,
+      "end": 1928.3,
+      "text": "Honestly? The support group.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1928.3,
+      "end": 1952.8,
+      "text": "Hearing people talk about their journeys. One person said it took them five years to feel solid in their identity and their family relationships.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1952.8,
+      "end": 2003.8,
+      "text": "Five years. And I've been out to my parents for like, a week and a half.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2004.0,
+      "end": 2032.4,
+      "text": "Right. And in that week and a half, your mom reached out. Your dad is researching.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2032.4,
+      "end": 2062.7,
+      "text": "You're building community. You're practicing mindfulness. You're still showing up to therapy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2062.7,
+      "end": 2068.5,
+      "text": "That's not nothing, Alex. That's resilience.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2068.7,
+      "end": 2088.3,
+      "text": "I didn't think about it that way.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2088.3,
+      "end": 2112.8,
+      "text": "I've just been so focused on what hasn't happened yet. But you're right.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2112.8,
+      "end": 2134.9,
+      "text": "I survived. Like, I genuinely didn't know if I would, and I did.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2135.1,
+      "end": 2167.8,
+      "text": "You not only survived, you're actively building a life that aligns with your values.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2167.8,
+      "end": 2186.4,
+      "text": "You came out even though it was terrifying. You're staying in relationship with your parents even though it's painful.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2186.4,
+      "end": 2198.6,
+      "text": "You're letting Jordan support you. That's courage.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2198.8,
+      "end": 2228.7,
+      "text": "I guess I never thought of it as courage. I thought courage was like, not being scared.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2228.7,
+      "end": 2267.4,
+      "text": "But I'm scared all the time. I'm just doing it anyway.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2267.6,
+      "end": 2308.3,
+      "text": "That's the definition of courage - doing what matters even when you're afraid.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2308.3,
+      "end": 2318.6,
+      "text": "Fear isn't the opposite of courage, it's a prerequisite.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2318.6,
+      "end": 2324.8,
+      "text": "Can I share something I've noticed about your language today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2325.0,
+      "end": 2342.3,
+      "text": "Sure, yeah.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2342.5,
+      "end": 2387.6,
+      "text": "You've used the word 'I' a lot - 'I survived,' 'I'm doing it anyway,' 'I can observe my thoughts.' You're owning your agency, your strength.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2387.6,
+      "end": 2427.4,
+      "text": "Last week you were saying 'they left me,' 'this happened to me.' Do you notice the shift?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2427.4,
+      "end": 2434.7,
+      "text": "",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2434.9,
+      "end": 2448.3,
+      "text": "Whoa. Yeah. I... yeah, I do.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2448.3,
+      "end": 2478.7,
+      "text": "I guess I'm realizing that I'm not just a victim of circumstances. I'm making choices. I'm showing up.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2478.7,
+      "end": 2523.6,
+      "text": "I have some control here, even when things feel out of control.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2523.8,
+      "end": 2584.7,
+      "text": "Exactly. That's psychological flexibility - the ability to stay present, accept what you can't control, and commit to actions aligned with your values even in the face of difficulty.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2584.7,
+      "end": 2592.1,
+      "text": "You're living it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2592.1,
+      "end": 2598.4,
+      "text": "You mentioned something earlier that really struck me. You said, quote, 'I don't need them to understand me to know who I am.' Can we talk about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2598.6,
+      "end": 2606.8,
+      "text": "Yeah.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2606.8,
+      "end": 2624.3,
+      "text": "That's like, the biggest thing I've realized.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2624.3,
+      "end": 2668.7,
+      "text": "For so long I thought I needed my parents' approval to be valid. Like, if they didn't accept me, then maybe I was wrong about myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2668.7,
+      "end": 2714.8,
+      "text": "But I know who I am. Their journey to understanding is separate from my truth.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2715.0,
+      "end": 2742.6,
+      "text": "That's profound, Alex. That's differentiation - knowing where you end and they begin.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2742.6,
+      "end": 2762.4,
+      "text": "Your identity isn't contingent on their understanding.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2762.4,
+      "end": 2768.9,
+      "text": "Where did that insight come from?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2769.1,
+      "end": 2784.3,
+      "text": "I think from Jordan, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2784.3,
+      "end": 2818.6,
+      "text": "They told me, 'Your parents' confusion doesn't make you less real.' And it just clicked.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2818.6,
+      "end": 2853.7,
+      "text": "Like, the sky is still blue even if someone is colorblind, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2853.9,
+      "end": 2878.4,
+      "text": "That's a powerful metaphor. Jordan sounds like they have real wisdom.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2878.4,
+      "end": 2912.5,
+      "text": "How does it feel to let yourself be supported by them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2912.7,
+      "end": 2928.4,
+      "text": "Scary sometimes. But good.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2928.4,
+      "end": 2958.7,
+      "text": "I keep waiting for them to leave, you know? Like everyone else did. But they keep showing up.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2958.7,
+      "end": 2986.4,
+      "text": "And I'm trying to just trust that instead of sabotaging it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2986.6,
+      "end": 3000.0,
+      "text": "That's the work. Letting yourself be loved is sometimes harder than loving. You're doing beautifully, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "quality": {
+    "total_segments": 170,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 72,
+      "SPEAKER_01": 98
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-05-16T14:00:00Z",
+  "completed_at": "2025-05-16T14:56:26Z"
+}

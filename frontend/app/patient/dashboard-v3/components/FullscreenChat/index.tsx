@@ -438,7 +438,7 @@ export function FullscreenChat({
           >
             <div className="max-w-3xl mx-auto">
               {/* Welcome Greeting - Always visible at top, sticky when scrolling */}
-              <div className={`sticky top-0 z-10 pt-8 pb-4 ${
+              <div className={`sticky top-0 z-10 pt-8 pb-8 ${
                 isDark ? 'bg-[#1a1625]' : 'bg-[#F8F7F4]'
               }`}>
                 <h1
@@ -451,7 +451,7 @@ export function FullscreenChat({
               </div>
 
               {/* Dobby Intro Chat Bubble - matches subsequent assistant messages */}
-              <div className="flex gap-3 mb-4">
+              <div className="flex gap-3 mb-4 mt-4">
                 <div className="flex-shrink-0">
                   <DobbyLogo size={37} />
                 </div>

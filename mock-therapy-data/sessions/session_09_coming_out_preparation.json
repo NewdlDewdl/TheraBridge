@@ -1,0 +1,1295 @@
+{
+  "id": "session_09_alex_chen",
+  "status": "completed",
+  "filename": "session_09_2025-05-02.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_09_2025-05-02.mp3",
+    "file_size_mb": 46.8,
+    "duration": 3600.0,
+    "language": "english",
+    "timestamp": "20250502_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 398.6,
+    "preprocessing_time_seconds": 5.8,
+    "transcription_time_seconds": 62.1,
+    "diarization_time_seconds": 329.4,
+    "alignment_time_seconds": 1.3
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1440.0,
+      "segment_count": 92
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 2160.0,
+      "segment_count": 106
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.7,
+      "text": "Hey Alex, good to see you. How have the past two weeks been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.7,
+      "end": 89.3,
+      "text": "Pretty good, actually. Like, I'm still stressed about school and stuff, but I've been feeling better overall. Jordan and I have been doing really well. We've been together for a month now, and honestly it feels really stable. Like, in a way I haven't experienced before.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 89.3,
+      "end": 112.5,
+      "text": "That's wonderful. I'm really glad to hear the relationship feels stable. That's been such an important theme for you - feeling secure in relationships. What makes it feel different with Jordan?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 112.5,
+      "end": 203.8,
+      "text": "I think it's like, they're really consistent? Like, they do what they say they're gonna do. They text back when they say they will. And when I get anxious, they don't get mad at me for it. They just reassure me without making me feel like I'm being too much. It's... it's really nice.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 203.8,
+      "end": 231.4,
+      "text": "That sounds like you're experiencing what secure attachment can feel like. Someone who's reliable and emotionally available. How does it feel to be in a relationship where you don't have to constantly worry about abandonment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 231.4,
+      "end": 312.6,
+      "text": "It's weird, honestly. Like, part of my brain is still waiting for the other shoe to drop, you know? But another part of me is like, okay, maybe this is what healthy looks like. I can actually focus on other things instead of obsessing over every text message. It's kind of freeing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 312.6,
+      "end": 347.9,
+      "text": "That's a really important observation. The anxious part is still there, but it's not running the show anymore. You're able to notice it and not let it take over. That's huge progress, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 347.9,
+      "end": 453.2,
+      "text": "Yeah. So, um, actually there's something I wanted to talk to you about today. Jordan wants to meet my family. And I want that too, but... it's complicated. Because my parents don't know I'm non-binary, and they definitely don't know I'm dating someone who's also non-binary. And I'm starting to think maybe it's time to tell them.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 453.2,
+      "end": 478.6,
+      "text": "Okay, this is a really big topic. Let's unpack this. First, tell me more about what's making you feel like now might be the right time to come out to your parents?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 478.6,
+      "end": 587.4,
+      "text": "I guess I'm just tired of hiding, you know? Like, I've been out for years to my friends, I'm doing better mentally, I'm in a relationship that actually feels good, and I want them to know the real me. I want Jordan to be able to come to family dinner without me having to lie about who they are. It feels like I'm living two separate lives and it's exhausting.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 587.4,
+      "end": 623.8,
+      "text": "That makes a lot of sense. Living authentically is really important for your mental health. At the same time, I know you've had concerns about how your parents might react. What are your fears about coming out to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 623.8,
+      "end": 748.3,
+      "text": "I mean, my biggest fear is that they'll reject me. Like, disown me or something. In Chinese culture, especially with immigrant parents, there's this huge emphasis on conformity and not standing out. Being queer is like, the ultimate standing out. And my parents already think I'm too Americanized. This would just confirm all their worst fears about me losing my culture.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 748.3,
+      "end": 782.6,
+      "text": "Those are really valid concerns. The cultural context adds another layer of complexity to this. Let me ask you this - what do you think is the worst case scenario if you come out to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 782.6,
+      "end": 883.5,
+      "text": "Worst case? They cut me off financially, stop talking to me, tell my extended family and everyone turns against me. I lose my family completely. That's the nightmare scenario. And honestly, I don't know if it's realistic or if my anxiety is just catastrophizing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 883.5,
+      "end": 942.7,
+      "text": "Okay, so that's the catastrophic outcome. What do you think is the best case scenario? If everything went as well as you could hope, what would that look like?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 942.7,
+      "end": 1034.8,
+      "text": "Best case? They're surprised but accepting. They ask questions, they try to understand, they use my pronouns and eventually they welcome Jordan into the family. We all go out to dim sum together and it's fine. But that feels like a fantasy, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1034.8,
+      "end": 1089.2,
+      "text": "And what about the middle ground? Most outcomes aren't the extremes. What do you think is the most likely realistic scenario?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1089.2,
+      "end": 1223.6,
+      "text": "Probably somewhere in between. Like, they're shocked and upset at first. My mom cries, my dad gets quiet. They don't understand it, they ask if it's a phase, they struggle with the pronouns. But they don't disown me. It's awkward and painful for a while, but eventually they come around. Or at least they tolerate it even if they never fully accept it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1223.6,
+      "end": 1268.3,
+      "text": "That sounds like a realistic assessment based on what you know about your parents. They have a history of being emotionally reserved but not cruel, right? They've never been abusive or threatening?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1268.3,
+      "end": 1356.4,
+      "text": "No, they're not abusive. They're just very traditional and focused on appearances and achievement. They've never kicked me out or anything like that. They're just... emotionally distant, I guess. But not mean.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1356.4,
+      "end": 1423.8,
+      "text": "Okay. So I want to do an exercise with you that comes from Acceptance and Commitment Therapy, or ACT. It's called values clarification. The idea is to help you get clear on what's truly important to you, so you can make decisions that align with your values even when it's scary. Does that sound okay?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1423.8,
+      "end": 1437.2,
+      "text": "Yeah, okay. I'm willing to try.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1437.2,
+      "end": 1523.7,
+      "text": "Great. So I want you to imagine you're at your 80th birthday party. You're surrounded by people who love you. What do you want them to say about how you lived your life? What values do you want to have embodied?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1523.7,
+      "end": 1645.9,
+      "text": "Um, that's a good question. I guess I want them to say I was authentic. That I lived as my true self. That I was brave enough to be honest even when it was hard. And that I valued love and connection over fear. Like, I didn't let anxiety make my decisions for me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1645.9,
+      "end": 1701.4,
+      "text": "Beautiful. So authenticity, courage, love, connection. Those are core values for you. Now, when you think about the decision to come out to your parents, which choice aligns more with those values?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1701.4,
+      "end": 1798.6,
+      "text": "Coming out, I guess. I mean, hiding who I am is the opposite of authenticity. And staying closeted is definitely letting fear make the decision. So yeah, coming out is more aligned with my values. But that doesn't make it less scary.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1798.6,
+      "end": 1867.3,
+      "text": "Absolutely. In ACT we talk about something called 'willingness' - being willing to feel the fear and the discomfort in service of your values. You don't have to like the fear. You just have to be willing to carry it with you while you do the thing that matters to you. Does that make sense?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1867.3,
+      "end": 1954.2,
+      "text": "Yeah, it does. It's like, I can be scared and still do it. The fear doesn't have to stop me. That actually feels kind of empowering when you put it that way.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1954.2,
+      "end": 2012.8,
+      "text": "Exactly. So now let's talk about the practical side. If you decide you want to move forward with coming out, how do you want to do it? What's your plan?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2012.8,
+      "end": 2123.5,
+      "text": "I've been thinking about this a lot. I think I want to do it in person, not over text or phone. Maybe go home for a weekend and tell them when we're all together. My sibling is pretty cool, they might be supportive. Or at least not hostile.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2123.5,
+      "end": 2178.4,
+      "text": "In person is a good choice for something this significant. What about the setting? Where in the house? What time of day? Do you want to have an escape plan if things get too overwhelming?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2178.4,
+      "end": 2289.7,
+      "text": "Maybe in the living room, during the day. Not at dinner because that could get weird. And yeah, I should probably drive myself so I can leave if I need to. Maybe have Sarah on standby to come get me if things go really badly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2289.7,
+      "end": 2345.6,
+      "text": "Good. Having a support person ready is smart. What about what you're going to say? Have you thought about how you want to explain your identity to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2345.6,
+      "end": 2478.3,
+      "text": "I've been kind of scripting it in my head. Something like, 'Mom, Dad, there's something important I need to share with you. I'm non-binary, which means I don't identify as male or female. I use they/them pronouns. This isn't a phase or something I decided recently. This is who I am, and I need you to know the real me.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2478.3,
+      "end": 2534.8,
+      "text": "That's clear and direct. It states your identity without apologizing for it. How do you think they'll respond? What questions do you anticipate?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2534.8,
+      "end": 2648.5,
+      "text": "My mom will probably ask if it's because of something they did wrong. My dad might ask if it's medical or if I need treatment. They'll definitely struggle with understanding the pronoun thing. And they'll probably ask if this means I'm gay, which is its own conversation.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2648.5,
+      "end": 2712.9,
+      "text": "Okay. So let's prepare responses for those. For the 'did we do something wrong' question, what would you say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2712.9,
+      "end": 2823.4,
+      "text": "I'd say, 'No, this isn't about you. This is just who I am. You didn't cause this, and there's nothing to fix. I'm still the same person, I'm just being honest about my gender identity now.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2823.4,
+      "end": 2867.3,
+      "text": "Good. That's reassuring without being defensive. What about if they ask if you're sure, or if it might be a phase?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2867.3,
+      "end": 2978.6,
+      "text": "I could say, 'I've known this about myself for a long time. I've been living as non-binary with my friends for years. This isn't something I'm experimenting with. I understand it might take you time to process this, but this is who I am.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2978.6,
+      "end": 3034.2,
+      "text": "Excellent. You're setting a boundary while also acknowledging they might need time. Now, let's talk about the relationship aspect. Are you planning to tell them about Jordan in the same conversation?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3034.2,
+      "end": 3156.8,
+      "text": "I think so. I mean, Jordan is a big part of why I want to do this now. I'd probably say something like, 'I'm also in a relationship with someone named Jordan who's also non-binary. They're really important to me, and I'd like you to meet them when you're ready.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3156.8,
+      "end": 3218.5,
+      "text": "That's good. You're inviting them into your life without demanding immediate acceptance. What if they refuse to meet Jordan or use your pronouns?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3218.5,
+      "end": 3334.7,
+      "text": "That's the hard part. I think I'd have to set a boundary. Like, 'I understand this is hard for you, but I need you to at least try to use my correct name and pronouns. It's okay if you make mistakes, but I need you to try. And Jordan is part of my life, so if you want to be in my life, you'll need to respect that relationship.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3334.7,
+      "end": 3389.4,
+      "text": "That's a firm but fair boundary. You're giving them room to learn while also standing up for yourself. I'm really proud of how thoughtfully you're approaching this, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3389.4,
+      "end": 3467.8,
+      "text": "Thanks. I'm scared, but I also feel like this is the right thing to do. Like, I can't keep living in the closet with my family. It's taking too much energy and it's not aligned with who I want to be.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3467.8,
+      "end": 3532.6,
+      "text": "That's your values talking. You're choosing authenticity even though it's scary. Before we wrap up today, I want to give you some homework. Two things - first, I want you to write a letter to your parents. You don't have to send it, but writing it out can help you organize your thoughts and practice what you want to say.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3532.6,
+      "end": 3556.3,
+      "text": "Okay, I can do that. What's the second thing?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3556.3,
+      "end": 3600.0,
+      "text": "Second, I want you to practice coming out with a friend. Someone you trust who knows you're non-binary. Do a role play where they pretend to be your parents and ask you hard questions. It'll help you feel more prepared and less anxious when you do it for real. Sound good?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 7.3,
+      "text": "Hey Alex, good to see you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 7.3,
+      "end": 18.7,
+      "text": "How have the past two weeks been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.7,
+      "end": 28.4,
+      "text": "Pretty good, actually.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 28.4,
+      "end": 43.6,
+      "text": "Like, I'm still stressed about school and stuff, but I've been feeling better overall.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 43.6,
+      "end": 58.9,
+      "text": "Jordan and I have been doing really well. We've been together for a month now,",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 58.9,
+      "end": 89.3,
+      "text": "and honestly it feels really stable. Like, in a way I haven't experienced before.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 89.3,
+      "end": 98.5,
+      "text": "That's wonderful. I'm really glad to hear the relationship feels stable.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 98.5,
+      "end": 112.5,
+      "text": "That's been such an important theme for you - feeling secure in relationships. What makes it feel different with Jordan?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 112.5,
+      "end": 128.7,
+      "text": "I think it's like, they're really consistent?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 128.7,
+      "end": 147.3,
+      "text": "Like, they do what they say they're gonna do. They text back when they say they will.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 147.3,
+      "end": 178.6,
+      "text": "And when I get anxious, they don't get mad at me for it. They just reassure me without making me feel like I'm being too much.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 178.6,
+      "end": 203.8,
+      "text": "It's... it's really nice.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 203.8,
+      "end": 231.4,
+      "text": "That sounds like you're experiencing what secure attachment can feel like. Someone who's reliable and emotionally available. How does it feel to be in a relationship where you don't have to constantly worry about abandonment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 231.4,
+      "end": 248.2,
+      "text": "It's weird, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 248.2,
+      "end": 272.8,
+      "text": "Like, part of my brain is still waiting for the other shoe to drop, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 272.8,
+      "end": 294.7,
+      "text": "But another part of me is like, okay, maybe this is what healthy looks like.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 294.7,
+      "end": 312.6,
+      "text": "I can actually focus on other things instead of obsessing over every text message. It's kind of freeing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 312.6,
+      "end": 328.4,
+      "text": "That's a really important observation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 328.4,
+      "end": 347.9,
+      "text": "The anxious part is still there, but it's not running the show anymore. You're able to notice it and not let it take over. That's huge progress, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 347.9,
+      "end": 367.5,
+      "text": "Yeah. So, um, actually there's something I wanted to talk to you about today.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 367.5,
+      "end": 389.3,
+      "text": "Jordan wants to meet my family. And I want that too, but... it's complicated.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 389.3,
+      "end": 423.7,
+      "text": "Because my parents don't know I'm non-binary, and they definitely don't know I'm dating someone who's also non-binary.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 423.7,
+      "end": 453.2,
+      "text": "And I'm starting to think maybe it's time to tell them.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 453.2,
+      "end": 468.4,
+      "text": "Okay, this is a really big topic. Let's unpack this.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 468.4,
+      "end": 478.6,
+      "text": "First, tell me more about what's making you feel like now might be the right time to come out to your parents?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 478.6,
+      "end": 503.8,
+      "text": "I guess I'm just tired of hiding, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 503.8,
+      "end": 534.2,
+      "text": "Like, I've been out for years to my friends, I'm doing better mentally, I'm in a relationship that actually feels good,",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 534.2,
+      "end": 556.7,
+      "text": "and I want them to know the real me. I want Jordan to be able to come to family dinner without me having to lie about who they are.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 556.7,
+      "end": 587.4,
+      "text": "It feels like I'm living two separate lives and it's exhausting.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 587.4,
+      "end": 608.6,
+      "text": "That makes a lot of sense. Living authentically is really important for your mental health.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 608.6,
+      "end": 623.8,
+      "text": "At the same time, I know you've had concerns about how your parents might react. What are your fears about coming out to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 623.8,
+      "end": 648.2,
+      "text": "I mean, my biggest fear is that they'll reject me. Like, disown me or something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 648.2,
+      "end": 687.5,
+      "text": "In Chinese culture, especially with immigrant parents, there's this huge emphasis on conformity and not standing out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 687.5,
+      "end": 708.9,
+      "text": "Being queer is like, the ultimate standing out. And my parents already think I'm too Americanized.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 708.9,
+      "end": 748.3,
+      "text": "This would just confirm all their worst fears about me losing my culture.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 748.3,
+      "end": 768.4,
+      "text": "Those are really valid concerns. The cultural context adds another layer of complexity to this.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 768.4,
+      "end": 782.6,
+      "text": "Let me ask you this - what do you think is the worst case scenario if you come out to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 782.6,
+      "end": 823.7,
+      "text": "Worst case? They cut me off financially, stop talking to me, tell my extended family and everyone turns against me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 823.7,
+      "end": 847.6,
+      "text": "I lose my family completely. That's the nightmare scenario.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 847.6,
+      "end": 883.5,
+      "text": "And honestly, I don't know if it's realistic or if my anxiety is just catastrophizing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 883.5,
+      "end": 912.3,
+      "text": "Okay, so that's the catastrophic outcome.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 912.3,
+      "end": 942.7,
+      "text": "What do you think is the best case scenario? If everything went as well as you could hope, what would that look like?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 942.7,
+      "end": 978.3,
+      "text": "Best case? They're surprised but accepting. They ask questions, they try to understand,",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 978.3,
+      "end": 1008.6,
+      "text": "they use my pronouns and eventually they welcome Jordan into the family.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1008.6,
+      "end": 1034.8,
+      "text": "We all go out to dim sum together and it's fine. But that feels like a fantasy, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1034.8,
+      "end": 1063.4,
+      "text": "And what about the middle ground? Most outcomes aren't the extremes.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1063.4,
+      "end": 1089.2,
+      "text": "What do you think is the most likely realistic scenario?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1089.2,
+      "end": 1118.6,
+      "text": "Probably somewhere in between. Like, they're shocked and upset at first.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1118.6,
+      "end": 1148.3,
+      "text": "My mom cries, my dad gets quiet. They don't understand it, they ask if it's a phase, they struggle with the pronouns.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1148.3,
+      "end": 1173.8,
+      "text": "But they don't disown me. It's awkward and painful for a while, but eventually they come around.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1173.8,
+      "end": 1223.6,
+      "text": "Or at least they tolerate it even if they never fully accept it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1223.6,
+      "end": 1248.7,
+      "text": "That sounds like a realistic assessment based on what you know about your parents.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1248.7,
+      "end": 1268.3,
+      "text": "They have a history of being emotionally reserved but not cruel, right? They've never been abusive or threatening?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1268.3,
+      "end": 1298.5,
+      "text": "No, they're not abusive. They're just very traditional and focused on appearances and achievement.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1298.5,
+      "end": 1327.8,
+      "text": "They've never kicked me out or anything like that. They're just... emotionally distant, I guess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1327.8,
+      "end": 1356.4,
+      "text": "But not mean.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1356.4,
+      "end": 1389.7,
+      "text": "Okay. So I want to do an exercise with you that comes from Acceptance and Commitment Therapy, or ACT.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1389.7,
+      "end": 1405.3,
+      "text": "It's called values clarification.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1405.3,
+      "end": 1423.8,
+      "text": "The idea is to help you get clear on what's truly important to you, so you can make decisions that align with your values even when it's scary. Does that sound okay?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1423.8,
+      "end": 1437.2,
+      "text": "Yeah, okay. I'm willing to try.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1437.2,
+      "end": 1468.5,
+      "text": "Great. So I want you to imagine you're at your 80th birthday party.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1468.5,
+      "end": 1487.3,
+      "text": "You're surrounded by people who love you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1487.3,
+      "end": 1523.7,
+      "text": "What do you want them to say about how you lived your life? What values do you want to have embodied?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1523.7,
+      "end": 1548.2,
+      "text": "Um, that's a good question.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1548.2,
+      "end": 1578.6,
+      "text": "I guess I want them to say I was authentic. That I lived as my true self.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1578.6,
+      "end": 1607.3,
+      "text": "That I was brave enough to be honest even when it was hard.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1607.3,
+      "end": 1629.4,
+      "text": "And that I valued love and connection over fear.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1629.4,
+      "end": 1645.9,
+      "text": "Like, I didn't let anxiety make my decisions for me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1645.9,
+      "end": 1678.5,
+      "text": "Beautiful. So authenticity, courage, love, connection. Those are core values for you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1678.5,
+      "end": 1701.4,
+      "text": "Now, when you think about the decision to come out to your parents, which choice aligns more with those values?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1701.4,
+      "end": 1723.8,
+      "text": "Coming out, I guess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1723.8,
+      "end": 1752.4,
+      "text": "I mean, hiding who I am is the opposite of authenticity. And staying closeted is definitely letting fear make the decision.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1752.4,
+      "end": 1798.6,
+      "text": "So yeah, coming out is more aligned with my values. But that doesn't make it less scary.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1798.6,
+      "end": 1834.7,
+      "text": "Absolutely. In ACT we talk about something called 'willingness' -",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1834.7,
+      "end": 1867.3,
+      "text": "being willing to feel the fear and the discomfort in service of your values. You don't have to like the fear. You just have to be willing to carry it with you while you do the thing that matters to you. Does that make sense?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1867.3,
+      "end": 1898.4,
+      "text": "Yeah, it does. It's like, I can be scared and still do it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1898.4,
+      "end": 1923.8,
+      "text": "The fear doesn't have to stop me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1923.8,
+      "end": 1954.2,
+      "text": "That actually feels kind of empowering when you put it that way.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1954.2,
+      "end": 1984.6,
+      "text": "Exactly. So now let's talk about the practical side.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1984.6,
+      "end": 2012.8,
+      "text": "If you decide you want to move forward with coming out, how do you want to do it? What's your plan?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2012.8,
+      "end": 2042.3,
+      "text": "I've been thinking about this a lot.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2042.3,
+      "end": 2073.8,
+      "text": "I think I want to do it in person, not over text or phone.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2073.8,
+      "end": 2102.4,
+      "text": "Maybe go home for a weekend and tell them when we're all together.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2102.4,
+      "end": 2123.5,
+      "text": "My sibling is pretty cool, they might be supportive. Or at least not hostile.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2123.5,
+      "end": 2148.2,
+      "text": "In person is a good choice for something this significant.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2148.2,
+      "end": 2178.4,
+      "text": "What about the setting? Where in the house? What time of day? Do you want to have an escape plan if things get too overwhelming?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2178.4,
+      "end": 2218.5,
+      "text": "Maybe in the living room, during the day. Not at dinner because that could get weird.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2218.5,
+      "end": 2254.7,
+      "text": "And yeah, I should probably drive myself so I can leave if I need to.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2254.7,
+      "end": 2289.7,
+      "text": "Maybe have Sarah on standby to come get me if things go really badly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2289.7,
+      "end": 2318.3,
+      "text": "Good. Having a support person ready is smart.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2318.3,
+      "end": 2345.6,
+      "text": "What about what you're going to say? Have you thought about how you want to explain your identity to them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2345.6,
+      "end": 2378.4,
+      "text": "I've been kind of scripting it in my head.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2378.4,
+      "end": 2423.7,
+      "text": "Something like, 'Mom, Dad, there's something important I need to share with you.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2423.7,
+      "end": 2453.8,
+      "text": "I'm non-binary, which means I don't identify as male or female. I use they/them pronouns.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2453.8,
+      "end": 2478.3,
+      "text": "This isn't a phase or something I decided recently. This is who I am, and I need you to know the real me.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2478.3,
+      "end": 2508.6,
+      "text": "That's clear and direct. It states your identity without apologizing for it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2508.6,
+      "end": 2534.8,
+      "text": "How do you think they'll respond? What questions do you anticipate?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2534.8,
+      "end": 2573.6,
+      "text": "My mom will probably ask if it's because of something they did wrong.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2573.6,
+      "end": 2603.7,
+      "text": "My dad might ask if it's medical or if I need treatment.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2603.7,
+      "end": 2628.4,
+      "text": "They'll definitely struggle with understanding the pronoun thing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2628.4,
+      "end": 2648.5,
+      "text": "And they'll probably ask if this means I'm gay, which is its own conversation.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2648.5,
+      "end": 2683.4,
+      "text": "Okay. So let's prepare responses for those.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2683.4,
+      "end": 2712.9,
+      "text": "For the 'did we do something wrong' question, what would you say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2712.9,
+      "end": 2753.8,
+      "text": "I'd say, 'No, this isn't about you. This is just who I am.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2753.8,
+      "end": 2788.4,
+      "text": "You didn't cause this, and there's nothing to fix.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2788.4,
+      "end": 2823.4,
+      "text": "I'm still the same person, I'm just being honest about my gender identity now.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2823.4,
+      "end": 2852.7,
+      "text": "Good. That's reassuring without being defensive.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2852.7,
+      "end": 2867.3,
+      "text": "What about if they ask if you're sure, or if it might be a phase?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2867.3,
+      "end": 2908.5,
+      "text": "I could say, 'I've known this about myself for a long time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2908.5,
+      "end": 2943.7,
+      "text": "I've been living as non-binary with my friends for years. This isn't something I'm experimenting with.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2943.7,
+      "end": 2978.6,
+      "text": "I understand it might take you time to process this, but this is who I am.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2978.6,
+      "end": 3007.8,
+      "text": "Excellent. You're setting a boundary while also acknowledging they might need time.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3007.8,
+      "end": 3034.2,
+      "text": "Now, let's talk about the relationship aspect. Are you planning to tell them about Jordan in the same conversation?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3034.2,
+      "end": 3073.5,
+      "text": "I think so. I mean, Jordan is a big part of why I want to do this now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3073.5,
+      "end": 3118.4,
+      "text": "I'd probably say something like, 'I'm also in a relationship with someone named Jordan who's also non-binary.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3118.4,
+      "end": 3156.8,
+      "text": "They're really important to me, and I'd like you to meet them when you're ready.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3156.8,
+      "end": 3192.4,
+      "text": "That's good. You're inviting them into your life without demanding immediate acceptance.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3192.4,
+      "end": 3218.5,
+      "text": "What if they refuse to meet Jordan or use your pronouns?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3218.5,
+      "end": 3248.7,
+      "text": "That's the hard part. I think I'd have to set a boundary.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3248.7,
+      "end": 3289.6,
+      "text": "Like, 'I understand this is hard for you, but I need you to at least try to use my correct name and pronouns.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3289.6,
+      "end": 3334.7,
+      "text": "It's okay if you make mistakes, but I need you to try. And Jordan is part of my life, so if you want to be in my life, you'll need to respect that relationship.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3334.7,
+      "end": 3367.8,
+      "text": "That's a firm but fair boundary.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3367.8,
+      "end": 3389.4,
+      "text": "You're giving them room to learn while also standing up for yourself. I'm really proud of how thoughtfully you're approaching this, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3389.4,
+      "end": 3423.5,
+      "text": "Thanks. I'm scared, but I also feel like this is the right thing to do.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3423.5,
+      "end": 3467.8,
+      "text": "Like, I can't keep living in the closet with my family. It's taking too much energy and it's not aligned with who I want to be.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3467.8,
+      "end": 3498.6,
+      "text": "That's your values talking. You're choosing authenticity even though it's scary.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3498.6,
+      "end": 3532.6,
+      "text": "Before we wrap up today, I want to give you some homework. Two things - first, I want you to write a letter to your parents. You don't have to send it, but writing it out can help you organize your thoughts and practice what you want to say.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3532.6,
+      "end": 3556.3,
+      "text": "Okay, I can do that. What's the second thing?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3556.3,
+      "end": 3600.0,
+      "text": "Second, I want you to practice coming out with a friend. Someone you trust who knows you're non-binary. Do a role play where they pretend to be your parents and ask you hard questions. It'll help you feel more prepared and less anxious when you do it for real. Sound good?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "quality": {
+    "total_segments": 198,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 92,
+      "SPEAKER_01": 106
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-05-02T14:00:00Z",
+  "completed_at": "2025-05-02T15:06:39Z"
+}

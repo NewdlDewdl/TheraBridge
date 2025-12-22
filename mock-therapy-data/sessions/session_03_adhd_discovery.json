@@ -1,0 +1,1155 @@
+{
+  "id": "session_03_alex_chen",
+  "status": "completed",
+  "filename": "session_03_2025-01-31.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_03_2025-01-31.mp3",
+    "file_size_mb": 38.4,
+    "duration": 3000.0,
+    "language": "english",
+    "timestamp": "20250131_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 347.2,
+    "preprocessing_time_seconds": 5.8,
+    "transcription_time_seconds": 58.4,
+    "diarization_time_seconds": 281.6,
+    "alignment_time_seconds": 1.4
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1185.0,
+      "segment_count": 68
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1815.0,
+      "segment_count": 94
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.6,
+      "text": "Hi Alex, welcome back. It's good to see you. How have the past two weeks been? I noticed you had to cancel last week.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.9,
+      "end": 56.3,
+      "text": "Yeah, sorry about that. I had this huge exam and I was freaking out about it. Um, the past two weeks have been... kind of a blur honestly. Like I've been trying to do the grounding exercises you taught me, and they help sometimes, but mostly I just feel like I'm barely keeping my head above water.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 56.6,
+      "end": 78.4,
+      "text": "It sounds like you've been really overwhelmed. I'm glad you're trying the grounding techniques even if they only help sometimes. Tell me more about what it's been like - what specifically is making you feel like you're barely keeping your head above water?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 78.7,
+      "end": 154.2,
+      "text": "It's just... everything feels impossible. Like, I know I have things I need to do, but I can't make myself do them. I'll sit down to work on my research and then three hours later I realize I've been scrolling Reddit the entire time. Or I'll hyperfocus on something completely random that doesn't matter, like organizing my desktop files for five hours when I have a deadline the next day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 154.5,
+      "end": 178.9,
+      "text": "So you're experiencing these extremes - either you can't focus at all and get distracted, or you're hyperfocusing on the wrong things. Is that right?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 179.2,
+      "end": 231.6,
+      "text": "Yeah, exactly. And it's so frustrating because I know what I need to do. It's not like I don't know. But there's this huge wall between knowing and actually doing it. And then I feel so guilty and anxious about not doing it that it becomes even harder to start. It's like this horrible cycle.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 231.9,
+      "end": 268.7,
+      "text": "That sounds really exhausting - knowing what you need to do but feeling unable to do it, and then the guilt and anxiety making it worse. You mentioned hyperfocusing and getting distracted. Have you always experienced these patterns, or is this something new?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 269.0,
+      "end": 367.4,
+      "text": "Um, I mean, kind of always? But I used to be better at dealing with it. In undergrad I could pull all-nighters and just force myself to get things done at the last minute. Like the adrenaline of the deadline would kick in and I'd be able to focus. But now that's not even working. I missed a deadline last week - just completely forgot about it until the day after. And that's been happening more and more.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 367.7,
+      "end": 399.2,
+      "text": "So you were relying on deadline pressure to help you focus, and now even that's not working. You also mentioned forgetting about the deadline completely. Is that kind of forgetting happening with other things too?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 399.5,
+      "end": 478.9,
+      "text": "Oh my god, yes. All the time. I'll forget to eat, forget meetings, forget where I put my phone literally five seconds after putting it down. Last week I spent like 30 minutes looking for my keys and they were in my hand the whole time. My roommate thought it was hilarious but I was almost in tears because I was going to be late for class. Again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 479.2,
+      "end": 512.8,
+      "text": "That must be really frustrating. You're dealing with a lot of executive function challenges - planning, organizing, remembering, initiating tasks. Alex, I'm hearing a lot of things that align with ADHD symptoms. I know you mentioned you were diagnosed last year. Can we talk more about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 513.1,
+      "end": 572.4,
+      "text": "I mean, yeah, I got diagnosed senior year. But I honestly don't think that's my main problem right now. Like, I'm just really depressed and anxious, you know? The ADHD is whatever. I made it this far without treating it, so it's probably not that big of a deal.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 572.7,
+      "end": 623.5,
+      "text": "I hear you minimizing the ADHD, and I want to explore that with you. You said you made it this far without treating it - but from what you're describing, it sounds like it's taking a significant toll. Can you tell me more about how you've been managing without treatment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 623.8,
+      "end": 712.3,
+      "text": "I don't know, I just... I work really hard. Or I try to. I set like a million alarms and reminders. I make detailed schedules that I never follow. I write everything down on sticky notes and then lose the sticky notes. Honestly now that I'm saying it out loud it sounds kind of ridiculous. Like I'm spending so much energy on these systems that barely work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 712.6,
+      "end": 768.9,
+      "text": "It's not ridiculous at all. What you're describing are called compensatory strategies - ways you've taught yourself to work around the ADHD. And it sounds like those strategies are breaking down now. That doesn't mean you're failing - it means the demands on you have increased and you need more support.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 769.2,
+      "end": 803.4,
+      "text": "I never thought about it that way. I just thought I was getting worse at everything. Like I'm not trying hard enough or I'm lazy like my parents always say.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 803.7,
+      "end": 867.2,
+      "text": "Alex, I want to be really clear about something. What you're describing isn't laziness. It's not a character flaw or lack of effort. ADHD is a neurological condition that affects executive function - your brain's ability to plan, organize, regulate attention, and follow through. You've been working incredibly hard, probably harder than most people, just to keep up.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 867.5,
+      "end": 892.1,
+      "text": "Wait, really? Like this isn't just me being bad at life?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 892.4,
+      "end": 978.6,
+      "text": "Really. And here's what's important to understand - untreated ADHD can look like and worsen depression and anxiety. The constant feeling of failing, of not being able to do what you know you should do, of forgetting important things - that takes a huge toll on your mental health. It makes sense that you're feeling depressed and anxious when your brain is working against you like this.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 978.9,
+      "end": 1067.8,
+      "text": "Oh my god. Oh my god. That's... I never connected those things. Like I always thought the depression was making me unable to focus, not the other way around. Or like, both things happening separately. But you're saying the ADHD could be causing some of the depression?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1068.1,
+      "end": 1142.7,
+      "text": "It's not that simple - they're both real and they affect each other. But yes, untreated ADHD absolutely contributes to depression and anxiety, especially in high-achieving people who have been masking and compensating for years. Eventually the compensatory strategies stop working and it feels like everything is falling apart.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1143.0,
+      "end": 1187.4,
+      "text": "That's exactly what it feels like. Like I used to be able to handle things and now I just can't.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1187.7,
+      "end": 1256.3,
+      "text": "And that shift often happens during major life transitions - like starting a PhD program. The demands increased, the structure decreased, and suddenly the strategies that worked before aren't enough. Does that resonate with you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1256.6,
+      "end": 1368.2,
+      "text": "Yes. Oh my god, yes. In undergrad there were deadlines and classes at specific times and like, external structure. Now I'm supposed to just motivate myself to work on research that doesn't have clear deadlines and I'm drowning. I literally cannot make myself do things without that external pressure. And I feel so stupid because everyone else seems fine.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1368.5,
+      "end": 1443.7,
+      "text": "You're not stupid. You have ADHD, which means your brain needs different kinds of support to function optimally. Other people aren't fine - you just don't see their struggles. But also, some people's brains are wired differently and they don't need as much external structure. That doesn't make you less capable - it just means you need different tools.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1444.0,
+      "end": 1523.8,
+      "text": "This is kind of blowing my mind right now. I'm just... I'm realizing how much energy I've been spending hating myself for things that might actually be symptoms. Like my ex Jamie used to get so frustrated with me for being late all the time or forgetting plans. And I felt terrible about it but I couldn't seem to stop doing it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1524.1,
+      "end": 1598.6,
+      "text": "Time blindness - difficulty accurately perceiving and managing time - is a classic ADHD symptom. So is forgetfulness, especially for appointments or plans. Those are real symptoms, not character flaws. Though I imagine it's been hard to separate the two when you've been getting negative feedback about them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1598.9,
+      "end": 1708.5,
+      "text": "Yeah, it really has been. Jamie would say things like 'if you really cared about me you'd remember' or 'it's not that hard to be on time.' And I do care, I cared so much. I'd set alarms and everything. But then I'd get distracted putting on my shoes or I'd misjudge how long it would take to get there. And then I'd feel like the worst person in the world.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1708.8,
+      "end": 1789.3,
+      "text": "That must have been really painful to be judged for something you were genuinely struggling with. And I imagine it reinforced the idea that there's something fundamentally wrong with you, rather than that you have a treatable condition that needs support.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1789.6,
+      "end": 1862.4,
+      "text": "I'm literally about to cry right now. Like this is the first time anyone has said it's not my fault. Everyone always just tells me to try harder or care more or use a planner. As if I haven't tried all of that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1862.7,
+      "end": 1924.5,
+      "text": "I can see how emotional this is for you. It makes sense - you've been carrying so much shame and self-blame for things that are actually symptoms of a medical condition. That's a heavy burden. Do you need to take a moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1924.8,
+      "end": 1987.3,
+      "text": "No, I'm okay. It's just... it's relief, you know? Like maybe I'm not fundamentally broken. Maybe there's actually something that can help.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1987.6,
+      "end": 2058.9,
+      "text": "You're absolutely not fundamentally broken. And yes, there are many things that can help. ADHD is one of the most treatable mental health conditions. Medication can be really effective, and there are also behavioral strategies and accommodations that can make a huge difference. Would you be open to exploring treatment options?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2059.2,
+      "end": 2134.6,
+      "text": "Yes. God, yes. I mean I'm nervous about medication because I've heard mixed things, but I can't keep living like this. What would treatment look like?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2134.9,
+      "end": 2256.8,
+      "text": "So typically we'd start with a psychiatric evaluation to confirm the diagnosis and discuss medication options. The most common ADHD medications are stimulants - things like Adderall or Ritalin - which can sound scary but are very effective and safe when properly prescribed. There are also non-stimulant options if you prefer. The goal is to find something that helps your brain function better without major side effects.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2257.1,
+      "end": 2323.4,
+      "text": "Okay. That actually sounds manageable. I was worried you'd say I need to completely restructure my entire life or something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2323.7,
+      "end": 2412.5,
+      "text": "I mean, some lifestyle changes can help too - things like regular sleep, exercise, breaking tasks into smaller chunks, using external reminders. But medication can be the foundation that makes those strategies actually work. Right now you're trying to implement all these strategies with an untreated condition. It's like trying to run a race with a broken leg.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2412.8,
+      "end": 2476.3,
+      "text": "That metaphor really helps. I've been so hard on myself for not being able to just do the things. But if my brain literally works differently, then of course normal strategies don't work the same way.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2476.6,
+      "end": 2554.7,
+      "text": "Exactly. And here's something else important - ADHD in high-achieving people often goes undiagnosed or untreated for years because you've developed these elaborate coping mechanisms. You're smart enough to compensate, but it takes enormous effort. And the cost is exhaustion, anxiety, depression, and feeling like you're constantly failing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2555.0,
+      "end": 2618.4,
+      "text": "That's... that's exactly my life. I keep wondering how other people make things look so easy when I'm drowning just trying to do basic stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2618.7,
+      "end": 2687.3,
+      "text": "Because they're not fighting their own brain every step of the way. You are. And you've still managed to get into a PhD program, which shows how capable you are. Imagine what you could do with proper support.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2687.6,
+      "end": 2729.8,
+      "text": "I'm trying not to get too hopeful but this feels like a really big deal. Like this could actually change things?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2730.1,
+      "end": 2812.4,
+      "text": "It really could. I don't want to promise miracles - medication isn't a cure-all and there will still be challenges. But many people with ADHD say treatment is life-changing. They describe it as finally being able to access their own abilities, like the volume of the world gets turned down and they can focus on what matters.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2812.7,
+      "end": 2867.9,
+      "text": "That sounds amazing. Okay, so what do I need to do? Like what are the next steps?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2868.2,
+      "end": 2943.6,
+      "text": "I'm going to refer you to a psychiatrist - I work with several who specialize in ADHD in adults. They'll do an evaluation and discuss medication options with you. In the meantime, I want you to start keeping an ADHD symptom journal. Just track when you notice symptoms, what's happening, how it affects you. This will be really helpful information for the psychiatrist.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2943.9,
+      "end": 2987.5,
+      "text": "Okay, I can do that. Should I track like everything or just specific things?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2987.8,
+      "end": 3000.0,
+      "text": "Focus on attention issues, impulsivity, time management problems, forgetfulness, emotional regulation. Anything that feels related to what we've talked about today.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 8.3,
+      "text": "Hi Alex, welcome back. It's good to see you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 8.3,
+      "end": 18.6,
+      "text": "How have the past two weeks been? I noticed you had to cancel last week.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.9,
+      "end": 26.4,
+      "text": "Yeah, sorry about that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 26.4,
+      "end": 37.2,
+      "text": "I had this huge exam and I was freaking out about it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 37.2,
+      "end": 56.3,
+      "text": "Um, the past two weeks have been... kind of a blur honestly. Like I've been trying to do the grounding exercises you taught me, and they help sometimes, but mostly I just feel like I'm barely keeping my head above water.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 56.6,
+      "end": 68.7,
+      "text": "It sounds like you've been really overwhelmed.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 68.7,
+      "end": 78.4,
+      "text": "I'm glad you're trying the grounding techniques even if they only help sometimes. Tell me more about what it's been like - what specifically is making you feel like you're barely keeping your head above water?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 78.7,
+      "end": 92.1,
+      "text": "It's just... everything feels impossible.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 92.1,
+      "end": 108.4,
+      "text": "Like, I know I have things I need to do, but I can't make myself do them.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 108.4,
+      "end": 134.8,
+      "text": "I'll sit down to work on my research and then three hours later I realize I've been scrolling Reddit the entire time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 134.8,
+      "end": 154.2,
+      "text": "Or I'll hyperfocus on something completely random that doesn't matter, like organizing my desktop files for five hours when I have a deadline the next day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 154.5,
+      "end": 178.9,
+      "text": "So you're experiencing these extremes - either you can't focus at all and get distracted, or you're hyperfocusing on the wrong things. Is that right?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 179.2,
+      "end": 192.6,
+      "text": "Yeah, exactly. And it's so frustrating because I know what I need to do. It's not like I don't know.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 192.6,
+      "end": 212.3,
+      "text": "But there's this huge wall between knowing and actually doing it. And then I feel so guilty and anxious about not doing it that it becomes even harder to start.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 212.3,
+      "end": 231.6,
+      "text": "It's like this horrible cycle.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 231.9,
+      "end": 258.4,
+      "text": "That sounds really exhausting - knowing what you need to do but feeling unable to do it, and then the guilt and anxiety making it worse.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 258.4,
+      "end": 268.7,
+      "text": "You mentioned hyperfocusing and getting distracted. Have you always experienced these patterns, or is this something new?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 269.0,
+      "end": 282.3,
+      "text": "Um, I mean, kind of always? But I used to be better at dealing with it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 282.3,
+      "end": 312.7,
+      "text": "In undergrad I could pull all-nighters and just force myself to get things done at the last minute. Like the adrenaline of the deadline would kick in and I'd be able to focus.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 312.7,
+      "end": 342.6,
+      "text": "But now that's not even working. I missed a deadline last week - just completely forgot about it until the day after.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 342.6,
+      "end": 367.4,
+      "text": "And that's been happening more and more.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 367.7,
+      "end": 388.3,
+      "text": "So you were relying on deadline pressure to help you focus, and now even that's not working.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 388.3,
+      "end": 399.2,
+      "text": "You also mentioned forgetting about the deadline completely. Is that kind of forgetting happening with other things too?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 399.5,
+      "end": 412.8,
+      "text": "Oh my god, yes. All the time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 412.8,
+      "end": 437.9,
+      "text": "I'll forget to eat, forget meetings, forget where I put my phone literally five seconds after putting it down.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 437.9,
+      "end": 463.2,
+      "text": "Last week I spent like 30 minutes looking for my keys and they were in my hand the whole time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 463.2,
+      "end": 478.9,
+      "text": "My roommate thought it was hilarious but I was almost in tears because I was going to be late for class. Again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 479.2,
+      "end": 492.7,
+      "text": "That must be really frustrating. You're dealing with a lot of executive function challenges - planning, organizing, remembering, initiating tasks.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 492.7,
+      "end": 512.8,
+      "text": "Alex, I'm hearing a lot of things that align with ADHD symptoms. I know you mentioned you were diagnosed last year. Can we talk more about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 513.1,
+      "end": 532.8,
+      "text": "I mean, yeah, I got diagnosed senior year.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 532.8,
+      "end": 557.6,
+      "text": "But I honestly don't think that's my main problem right now. Like, I'm just really depressed and anxious, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 557.6,
+      "end": 572.4,
+      "text": "The ADHD is whatever. I made it this far without treating it, so it's probably not that big of a deal.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 572.7,
+      "end": 598.4,
+      "text": "I hear you minimizing the ADHD, and I want to explore that with you. You said you made it this far without treating it - but from what you're describing, it sounds like it's taking a significant toll.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 598.4,
+      "end": 623.5,
+      "text": "Can you tell me more about how you've been managing without treatment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 623.8,
+      "end": 641.2,
+      "text": "I don't know, I just... I work really hard. Or I try to.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 641.2,
+      "end": 668.7,
+      "text": "I set like a million alarms and reminders. I make detailed schedules that I never follow. I write everything down on sticky notes and then lose the sticky notes.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 668.7,
+      "end": 693.8,
+      "text": "Honestly now that I'm saying it out loud it sounds kind of ridiculous. Like I'm spending so much energy on these systems that barely work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 693.8,
+      "end": 712.3,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 712.6,
+      "end": 743.8,
+      "text": "It's not ridiculous at all. What you're describing are called compensatory strategies - ways you've taught yourself to work around the ADHD.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 743.8,
+      "end": 768.9,
+      "text": "And it sounds like those strategies are breaking down now. That doesn't mean you're failing - it means the demands on you have increased and you need more support.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 769.2,
+      "end": 788.6,
+      "text": "I never thought about it that way. I just thought I was getting worse at everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 788.6,
+      "end": 803.4,
+      "text": "Like I'm not trying hard enough or I'm lazy like my parents always say.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 803.7,
+      "end": 842.3,
+      "text": "Alex, I want to be really clear about something. What you're describing isn't laziness. It's not a character flaw or lack of effort.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 842.3,
+      "end": 867.2,
+      "text": "ADHD is a neurological condition that affects executive function - your brain's ability to plan, organize, regulate attention, and follow through. You've been working incredibly hard, probably harder than most people, just to keep up.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 867.5,
+      "end": 879.3,
+      "text": "Wait, really?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 879.3,
+      "end": 892.1,
+      "text": "Like this isn't just me being bad at life?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 892.4,
+      "end": 933.8,
+      "text": "Really. And here's what's important to understand - untreated ADHD can look like and worsen depression and anxiety.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 933.8,
+      "end": 978.6,
+      "text": "The constant feeling of failing, of not being able to do what you know you should do, of forgetting important things - that takes a huge toll on your mental health. It makes sense that you're feeling depressed and anxious when your brain is working against you like this.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 978.9,
+      "end": 993.4,
+      "text": "Oh my god. Oh my god.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 993.4,
+      "end": 1038.7,
+      "text": "That's... I never connected those things. Like I always thought the depression was making me unable to focus, not the other way around. Or like, both things happening separately.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1038.7,
+      "end": 1067.8,
+      "text": "But you're saying the ADHD could be causing some of the depression?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1068.1,
+      "end": 1102.4,
+      "text": "It's not that simple - they're both real and they affect each other.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1102.4,
+      "end": 1142.7,
+      "text": "But yes, untreated ADHD absolutely contributes to depression and anxiety, especially in high-achieving people who have been masking and compensating for years. Eventually the compensatory strategies stop working and it feels like everything is falling apart.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1143.0,
+      "end": 1167.8,
+      "text": "That's exactly what it feels like.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1167.8,
+      "end": 1187.4,
+      "text": "Like I used to be able to handle things and now I just can't.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1187.7,
+      "end": 1226.8,
+      "text": "And that shift often happens during major life transitions - like starting a PhD program.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1226.8,
+      "end": 1256.3,
+      "text": "The demands increased, the structure decreased, and suddenly the strategies that worked before aren't enough. Does that resonate with you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1256.6,
+      "end": 1273.2,
+      "text": "Yes. Oh my god, yes.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1273.2,
+      "end": 1312.8,
+      "text": "In undergrad there were deadlines and classes at specific times and like, external structure. Now I'm supposed to just motivate myself to work on research that doesn't have clear deadlines and I'm drowning.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1312.8,
+      "end": 1342.6,
+      "text": "I literally cannot make myself do things without that external pressure.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1342.6,
+      "end": 1368.2,
+      "text": "And I feel so stupid because everyone else seems fine.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1368.5,
+      "end": 1403.2,
+      "text": "You're not stupid. You have ADHD, which means your brain needs different kinds of support to function optimally.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1403.2,
+      "end": 1443.7,
+      "text": "Other people aren't fine - you just don't see their struggles. But also, some people's brains are wired differently and they don't need as much external structure. That doesn't make you less capable - it just means you need different tools.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1444.0,
+      "end": 1467.3,
+      "text": "This is kind of blowing my mind right now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1467.3,
+      "end": 1503.8,
+      "text": "I'm just... I'm realizing how much energy I've been spending hating myself for things that might actually be symptoms.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1503.8,
+      "end": 1523.8,
+      "text": "Like my ex Jamie used to get so frustrated with me for being late all the time or forgetting plans. And I felt terrible about it but I couldn't seem to stop doing it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1524.1,
+      "end": 1563.7,
+      "text": "Time blindness - difficulty accurately perceiving and managing time - is a classic ADHD symptom. So is forgetfulness, especially for appointments or plans.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1563.7,
+      "end": 1598.6,
+      "text": "Those are real symptoms, not character flaws. Though I imagine it's been hard to separate the two when you've been getting negative feedback about them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1598.9,
+      "end": 1634.7,
+      "text": "Yeah, it really has been. Jamie would say things like 'if you really cared about me you'd remember' or 'it's not that hard to be on time.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1634.7,
+      "end": 1658.3,
+      "text": "And I do care, I cared so much. I'd set alarms and everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1658.3,
+      "end": 1688.4,
+      "text": "But then I'd get distracted putting on my shoes or I'd misjudge how long it would take to get there.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1688.4,
+      "end": 1708.5,
+      "text": "And then I'd feel like the worst person in the world.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1708.8,
+      "end": 1742.6,
+      "text": "That must have been really painful to be judged for something you were genuinely struggling with.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1742.6,
+      "end": 1789.3,
+      "text": "And I imagine it reinforced the idea that there's something fundamentally wrong with you, rather than that you have a treatable condition that needs support.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1789.6,
+      "end": 1823.8,
+      "text": "I'm literally about to cry right now. Like this is the first time anyone has said it's not my fault.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1823.8,
+      "end": 1862.4,
+      "text": "Everyone always just tells me to try harder or care more or use a planner. As if I haven't tried all of that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1862.7,
+      "end": 1892.3,
+      "text": "I can see how emotional this is for you. It makes sense - you've been carrying so much shame and self-blame for things that are actually symptoms of a medical condition.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1892.3,
+      "end": 1924.5,
+      "text": "That's a heavy burden. Do you need to take a moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1924.8,
+      "end": 1942.6,
+      "text": "No, I'm okay. It's just... it's relief, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1942.6,
+      "end": 1968.7,
+      "text": "Like maybe I'm not fundamentally broken. Maybe there's actually something that can help.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1968.7,
+      "end": 1987.3,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1987.6,
+      "end": 2018.4,
+      "text": "You're absolutely not fundamentally broken. And yes, there are many things that can help.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2018.4,
+      "end": 2058.9,
+      "text": "ADHD is one of the most treatable mental health conditions. Medication can be really effective, and there are also behavioral strategies and accommodations that can make a huge difference. Would you be open to exploring treatment options?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2059.2,
+      "end": 2087.3,
+      "text": "Yes. God, yes. I mean I'm nervous about medication because I've heard mixed things, but I can't keep living like this.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2087.3,
+      "end": 2134.6,
+      "text": "What would treatment look like?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2134.9,
+      "end": 2178.3,
+      "text": "So typically we'd start with a psychiatric evaluation to confirm the diagnosis and discuss medication options.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2178.3,
+      "end": 2236.8,
+      "text": "The most common ADHD medications are stimulants - things like Adderall or Ritalin - which can sound scary but are very effective and safe when properly prescribed. There are also non-stimulant options if you prefer.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2236.8,
+      "end": 2256.8,
+      "text": "The goal is to find something that helps your brain function better without major side effects.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2257.1,
+      "end": 2287.6,
+      "text": "Okay. That actually sounds manageable.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2287.6,
+      "end": 2323.4,
+      "text": "I was worried you'd say I need to completely restructure my entire life or something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2323.7,
+      "end": 2378.2,
+      "text": "I mean, some lifestyle changes can help too - things like regular sleep, exercise, breaking tasks into smaller chunks, using external reminders.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2378.2,
+      "end": 2412.5,
+      "text": "But medication can be the foundation that makes those strategies actually work. Right now you're trying to implement all these strategies with an untreated condition. It's like trying to run a race with a broken leg.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2412.8,
+      "end": 2448.7,
+      "text": "That metaphor really helps. I've been so hard on myself for not being able to just do the things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2448.7,
+      "end": 2476.3,
+      "text": "But if my brain literally works differently, then of course normal strategies don't work the same way.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2476.6,
+      "end": 2518.4,
+      "text": "Exactly. And here's something else important - ADHD in high-achieving people often goes undiagnosed or untreated for years because you've developed these elaborate coping mechanisms.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2518.4,
+      "end": 2554.7,
+      "text": "You're smart enough to compensate, but it takes enormous effort. And the cost is exhaustion, anxiety, depression, and feeling like you're constantly failing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2555.0,
+      "end": 2588.3,
+      "text": "That's... that's exactly my life.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2588.3,
+      "end": 2618.4,
+      "text": "I keep wondering how other people make things look so easy when I'm drowning just trying to do basic stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2618.7,
+      "end": 2648.9,
+      "text": "Because they're not fighting their own brain every step of the way. You are.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2648.9,
+      "end": 2687.3,
+      "text": "And you've still managed to get into a PhD program, which shows how capable you are. Imagine what you could do with proper support.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2687.6,
+      "end": 2718.4,
+      "text": "I'm trying not to get too hopeful but this feels like a really big deal.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2718.4,
+      "end": 2729.8,
+      "text": "Like this could actually change things?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2730.1,
+      "end": 2763.8,
+      "text": "It really could. I don't want to promise miracles - medication isn't a cure-all and there will still be challenges.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2763.8,
+      "end": 2812.4,
+      "text": "But many people with ADHD say treatment is life-changing. They describe it as finally being able to access their own abilities, like the volume of the world gets turned down and they can focus on what matters.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2812.7,
+      "end": 2842.3,
+      "text": "That sounds amazing. Okay, so what do I need to do?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2842.3,
+      "end": 2867.9,
+      "text": "Like what are the next steps?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2868.2,
+      "end": 2918.7,
+      "text": "I'm going to refer you to a psychiatrist - I work with several who specialize in ADHD in adults. They'll do an evaluation and discuss medication options with you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2918.7,
+      "end": 2943.6,
+      "text": "In the meantime, I want you to start keeping an ADHD symptom journal. Just track when you notice symptoms, what's happening, how it affects you. This will be really helpful information for the psychiatrist.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2943.9,
+      "end": 2967.8,
+      "text": "Okay, I can do that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2967.8,
+      "end": 2987.5,
+      "text": "Should I track like everything or just specific things?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2987.8,
+      "end": 3000.0,
+      "text": "Focus on attention issues, impulsivity, time management problems, forgetfulness, emotional regulation. Anything that feels related to what we've talked about today.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "quality": {
+    "total_segments": 162,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 68,
+      "SPEAKER_01": 94
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-01-31T14:00:00Z",
+  "completed_at": "2025-01-31T14:55:47Z"
+}

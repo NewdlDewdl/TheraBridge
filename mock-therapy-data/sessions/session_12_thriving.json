@@ -1,0 +1,1498 @@
+{
+  "id": "session_12_alex_chen",
+  "status": "completed",
+  "filename": "session_12_2025-05-30.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_12_2025-05-30.mp3",
+    "file_size_mb": 37.8,
+    "duration": 3000.0,
+    "language": "english",
+    "timestamp": "20250530_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 342.6,
+    "preprocessing_time_seconds": 5.8,
+    "transcription_time_seconds": 54.2,
+    "diarization_time_seconds": 281.3,
+    "alignment_time_seconds": 1.3
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1200.0,
+      "segment_count": 62
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1800.0,
+      "segment_count": 89
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.4,
+      "text": "Alex! Come in, come in. You look absolutely radiant today. I can see it in your whole posture, the way you're walking. Tell me everything!",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.4,
+      "end": 76.8,
+      "text": "Oh my god, Dr. Mitchell, I have so much to tell you. So, the paper I told you about last session? The one I submitted to the conference? It got accepted! And I'm first author! Like, my name is literally first on the list. I still can't believe it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 76.8,
+      "end": 112.3,
+      "text": "Alex, that's incredible! A first-author publication is a huge accomplishment, especially at your stage. How does it feel? I want you to really sit with that achievement for a moment.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 112.3,
+      "end": 187.6,
+      "text": "It feels surreal, honestly. Like, I keep waiting for someone to tell me there was a mistake. But then I remember that's my old brain talking, you know? The imposter syndrome stuff we've been working on. I actually did this. I wrote a good paper. My advisor said it was really strong work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 187.6,
+      "end": 224.5,
+      "text": "I love that you caught that negative thought pattern and challenged it. That's such growth from where we started. Do you remember our first session when you felt like you didn't belong in your PhD program at all?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 224.5,
+      "end": 298.3,
+      "text": "Oh god, yeah. I was a mess. I couldn't even open my laptop without having a panic attack. And now I'm like, publishing papers and mentoring other students. It's kind of wild when I think about it. Jordan keeps telling me I don't give myself enough credit for how far I've come.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 298.3,
+      "end": 328.7,
+      "text": "Speaking of Jordan, how are things going? Last time you mentioned you were at about a month and a half together. I'm curious how the relationship has been developing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 328.7,
+      "end": 426.2,
+      "text": "It's really good. Like, really good. We just hit two months last week. And I know this sounds cheesy, but it feels different than my past relationships. I'm not constantly anxious about them leaving. We actually talk about things when there's an issue instead of me just spiraling.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 426.2,
+      "end": 458.9,
+      "text": "That's wonderful. What do you think is different this time? Is it Jordan, or is it you, or maybe a combination?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 458.9,
+      "end": 567.4,
+      "text": "I think it's both, honestly. Jordan's really emotionally available and communicative, which helps. But I'm also bringing different skills to this relationship. Like, when I start feeling anxious, I actually use those grounding techniques we practiced instead of texting them a million times. And the Adderall has helped me regulate my emotions better too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 567.4,
+      "end": 601.8,
+      "text": "I'm so glad the medication is working for you. How's that been going overall? Any side effects or concerns you want to discuss?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 601.8,
+      "end": 683.5,
+      "text": "No, it's been great. The 15 milligrams is like the perfect dose for me. I can focus in my classes, I'm not losing my keys every five minutes, and I'm actually getting work done without that constant mental fog. My advisor even noticed the difference in my productivity.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 683.5,
+      "end": 718.3,
+      "text": "That's excellent. And it sounds like you're using it in combination with behavioral strategies, which is exactly what we want. You mentioned grounding techniques. What else has been helpful?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 718.3,
+      "end": 812.6,
+      "text": "The box breathing, for sure. And I've been really good about my sleep schedule. Like, I go to bed at the same time every night, I don't scroll on my phone in bed, all that sleep hygiene stuff. It's made such a difference in my mood and energy levels. Oh, and I started exercising again! Just like, running a couple times a week.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 812.6,
+      "end": 852.4,
+      "text": "Alex, you're basically giving me a masterclass in self-care right now. This is amazing. I want to make sure we capture all of this for when you inevitably hit bumps in the road, because recovery isn't linear. But this is really solid work.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 852.4,
+      "end": 923.7,
+      "text": "Yeah, I know. I'm trying not to get too comfortable, you know? But it does feel good to like, actually enjoy life again. Sarah and Marcus keep saying I seem like a different person. In a good way. We've been hanging out more, going to trivia nights and stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 923.7,
+      "end": 967.2,
+      "text": "Your support system has been so important throughout this process. I'm glad you're engaging with them again. Now, there's something else I want to talk about. You mentioned something huge kind of casually. Tell me about the peer mentoring.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 967.2,
+      "end": 1087.5,
+      "text": "Oh, right! So, the LGBTQ+ student group in my department reached out to me because they heard I was doing well after like, really struggling my first semester. They asked if I'd be willing to mentor other queer students in STEM, especially people dealing with mental health stuff or family issues around their identity.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1087.5,
+      "end": 1126.8,
+      "text": "And you said yes. Alex, do you realize how powerful that is? You're taking your pain and your growth and using it to help others. How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1126.8,
+      "end": 1234.3,
+      "text": "It feels really meaningful, actually. Like, I wish I had someone like me when I was first starting out. Someone who got it, you know? The whole intersection of being queer and Asian and in a competitive academic environment. And dealing with family expectations. I've already met with two students and it's been really rewarding.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1234.3,
+      "end": 1278.6,
+      "text": "This actually leads into something I want to discuss. You mentioned family. Have there been any developments there? I know that's been a really complex part of your journey.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1278.6,
+      "end": 1367.9,
+      "text": "Okay, so this is the other huge thing. My dad texted me. Like, out of nowhere. He said, and I quote, 'Proud of your paper. Still learning about... everything.' That's it. But Dr. Mitchell, that's the first time he's ever acknowledged my identity, even indirectly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1367.9,
+      "end": 1401.5,
+      "text": "Alex, wow. I can see how much that means to you. How did you react when you got that text?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1401.5,
+      "end": 1487.3,
+      "text": "I cried. Like, full-on sobbed. Jordan was with me and they held me while I just lost it. It's not like my dad suddenly accepts everything, but he's trying. That's more than I ever expected. I texted back saying thank you and that I know it's hard for him too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1487.3,
+      "end": 1542.8,
+      "text": "That's a beautiful response. You're allowing space for your father's growth while also honoring how much that acknowledgment means to you. How does it feel to have that shift in your family dynamic?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1542.8,
+      "end": 1638.4,
+      "text": "It's like this weight I didn't even know I was carrying got a little lighter. I'm not holding my breath for him to like, march in a pride parade or anything. But knowing he's trying to understand? That's huge. My mom's still pretty silent about it, but baby steps, right?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1638.4,
+      "end": 1683.7,
+      "text": "Baby steps are still steps. And you're being realistic about your expectations, which shows a lot of maturity. Now, I want to talk about something clinical for a moment. Do you have your PHQ-9 and GAD-7 scores?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1683.7,
+      "end": 1726.5,
+      "text": "Yeah, I filled them out before I came. PHQ-9 is a seven and GAD-7 is also a seven. Those are like, way better than where I started, right?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1726.5,
+      "end": 1812.3,
+      "text": "Alex, when you came to me in January, your PHQ-9 was eighteen and your GAD-7 was sixteen. You've gone from moderate to severe depression and anxiety to minimal symptoms. You're technically in remission. Do you understand how significant that is?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1812.3,
+      "end": 1876.8,
+      "text": "Wait, really? Remission? That sounds so official. Like, I'm actually better? Not just having a good couple of weeks?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1876.8,
+      "end": 1967.4,
+      "text": "You're actually better. And this isn't just luck or a good streak. You've put in consistent work. You've been doing therapy homework, taking medication as prescribed, building coping skills, strengthening your support system. This is the result of your effort. You should be incredibly proud.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1967.4,
+      "end": 2043.6,
+      "text": "I am. I really am. It's weird though, sometimes I get scared that it's all going to fall apart again. Like, what if I wake up one day and I'm back where I started?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2043.6,
+      "end": 2128.9,
+      "text": "That's a completely normal fear, and it's actually a good segue into what I want to talk about today, which is relapse prevention. You're not going to wake up back in January. But you might have harder days or weeks. Let's talk about your warning signs. What would tell you that you're starting to slide?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2128.9,
+      "end": 2238.7,
+      "text": "Um, probably if I started sleeping a lot again. Or if I stopped wanting to see Jordan or my friends. Oh, and if I start avoiding my research or missing deadlines. Those were all big red flags last time. And like, intrusive thoughts about being worthless or people leaving me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2238.7,
+      "end": 2301.5,
+      "text": "Perfect. You have really good insight into your patterns. Now, if you noticed those warning signs, what would you do? Let's create a specific action plan.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2301.5,
+      "end": 2412.8,
+      "text": "Okay, so first I'd probably reach out to Jordan or Sarah or Marcus. Tell them I'm struggling. Then I'd make sure I'm still taking my medication consistently. Maybe check in with my psychiatrist about the dose. And I'd definitely call you to schedule a session, even if it's not our regular time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2412.8,
+      "end": 2478.3,
+      "text": "Excellent. Those are all concrete, actionable steps. I also want you to keep using your coping skills even when you're feeling good. Don't wait until you're in crisis to do box breathing or go for a run. Maintenance is key.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2478.3,
+      "end": 2547.6,
+      "text": "That makes sense. It's like, I can't just stop doing the things that got me here. I need to keep practicing them so they're automatic when things get hard again. If they get hard again. I'm trying to be optimistic but realistic.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2547.6,
+      "end": 2623.4,
+      "text": "That's exactly the balance we want. Now, given how well you're doing, I want to discuss the possibility of transitioning to biweekly sessions instead of weekly. How would you feel about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2623.4,
+      "end": 2712.8,
+      "text": "Honestly? Part of me is excited because it feels like a graduation of sorts. But part of me is also nervous. Like, what if I need you and I have to wait two weeks? But I know that's probably my anxiety talking. I think it's a good idea. Shows that I'm doing better.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2712.8,
+      "end": 2798.5,
+      "text": "It is a graduation of sorts. And remember, you can always reach out between sessions if something urgent comes up. This isn't about me abandoning you. It's about recognizing your growth and giving you more independence. We can always adjust back to weekly if needed.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2798.5,
+      "end": 2863.2,
+      "text": "Okay, yeah. I think I'm ready for that. It's kind of empowering, actually. Like, I can trust myself to handle things for two weeks at a time. That would have been unthinkable five months ago.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2863.2,
+      "end": 2921.7,
+      "text": "Absolutely. So for homework before we meet again in two weeks, I want you to create a wellness action plan. Write down all the things that keep you healthy, your warning signs, and your action steps. Make it concrete.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2921.7,
+      "end": 2967.3,
+      "text": "I can do that. And I'll keep meeting with the students I'm mentoring. That's been really good for me too. Keeps me grounded and reminds me why I'm doing this work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2967.3,
+      "end": 3000.0,
+      "text": "Perfect. Alex, I just want to say how proud I am of you. You've done incredible work, and you should celebrate this moment. You're not just surviving anymore. You're thriving.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 5.2,
+      "text": "Alex! Come in, come in.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 5.2,
+      "end": 9.8,
+      "text": "You look absolutely radiant today.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 9.8,
+      "end": 18.4,
+      "text": "I can see it in your whole posture, the way you're walking. Tell me everything!",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.4,
+      "end": 27.6,
+      "text": "Oh my god, Dr. Mitchell, I have so much to tell you.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 27.6,
+      "end": 38.9,
+      "text": "So, the paper I told you about last session? The one I submitted to the conference?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 38.9,
+      "end": 48.3,
+      "text": "It got accepted! And I'm first author!",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 48.3,
+      "end": 59.7,
+      "text": "Like, my name is literally first on the list.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 59.7,
+      "end": 76.8,
+      "text": "I still can't believe it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 76.8,
+      "end": 86.4,
+      "text": "Alex, that's incredible!",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 86.4,
+      "end": 99.7,
+      "text": "A first-author publication is a huge accomplishment, especially at your stage.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 99.7,
+      "end": 112.3,
+      "text": "How does it feel? I want you to really sit with that achievement for a moment.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 112.3,
+      "end": 122.8,
+      "text": "It feels surreal, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 122.8,
+      "end": 137.4,
+      "text": "Like, I keep waiting for someone to tell me there was a mistake.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 137.4,
+      "end": 152.6,
+      "text": "But then I remember that's my old brain talking, you know? The imposter syndrome stuff we've been working on.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 152.6,
+      "end": 164.9,
+      "text": "I actually did this. I wrote a good paper.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 164.9,
+      "end": 187.6,
+      "text": "My advisor said it was really strong work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 187.6,
+      "end": 205.3,
+      "text": "I love that you caught that negative thought pattern and challenged it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 205.3,
+      "end": 216.8,
+      "text": "That's such growth from where we started.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 216.8,
+      "end": 224.5,
+      "text": "Do you remember our first session when you felt like you didn't belong in your PhD program at all?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 224.5,
+      "end": 234.7,
+      "text": "Oh god, yeah. I was a mess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 234.7,
+      "end": 251.3,
+      "text": "I couldn't even open my laptop without having a panic attack.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 251.3,
+      "end": 272.6,
+      "text": "And now I'm like, publishing papers and mentoring other students.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 272.6,
+      "end": 285.8,
+      "text": "It's kind of wild when I think about it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 285.8,
+      "end": 298.3,
+      "text": "Jordan keeps telling me I don't give myself enough credit for how far I've come.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 298.3,
+      "end": 307.4,
+      "text": "Speaking of Jordan, how are things going?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 307.4,
+      "end": 319.8,
+      "text": "Last time you mentioned you were at about a month and a half together.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 319.8,
+      "end": 328.7,
+      "text": "I'm curious how the relationship has been developing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 328.7,
+      "end": 342.3,
+      "text": "It's really good. Like, really good.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 342.3,
+      "end": 354.8,
+      "text": "We just hit two months last week.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 354.8,
+      "end": 374.6,
+      "text": "And I know this sounds cheesy, but it feels different than my past relationships.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 374.6,
+      "end": 391.5,
+      "text": "I'm not constantly anxious about them leaving.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 391.5,
+      "end": 426.2,
+      "text": "We actually talk about things when there's an issue instead of me just spiraling.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 426.2,
+      "end": 434.7,
+      "text": "That's wonderful.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 434.7,
+      "end": 448.2,
+      "text": "What do you think is different this time?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 448.2,
+      "end": 458.9,
+      "text": "Is it Jordan, or is it you, or maybe a combination?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 458.9,
+      "end": 472.8,
+      "text": "I think it's both, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 472.8,
+      "end": 491.3,
+      "text": "Jordan's really emotionally available and communicative, which helps.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 491.3,
+      "end": 512.6,
+      "text": "But I'm also bringing different skills to this relationship.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 512.6,
+      "end": 545.8,
+      "text": "Like, when I start feeling anxious, I actually use those grounding techniques we practiced instead of texting them a million times.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 545.8,
+      "end": 567.4,
+      "text": "And the Adderall has helped me regulate my emotions better too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 567.4,
+      "end": 583.2,
+      "text": "I'm so glad the medication is working for you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 583.2,
+      "end": 601.8,
+      "text": "How's that been going overall? Any side effects or concerns you want to discuss?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 601.8,
+      "end": 617.3,
+      "text": "No, it's been great.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 617.3,
+      "end": 634.8,
+      "text": "The 15 milligrams is like the perfect dose for me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 634.8,
+      "end": 659.2,
+      "text": "I can focus in my classes, I'm not losing my keys every five minutes, and I'm actually getting work done without that constant mental fog.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 659.2,
+      "end": 683.5,
+      "text": "My advisor even noticed the difference in my productivity.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 683.5,
+      "end": 694.7,
+      "text": "That's excellent.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 694.7,
+      "end": 709.6,
+      "text": "And it sounds like you're using it in combination with behavioral strategies, which is exactly what we want.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 709.6,
+      "end": 718.3,
+      "text": "You mentioned grounding techniques. What else has been helpful?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 718.3,
+      "end": 732.8,
+      "text": "The box breathing, for sure.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 732.8,
+      "end": 751.4,
+      "text": "And I've been really good about my sleep schedule.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 751.4,
+      "end": 778.6,
+      "text": "Like, I go to bed at the same time every night, I don't scroll on my phone in bed, all that sleep hygiene stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 778.6,
+      "end": 795.4,
+      "text": "It's made such a difference in my mood and energy levels.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 795.4,
+      "end": 812.6,
+      "text": "Oh, and I started exercising again! Just like, running a couple times a week.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 812.6,
+      "end": 832.8,
+      "text": "Alex, you're basically giving me a masterclass in self-care right now. This is amazing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 832.8,
+      "end": 845.7,
+      "text": "I want to make sure we capture all of this for when you inevitably hit bumps in the road, because recovery isn't linear.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 845.7,
+      "end": 852.4,
+      "text": "But this is really solid work.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 852.4,
+      "end": 873.9,
+      "text": "Yeah, I know. I'm trying not to get too comfortable, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 873.9,
+      "end": 893.2,
+      "text": "But it does feel good to like, actually enjoy life again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 893.2,
+      "end": 912.8,
+      "text": "Sarah and Marcus keep saying I seem like a different person. In a good way.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 912.8,
+      "end": 923.7,
+      "text": "We've been hanging out more, going to trivia nights and stuff.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 923.7,
+      "end": 945.6,
+      "text": "Your support system has been so important throughout this process. I'm glad you're engaging with them again.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 945.6,
+      "end": 959.8,
+      "text": "Now, there's something else I want to talk about.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 959.8,
+      "end": 967.2,
+      "text": "You mentioned something huge kind of casually. Tell me about the peer mentoring.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 967.2,
+      "end": 978.4,
+      "text": "Oh, right!",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 978.4,
+      "end": 1023.6,
+      "text": "So, the LGBTQ+ student group in my department reached out to me because they heard I was doing well after like, really struggling my first semester.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1023.6,
+      "end": 1087.5,
+      "text": "They asked if I'd be willing to mentor other queer students in STEM, especially people dealing with mental health stuff or family issues around their identity.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1087.5,
+      "end": 1102.8,
+      "text": "And you said yes.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1102.8,
+      "end": 1119.3,
+      "text": "Alex, do you realize how powerful that is? You're taking your pain and your growth and using it to help others.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1119.3,
+      "end": 1126.8,
+      "text": "How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1126.8,
+      "end": 1147.3,
+      "text": "It feels really meaningful, actually.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1147.3,
+      "end": 1167.8,
+      "text": "Like, I wish I had someone like me when I was first starting out. Someone who got it, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1167.8,
+      "end": 1201.4,
+      "text": "The whole intersection of being queer and Asian and in a competitive academic environment. And dealing with family expectations.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1201.4,
+      "end": 1234.3,
+      "text": "I've already met with two students and it's been really rewarding.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1234.3,
+      "end": 1253.8,
+      "text": "This actually leads into something I want to discuss.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1253.8,
+      "end": 1267.4,
+      "text": "You mentioned family. Have there been any developments there?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1267.4,
+      "end": 1278.6,
+      "text": "I know that's been a really complex part of your journey.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1278.6,
+      "end": 1295.3,
+      "text": "Okay, so this is the other huge thing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1295.3,
+      "end": 1309.7,
+      "text": "My dad texted me. Like, out of nowhere.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1309.7,
+      "end": 1334.8,
+      "text": "He said, and I quote, 'Proud of your paper. Still learning about... everything.'",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1334.8,
+      "end": 1342.6,
+      "text": "That's it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1342.6,
+      "end": 1367.9,
+      "text": "But Dr. Mitchell, that's the first time he's ever acknowledged my identity, even indirectly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1367.9,
+      "end": 1382.4,
+      "text": "Alex, wow. I can see how much that means to you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1382.4,
+      "end": 1401.5,
+      "text": "How did you react when you got that text?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1401.5,
+      "end": 1418.7,
+      "text": "I cried. Like, full-on sobbed.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1418.7,
+      "end": 1439.6,
+      "text": "Jordan was with me and they held me while I just lost it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1439.6,
+      "end": 1462.8,
+      "text": "It's not like my dad suddenly accepts everything, but he's trying.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1462.8,
+      "end": 1476.4,
+      "text": "That's more than I ever expected.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1476.4,
+      "end": 1487.3,
+      "text": "I texted back saying thank you and that I know it's hard for him too.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1487.3,
+      "end": 1508.6,
+      "text": "That's a beautiful response.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1508.6,
+      "end": 1534.7,
+      "text": "You're allowing space for your father's growth while also honoring how much that acknowledgment means to you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1534.7,
+      "end": 1542.8,
+      "text": "How does it feel to have that shift in your family dynamic?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1542.8,
+      "end": 1571.4,
+      "text": "It's like this weight I didn't even know I was carrying got a little lighter.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1571.4,
+      "end": 1594.8,
+      "text": "I'm not holding my breath for him to like, march in a pride parade or anything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1594.8,
+      "end": 1612.3,
+      "text": "But knowing he's trying to understand? That's huge.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1612.3,
+      "end": 1638.4,
+      "text": "My mom's still pretty silent about it, but baby steps, right?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1638.4,
+      "end": 1654.3,
+      "text": "Baby steps are still steps.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1654.3,
+      "end": 1672.8,
+      "text": "And you're being realistic about your expectations, which shows a lot of maturity.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1672.8,
+      "end": 1683.7,
+      "text": "Now, I want to talk about something clinical for a moment. Do you have your PHQ-9 and GAD-7 scores?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1683.7,
+      "end": 1698.4,
+      "text": "Yeah, I filled them out before I came.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1698.4,
+      "end": 1715.8,
+      "text": "PHQ-9 is a seven and GAD-7 is also a seven.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1715.8,
+      "end": 1726.5,
+      "text": "Those are like, way better than where I started, right?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1726.5,
+      "end": 1762.8,
+      "text": "Alex, when you came to me in January, your PHQ-9 was eighteen and your GAD-7 was sixteen.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1762.8,
+      "end": 1791.4,
+      "text": "You've gone from moderate to severe depression and anxiety to minimal symptoms.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1791.4,
+      "end": 1812.3,
+      "text": "You're technically in remission. Do you understand how significant that is?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1812.3,
+      "end": 1827.6,
+      "text": "Wait, really? Remission?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1827.6,
+      "end": 1842.3,
+      "text": "That sounds so official.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1842.3,
+      "end": 1864.7,
+      "text": "Like, I'm actually better? Not just having a good couple of weeks?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1864.7,
+      "end": 1876.8,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1876.8,
+      "end": 1893.4,
+      "text": "You're actually better.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1893.4,
+      "end": 1914.6,
+      "text": "And this isn't just luck or a good streak.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1914.6,
+      "end": 1945.8,
+      "text": "You've put in consistent work. You've been doing therapy homework, taking medication as prescribed, building coping skills, strengthening your support system.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1945.8,
+      "end": 1959.7,
+      "text": "This is the result of your effort.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1959.7,
+      "end": 1967.4,
+      "text": "You should be incredibly proud.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1967.4,
+      "end": 1982.6,
+      "text": "I am. I really am.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1982.6,
+      "end": 2018.3,
+      "text": "It's weird though, sometimes I get scared that it's all going to fall apart again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2018.3,
+      "end": 2043.6,
+      "text": "Like, what if I wake up one day and I'm back where I started?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2043.6,
+      "end": 2068.7,
+      "text": "That's a completely normal fear, and it's actually a good segue into what I want to talk about today, which is relapse prevention.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2068.7,
+      "end": 2087.4,
+      "text": "You're not going to wake up back in January. But you might have harder days or weeks.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2087.4,
+      "end": 2104.8,
+      "text": "Let's talk about your warning signs.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2104.8,
+      "end": 2128.9,
+      "text": "What would tell you that you're starting to slide?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2128.9,
+      "end": 2152.3,
+      "text": "Um, probably if I started sleeping a lot again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2152.3,
+      "end": 2178.6,
+      "text": "Or if I stopped wanting to see Jordan or my friends.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2178.6,
+      "end": 2207.4,
+      "text": "Oh, and if I start avoiding my research or missing deadlines. Those were all big red flags last time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2207.4,
+      "end": 2238.7,
+      "text": "And like, intrusive thoughts about being worthless or people leaving me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2238.7,
+      "end": 2263.8,
+      "text": "Perfect. You have really good insight into your patterns.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2263.8,
+      "end": 2284.7,
+      "text": "Now, if you noticed those warning signs, what would you do?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2284.7,
+      "end": 2301.5,
+      "text": "Let's create a specific action plan.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2301.5,
+      "end": 2323.8,
+      "text": "Okay, so first I'd probably reach out to Jordan or Sarah or Marcus. Tell them I'm struggling.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2323.8,
+      "end": 2349.6,
+      "text": "Then I'd make sure I'm still taking my medication consistently.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2349.6,
+      "end": 2374.3,
+      "text": "Maybe check in with my psychiatrist about the dose.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2374.3,
+      "end": 2412.8,
+      "text": "And I'd definitely call you to schedule a session, even if it's not our regular time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2412.8,
+      "end": 2438.7,
+      "text": "Excellent. Those are all concrete, actionable steps.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2438.7,
+      "end": 2463.4,
+      "text": "I also want you to keep using your coping skills even when you're feeling good.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2463.4,
+      "end": 2478.3,
+      "text": "Don't wait until you're in crisis to do box breathing or go for a run. Maintenance is key.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2478.3,
+      "end": 2496.8,
+      "text": "That makes sense.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2496.8,
+      "end": 2526.3,
+      "text": "It's like, I can't just stop doing the things that got me here. I need to keep practicing them so they're automatic when things get hard again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2526.3,
+      "end": 2538.7,
+      "text": "If they get hard again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2538.7,
+      "end": 2547.6,
+      "text": "I'm trying to be optimistic but realistic.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2547.6,
+      "end": 2567.3,
+      "text": "That's exactly the balance we want.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2567.3,
+      "end": 2604.8,
+      "text": "Now, given how well you're doing, I want to discuss the possibility of transitioning to biweekly sessions instead of weekly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2604.8,
+      "end": 2623.4,
+      "text": "How would you feel about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2623.4,
+      "end": 2642.7,
+      "text": "Honestly? Part of me is excited because it feels like a graduation of sorts.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2642.7,
+      "end": 2668.3,
+      "text": "But part of me is also nervous. Like, what if I need you and I have to wait two weeks?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2668.3,
+      "end": 2689.6,
+      "text": "But I know that's probably my anxiety talking.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2689.6,
+      "end": 2712.8,
+      "text": "I think it's a good idea. Shows that I'm doing better.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2712.8,
+      "end": 2731.4,
+      "text": "It is a graduation of sorts.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2731.4,
+      "end": 2756.8,
+      "text": "And remember, you can always reach out between sessions if something urgent comes up.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2756.8,
+      "end": 2779.3,
+      "text": "This isn't about me abandoning you. It's about recognizing your growth and giving you more independence.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2779.3,
+      "end": 2798.5,
+      "text": "We can always adjust back to weekly if needed.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2798.5,
+      "end": 2817.4,
+      "text": "Okay, yeah. I think I'm ready for that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2817.4,
+      "end": 2841.6,
+      "text": "It's kind of empowering, actually. Like, I can trust myself to handle things for two weeks at a time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2841.6,
+      "end": 2863.2,
+      "text": "That would have been unthinkable five months ago.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2863.2,
+      "end": 2882.4,
+      "text": "Absolutely.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2882.4,
+      "end": 2909.8,
+      "text": "So for homework before we meet again in two weeks, I want you to create a wellness action plan.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2909.8,
+      "end": 2921.7,
+      "text": "Write down all the things that keep you healthy, your warning signs, and your action steps. Make it concrete.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2921.7,
+      "end": 2938.6,
+      "text": "I can do that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2938.6,
+      "end": 2956.4,
+      "text": "And I'll keep meeting with the students I'm mentoring.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2956.4,
+      "end": 2967.3,
+      "text": "That's been really good for me too. Keeps me grounded and reminds me why I'm doing this work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2967.3,
+      "end": 2978.8,
+      "text": "Perfect. Alex, I just want to say how proud I am of you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2978.8,
+      "end": 2992.4,
+      "text": "You've done incredible work, and you should celebrate this moment.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2992.4,
+      "end": 3000.0,
+      "text": "You're not just surviving anymore. You're thriving.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "quality": {
+    "total_segments": 151,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 62,
+      "SPEAKER_01": 89
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-05-30T14:00:00Z",
+  "completed_at": "2025-05-30T14:50:00Z"
+}

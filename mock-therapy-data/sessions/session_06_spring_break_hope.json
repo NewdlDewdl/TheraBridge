@@ -1,0 +1,1372 @@
+{
+  "id": "session_06_alex_chen",
+  "status": "completed",
+  "filename": "session_06_2025-03-14.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_06_2025-03-14.mp3",
+    "file_size_mb": 37.8,
+    "duration": 3000.0,
+    "language": "english",
+    "timestamp": "20250314_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 389.2,
+    "preprocessing_time_seconds": 5.8,
+    "transcription_time_seconds": 62.1,
+    "diarization_time_seconds": 320.4,
+    "alignment_time_seconds": 0.9
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1215.0,
+      "segment_count": 68
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1785.0,
+      "segment_count": 89
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.3,
+      "text": "Hey Alex! It's really good to see you. You look different today - in a good way. There's like, more energy? How have the past two weeks been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 47.2,
+      "text": "Hey Dr. Mitchell. Yeah, I feel different. Um, I don't know how to describe it exactly, but like, things have been... better? Which is weird to say out loud because I'm not used to saying that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 47.4,
+      "end": 72.8,
+      "text": "That's wonderful to hear. I'm so glad you're noticing a shift. Tell me more about what's been better. What's changed for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 73.1,
+      "end": 138.6,
+      "text": "So, the medication is really helping. Like, really helping. I went to my psychiatrist follow-up last week and we increased the dose to 15 milligrams because the 10 was working but I still had some symptoms. And now it's like... my brain is quieter? I can actually focus for more than 10 minutes at a time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 138.9,
+      "end": 167.4,
+      "text": "That's such great progress, Alex. I remember in our first few sessions you were so hesitant about medication, worried it meant you were lazy or broken. How does it feel to experience that it's actually helping?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 167.7,
+      "end": 236.5,
+      "text": "Honestly? Kind of validating. Like, I really do have ADHD, it's not just me being a failure. And the medication doesn't make me feel like a zombie or anything. I just feel like... like maybe this is what other people feel like all the time? Like they can just decide to do something and then do it?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 236.8,
+      "end": 271.3,
+      "text": "Exactly. That's exactly what we talked about - your brain just needed a little extra support to function the way it's meant to. This isn't about fixing what's broken, it's about giving your brain what it needs. How has this been affecting your school work?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 271.6,
+      "end": 342.8,
+      "text": "Oh my god, so much better. I actually turned in my dissertation chapter on time. On time! I didn't even pull an all-nighter. I worked on it for like two hours every day for a week and just... finished it. My advisor was shocked because I've been so behind all semester.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 343.1,
+      "end": 381.7,
+      "text": "Alex, that's incredible! Do you hear yourself? You completed a major academic milestone, on time, without the crisis all-nighter pattern. That's huge progress. How did that feel for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 382.0,
+      "end": 453.9,
+      "text": "It felt... weird? But good weird. I kept waiting for the panic to kick in, like oh no it's the night before and I haven't started. But it never came because I'd actually been doing the work. And when I turned it in, my advisor said it was really solid work. She said she could tell I'd taken my time with it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 454.2,
+      "end": 493.6,
+      "text": "I love that you're recognizing this pattern shift. You've gone from crisis mode to steady, consistent work. That must feel so different. What else has been going well?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 493.9,
+      "end": 567.3,
+      "text": "So, I've been doing the meditation thing we talked about. I'm on a 14-day streak! I use this app called Headspace and I do 10 minutes every morning. At first it was really hard to sit still, but now it's like... I actually look forward to it? It helps me start my day calmer.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 567.6,
+      "end": 603.2,
+      "text": "A 14-day streak! That's fantastic consistency. Mindfulness-based cognitive therapy can be so powerful for both anxiety and depression. What do you notice during or after your meditation sessions?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 603.5,
+      "end": 687.4,
+      "text": "I notice that my thoughts are still there, like the anxious ones or the sad ones, but they're not as loud? Like, before it felt like my brain was screaming at me all the time. Now it's more like... thoughts are just thoughts. They come and go. I don't have to believe all of them or react to all of them.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 687.7,
+      "end": 734.8,
+      "text": "That's such an important insight, Alex. That's exactly what mindfulness teaches us - thoughts are mental events, not facts. You're developing the skill of observing your thoughts without getting swept away by them. That's really advanced emotional regulation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 735.1,
+      "end": 789.6,
+      "text": "Yeah, and I think it's helping with the rumination about Jamie. Like, I still think about them sometimes, but I'm not spiraling for hours anymore. I can notice the thought and then like, redirect myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 789.9,
+      "end": 826.3,
+      "text": "That's huge progress. Two months ago you were checking their social media constantly and replaying every interaction. Now you're practicing self-compassion and redirection. How are you feeling about the breakup overall?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 826.6,
+      "end": 912.8,
+      "text": "Honestly? I think I'm okay. Like, it still hurts sometimes, but I'm not destroyed by it anymore. And I've been thinking... maybe the relationship ending wasn't about me being unlovable. Maybe it just wasn't the right fit, you know? Like, that's allowed to be true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 913.1,
+      "end": 971.5,
+      "text": "Wow. Alex, do you realize what you just said? You're challenging that core belief we identified - that you're unlovable. You're reframing the breakup as incompatibility rather than evidence of your worth. That's tremendous growth.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 971.8,
+      "end": 1039.2,
+      "text": "Yeah. And honestly, when I think back on it, Jamie and I weren't that compatible. They were really into outdoor stuff and I'm more of a homebody. They wanted to go to parties every weekend and I find that exhausting. We liked each other, but we didn't actually have that much in common.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1039.5,
+      "end": 1082.7,
+      "text": "You're doing really sophisticated analysis here - looking at the relationship objectively rather than through the lens of rejection and abandonment. That takes a lot of emotional maturity. What else has been going on?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1083.0,
+      "end": 1167.9,
+      "text": "So, I actually reached out to Sarah and Marcus, my friends I'd been avoiding. We got coffee last weekend and it was really nice. They were so supportive and not at all mad that I'd been MIA. We talked about normal stuff, grad school drama, and I didn't feel like I was bringing everyone down.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1168.2,
+      "end": 1213.6,
+      "text": "That's wonderful! Reconnecting with your support system is such an important part of behavioral activation. How did it feel to be social again after isolating?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1213.9,
+      "end": 1289.4,
+      "text": "It felt good, actually. I was nervous at first, but then we just fell back into our normal rhythm. And I realized I'd missed them. I'd missed having friends and doing normal friend things. Depression was telling me they didn't want to see me, but that wasn't true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1289.7,
+      "end": 1337.2,
+      "text": "Depression lies to us. It tells us to isolate, that we're a burden, that people don't care. But the reality was your friends were happy to see you. You tested that thought and found evidence against it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1337.5,
+      "end": 1403.8,
+      "text": "Exactly. And it made me want to do more things. So I actually signed up to go rock climbing with Sarah next week. I used to love climbing before grad school took over my life. I'm kind of excited to try it again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1404.1,
+      "end": 1454.7,
+      "text": "Alex, this is textbook behavioral activation! You're re-engaging with activities that used to bring you joy. Rock climbing is also great for mindfulness - you have to be really present and focused. I love that you're doing this.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1455.0,
+      "end": 1531.6,
+      "text": "Yeah, and I've also been working on a coding side project. Nothing for school, just like, a little app I'm building for fun. I forgot how much I actually enjoy coding when it's not for a grade or my advisor. It's just... satisfying to make something work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1531.9,
+      "end": 1579.3,
+      "text": "That's so important - finding intrinsic motivation and joy in activities again, not just doing things out of obligation or fear. Your coding project, rock climbing, meditation - these are all forms of self-care and values-based living.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1579.6,
+      "end": 1658.7,
+      "text": "I'm also doing something kind of big. So, spring break is next week, and my friend from college, Jordan, lives in Portland. They invited me to visit and I said yes. I'm going to fly there for four days. It'll be my first solo trip in like, years.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1659.0,
+      "end": 1696.4,
+      "text": "Alex, that's amazing! A solo trip to visit a friend - that takes planning, courage, and a belief that you deserve to do something fun. How are you feeling about it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1696.7,
+      "end": 1783.9,
+      "text": "I'm excited! Like, genuinely excited. Two months ago I couldn't imagine leaving my apartment, and now I'm booking flights and planning what to do in Portland. Jordan wants to take me to this bookstore and there's a coffee shop scene there. I'm really looking forward to it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1784.2,
+      "end": 1831.6,
+      "text": "I love that you're experiencing genuine excitement and anticipation. Those are emotions you told me you thought you'd never feel again. And now here you are, making plans, looking forward to things. How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1831.9,
+      "end": 1912.3,
+      "text": "It feels... hopeful? Which is a weird feeling for me. Like, I'm starting to think maybe I can be okay. Maybe I don't need to be in a relationship to be happy. Maybe I can just like, build a life that I enjoy, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1912.6,
+      "end": 1976.8,
+      "text": "Alex, this is such a significant moment. This is the first time I've heard you express genuine hope for your future. 'Maybe I can be okay' - that's a profound shift from where you were when we started. How does it feel to say that out loud?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1977.1,
+      "end": 2067.4,
+      "text": "It feels scary but also like, real? I'm not saying everything is perfect. I still have hard days. I still get anxious. But I'm starting to believe that I can handle it. That I have tools now. Medication, meditation, therapy, friends. I'm not drowning anymore.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2067.7,
+      "end": 2134.3,
+      "text": "You're absolutely right - recovery isn't about never having hard days. It's about having the skills and support to navigate them. And you've built that foundation. You should feel really proud of yourself. I'm certainly proud of you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2134.6,
+      "end": 2178.9,
+      "text": "Thank you. That means a lot. Um, can I ask you something? Like, is it normal to feel guilty about feeling better?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2179.2,
+      "end": 2221.7,
+      "text": "That's such a common experience. Tell me more about what you're feeling guilty about. What thoughts come up when you notice you're doing better?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2222.0,
+      "end": 2318.6,
+      "text": "I don't know, it's like... part of me thinks I was being dramatic before. Like maybe I wasn't really that depressed, I was just being lazy or attention-seeking. And now that I'm better, it's like proof that I was faking it. Which I know doesn't make sense, but that's what my brain says.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2318.9,
+      "end": 2396.4,
+      "text": "This is actually a really common cognitive distortion. You weren't faking anything, Alex. You were genuinely suffering. The fact that you're better now doesn't invalidate how much pain you were in. It's evidence that treatment works - medication, therapy, behavioral changes. You did the work.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2396.7,
+      "end": 2453.8,
+      "text": "Yeah, you're right. I guess I'm just not used to feeling good, so part of me is waiting for it to go away. Like, what if this is temporary and I crash again?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2454.1,
+      "end": 2538.7,
+      "text": "That's a very understandable fear, especially after experiencing such a dark period. But here's what I want you to remember - you now have tools and strategies that you didn't have before. If you have a setback, it doesn't mean you're back at square one. You know how to cope now. You know what helps.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2539.0,
+      "end": 2601.3,
+      "text": "That makes sense. Like, I have my meditation practice, I have medication that works, I have you, I have my friends. I'm not starting from scratch if things get hard again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2601.6,
+      "end": 2647.2,
+      "text": "Exactly. Recovery is not linear. There will be ups and downs, but you're building resilience. Speaking of which, have you filled out your PHQ-9 and GAD-7 for today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2647.5,
+      "end": 2689.3,
+      "text": "Yeah, I did them in the waiting room. I think my scores are lower this time. I noticed I was answering differently than I used to.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2689.6,
+      "end": 2748.9,
+      "text": "Let me take a look. Okay, so your PHQ-9 is 11, down from 18 two weeks ago. That's moved you from moderately severe depression to moderate depression. And your GAD-7 is 10, down from 14. Both of these are really significant improvements.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2749.2,
+      "end": 2812.6,
+      "text": "Wow, those numbers are actually lower than I expected. I mean, I feel better, but seeing the numbers makes it feel more real. Like I'm not imagining it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2812.9,
+      "end": 2867.4,
+      "text": "You're definitely not imagining it. These are validated clinical measures, and they're confirming what you're experiencing - real, measurable improvement. You should feel really proud of this progress.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2867.7,
+      "end": 2916.8,
+      "text": "I do. I really do. It's kind of amazing to think about where I was in January versus now. Like, night and day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2917.1,
+      "end": 2963.2,
+      "text": "It really is. So let's talk about homework for the next two weeks. What feels doable and helpful for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2963.5,
+      "end": 3000.0,
+      "text": "I want to keep doing my meditation every day. And while I'm in Portland, I want to try one new social activity. Maybe go to an open mic or something? Jordan mentioned there are some cool queer-friendly spaces there. I think I'm ready to put myself out there a little more.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 6.8,
+      "text": "Hey Alex! It's really good to see you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 6.8,
+      "end": 11.2,
+      "text": "You look different today - in a good way. There's like, more energy?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 11.2,
+      "end": 18.3,
+      "text": "How have the past two weeks been?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 21.9,
+      "text": "Hey Dr. Mitchell. Yeah, I feel different.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 21.9,
+      "end": 32.4,
+      "text": "Um, I don't know how to describe it exactly, but like, things have been... better?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 32.4,
+      "end": 47.2,
+      "text": "Which is weird to say out loud because I'm not used to saying that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 47.4,
+      "end": 52.6,
+      "text": "That's wonderful to hear. I'm so glad you're noticing a shift.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 52.6,
+      "end": 72.8,
+      "text": "Tell me more about what's been better. What's changed for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 73.1,
+      "end": 86.7,
+      "text": "So, the medication is really helping. Like, really helping.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 86.7,
+      "end": 108.3,
+      "text": "I went to my psychiatrist follow-up last week and we increased the dose to 15 milligrams because the 10 was working but I still had some symptoms.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 108.3,
+      "end": 123.5,
+      "text": "And now it's like... my brain is quieter? I can actually focus for more than 10 minutes at a time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 123.5,
+      "end": 138.6,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 138.9,
+      "end": 148.2,
+      "text": "That's such great progress, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 148.2,
+      "end": 167.4,
+      "text": "I remember in our first few sessions you were so hesitant about medication, worried it meant you were lazy or broken. How does it feel to experience that it's actually helping?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 167.7,
+      "end": 174.3,
+      "text": "Honestly? Kind of validating.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 174.3,
+      "end": 189.6,
+      "text": "Like, I really do have ADHD, it's not just me being a failure.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 189.6,
+      "end": 201.8,
+      "text": "And the medication doesn't make me feel like a zombie or anything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 201.8,
+      "end": 236.5,
+      "text": "I just feel like... like maybe this is what other people feel like all the time? Like they can just decide to do something and then do it?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 236.8,
+      "end": 245.2,
+      "text": "Exactly. That's exactly what we talked about.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 245.2,
+      "end": 261.7,
+      "text": "Your brain just needed a little extra support to function the way it's meant to. This isn't about fixing what's broken, it's about giving your brain what it needs.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 261.7,
+      "end": 271.3,
+      "text": "How has this been affecting your school work?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 271.6,
+      "end": 283.4,
+      "text": "Oh my god, so much better.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 283.4,
+      "end": 298.7,
+      "text": "I actually turned in my dissertation chapter on time. On time!",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 298.7,
+      "end": 321.5,
+      "text": "I didn't even pull an all-nighter. I worked on it for like two hours every day for a week and just... finished it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 321.5,
+      "end": 342.8,
+      "text": "My advisor was shocked because I've been so behind all semester.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 343.1,
+      "end": 353.8,
+      "text": "Alex, that's incredible! Do you hear yourself?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 353.8,
+      "end": 371.2,
+      "text": "You completed a major academic milestone, on time, without the crisis all-nighter pattern. That's huge progress.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 371.2,
+      "end": 381.7,
+      "text": "How did that feel for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 382.0,
+      "end": 391.3,
+      "text": "It felt... weird? But good weird.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 391.3,
+      "end": 417.8,
+      "text": "I kept waiting for the panic to kick in, like oh no it's the night before and I haven't started. But it never came because I'd actually been doing the work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 417.8,
+      "end": 453.9,
+      "text": "And when I turned it in, my advisor said it was really solid work. She said she could tell I'd taken my time with it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 454.2,
+      "end": 469.8,
+      "text": "I love that you're recognizing this pattern shift.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 469.8,
+      "end": 483.1,
+      "text": "You've gone from crisis mode to steady, consistent work. That must feel so different.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 483.1,
+      "end": 493.6,
+      "text": "What else has been going well?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 493.9,
+      "end": 523.7,
+      "text": "So, I've been doing the meditation thing we talked about. I'm on a 14-day streak!",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 523.7,
+      "end": 546.2,
+      "text": "I use this app called Headspace and I do 10 minutes every morning.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 546.2,
+      "end": 567.3,
+      "text": "At first it was really hard to sit still, but now it's like... I actually look forward to it? It helps me start my day calmer.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 567.6,
+      "end": 579.4,
+      "text": "A 14-day streak! That's fantastic consistency.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 579.4,
+      "end": 603.2,
+      "text": "Mindfulness-based cognitive therapy can be so powerful for both anxiety and depression. What do you notice during or after your meditation sessions?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 603.5,
+      "end": 631.8,
+      "text": "I notice that my thoughts are still there, like the anxious ones or the sad ones, but they're not as loud?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 631.8,
+      "end": 658.3,
+      "text": "Like, before it felt like my brain was screaming at me all the time. Now it's more like... thoughts are just thoughts.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 658.3,
+      "end": 687.4,
+      "text": "They come and go. I don't have to believe all of them or react to all of them.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 687.7,
+      "end": 703.2,
+      "text": "That's such an important insight, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 703.2,
+      "end": 721.6,
+      "text": "That's exactly what mindfulness teaches us - thoughts are mental events, not facts.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 721.6,
+      "end": 734.8,
+      "text": "You're developing the skill of observing your thoughts without getting swept away by them. That's really advanced emotional regulation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 735.1,
+      "end": 758.4,
+      "text": "Yeah, and I think it's helping with the rumination about Jamie.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 758.4,
+      "end": 789.6,
+      "text": "Like, I still think about them sometimes, but I'm not spiraling for hours anymore. I can notice the thought and then like, redirect myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 789.9,
+      "end": 796.7,
+      "text": "That's huge progress.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 796.7,
+      "end": 816.3,
+      "text": "Two months ago you were checking their social media constantly and replaying every interaction. Now you're practicing self-compassion and redirection.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 816.3,
+      "end": 826.3,
+      "text": "How are you feeling about the breakup overall?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 826.6,
+      "end": 838.9,
+      "text": "Honestly? I think I'm okay.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 838.9,
+      "end": 867.2,
+      "text": "Like, it still hurts sometimes, but I'm not destroyed by it anymore.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 867.2,
+      "end": 912.8,
+      "text": "And I've been thinking... maybe the relationship ending wasn't about me being unlovable. Maybe it just wasn't the right fit, you know? Like, that's allowed to be true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 913.1,
+      "end": 926.4,
+      "text": "Wow. Alex, do you realize what you just said?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 926.4,
+      "end": 951.8,
+      "text": "You're challenging that core belief we identified - that you're unlovable. You're reframing the breakup as incompatibility rather than evidence of your worth.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 951.8,
+      "end": 971.5,
+      "text": "That's tremendous growth.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 971.8,
+      "end": 1003.6,
+      "text": "Yeah. And honestly, when I think back on it, Jamie and I weren't that compatible.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1003.6,
+      "end": 1023.8,
+      "text": "They were really into outdoor stuff and I'm more of a homebody. They wanted to go to parties every weekend and I find that exhausting.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1023.8,
+      "end": 1039.2,
+      "text": "We liked each other, but we didn't actually have that much in common.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1039.5,
+      "end": 1068.7,
+      "text": "You're doing really sophisticated analysis here - looking at the relationship objectively rather than through the lens of rejection and abandonment. That takes a lot of emotional maturity.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1068.7,
+      "end": 1082.7,
+      "text": "What else has been going on?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1083.0,
+      "end": 1119.4,
+      "text": "So, I actually reached out to Sarah and Marcus, my friends I'd been avoiding.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1119.4,
+      "end": 1145.7,
+      "text": "We got coffee last weekend and it was really nice. They were so supportive and not at all mad that I'd been MIA.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1145.7,
+      "end": 1167.9,
+      "text": "We talked about normal stuff, grad school drama, and I didn't feel like I was bringing everyone down.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1168.2,
+      "end": 1178.6,
+      "text": "That's wonderful!",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1178.6,
+      "end": 1203.8,
+      "text": "Reconnecting with your support system is such an important part of behavioral activation. How did it feel to be social again after isolating?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1203.8,
+      "end": 1213.6,
+      "text": "",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1213.9,
+      "end": 1228.7,
+      "text": "It felt good, actually. I was nervous at first, but then we just fell back into our normal rhythm.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1228.7,
+      "end": 1251.3,
+      "text": "And I realized I'd missed them. I'd missed having friends and doing normal friend things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1251.3,
+      "end": 1289.4,
+      "text": "Depression was telling me they didn't want to see me, but that wasn't true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1289.7,
+      "end": 1312.8,
+      "text": "Depression lies to us. It tells us to isolate, that we're a burden, that people don't care.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1312.8,
+      "end": 1337.2,
+      "text": "But the reality was your friends were happy to see you. You tested that thought and found evidence against it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1337.5,
+      "end": 1364.8,
+      "text": "Exactly. And it made me want to do more things.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1364.8,
+      "end": 1403.8,
+      "text": "So I actually signed up to go rock climbing with Sarah next week. I used to love climbing before grad school took over my life. I'm kind of excited to try it again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1404.1,
+      "end": 1423.6,
+      "text": "Alex, this is textbook behavioral activation! You're re-engaging with activities that used to bring you joy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1423.6,
+      "end": 1454.7,
+      "text": "Rock climbing is also great for mindfulness - you have to be really present and focused. I love that you're doing this.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1455.0,
+      "end": 1487.3,
+      "text": "Yeah, and I've also been working on a coding side project. Nothing for school, just like, a little app I'm building for fun.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1487.3,
+      "end": 1531.6,
+      "text": "I forgot how much I actually enjoy coding when it's not for a grade or my advisor. It's just... satisfying to make something work.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1531.9,
+      "end": 1562.8,
+      "text": "That's so important - finding intrinsic motivation and joy in activities again, not just doing things out of obligation or fear.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1562.8,
+      "end": 1579.3,
+      "text": "Your coding project, rock climbing, meditation - these are all forms of self-care and values-based living.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1579.6,
+      "end": 1603.8,
+      "text": "I'm also doing something kind of big.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1603.8,
+      "end": 1638.2,
+      "text": "So, spring break is next week, and my friend from college, Jordan, lives in Portland. They invited me to visit and I said yes.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1638.2,
+      "end": 1658.7,
+      "text": "I'm going to fly there for four days. It'll be my first solo trip in like, years.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1659.0,
+      "end": 1673.4,
+      "text": "Alex, that's amazing!",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1673.4,
+      "end": 1686.9,
+      "text": "A solo trip to visit a friend - that takes planning, courage, and a belief that you deserve to do something fun.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1686.9,
+      "end": 1696.4,
+      "text": "How are you feeling about it?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1696.7,
+      "end": 1712.8,
+      "text": "I'm excited! Like, genuinely excited.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1712.8,
+      "end": 1748.3,
+      "text": "Two months ago I couldn't imagine leaving my apartment, and now I'm booking flights and planning what to do in Portland.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1748.3,
+      "end": 1783.9,
+      "text": "Jordan wants to take me to this bookstore and there's a coffee shop scene there. I'm really looking forward to it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1784.2,
+      "end": 1815.3,
+      "text": "I love that you're experiencing genuine excitement and anticipation. Those are emotions you told me you thought you'd never feel again.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1815.3,
+      "end": 1831.6,
+      "text": "And now here you are, making plans, looking forward to things. How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1831.9,
+      "end": 1852.7,
+      "text": "It feels... hopeful? Which is a weird feeling for me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1852.7,
+      "end": 1882.4,
+      "text": "Like, I'm starting to think maybe I can be okay. Maybe I don't need to be in a relationship to be happy.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1882.4,
+      "end": 1912.3,
+      "text": "Maybe I can just like, build a life that I enjoy, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1912.6,
+      "end": 1933.8,
+      "text": "Alex, this is such a significant moment.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1933.8,
+      "end": 1958.7,
+      "text": "This is the first time I've heard you express genuine hope for your future. 'Maybe I can be okay' - that's a profound shift from where you were when we started.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1958.7,
+      "end": 1976.8,
+      "text": "How does it feel to say that out loud?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1977.1,
+      "end": 1998.3,
+      "text": "It feels scary but also like, real?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1998.3,
+      "end": 2023.7,
+      "text": "I'm not saying everything is perfect. I still have hard days. I still get anxious.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2023.7,
+      "end": 2048.6,
+      "text": "But I'm starting to believe that I can handle it. That I have tools now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2048.6,
+      "end": 2067.4,
+      "text": "Medication, meditation, therapy, friends. I'm not drowning anymore.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2067.7,
+      "end": 2098.3,
+      "text": "You're absolutely right - recovery isn't about never having hard days. It's about having the skills and support to navigate them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2098.3,
+      "end": 2134.3,
+      "text": "And you've built that foundation. You should feel really proud of yourself. I'm certainly proud of you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2134.6,
+      "end": 2148.3,
+      "text": "Thank you. That means a lot.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2148.3,
+      "end": 2178.9,
+      "text": "Um, can I ask you something? Like, is it normal to feel guilty about feeling better?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2179.2,
+      "end": 2193.8,
+      "text": "That's such a common experience.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2193.8,
+      "end": 2221.7,
+      "text": "Tell me more about what you're feeling guilty about. What thoughts come up when you notice you're doing better?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2222.0,
+      "end": 2258.4,
+      "text": "I don't know, it's like... part of me thinks I was being dramatic before.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2258.4,
+      "end": 2283.7,
+      "text": "Like maybe I wasn't really that depressed, I was just being lazy or attention-seeking.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2283.7,
+      "end": 2318.6,
+      "text": "And now that I'm better, it's like proof that I was faking it. Which I know doesn't make sense, but that's what my brain says.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2318.9,
+      "end": 2342.7,
+      "text": "This is actually a really common cognitive distortion. You weren't faking anything, Alex. You were genuinely suffering.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2342.7,
+      "end": 2373.8,
+      "text": "The fact that you're better now doesn't invalidate how much pain you were in. It's evidence that treatment works - medication, therapy, behavioral changes.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2373.8,
+      "end": 2396.4,
+      "text": "You did the work.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2396.7,
+      "end": 2423.6,
+      "text": "Yeah, you're right. I guess I'm just not used to feeling good, so part of me is waiting for it to go away.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2423.6,
+      "end": 2453.8,
+      "text": "Like, what if this is temporary and I crash again?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2454.1,
+      "end": 2487.3,
+      "text": "That's a very understandable fear, especially after experiencing such a dark period.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2487.3,
+      "end": 2518.6,
+      "text": "But here's what I want you to remember - you now have tools and strategies that you didn't have before. If you have a setback, it doesn't mean you're back at square one.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2518.6,
+      "end": 2538.7,
+      "text": "You know how to cope now. You know what helps.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2539.0,
+      "end": 2573.8,
+      "text": "That makes sense. Like, I have my meditation practice, I have medication that works, I have you, I have my friends.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2573.8,
+      "end": 2601.3,
+      "text": "I'm not starting from scratch if things get hard again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2601.6,
+      "end": 2623.4,
+      "text": "Exactly. Recovery is not linear. There will be ups and downs, but you're building resilience.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2623.4,
+      "end": 2647.2,
+      "text": "Speaking of which, have you filled out your PHQ-9 and GAD-7 for today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2647.5,
+      "end": 2673.8,
+      "text": "Yeah, I did them in the waiting room. I think my scores are lower this time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2673.8,
+      "end": 2689.3,
+      "text": "I noticed I was answering differently than I used to.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2689.6,
+      "end": 2718.4,
+      "text": "Let me take a look. Okay, so your PHQ-9 is 11, down from 18 two weeks ago.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2718.4,
+      "end": 2738.2,
+      "text": "That's moved you from moderately severe depression to moderate depression.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2738.2,
+      "end": 2748.9,
+      "text": "And your GAD-7 is 10, down from 14. Both of these are really significant improvements.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2749.2,
+      "end": 2783.6,
+      "text": "Wow, those numbers are actually lower than I expected. I mean, I feel better, but seeing the numbers makes it feel more real.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2783.6,
+      "end": 2812.6,
+      "text": "Like I'm not imagining it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2812.9,
+      "end": 2843.7,
+      "text": "You're definitely not imagining it. These are validated clinical measures, and they're confirming what you're experiencing - real, measurable improvement.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2843.7,
+      "end": 2867.4,
+      "text": "You should feel really proud of this progress.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2867.7,
+      "end": 2893.4,
+      "text": "I do. I really do. It's kind of amazing to think about where I was in January versus now.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2893.4,
+      "end": 2916.8,
+      "text": "Like, night and day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2917.1,
+      "end": 2943.8,
+      "text": "It really is. So let's talk about homework for the next two weeks.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2943.8,
+      "end": 2963.2,
+      "text": "What feels doable and helpful for you?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2963.5,
+      "end": 2982.7,
+      "text": "I want to keep doing my meditation every day.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2982.7,
+      "end": 3000.0,
+      "text": "And while I'm in Portland, I want to try one new social activity. Maybe go to an open mic or something? Jordan mentioned there are some cool queer-friendly spaces there. I think I'm ready to put myself out there a little more.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    }
+  ],
+  "quality": {
+    "total_segments": 157,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 68,
+      "SPEAKER_01": 89
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-03-14T14:00:00Z",
+  "completed_at": "2025-03-14T14:56:33Z"
+}

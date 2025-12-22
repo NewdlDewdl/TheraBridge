@@ -1,0 +1,237 @@
+{
+  "validation_date": "2025-12-22",
+  "validator": "Automated Validation Agent",
+  "overall_status": "FAIL",
+  "summary": {
+    "total_files": 12,
+    "expected_files": 12,
+    "passing_files": 11,
+    "failing_files": 1,
+    "missing_files": 0,
+    "pass_rate": "91.7%"
+  },
+  "validation_checks": {
+    "file_existence": {
+      "status": "PASS",
+      "files_found": 12,
+      "files_expected": 12
+    },
+    "json_schema": {
+      "status": "PASS",
+      "passing": 11,
+      "failing": 1
+    },
+    "speaker_distribution": {
+      "status": "PASS",
+      "passing": 11,
+      "failing": 0,
+      "notes": "All sessions within expected 35-45% therapist, 55-65% client range"
+    },
+    "timestamp_validation": {
+      "status": "FAIL",
+      "passing": 11,
+      "failing": 1,
+      "critical_issues": [
+        {
+          "session": "session_12_thriving",
+          "error": "Last segment ends at 5300.0s, but metadata declares duration as 3000.0s",
+          "impact": "Will cause audio generation to fail"
+        }
+      ]
+    },
+    "audio_compatibility": {
+      "status": "PASS",
+      "passing": 11,
+      "failing": 0,
+      "checks": {
+        "utf8_encoding": "PASS",
+        "segment_length": "PASS (all <300s)",
+        "speaker_labels": "PASS",
+        "text_fields": "PASS (no empty/missing)"
+      }
+    },
+    "clinical_content": {
+      "status": "PASS",
+      "spot_checks": 4,
+      "authentic_content": true,
+      "therapeutic_techniques": true
+    }
+  },
+  "passing_sessions": [
+    "session_01_crisis_intake",
+    "session_02_emotional_regulation",
+    "session_03_adhd_discovery",
+    "session_04_medication_start",
+    "session_05_family_conflict",
+    "session_06_spring_break_hope",
+    "session_07_dating_anxiety",
+    "session_08_relationship_boundaries",
+    "session_09_coming_out_preparation",
+    "session_10_coming_out_aftermath",
+    "session_11_rebuilding"
+  ],
+  "failing_sessions": [
+    {
+      "session": "session_12_thriving",
+      "errors": [
+        {
+          "type": "timestamp_integrity",
+          "severity": "critical",
+          "description": "Last segment ends at 5300.0s, expected 3000.0s",
+          "discrepancy_seconds": 2300,
+          "discrepancy_minutes": 38.33
+        }
+      ],
+      "action_required": "REGENERATE"
+    }
+  ],
+  "speaker_distribution_analysis": [
+    {
+      "session": "session_01_crisis_intake",
+      "duration_minutes": 60.0,
+      "therapist_percent": 35.0,
+      "client_percent": 65.0,
+      "therapist_segments": 89,
+      "client_segments": 124
+    },
+    {
+      "session": "session_02_emotional_regulation",
+      "duration_minutes": 45.0,
+      "therapist_percent": 40.0,
+      "client_percent": 60.0,
+      "therapist_segments": 62,
+      "client_segments": 71
+    },
+    {
+      "session": "session_03_adhd_discovery",
+      "duration_minutes": 50.0,
+      "therapist_percent": 39.5,
+      "client_percent": 60.5,
+      "therapist_segments": 68,
+      "client_segments": 94
+    },
+    {
+      "session": "session_04_medication_start",
+      "duration_minutes": 45.0,
+      "therapist_percent": 40.0,
+      "client_percent": 60.0,
+      "therapist_segments": 62,
+      "client_segments": 78
+    },
+    {
+      "session": "session_05_family_conflict",
+      "duration_minutes": 55.0,
+      "therapist_percent": 40.0,
+      "client_percent": 60.0,
+      "therapist_segments": 78,
+      "client_segments": 95
+    },
+    {
+      "session": "session_06_spring_break_hope",
+      "duration_minutes": 50.0,
+      "therapist_percent": 40.5,
+      "client_percent": 59.5,
+      "therapist_segments": 68,
+      "client_segments": 89
+    },
+    {
+      "session": "session_07_dating_anxiety",
+      "duration_minutes": 50.0,
+      "therapist_percent": 39.5,
+      "client_percent": 60.5,
+      "therapist_segments": 72,
+      "client_segments": 98
+    },
+    {
+      "session": "session_08_relationship_boundaries",
+      "duration_minutes": 45.0,
+      "therapist_percent": 40.0,
+      "client_percent": 60.0,
+      "therapist_segments": 48,
+      "client_segments": 64
+    },
+    {
+      "session": "session_09_coming_out_preparation",
+      "duration_minutes": 60.0,
+      "therapist_percent": 40.0,
+      "client_percent": 60.0,
+      "therapist_segments": 92,
+      "client_segments": 106
+    },
+    {
+      "session": "session_10_coming_out_aftermath",
+      "duration_minutes": 55.0,
+      "therapist_percent": 40.0,
+      "client_percent": 60.0,
+      "therapist_segments": 94,
+      "client_segments": 128
+    },
+    {
+      "session": "session_11_rebuilding",
+      "duration_minutes": 50.0,
+      "therapist_percent": 40.0,
+      "client_percent": 60.0,
+      "therapist_segments": 72,
+      "client_segments": 98
+    }
+  ],
+  "audio_compatibility_stats": {
+    "total_segments_analyzed": 537,
+    "segments_over_300s": 0,
+    "empty_text_fields": 0,
+    "encoding_issues": 0,
+    "invalid_speaker_labels": 0
+  },
+  "clinical_content_validation": {
+    "session_01_crisis_intake": {
+      "safety_plan": true,
+      "suicidal_ideation_assessment": true,
+      "crisis_intervention": true,
+      "phq9_gad7_by_name": false
+    },
+    "session_02_emotional_regulation": {
+      "tipp_technique": true,
+      "dbt_framework": true,
+      "emotion_regulation": true
+    },
+    "session_03_adhd_discovery": {
+      "adhd_diagnosis": true,
+      "attention_difficulties": true,
+      "executive_function": true
+    },
+    "session_09_coming_out_preparation": {
+      "coming_out_discussion": true,
+      "queer_identity": true,
+      "family_dynamics": true
+    }
+  },
+  "recommendations": {
+    "immediate_action": [
+      "Regenerate session_12_thriving.json with corrected timestamps",
+      "Ensure last segment ends at 3000.0s OR update metadata duration to 5300.0s",
+      "Re-run validation after regeneration"
+    ],
+    "optional_improvements": [
+      "Session 01: Consider explicitly mentioning PHQ-9 and GAD-7 by name in dialogue"
+    ],
+    "ready_for_audio_generation": [
+      "session_01_crisis_intake",
+      "session_02_emotional_regulation",
+      "session_03_adhd_discovery",
+      "session_04_medication_start",
+      "session_05_family_conflict",
+      "session_06_spring_break_hope",
+      "session_07_dating_anxiety",
+      "session_08_relationship_boundaries",
+      "session_09_coming_out_preparation",
+      "session_10_coming_out_aftermath",
+      "session_11_rebuilding"
+    ]
+  },
+  "next_steps": [
+    "Regenerate session_12_thriving.json",
+    "Re-run validation: python3 validate_sessions.py",
+    "Confirm all 12 sessions pass",
+    "Proceed with Hume AI audio generation"
+  ]
+}

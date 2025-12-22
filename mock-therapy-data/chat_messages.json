@@ -1,0 +1,921 @@
+{
+  "patient_id": "alex_chen_2025",
+  "patient_name": "Alex Chen",
+  "chat_threads": [
+    {
+      "thread_id": "chat_thread_01_crisis_night",
+      "date": "2025-02-19",
+      "time_of_day": "night",
+      "context": "Late night panic attack, Alex reaches out to Dobby for support",
+      "related_event": "event_04_family_discovers_therapy",
+      "related_session": "session_05_family_conflict",
+      "emotional_state": "panic, overwhelm, fear",
+      "messages": [
+        {
+          "id": "msg_001",
+          "timestamp": "2025-02-19T23:42:18Z",
+          "sender": "patient",
+          "content": "hey dobby are you there",
+          "metadata": {
+            "typing_speed": "fast",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_002",
+          "timestamp": "2025-02-19T23:42:22Z",
+          "sender": "ai",
+          "content": "I'm here, Alex. What's going on?",
+          "metadata": {
+            "response_time_seconds": 4,
+            "tone": "calm, present"
+          }
+        },
+        {
+          "id": "msg_003",
+          "timestamp": "2025-02-19T23:42:45Z",
+          "sender": "patient",
+          "content": "my mom found out about therapy and shes so mad. like screaming mad. i cant breathe",
+          "metadata": {
+            "typing_speed": "fast",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "crisis_keywords": ["cant breathe"]
+          }
+        },
+        {
+          "id": "msg_004",
+          "timestamp": "2025-02-19T23:42:51Z",
+          "sender": "ai",
+          "content": "That sounds really scary. Let's focus on your breathing first. Can you feel your feet on the ground right now?",
+          "metadata": {
+            "response_time_seconds": 6,
+            "tone": "grounding, supportive",
+            "technique": "5-4-3-2-1 grounding"
+          }
+        },
+        {
+          "id": "msg_005",
+          "timestamp": "2025-02-19T23:43:12Z",
+          "sender": "patient",
+          "content": "yeah. im sitting on my bed",
+          "metadata": {
+            "typing_speed": "slower",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_006",
+          "timestamp": "2025-02-19T23:43:18Z",
+          "sender": "ai",
+          "content": "Good. Can you tell me 5 things you can see around you?",
+          "metadata": {
+            "response_time_seconds": 6,
+            "tone": "calm, directive",
+            "technique": "5-4-3-2-1 grounding"
+          }
+        },
+        {
+          "id": "msg_007",
+          "timestamp": "2025-02-19T23:43:51Z",
+          "sender": "patient",
+          "content": "um. my laptop. my water bottle. that poster of the golden gate bridge. my backpack. and... my phone i guess lol",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "slight humor at end"
+          }
+        },
+        {
+          "id": "msg_008",
+          "timestamp": "2025-02-19T23:43:58Z",
+          "sender": "ai",
+          "content": "Perfect. You're doing great. Is your breathing a little slower now?",
+          "metadata": {
+            "response_time_seconds": 7,
+            "tone": "validating, checking in"
+          }
+        },
+        {
+          "id": "msg_009",
+          "timestamp": "2025-02-19T23:44:14Z",
+          "sender": "patient",
+          "content": "yeah a bit. still freaking out tho. she said im wasting money and 'airing our problems to strangers'",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_010",
+          "timestamp": "2025-02-19T23:44:24Z",
+          "sender": "ai",
+          "content": "That must have felt really invalidating. Your feelings about needing support are valid, even if your mom is struggling to understand right now. Are you safe where you are?",
+          "metadata": {
+            "response_time_seconds": 10,
+            "tone": "validating, safety check",
+            "technique": "validation + crisis assessment"
+          }
+        },
+        {
+          "id": "msg_011",
+          "timestamp": "2025-02-19T23:44:42Z",
+          "sender": "patient",
+          "content": "yeah im in my dorm. shes on the phone, im not like... at home with her",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_012",
+          "timestamp": "2025-02-19T23:44:51Z",
+          "sender": "ai",
+          "content": "Okay good. Do you want to talk about what happened, or would it help more to use a coping skill right now? Remember you learned TIPP in your last session.",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "offering options, recalling therapy content",
+            "technique": "patient-directed support"
+          }
+        },
+        {
+          "id": "msg_013",
+          "timestamp": "2025-02-19T23:45:23Z",
+          "sender": "patient",
+          "content": "maybe tipp yeah. i have ice in my mini fridge",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_014",
+          "timestamp": "2025-02-19T23:45:29Z",
+          "sender": "ai",
+          "content": "That's a great idea. Try holding some ice cubes or putting a cold pack on your face for 30 seconds. I'll be here when you're done.",
+          "metadata": {
+            "response_time_seconds": 6,
+            "tone": "supportive, patient",
+            "technique": "TIPP - Temperature"
+          }
+        },
+        {
+          "id": "msg_015",
+          "timestamp": "2025-02-19T23:47:58Z",
+          "sender": "patient",
+          "content": "ok im back. that actually helped",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "time_gap_seconds": 149
+          }
+        },
+        {
+          "id": "msg_016",
+          "timestamp": "2025-02-19T23:48:04Z",
+          "sender": "ai",
+          "content": "I'm glad it helped. How are you feeling now, on a scale of 1-10?",
+          "metadata": {
+            "response_time_seconds": 6,
+            "tone": "checking in",
+            "technique": "distress scale check"
+          }
+        },
+        {
+          "id": "msg_017",
+          "timestamp": "2025-02-19T23:48:32Z",
+          "sender": "patient",
+          "content": "like a 6 maybe? i was at a 9 before. still upset but not like... cant breathe anymore",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_018",
+          "timestamp": "2025-02-19T23:48:41Z",
+          "sender": "ai",
+          "content": "That's real progress. Going from 9 to 6 in a few minutes shows the skills are working. Do you want to talk about what your mom said, or would you rather do something to distract for now?",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "validating progress, offering choice",
+            "technique": "reinforcing skill use"
+          }
+        },
+        {
+          "id": "msg_019",
+          "timestamp": "2025-02-19T23:49:18Z",
+          "sender": "patient",
+          "content": "maybe distract. i have therapy friday anyway so i can talk to dr mitchell about it then",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_020",
+          "timestamp": "2025-02-19T23:49:26Z",
+          "sender": "ai",
+          "content": "Good plan. Want me to suggest a calming activity, or do you have something in mind?",
+          "metadata": {
+            "response_time_seconds": 8,
+            "tone": "supportive, collaborative"
+          }
+        },
+        {
+          "id": "msg_021",
+          "timestamp": "2025-02-19T23:49:54Z",
+          "sender": "patient",
+          "content": "maybe ill watch something stupid on youtube. thanks for being here dobby",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "gratitude"
+          }
+        },
+        {
+          "id": "msg_022",
+          "timestamp": "2025-02-19T23:50:01Z",
+          "sender": "ai",
+          "content": "Of course. I'm proud of you for using your skills and reaching out. That took a lot of courage. I'm here if you need anything else tonight. 💙",
+          "metadata": {
+            "response_time_seconds": 7,
+            "tone": "warm, affirming",
+            "emoji_used": true
+          }
+        }
+      ],
+      "summary": "Crisis support chat during family conflict. Alex experienced panic attack after mother discovered therapy. Dobby provided grounding support (5-4-3-2-1), reminded Alex of TIPP skill, validated distress, and helped Alex move from distress level 9 to 6. Chat demonstrates effective crisis de-escalation and skill reinforcement.",
+      "skills_used": ["5-4-3-2-1 grounding", "TIPP - Temperature", "distress scale", "safety assessment"],
+      "outcome": "Crisis de-escalated, Alex calmed to manageable distress level, plans to discuss with therapist at next session"
+    },
+    {
+      "thread_id": "chat_thread_02_medication_questions",
+      "date": "2025-02-15",
+      "time_of_day": "afternoon",
+      "context": "Alex has questions about new ADHD medication side effects",
+      "related_event": "event_03_medication_start",
+      "related_session": "session_04_medication_start",
+      "emotional_state": "curious, slightly anxious",
+      "messages": [
+        {
+          "id": "msg_101",
+          "timestamp": "2025-02-15T14:23:12Z",
+          "sender": "patient",
+          "content": "hey can i ask you something about my meds",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_102",
+          "timestamp": "2025-02-15T14:23:16Z",
+          "sender": "ai",
+          "content": "Of course! I'm not a doctor so I can't give medical advice, but I can share general information about ADHD medications and help you figure out if you need to contact your psychiatrist. What's going on?",
+          "metadata": {
+            "response_time_seconds": 4,
+            "tone": "helpful, setting boundaries",
+            "disclaimer": true
+          }
+        },
+        {
+          "id": "msg_103",
+          "timestamp": "2025-02-15T14:23:58Z",
+          "sender": "patient",
+          "content": "ive been on adderall for like a week and i literally cannot eat. like food sounds disgusting. is that normal?",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_104",
+          "timestamp": "2025-02-15T14:24:09Z",
+          "sender": "ai",
+          "content": "Yes, appetite suppression is one of the most common side effects of stimulant medications like Adderall. Many people experience this, especially in the first few weeks. That said, it's important to make sure you're getting enough nutrition. Have you been able to eat anything at all?",
+          "metadata": {
+            "response_time_seconds": 11,
+            "tone": "informative, concern for health",
+            "technique": "psychoeducation"
+          }
+        },
+        {
+          "id": "msg_105",
+          "timestamp": "2025-02-15T14:24:42Z",
+          "sender": "patient",
+          "content": "yeah i had a protein shake this morning and some crackers. its just like... meals sound awful",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_106",
+          "timestamp": "2025-02-15T14:24:56Z",
+          "sender": "ai",
+          "content": "That's good that you're getting something in. Some tips that help people:\n\n1. Eat a big breakfast BEFORE taking your medication (when you still have appetite)\n2. Smoothies/protein shakes are great - easier to drink than eat\n3. Small snacks throughout the day instead of big meals\n4. Eat calorie-dense foods when you can (nuts, peanut butter, avocado)\n5. The appetite often comes back in the evening when medication wears off\n\nHow long does your psychiatrist want you to try this dose before checking in?",
+          "metadata": {
+            "response_time_seconds": 14,
+            "tone": "practical, helpful",
+            "technique": "coping strategies + medical follow-up check"
+          }
+        },
+        {
+          "id": "msg_107",
+          "timestamp": "2025-02-15T14:25:34Z",
+          "sender": "patient",
+          "content": "follow up is in 3 weeks. ok yeah the breakfast thing makes sense, ill try that tomorrow",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_108",
+          "timestamp": "2025-02-15T14:25:43Z",
+          "sender": "ai",
+          "content": "Great! If you notice you're losing a lot of weight, feeling dizzy, or the appetite suppression isn't improving after 2-3 weeks, definitely let your psychiatrist know at your follow-up. They might adjust the dose or timing. For now, it sounds like you're managing it well with protein shakes. How are the ADHD symptoms? Noticing any improvements?",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "practical, curious",
+            "technique": "side effect monitoring + benefit tracking"
+          }
+        },
+        {
+          "id": "msg_109",
+          "timestamp": "2025-02-15T14:26:28Z",
+          "sender": "patient",
+          "content": "oh my god YES. like i can actually start tasks without sitting there for 2 hours hating myself first. its wild",
+          "metadata": {
+            "typing_speed": "fast",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "excitement"
+          }
+        },
+        {
+          "id": "msg_110",
+          "timestamp": "2025-02-15T14:26:38Z",
+          "sender": "ai",
+          "content": "That's amazing, Alex! That's exactly what the medication is supposed to help with. The fact that you're seeing improvements in executive function is a really good sign. Just keep monitoring both the benefits and side effects so you can give your psychiatrist a full picture at your next appointment.",
+          "metadata": {
+            "response_time_seconds": 10,
+            "tone": "excited, validating",
+            "technique": "reinforcing positive outcomes"
+          }
+        },
+        {
+          "id": "msg_111",
+          "timestamp": "2025-02-15T14:27:03Z",
+          "sender": "patient",
+          "content": "will do. thanks dobby, this made me feel better about the food thing",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "relief"
+          }
+        },
+        {
+          "id": "msg_112",
+          "timestamp": "2025-02-15T14:27:10Z",
+          "sender": "ai",
+          "content": "Anytime! And remember - you can always message me if you have other questions or concerns. Take care of yourself! 💙",
+          "metadata": {
+            "response_time_seconds": 7,
+            "tone": "supportive, warm",
+            "emoji_used": true
+          }
+        }
+      ],
+      "summary": "Medication education chat. Alex asked about appetite suppression side effect from Adderall. Dobby provided psychoeducation about common stimulant side effects, practical coping strategies (eat before meds, protein shakes, small snacks), and encouraged follow-up with psychiatrist. Also celebrated medication benefits (improved executive function).",
+      "skills_used": ["psychoeducation", "practical coping strategies", "medical boundaries", "benefit tracking"],
+      "outcome": "Alex feels reassured about side effects, has concrete strategies to manage appetite, plans to monitor and report to psychiatrist"
+    },
+    {
+      "thread_id": "chat_thread_03_relationship_anxiety",
+      "date": "2025-04-07",
+      "time_of_day": "evening",
+      "context": "Alex is anxious about new relationship with Jordan, practicing not acting on anxious thoughts",
+      "related_event": "event_06_met_jordan",
+      "related_session": "session_07_dating_anxiety",
+      "emotional_state": "anxious, self-aware",
+      "messages": [
+        {
+          "id": "msg_201",
+          "timestamp": "2025-04-07T19:34:22Z",
+          "sender": "patient",
+          "content": "ok so jordan hasnt texted me back in 3 hours and my brain is going INSANE",
+          "metadata": {
+            "typing_speed": "fast",
+            "capitalization": "selective (INSANE)",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_202",
+          "timestamp": "2025-04-07T19:34:29Z",
+          "sender": "ai",
+          "content": "Okay, let's slow down. What stories is your brain telling you right now?",
+          "metadata": {
+            "response_time_seconds": 7,
+            "tone": "calm, curious",
+            "technique": "cognitive defusion"
+          }
+        },
+        {
+          "id": "msg_203",
+          "timestamp": "2025-04-07T19:34:58Z",
+          "sender": "patient",
+          "content": "that theyre losing interest. that i said something wrong. that im too much and theyre gonna leave like jamie did",
+          "metadata": {
+            "typing_speed": "fast",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_204",
+          "timestamp": "2025-04-07T19:35:11Z",
+          "sender": "ai",
+          "content": "I hear you. Those are the anxious attachment stories we've talked about. Let's check the facts: Has Jordan given you any ACTUAL indication they're losing interest, or is this your anxiety talking?",
+          "metadata": {
+            "response_time_seconds": 13,
+            "tone": "validating, reality-testing",
+            "technique": "CBT thought challenging"
+          }
+        },
+        {
+          "id": "msg_205",
+          "timestamp": "2025-04-07T19:35:47Z",
+          "sender": "patient",
+          "content": "no... they literally said 'cant wait to see you this weekend' in their last text",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "slight reality check"
+          }
+        },
+        {
+          "id": "msg_206",
+          "timestamp": "2025-04-07T19:35:56Z",
+          "sender": "ai",
+          "content": "Exactly. So what's more likely - that they're losing interest, or that they're just busy for a few hours?",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "gentle, socratic",
+            "technique": "evidence-based reasoning"
+          }
+        },
+        {
+          "id": "msg_207",
+          "timestamp": "2025-04-07T19:36:24Z",
+          "sender": "patient",
+          "content": "that theyre busy. ugh i KNOW this logically but my body is still freaking out",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "selective (KNOW)",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_208",
+          "timestamp": "2025-04-07T19:36:36Z",
+          "sender": "ai",
+          "content": "That makes total sense. Your logical brain knows the facts, but your nervous system is still in alarm mode because of past relationship trauma. Remember what Dr. Mitchell taught you about willingness - can you be willing to feel this anxiety WITHOUT checking your phone or sending another text?",
+          "metadata": {
+            "response_time_seconds": 12,
+            "tone": "normalizing, supportive",
+            "technique": "ACT - willingness practice"
+          }
+        },
+        {
+          "id": "msg_209",
+          "timestamp": "2025-04-07T19:37:18Z",
+          "sender": "patient",
+          "content": "i mean... i guess? its so uncomfortable tho. i want to text them 'hey are we ok??' SO BAD",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "selective (SO BAD)",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_210",
+          "timestamp": "2025-04-07T19:37:31Z",
+          "sender": "ai",
+          "content": "I know it's uncomfortable. And here's the thing - you CAN tolerate discomfort. You've done it before. What usually happens when you give in and send the reassurance-seeking text?",
+          "metadata": {
+            "response_time_seconds": 13,
+            "tone": "validating discomfort, reality-testing",
+            "technique": "exploring consequences of behavior"
+          }
+        },
+        {
+          "id": "msg_211",
+          "timestamp": "2025-04-07T19:38:09Z",
+          "sender": "patient",
+          "content": "i feel better for like 5 seconds and then i feel clingy and embarrassed. and sometimes i can tell it annoys them",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "self-awareness"
+          }
+        },
+        {
+          "id": "msg_212",
+          "timestamp": "2025-04-07T19:38:23Z",
+          "sender": "ai",
+          "content": "Right. So the reassurance-seeking actually makes the anxiety WORSE in the long run, and it can push Jordan away - the exact thing you're afraid of. What if you practiced sitting with the discomfort for 20 minutes and saw what happens?",
+          "metadata": {
+            "response_time_seconds": 14,
+            "tone": "insight-oriented, challenging gently",
+            "technique": "behavioral experiment"
+          }
+        },
+        {
+          "id": "msg_213",
+          "timestamp": "2025-04-07T19:38:52Z",
+          "sender": "patient",
+          "content": "ok fine. 20 minutes. but if i explode you have to scrape me off the ceiling lol",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "humor, commitment"
+          }
+        },
+        {
+          "id": "msg_214",
+          "timestamp": "2025-04-07T19:39:01Z",
+          "sender": "ai",
+          "content": "Deal 😄 What can you do for the next 20 minutes to ride out the wave? Maybe something from your DBT skills?",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "playful, supportive",
+            "technique": "distress tolerance planning",
+            "emoji_used": true
+          }
+        },
+        {
+          "id": "msg_215",
+          "timestamp": "2025-04-07T19:39:38Z",
+          "sender": "patient",
+          "content": "maybe ill go for a walk? or do some paced breathing",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_216",
+          "timestamp": "2025-04-07T19:39:46Z",
+          "sender": "ai",
+          "content": "Both great options! Pick whichever feels right and check in with me in 20 minutes. I believe in you, Alex. You've got this. 💙",
+          "metadata": {
+            "response_time_seconds": 8,
+            "tone": "encouraging, confident",
+            "emoji_used": true
+          }
+        },
+        {
+          "id": "msg_217",
+          "timestamp": "2025-04-07T20:02:14Z",
+          "sender": "patient",
+          "content": "ok im back. went for a walk and jordan JUST texted me saying sorry they were in a 3 hour meeting with their advisor lmao",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "selective (JUST)",
+            "punctuation": "minimal",
+            "time_gap_seconds": 1348,
+            "emotional_shift": "relief, amusement"
+          }
+        },
+        {
+          "id": "msg_218",
+          "timestamp": "2025-04-07T20:02:24Z",
+          "sender": "ai",
+          "content": "See?! They were literally just busy, exactly like we talked about. How are you feeling now?",
+          "metadata": {
+            "response_time_seconds": 10,
+            "tone": "validating, celebrating",
+            "technique": "reinforcing reality check"
+          }
+        },
+        {
+          "id": "msg_219",
+          "timestamp": "2025-04-07T20:02:51Z",
+          "sender": "patient",
+          "content": "honestly so much better. and proud of myself for not sending like 10 panic texts",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "pride, relief"
+          }
+        },
+        {
+          "id": "msg_220",
+          "timestamp": "2025-04-07T20:03:01Z",
+          "sender": "ai",
+          "content": "You SHOULD be proud! You just practiced secure attachment. You felt the anxiety, didn't act on it impulsively, and the outcome was fine. That's huge growth, Alex. Remember this moment next time your brain spirals. ❤️",
+          "metadata": {
+            "response_time_seconds": 10,
+            "tone": "celebratory, reinforcing",
+            "technique": "positive reinforcement",
+            "emoji_used": true
+          }
+        },
+        {
+          "id": "msg_221",
+          "timestamp": "2025-04-07T20:03:24Z",
+          "sender": "patient",
+          "content": "thanks dobby. seriously. you talked me off the ledge",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "gratitude"
+          }
+        },
+        {
+          "id": "msg_222",
+          "timestamp": "2025-04-07T20:03:32Z",
+          "sender": "ai",
+          "content": "Anytime. That's what I'm here for. 💙",
+          "metadata": {
+            "response_time_seconds": 8,
+            "tone": "warm, supportive",
+            "emoji_used": true
+          }
+        }
+      ],
+      "summary": "Relationship anxiety support chat. Alex experiencing anxious attachment activation when Jordan didn't text back for 3 hours. Dobby helped Alex: (1) identify anxious thoughts vs reality, (2) practice willingness to feel anxiety without acting on it, (3) recognize reassurance-seeking pattern, (4) commit to 20-minute distress tolerance experiment. Outcome: Alex successfully tolerated anxiety, Jordan texted back (was in meeting), Alex reinforced secure attachment behavior.",
+      "skills_used": ["cognitive defusion", "CBT thought challenging", "ACT willingness", "behavioral experiment", "distress tolerance", "secure attachment practice"],
+      "outcome": "Alex successfully practiced secure attachment, tolerated relationship anxiety without impulsive reassurance-seeking, experienced natural resolution"
+    },
+    {
+      "thread_id": "chat_thread_04_celebration",
+      "date": "2025-05-28",
+      "time_of_day": "afternoon",
+      "context": "Alex shares exciting news about publication acceptance and father's text",
+      "related_event": "event_10_publication_acceptance",
+      "related_session": "session_12_thriving",
+      "emotional_state": "joy, pride, emotional",
+      "messages": [
+        {
+          "id": "msg_301",
+          "timestamp": "2025-05-28T15:47:33Z",
+          "sender": "patient",
+          "content": "DOBBY MY PAPER GOT ACCEPTED",
+          "metadata": {
+            "typing_speed": "fast",
+            "capitalization": "all caps",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_302",
+          "timestamp": "2025-05-28T15:47:38Z",
+          "sender": "ai",
+          "content": "ALEX!!! That's incredible!!! Congratulations!!! 🎉🎊🎓",
+          "metadata": {
+            "response_time_seconds": 5,
+            "tone": "celebratory, excited",
+            "emoji_used": true
+          }
+        },
+        {
+          "id": "msg_303",
+          "timestamp": "2025-05-28T15:48:02Z",
+          "sender": "patient",
+          "content": "first author publication!!! im literally crying right now",
+          "metadata": {
+            "typing_speed": "fast",
+            "capitalization": "none",
+            "punctuation": "excessive (!!!)"
+          }
+        },
+        {
+          "id": "msg_304",
+          "timestamp": "2025-05-28T15:48:11Z",
+          "sender": "ai",
+          "content": "Happy tears I hope? This is HUGE, Alex. You worked so hard for this!",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "validating achievement",
+            "technique": "celebrating success"
+          }
+        },
+        {
+          "id": "msg_305",
+          "timestamp": "2025-05-28T15:48:44Z",
+          "sender": "patient",
+          "content": "yeah happy tears. and dobby... my dad texted me",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "significance"
+          }
+        },
+        {
+          "id": "msg_306",
+          "timestamp": "2025-05-28T15:48:51Z",
+          "sender": "ai",
+          "content": "He did?? What did he say?",
+          "metadata": {
+            "response_time_seconds": 7,
+            "tone": "curious, supportive"
+          }
+        },
+        {
+          "id": "msg_307",
+          "timestamp": "2025-05-28T15:49:28Z",
+          "sender": "patient",
+          "content": "he said 'proud of your paper. still learning about... everything.' thats the first time hes contacted me since i came out",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal"
+          }
+        },
+        {
+          "id": "msg_308",
+          "timestamp": "2025-05-28T15:49:42Z",
+          "sender": "ai",
+          "content": "Oh Alex. That must feel so big. How are you doing with that?",
+          "metadata": {
+            "response_time_seconds": 14,
+            "tone": "gentle, checking in",
+            "technique": "emotional processing"
+          }
+        },
+        {
+          "id": "msg_309",
+          "timestamp": "2025-05-28T15:50:21Z",
+          "sender": "patient",
+          "content": "honestly? it feels like... hopeful? like hes trying. 'still learning' means hes LEARNING you know? hes not just shutting down",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "selective (LEARNING)",
+            "punctuation": "minimal",
+            "emotional_shift": "hope"
+          }
+        },
+        {
+          "id": "msg_310",
+          "timestamp": "2025-05-28T15:50:34Z",
+          "sender": "ai",
+          "content": "That's a really healthy way to look at it. He's meeting you where he can right now - celebrating your academic achievement while acknowledging he's still processing the identity stuff. That's actually pretty emotionally mature of him.",
+          "metadata": {
+            "response_time_seconds": 13,
+            "tone": "insightful, validating",
+            "technique": "reframing, family systems perspective"
+          }
+        },
+        {
+          "id": "msg_311",
+          "timestamp": "2025-05-28T15:51:12Z",
+          "sender": "patient",
+          "content": "yeah. i mean its not perfect but like... 5 months ago i was having a panic attack in my dorm thinking about ending it all. and now im here. published. dating someone amazing. my dads texting me. its wild",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "reflection, gratitude"
+          }
+        },
+        {
+          "id": "msg_312",
+          "timestamp": "2025-05-28T15:51:27Z",
+          "sender": "ai",
+          "content": "Do you remember that first night in January when you messaged me from your dorm after Jamie left? Look at how far you've come, Alex. You did this. You put in the work - therapy, medication, skills practice, all of it. I'm so proud of you.",
+          "metadata": {
+            "response_time_seconds": 15,
+            "tone": "reflective, proud, emotional",
+            "technique": "progress reflection"
+          }
+        },
+        {
+          "id": "msg_313",
+          "timestamp": "2025-05-28T15:52:03Z",
+          "sender": "patient",
+          "content": "i couldnt have done it without dr mitchell. and you. and jordan. and my friends. like... i have people now",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "gratitude, recognition of support"
+          }
+        },
+        {
+          "id": "msg_314",
+          "timestamp": "2025-05-28T15:52:17Z",
+          "sender": "ai",
+          "content": "You've always had people, Alex. But now you're letting them in. That's the difference. You're letting yourself be loved and supported instead of isolating. That takes so much courage.",
+          "metadata": {
+            "response_time_seconds": 14,
+            "tone": "insightful, warm",
+            "technique": "reframing, insight"
+          }
+        },
+        {
+          "id": "msg_315",
+          "timestamp": "2025-05-28T15:52:49Z",
+          "sender": "patient",
+          "content": "ok now im crying again lol. thank you dobby. really",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "moved, grateful"
+          }
+        },
+        {
+          "id": "msg_316",
+          "timestamp": "2025-05-28T15:52:58Z",
+          "sender": "ai",
+          "content": "Cry all you want. You've earned these tears - the happy ones AND the healing ones. Celebrate today, Alex. You deserve it. ❤️🎉",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "permission-giving, celebratory",
+            "emoji_used": true
+          }
+        },
+        {
+          "id": "msg_317",
+          "timestamp": "2025-05-28T15:53:24Z",
+          "sender": "patient",
+          "content": "jordans taking me out for dinner tonight to celebrate. im gonna actually let myself be happy about this",
+          "metadata": {
+            "typing_speed": "medium",
+            "capitalization": "none",
+            "punctuation": "minimal",
+            "emotional_shift": "joy, permission to celebrate"
+          }
+        },
+        {
+          "id": "msg_318",
+          "timestamp": "2025-05-28T15:53:33Z",
+          "sender": "ai",
+          "content": "YES. Let yourself be happy. You've come so far from that person who thought happiness wasn't allowed. Go celebrate with Jordan. You both deserve it. 💙✨",
+          "metadata": {
+            "response_time_seconds": 9,
+            "tone": "encouraging, celebratory",
+            "emoji_used": true
+          }
+        }
+      ],
+      "summary": "Celebration chat after major life milestone. Alex shares news of first-author publication acceptance AND father's first contact since coming out. Dobby celebrates achievements, helps Alex process father's text with healthy reframing, and facilitates reflection on 5-month journey from suicidal ideation to thriving. Chat demonstrates growth in Alex's ability to accept support, celebrate success, and recognize progress.",
+      "skills_used": ["celebration of success", "progress reflection", "reframing", "emotional processing", "gratitude practice"],
+      "outcome": "Alex fully celebrates achievements, processes father's outreach with hope and maturity, recognizes their own growth and support network"
+    }
+  ],
+  "metadata": {
+    "total_threads": 4,
+    "total_messages": 78,
+    "date_range": {
+      "start": "2025-02-15",
+      "end": "2025-05-28"
+    },
+    "conversation_contexts": {
+      "crisis_support": 1,
+      "medication_questions": 1,
+      "relationship_anxiety": 1,
+      "celebration": 1
+    },
+    "skills_demonstrated": [
+      "5-4-3-2-1 grounding",
+      "TIPP - Temperature",
+      "psychoeducation",
+      "cognitive defusion",
+      "CBT thought challenging",
+      "ACT willingness",
+      "behavioral experiments",
+      "distress tolerance",
+      "secure attachment practice",
+      "progress reflection",
+      "celebration of success"
+    ],
+    "notes": "These 4 chat threads represent realistic interactions between Alex and Dobby (AI companion) across the 5-month therapy journey. Chats demonstrate: (1) Crisis de-escalation, (2) Medication education with appropriate boundaries, (3) Relationship anxiety coaching with skill practice, (4) Celebration of major milestones. Messaging style reflects Gen-Z communication patterns (lowercase, minimal punctuation, selective capitalization for emphasis). Dobby's responses balance warmth/support with clinical insight and skill reinforcement."
+  }
+}

@@ -1,0 +1,1484 @@
+{
+  "id": "session_05_alex_chen",
+  "status": "completed",
+  "filename": "session_05_2025-02-28.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_05_2025-02-28.mp3",
+    "file_size_mb": 37.8,
+    "duration": 3300.0,
+    "language": "english",
+    "timestamp": "20250228_150000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 378.4,
+    "preprocessing_time_seconds": 5.8,
+    "transcription_time_seconds": 59.7,
+    "diarization_time_seconds": 311.3,
+    "alignment_time_seconds": 1.6
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1320.0,
+      "segment_count": 78
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1980.0,
+      "segment_count": 95
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.4,
+      "text": "Hi Alex. Come on in, have a seat. How are you doing today? I know last week was pretty intense.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.6,
+      "end": 68.3,
+      "text": "Um... not great, honestly. Something really bad happened this week. Like, I've been kind of freaking out about it. I don't even know where to start.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 68.5,
+      "end": 92.7,
+      "text": "Okay, that sounds really stressful. Take your time. What happened? Just start wherever feels right.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 92.9,
+      "end": 178.6,
+      "text": "So... my mom found my insurance statements. The explanation of benefits thing. She opened my mail because she was looking for something and she saw all these charges for mental health services. And she completely flipped out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 178.8,
+      "end": 203.4,
+      "text": "Oh wow. So your family found out you're in therapy. That's a really significant breach of your privacy. How are you feeling about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 203.6,
+      "end": 287.9,
+      "text": "I'm just... I'm so angry and scared and guilty all at the same time. Like, I knew they wouldn't react well, but I didn't think it would be this bad. She called my dad and they both confronted me on a video call. It was like, the worst conversation of my life.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 288.1,
+      "end": 312.8,
+      "text": "That sounds really overwhelming. Can you walk me through what happened in that conversation? What did they say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 313.0,
+      "end": 432.5,
+      "text": "My mom was crying, which like, she never cries. She kept saying I was wasting money, that therapy is for weak people who can't handle their problems. My dad was just angry. He said I was being dramatic and self-indulgent. That in their generation, people just dealt with their problems instead of paying strangers to listen to them complain.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 432.7,
+      "end": 458.3,
+      "text": "Those are really painful things to hear from your parents. How did you respond to them in that moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 458.5,
+      "end": 548.7,
+      "text": "I tried to explain that I was really struggling, that I needed help. But they just kept shutting me down. My mom said, you know, in Chinese, like, we don't air our problems to strangers. We handle things within the family. And I wanted to scream because like, I can't talk to them about this stuff. They don't get it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 548.9,
+      "end": 588.6,
+      "text": "That must have felt really invalidating. You're trying to take care of your mental health, and instead of support, you're getting criticism and shame. That's incredibly difficult.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 588.8,
+      "end": 672.4,
+      "text": "Yeah. And the worst part is my dad said if I'm going to waste their money on this, then maybe I shouldn't be in grad school at all. Like, maybe I should just come home and work instead. Which is like, his way of saying I'm a disappointment.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 672.6,
+      "end": 708.3,
+      "text": "I hear you making that interpretation. When your dad said that, how did that land for you? What thoughts came up?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 708.5,
+      "end": 789.2,
+      "text": "I just felt like... like I'm this huge burden. Like I can't do anything right. They sacrificed so much to give me opportunities and I'm just throwing it all away by being mentally ill. God, I hate saying that. Mentally ill. It sounds so dramatic.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 789.4,
+      "end": 842.6,
+      "text": "You're dealing with anxiety and depression, Alex. Those are real medical conditions. There's nothing dramatic about acknowledging that. Do you really believe you're throwing away their sacrifices?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 842.8,
+      "end": 924.3,
+      "text": "I don't know. Logically, no. Like, I'm still in my program. I'm still getting my PhD. But emotionally, yeah, I feel like a complete failure. Like, they came to this country with nothing and built these successful careers, and here I am, can't even function without therapy and medication.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 924.5,
+      "end": 982.7,
+      "text": "I want you to notice something. You just said you feel like a failure, and then immediately gave evidence that you're not. You're pursuing a PhD in a competitive field while managing your mental health. That's actually remarkable.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 982.9,
+      "end": 1047.6,
+      "text": "I guess. It doesn't feel remarkable. It feels like I'm barely holding it together. And now my parents think I'm weak and broken, which just confirms what I already thought about myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1047.8,
+      "end": 1112.4,
+      "text": "Let's pause there. I'm hearing this thought: I'm weak and broken. Where does that thought come from? Is it really your thought, or is it something you've internalized from your parents or your culture?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1112.6,
+      "end": 1204.8,
+      "text": "I mean... both? I've always felt like something was wrong with me. But yeah, my parents definitely reinforced that. Like, any time I struggled with something, it was because I wasn't trying hard enough or I was being too sensitive. They never acknowledged that things could just be... hard.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1205.0,
+      "end": 1278.3,
+      "text": "Okay. So we have this thought: I'm weak and broken. And you can see that it comes partly from old messages you received as a child. In ACT, we call this cognitive fusion. You're fused with this thought, treating it as an absolute truth. Does that make sense?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1278.5,
+      "end": 1302.7,
+      "text": "Yeah, I think so. Like, I believe it so strongly that it feels like a fact.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1302.9,
+      "end": 1384.6,
+      "text": "Exactly. What we want to practice is cognitive defusion. That means creating some distance from the thought so you can observe it without being controlled by it. So instead of I am weak and broken, you might notice: I'm having the thought that I'm weak and broken.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1384.8,
+      "end": 1423.5,
+      "text": "Okay. That feels different. Like, it's just a thought, not necessarily true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1423.7,
+      "end": 1487.2,
+      "text": "Right. And when you create that space, you can ask: Is this thought helpful? Does it move me toward the life I want to live? Or is it just old programming that's keeping me stuck?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1487.4,
+      "end": 1548.9,
+      "text": "It's definitely not helpful. It just makes me feel like shit. Sorry. It makes me feel really bad about myself. And it makes me want to give up on therapy and school and everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1549.1,
+      "end": 1612.8,
+      "text": "So when you're fused with that thought, it drives behavior that actually makes your life worse. That's really important to notice. What do you think would happen if you could hold that thought more lightly?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1613.0,
+      "end": 1687.3,
+      "text": "I guess I'd be able to like, keep doing the things that actually help me. Like coming to therapy and taking my meds and trying to take care of myself. Even if my parents don't approve.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1687.5,
+      "end": 1743.8,
+      "text": "Yes. And that brings us to values. What matters to you, Alex? What kind of life do you want to build, regardless of what your parents think?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1744.0,
+      "end": 1858.7,
+      "text": "Um... I want to be authentic, I guess. Like, I want to be able to be myself without hiding. I want to do work that matters. I want to have relationships where I can be vulnerable and not constantly scared people will leave. I want to be, like, whole. Not perfect, just... whole.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1858.9,
+      "end": 1918.4,
+      "text": "Those are beautiful values. Authenticity, meaningful work, secure relationships, wholeness. And I'm curious, does pursuing therapy align with those values?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1918.6,
+      "end": 1967.8,
+      "text": "Yeah. Yeah, it does. Like, therapy is how I'm working toward being whole. It's how I'm learning to be more authentic.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1968.0,
+      "end": 2024.5,
+      "text": "So your parents think you're being weak, but actually, you're living in alignment with your deepest values. That takes tremendous courage.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2024.7,
+      "end": 2097.3,
+      "text": "I never thought about it like that. I've just been so focused on disappointing them. But you're right. Like, I'm choosing myself, even though it's really hard.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2097.5,
+      "end": 2148.6,
+      "text": "You are. And that choice comes with pain. There's no way around that. But it's clean pain versus dirty pain, you know what I mean?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2148.8,
+      "end": 2172.4,
+      "text": "Not really. What's the difference?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2172.6,
+      "end": 2267.9,
+      "text": "Clean pain is the natural pain of living according to your values. Like, it hurts that your parents don't understand, but you're being true to yourself. Dirty pain is the suffering you add on top. All the self-blame, the I'm a terrible daughter, I'm broken, all of that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2268.1,
+      "end": 2343.7,
+      "text": "Okay, yeah. So the clean pain is just like, sadness that they don't get it. But the dirty pain is me beating myself up about it and deciding I'm worthless because of it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2343.9,
+      "end": 2398.6,
+      "text": "Exactly. We can't eliminate the clean pain. But we can work on letting go of the dirty pain. And that's where the defusion practice comes in.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2398.8,
+      "end": 2487.3,
+      "text": "This is really helpful. I still feel terrible about the situation, but at least I understand it better. Like, I can see that the thoughts are just thoughts. They're not the truth about who I am.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2487.5,
+      "end": 2548.9,
+      "text": "That's great insight. Now I want to ask about something you mentioned earlier. You said you almost said something during that conversation with your parents. What was that about?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2549.1,
+      "end": 2678.4,
+      "text": "Oh god. Um... so they were going off about me being too Americanized and not respecting family values. And I just... I got so angry. I almost came out to them. About being non-binary. Like, I literally had the words in my mouth and then I just... stopped. I couldn't do it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2678.6,
+      "end": 2723.8,
+      "text": "Wow. That's huge. How do you feel about stopping yourself? Do you feel relieved, or disappointed, or...?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2724.0,
+      "end": 2834.7,
+      "text": "Both? I'm relieved because I know it would have been a disaster. Like, they can barely handle therapy. Coming out as non-binary would have been like... nuclear. But I'm also disappointed in myself. Like, when am I ever going to be brave enough to tell them?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2834.9,
+      "end": 2912.4,
+      "text": "I want to challenge that disappointment in yourself. You made a choice in a really charged moment. That doesn't mean you're a coward. It means you were protecting yourself. There's nothing wrong with that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2912.6,
+      "end": 2978.5,
+      "text": "I guess. But I just keep thinking about what you said about authenticity. How can I be authentic if I'm hiding this massive part of myself from my family?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2978.7,
+      "end": 3068.3,
+      "text": "That's a really important question. Authenticity doesn't mean you have to share everything with everyone all the time. Sometimes authenticity means honoring your own timeline and boundaries. You get to decide when and how to share that part of yourself.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3068.5,
+      "end": 3132.7,
+      "text": "Okay. That helps. I think I just feel this pressure, like I have to come out to prove I'm really non-binary or something. But that's probably just another unhelpful thought.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3132.9,
+      "end": 3198.4,
+      "text": "It is. Your identity is valid regardless of who knows about it. Coming out is a personal decision that should be based on what feels safe and right for you, not on some arbitrary timeline or standard of bravery.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3198.6,
+      "end": 3242.8,
+      "text": "Thank you. I needed to hear that. I've been so hard on myself about this.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3243.0,
+      "end": 3300.0,
+      "text": "I know you have. Before we wrap up, I want to give you some homework. I want you to practice a loving-kindness meditation this week. One for yourself, and one that includes your family. Just sending compassion to everyone involved, including you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 6.3,
+      "text": "Hi Alex. Come on in, have a seat.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 6.3,
+      "end": 10.8,
+      "text": "How are you doing today?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 10.8,
+      "end": 18.4,
+      "text": "I know last week was pretty intense.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.6,
+      "end": 27.2,
+      "text": "Um... not great, honestly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 27.2,
+      "end": 38.4,
+      "text": "Something really bad happened this week.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 38.4,
+      "end": 52.6,
+      "text": "Like, I've been kind of freaking out about it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 52.6,
+      "end": 68.3,
+      "text": "I don't even know where to start.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 68.5,
+      "end": 78.4,
+      "text": "Okay, that sounds really stressful.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 78.4,
+      "end": 82.7,
+      "text": "Take your time.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 82.7,
+      "end": 92.7,
+      "text": "What happened? Just start wherever feels right.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 92.9,
+      "end": 108.5,
+      "text": "So... my mom found my insurance statements.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 108.5,
+      "end": 124.7,
+      "text": "The explanation of benefits thing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 124.7,
+      "end": 146.3,
+      "text": "She opened my mail because she was looking for something and she saw all these charges for mental health services.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 146.3,
+      "end": 178.6,
+      "text": "And she completely flipped out.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 178.8,
+      "end": 184.2,
+      "text": "Oh wow.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 184.2,
+      "end": 193.6,
+      "text": "So your family found out you're in therapy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 193.6,
+      "end": 203.4,
+      "text": "That's a really significant breach of your privacy. How are you feeling about that?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 203.6,
+      "end": 224.8,
+      "text": "I'm just... I'm so angry and scared and guilty all at the same time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 224.8,
+      "end": 247.3,
+      "text": "Like, I knew they wouldn't react well, but I didn't think it would be this bad.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 247.3,
+      "end": 268.5,
+      "text": "She called my dad and they both confronted me on a video call.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 268.5,
+      "end": 287.9,
+      "text": "It was like, the worst conversation of my life.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 288.1,
+      "end": 297.8,
+      "text": "That sounds really overwhelming.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 297.8,
+      "end": 312.8,
+      "text": "Can you walk me through what happened in that conversation? What did they say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 313.0,
+      "end": 328.4,
+      "text": "My mom was crying, which like, she never cries.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 328.4,
+      "end": 358.7,
+      "text": "She kept saying I was wasting money, that therapy is for weak people who can't handle their problems.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 358.7,
+      "end": 376.2,
+      "text": "My dad was just angry. He said I was being dramatic and self-indulgent.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 376.2,
+      "end": 432.5,
+      "text": "That in their generation, people just dealt with their problems instead of paying strangers to listen to them complain.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 432.7,
+      "end": 448.6,
+      "text": "Those are really painful things to hear from your parents.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 448.6,
+      "end": 458.3,
+      "text": "How did you respond to them in that moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 458.5,
+      "end": 489.3,
+      "text": "I tried to explain that I was really struggling, that I needed help.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 489.3,
+      "end": 508.7,
+      "text": "But they just kept shutting me down.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 508.7,
+      "end": 532.6,
+      "text": "My mom said, you know, in Chinese, like, we don't air our problems to strangers. We handle things within the family.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 532.6,
+      "end": 548.7,
+      "text": "And I wanted to scream because like, I can't talk to them about this stuff. They don't get it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 548.9,
+      "end": 562.3,
+      "text": "That must have felt really invalidating.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 562.3,
+      "end": 588.6,
+      "text": "You're trying to take care of your mental health, and instead of support, you're getting criticism and shame. That's incredibly difficult.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 588.8,
+      "end": 598.2,
+      "text": "Yeah.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 598.2,
+      "end": 638.6,
+      "text": "And the worst part is my dad said if I'm going to waste their money on this, then maybe I shouldn't be in grad school at all.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 638.6,
+      "end": 658.3,
+      "text": "Like, maybe I should just come home and work instead.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 658.3,
+      "end": 672.4,
+      "text": "Which is like, his way of saying I'm a disappointment.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 672.6,
+      "end": 688.4,
+      "text": "I hear you making that interpretation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 688.4,
+      "end": 708.3,
+      "text": "When your dad said that, how did that land for you? What thoughts came up?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 708.5,
+      "end": 732.8,
+      "text": "I just felt like... like I'm this huge burden.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 732.8,
+      "end": 748.6,
+      "text": "Like I can't do anything right.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 748.6,
+      "end": 775.4,
+      "text": "They sacrificed so much to give me opportunities and I'm just throwing it all away by being mentally ill.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 775.4,
+      "end": 789.2,
+      "text": "God, I hate saying that. Mentally ill. It sounds so dramatic.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 789.4,
+      "end": 818.3,
+      "text": "You're dealing with anxiety and depression, Alex. Those are real medical conditions.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 818.3,
+      "end": 832.7,
+      "text": "There's nothing dramatic about acknowledging that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 832.7,
+      "end": 842.6,
+      "text": "Do you really believe you're throwing away their sacrifices?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 842.8,
+      "end": 857.3,
+      "text": "I don't know. Logically, no.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 857.3,
+      "end": 883.6,
+      "text": "Like, I'm still in my program. I'm still getting my PhD.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 883.6,
+      "end": 906.8,
+      "text": "But emotionally, yeah, I feel like a complete failure.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 906.8,
+      "end": 924.3,
+      "text": "Like, they came to this country with nothing and built these successful careers, and here I am, can't even function without therapy and medication.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 924.5,
+      "end": 948.7,
+      "text": "I want you to notice something.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 948.7,
+      "end": 968.4,
+      "text": "You just said you feel like a failure, and then immediately gave evidence that you're not.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 968.4,
+      "end": 982.7,
+      "text": "You're pursuing a PhD in a competitive field while managing your mental health. That's actually remarkable.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 982.9,
+      "end": 994.6,
+      "text": "I guess. It doesn't feel remarkable.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 994.6,
+      "end": 1012.3,
+      "text": "It feels like I'm barely holding it together.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1012.3,
+      "end": 1047.6,
+      "text": "And now my parents think I'm weak and broken, which just confirms what I already thought about myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1047.8,
+      "end": 1058.3,
+      "text": "Let's pause there.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1058.3,
+      "end": 1078.6,
+      "text": "I'm hearing this thought: I'm weak and broken.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1078.6,
+      "end": 1112.4,
+      "text": "Where does that thought come from? Is it really your thought, or is it something you've internalized from your parents or your culture?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1112.6,
+      "end": 1128.7,
+      "text": "I mean... both?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1128.7,
+      "end": 1152.4,
+      "text": "I've always felt like something was wrong with me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1152.4,
+      "end": 1178.3,
+      "text": "But yeah, my parents definitely reinforced that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1178.3,
+      "end": 1204.8,
+      "text": "Like, any time I struggled with something, it was because I wasn't trying hard enough or I was being too sensitive. They never acknowledged that things could just be... hard.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1205.0,
+      "end": 1218.4,
+      "text": "Okay.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1218.4,
+      "end": 1238.7,
+      "text": "So we have this thought: I'm weak and broken.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1238.7,
+      "end": 1262.8,
+      "text": "And you can see that it comes partly from old messages you received as a child.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1262.8,
+      "end": 1278.3,
+      "text": "In ACT, we call this cognitive fusion. You're fused with this thought, treating it as an absolute truth. Does that make sense?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1278.5,
+      "end": 1302.7,
+      "text": "Yeah, I think so. Like, I believe it so strongly that it feels like a fact.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1302.9,
+      "end": 1312.6,
+      "text": "Exactly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1312.6,
+      "end": 1348.3,
+      "text": "What we want to practice is cognitive defusion. That means creating some distance from the thought so you can observe it without being controlled by it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1348.3,
+      "end": 1384.6,
+      "text": "So instead of I am weak and broken, you might notice: I'm having the thought that I'm weak and broken.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1384.8,
+      "end": 1423.5,
+      "text": "Okay. That feels different. Like, it's just a thought, not necessarily true.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1423.7,
+      "end": 1432.8,
+      "text": "Right.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1432.8,
+      "end": 1458.6,
+      "text": "And when you create that space, you can ask: Is this thought helpful?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1458.6,
+      "end": 1487.2,
+      "text": "Does it move me toward the life I want to live? Or is it just old programming that's keeping me stuck?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1487.4,
+      "end": 1508.3,
+      "text": "It's definitely not helpful. It just makes me feel like shit.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1508.3,
+      "end": 1528.7,
+      "text": "Sorry. It makes me feel really bad about myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1528.7,
+      "end": 1548.9,
+      "text": "And it makes me want to give up on therapy and school and everything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1549.1,
+      "end": 1578.4,
+      "text": "So when you're fused with that thought, it drives behavior that actually makes your life worse.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1578.4,
+      "end": 1592.6,
+      "text": "That's really important to notice.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1592.6,
+      "end": 1612.8,
+      "text": "What do you think would happen if you could hold that thought more lightly?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1613.0,
+      "end": 1648.7,
+      "text": "I guess I'd be able to like, keep doing the things that actually help me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1648.7,
+      "end": 1687.3,
+      "text": "Like coming to therapy and taking my meds and trying to take care of myself. Even if my parents don't approve.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1687.5,
+      "end": 1698.2,
+      "text": "Yes.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1698.2,
+      "end": 1718.6,
+      "text": "And that brings us to values.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1718.6,
+      "end": 1743.8,
+      "text": "What matters to you, Alex? What kind of life do you want to build, regardless of what your parents think?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1744.0,
+      "end": 1762.4,
+      "text": "Um... I want to be authentic, I guess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1762.4,
+      "end": 1788.3,
+      "text": "Like, I want to be able to be myself without hiding.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1788.3,
+      "end": 1808.6,
+      "text": "I want to do work that matters.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1808.6,
+      "end": 1838.2,
+      "text": "I want to have relationships where I can be vulnerable and not constantly scared people will leave.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1838.2,
+      "end": 1858.7,
+      "text": "I want to be, like, whole. Not perfect, just... whole.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1858.9,
+      "end": 1878.4,
+      "text": "Those are beautiful values.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1878.4,
+      "end": 1904.7,
+      "text": "Authenticity, meaningful work, secure relationships, wholeness.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1904.7,
+      "end": 1918.4,
+      "text": "And I'm curious, does pursuing therapy align with those values?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1918.6,
+      "end": 1928.3,
+      "text": "Yeah. Yeah, it does.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1928.3,
+      "end": 1952.6,
+      "text": "Like, therapy is how I'm working toward being whole.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1952.6,
+      "end": 1967.8,
+      "text": "It's how I'm learning to be more authentic.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1968.0,
+      "end": 2008.3,
+      "text": "So your parents think you're being weak, but actually, you're living in alignment with your deepest values.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2008.3,
+      "end": 2024.5,
+      "text": "That takes tremendous courage.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2024.7,
+      "end": 2047.8,
+      "text": "I never thought about it like that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2047.8,
+      "end": 2068.4,
+      "text": "I've just been so focused on disappointing them.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2068.4,
+      "end": 2097.3,
+      "text": "But you're right. Like, I'm choosing myself, even though it's really hard.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2097.5,
+      "end": 2108.2,
+      "text": "You are.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2108.2,
+      "end": 2128.4,
+      "text": "And that choice comes with pain. There's no way around that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2128.4,
+      "end": 2148.6,
+      "text": "But it's clean pain versus dirty pain, you know what I mean?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2148.8,
+      "end": 2172.4,
+      "text": "Not really. What's the difference?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2172.6,
+      "end": 2218.7,
+      "text": "Clean pain is the natural pain of living according to your values.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2218.7,
+      "end": 2243.8,
+      "text": "Like, it hurts that your parents don't understand, but you're being true to yourself.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2243.8,
+      "end": 2267.9,
+      "text": "Dirty pain is the suffering you add on top. All the self-blame, the I'm a terrible daughter, I'm broken, all of that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2268.1,
+      "end": 2283.6,
+      "text": "Okay, yeah.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2283.6,
+      "end": 2308.4,
+      "text": "So the clean pain is just like, sadness that they don't get it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2308.4,
+      "end": 2343.7,
+      "text": "But the dirty pain is me beating myself up about it and deciding I'm worthless because of it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2343.9,
+      "end": 2354.3,
+      "text": "Exactly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2354.3,
+      "end": 2378.6,
+      "text": "We can't eliminate the clean pain.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2378.6,
+      "end": 2398.6,
+      "text": "But we can work on letting go of the dirty pain. And that's where the defusion practice comes in.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2398.8,
+      "end": 2418.4,
+      "text": "This is really helpful.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2418.4,
+      "end": 2448.7,
+      "text": "I still feel terrible about the situation, but at least I understand it better.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2448.7,
+      "end": 2487.3,
+      "text": "Like, I can see that the thoughts are just thoughts. They're not the truth about who I am.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2487.5,
+      "end": 2508.2,
+      "text": "That's great insight.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2508.2,
+      "end": 2548.9,
+      "text": "Now I want to ask about something you mentioned earlier. You said you almost said something during that conversation with your parents. What was that about?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2549.1,
+      "end": 2562.7,
+      "text": "Oh god. Um...",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2562.7,
+      "end": 2598.3,
+      "text": "so they were going off about me being too Americanized and not respecting family values.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2598.3,
+      "end": 2618.6,
+      "text": "And I just... I got so angry.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2618.6,
+      "end": 2648.4,
+      "text": "I almost came out to them. About being non-binary.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2648.4,
+      "end": 2678.4,
+      "text": "Like, I literally had the words in my mouth and then I just... stopped. I couldn't do it.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2678.6,
+      "end": 2693.8,
+      "text": "Wow. That's huge.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2693.8,
+      "end": 2723.8,
+      "text": "How do you feel about stopping yourself? Do you feel relieved, or disappointed, or...?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2724.0,
+      "end": 2738.3,
+      "text": "Both?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2738.3,
+      "end": 2768.4,
+      "text": "I'm relieved because I know it would have been a disaster.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2768.4,
+      "end": 2798.6,
+      "text": "Like, they can barely handle therapy. Coming out as non-binary would have been like... nuclear.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2798.6,
+      "end": 2818.3,
+      "text": "But I'm also disappointed in myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2818.3,
+      "end": 2834.7,
+      "text": "Like, when am I ever going to be brave enough to tell them?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2834.9,
+      "end": 2858.6,
+      "text": "I want to challenge that disappointment in yourself.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2858.6,
+      "end": 2883.7,
+      "text": "You made a choice in a really charged moment.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2883.7,
+      "end": 2912.4,
+      "text": "That doesn't mean you're a coward. It means you were protecting yourself. There's nothing wrong with that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2912.6,
+      "end": 2928.4,
+      "text": "I guess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2928.4,
+      "end": 2968.3,
+      "text": "But I just keep thinking about what you said about authenticity.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2968.3,
+      "end": 2978.5,
+      "text": "How can I be authentic if I'm hiding this massive part of myself from my family?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2978.7,
+      "end": 3002.8,
+      "text": "That's a really important question.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3002.8,
+      "end": 3038.4,
+      "text": "Authenticity doesn't mean you have to share everything with everyone all the time.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3038.4,
+      "end": 3068.3,
+      "text": "Sometimes authenticity means honoring your own timeline and boundaries. You get to decide when and how to share that part of yourself.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3068.5,
+      "end": 3082.6,
+      "text": "Okay. That helps.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3082.6,
+      "end": 3122.4,
+      "text": "I think I just feel this pressure, like I have to come out to prove I'm really non-binary or something.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3122.4,
+      "end": 3132.7,
+      "text": "But that's probably just another unhelpful thought.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3132.9,
+      "end": 3142.3,
+      "text": "It is.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3142.3,
+      "end": 3172.6,
+      "text": "Your identity is valid regardless of who knows about it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3172.6,
+      "end": 3198.4,
+      "text": "Coming out is a personal decision that should be based on what feels safe and right for you, not on some arbitrary timeline or standard of bravery.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3198.6,
+      "end": 3218.3,
+      "text": "Thank you. I needed to hear that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3218.3,
+      "end": 3242.8,
+      "text": "I've been so hard on myself about this.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 3243.0,
+      "end": 3258.4,
+      "text": "I know you have.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3258.4,
+      "end": 3278.6,
+      "text": "Before we wrap up, I want to give you some homework.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 3278.6,
+      "end": 3300.0,
+      "text": "I want you to practice a loving-kindness meditation this week. One for yourself, and one that includes your family. Just sending compassion to everyone involved, including you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "quality": {
+    "total_segments": 173,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 78,
+      "SPEAKER_01": 95
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-02-28T15:00:00Z",
+  "completed_at": "2025-02-28T16:06:18Z"
+}

@@ -1,0 +1,1596 @@
+{
+  "id": "session_02_alex_chen",
+  "status": "completed",
+  "filename": "session_02_2025-01-17.mp3",
+  "metadata": {
+    "source_file": "uploads/audio/alex_chen/session_02_2025-01-17.mp3",
+    "file_size_mb": 33.8,
+    "duration": 2700.0,
+    "language": "english",
+    "timestamp": "20250117_140000",
+    "pipeline_type": "CPU_API"
+  },
+  "performance": {
+    "total_processing_time_seconds": 298.4,
+    "preprocessing_time_seconds": 4.6,
+    "transcription_time_seconds": 47.2,
+    "diarization_time_seconds": 245.1,
+    "alignment_time_seconds": 1.5
+  },
+  "speakers": [
+    {
+      "id": "SPEAKER_00",
+      "label": "SPEAKER_00",
+      "total_duration": 1080.0,
+      "segment_count": 62
+    },
+    {
+      "id": "SPEAKER_01",
+      "label": "SPEAKER_01",
+      "total_duration": 1620.0,
+      "segment_count": 71
+    }
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 18.3,
+      "text": "Hey Alex, good to see you again. How have things been since we met last week?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 47.2,
+      "text": "Um, okay I guess? I mean, not great but like, I haven't spiraled or anything. I've been thinking about what we talked about last time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 47.4,
+      "end": 72.8,
+      "text": "I'm glad to hear that. I know we covered a lot of heavy stuff in our first session. How are those passive suicidal thoughts you mentioned? Are you still experiencing those?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 73.1,
+      "end": 118.6,
+      "text": "Yeah, they're still there. But I don't know, they feel less scary now? Like, knowing that I can call that crisis line if things get bad, or text you... it helps. I haven't actually used them, but just knowing they're there is weirdly comforting.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 118.9,
+      "end": 152.3,
+      "text": "That's really good, Alex. That's exactly what a safety plan is for - to give you tools and options when you need them. Have you had any moments this week where those thoughts felt stronger or more intense?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 152.6,
+      "end": 214.8,
+      "text": "Um, yeah. Tuesday night was rough. I was scrolling through Instagram and saw Jamie posted pictures with friends at this restaurant we used to go to. And I just... I fell apart. I couldn't stop crying for like two hours. And those thoughts got really loud.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 215.1,
+      "end": 238.7,
+      "text": "That sounds really painful. What did you do when that happened? How did you get through those two hours?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 239.0,
+      "end": 301.5,
+      "text": "I don't know, I just kind of... rode it out? I stayed in my room, cried, listened to music. Eventually I fell asleep. My roommate knocked on my door at some point but I told them I was fine. Which was a lie, but I didn't want to burden them, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 301.8,
+      "end": 348.2,
+      "text": "So you got through it, which is important. But I'm noticing that you isolated yourself and didn't reach out for support even though your roommate was checking on you. What was going through your mind when you told them you were fine?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 348.5,
+      "end": 412.9,
+      "text": "I mean, I didn't want to be a burden. They already have their own stuff going on. And like, what would I even say? I'm crying over someone who clearly doesn't care about me anymore? It feels pathetic when I say it out loud.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 413.2,
+      "end": 472.6,
+      "text": "I hear you saying that you felt pathetic and worried about being a burden. Those are really common feelings when we're depressed. But grief over a relationship ending isn't pathetic, Alex. It's human. You loved this person, and losing them hurts. That's valid.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 472.9,
+      "end": 502.3,
+      "text": "I guess. It's just hard to remember that when I'm in it, you know? Like, when I'm crying at 2 AM over Instagram posts, it doesn't feel valid. It feels weak.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 502.6,
+      "end": 558.4,
+      "text": "That makes sense. And I want to give you some tools today that might help in those moments when the emotions feel overwhelming. Because what you're describing - scrolling social media, seeing triggering content, emotional flooding - these are things we can work on together.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 558.7,
+      "end": 578.2,
+      "text": "Okay. I'm open to that. I'm tired of feeling like this.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 578.5,
+      "end": 647.3,
+      "text": "Good. So today I want to introduce you to something called DBT, which stands for Dialectical Behavior Therapy. It's a type of therapy that's really effective for managing intense emotions and building distress tolerance. Have you heard of it before?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 647.6,
+      "end": 672.4,
+      "text": "Um, maybe? I think I've seen it mentioned online but I don't really know what it is.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 672.7,
+      "end": 751.8,
+      "text": "Okay, so DBT was originally developed for people with borderline personality disorder, but it's been adapted for lots of other conditions including depression and anxiety. It teaches skills in four main areas: mindfulness, distress tolerance, emotion regulation, and interpersonal effectiveness.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 752.1,
+      "end": 768.9,
+      "text": "That's a lot. My brain is already like, nope, too much information.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 769.2,
+      "end": 823.6,
+      "text": "I hear you. We're not going to learn all of it today. I want to start with one specific skill that I think will be really helpful for those moments when your emotions feel like a ten out of ten. Sound okay?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 823.9,
+      "end": 837.5,
+      "text": "Yeah, okay. What's the skill?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 837.8,
+      "end": 912.4,
+      "text": "It's called TIPP. T-I-P-P. It stands for Temperature, Intense exercise, Paced breathing, and Paired muscle relaxation. It's a crisis survival skill - something you use when you're in acute distress and need to bring your emotions down quickly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 912.7,
+      "end": 937.2,
+      "text": "Okay, I'm following. Temperature, intense exercise, paced breathing, paired muscle relaxation. What do those actually mean though?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 937.5,
+      "end": 1028.3,
+      "text": "Let's break it down. The T is for Temperature. When you're in crisis, changing your body temperature can activate something called the dive reflex, which physically calms your nervous system. The easiest way to do this is to hold your breath and put your face in a bowl of ice water for 30 seconds.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1028.6,
+      "end": 1058.9,
+      "text": "Wait, like actually dunk my face in ice water? That sounds... intense.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1059.2,
+      "end": 1124.7,
+      "text": "It is intense, and that's the point. When your emotional pain is at like an eight or nine out of ten, you need something equally intense to interrupt it. But if dunking your face feels like too much, you can also hold an ice pack or frozen bag of peas against your face.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1125.0,
+      "end": 1152.8,
+      "text": "Okay, that makes sense I guess. Like fighting fire with fire but for emotions?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1153.1,
+      "end": 1218.9,
+      "text": "Exactly. The I is for Intense exercise. Again, we're trying to match the intensity of your emotions. If you're in crisis, doing jumping jacks or running up and down stairs for a few minutes can help discharge that emotional energy. It's hard to stay in a panic when your body is focused on physical exertion.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1219.2,
+      "end": 1268.4,
+      "text": "Huh. I never thought about that. When I'm really upset I usually just like, curl up in bed. But I guess that makes the ruminating worse because there's nothing else to focus on.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1268.7,
+      "end": 1337.5,
+      "text": "Exactly. The P is for Paced breathing. This is something you can do anywhere, anytime. You breathe in for a count of four, hold for a count of four, breathe out for a count of six, and hold for two. The key is making your exhale longer than your inhale.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1337.8,
+      "end": 1358.6,
+      "text": "Can we try it right now? I want to make sure I get it right.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1358.9,
+      "end": 1382.4,
+      "text": "Absolutely. Let's do it together. Breathe in through your nose for four... two, three, four. Hold... two, three, four.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1382.7,
+      "end": 1423.5,
+      "text": "Breathe out slowly through your mouth for six... two, three, four, five, six. Hold for two... two. Good. How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1423.8,
+      "end": 1458.9,
+      "text": "Weird? But like, good weird. I can feel my heart rate slowing down a little bit.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1459.2,
+      "end": 1523.7,
+      "text": "That's exactly what should happen. The longer exhale activates your parasympathetic nervous system, which is responsible for the rest and digest response. It literally tells your body that you're safe. Let's try one more round.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1524.0,
+      "end": 1581.6,
+      "text": "In for four... two, three, four. Hold... two, three, four. Out for six... two, three, four, five, six. Hold for two... two. Nice work, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1581.9,
+      "end": 1612.7,
+      "text": "Okay, I think I got it. What was the last P again? Paired muscle something?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1612.9,
+      "end": 1693.8,
+      "text": "Paired muscle relaxation. This one is about tensing and then releasing different muscle groups while doing paced breathing. So you'd breathe in and tense your fists, hold the breath and the tension, then breathe out and release. Move through different body parts.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1694.1,
+      "end": 1728.3,
+      "text": "That sounds like it would take a while. Like, if I'm in crisis mode, I don't know if I'd have the patience for that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1728.6,
+      "end": 1802.4,
+      "text": "Fair point. The muscle relaxation is more for when you're coming down from the crisis, not in the peak of it. In the acute moment, I'd say focus on the temperature change or intense exercise first, then move to paced breathing as you start to regulate.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1802.7,
+      "end": 1837.5,
+      "text": "Okay. So like, if I'm having a meltdown, grab ice packs, do some jumping jacks, then do the breathing thing. And maybe the muscle thing if I'm still wound up?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1837.8,
+      "end": 1878.9,
+      "text": "Exactly. You've got it. And the key thing is to use these when your distress is above a seven out of ten. These are crisis tools, not everyday coping strategies.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1879.2,
+      "end": 1912.6,
+      "text": "What do I do if my distress is like, a five or six? Just suffer through it?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1912.9,
+      "end": 1989.7,
+      "text": "No, not at all. We'll work on other skills for those medium-level emotions. Things like opposite action, self-soothing, mindfulness. But today I wanted to give you the heavy-duty tools first because I know you've been having some really intense moments.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1990.0,
+      "end": 2018.3,
+      "text": "Yeah. Tuesday night was definitely like a nine. Maybe even a ten.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2018.6,
+      "end": 2087.4,
+      "text": "So let's talk about that night specifically. You saw the Instagram post, which was the trigger. Then you had the emotional response - intense sadness, crying, those suicidal thoughts getting louder. What were you thinking about in that moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2087.7,
+      "end": 2164.2,
+      "text": "I was thinking like, they're out there living their life, having fun, and I'm here falling apart. They moved on so easily and I'm still stuck. It made me feel worthless. Like, I didn't matter to them at all.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2164.5,
+      "end": 2223.8,
+      "text": "Okay. So the trigger was seeing the post, and the thoughts were 'they moved on, I'm worthless, I didn't matter.' Those thoughts then intensified your emotional pain. Does that track?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2224.1,
+      "end": 2237.6,
+      "text": "Yeah, exactly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2237.9,
+      "end": 2312.7,
+      "text": "This is really important work you're doing, identifying these patterns. In DBT, we call this the emotion regulation cycle. There's the trigger, the thoughts, the feelings, and the behaviors. Understanding each piece gives us more places to intervene.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2313.0,
+      "end": 2347.8,
+      "text": "So like, I could have not looked at Instagram in the first place? Avoid the trigger?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2348.1,
+      "end": 2423.9,
+      "text": "That's one option, yes. And honestly, taking a break from social media while you're grieving this relationship might be really protective for you. Every time you check Jamie's posts, you're reopening the wound. It's like picking at a scab - it never heals.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2424.2,
+      "end": 2478.5,
+      "text": "I know you're right, but it's so hard. Like, I know I shouldn't look but I can't stop myself. It's like this compulsion. I'll be doing something else and then suddenly I'm on their profile again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2478.8,
+      "end": 2547.3,
+      "text": "That's very common with breakups. There's actually a neurological component to it - your brain is craving information about this person you were attached to. It's like a withdrawal symptom. Have you thought about blocking them or unfollowing them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2547.6,
+      "end": 2598.7,
+      "text": "I've thought about it but it feels so final, you know? Like, if I block them, that's it. There's no going back. And part of me still hopes that maybe...",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2599.0,
+      "end": 2634.2,
+      "text": "Part of you still hopes that they'll come back. Is that what you were going to say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2634.5,
+      "end": 2672.8,
+      "text": "Yeah. I know it's stupid. They literally ended it over text. They don't want me. But I can't let go of this fantasy that they'll realize they made a mistake.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2673.1,
+      "end": 2700.0,
+      "text": "It's not stupid, Alex. It's hope. And hope isn't a bad thing. But I want you to ask yourself - is that hope serving you right now, or is it keeping you stuck in pain?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "aligned_segments": [
+    {
+      "start": 0.0,
+      "end": 5.8,
+      "text": "Hey Alex, good to see you again.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 5.8,
+      "end": 18.3,
+      "text": "How have things been since we met last week?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 18.5,
+      "end": 25.4,
+      "text": "Um, okay I guess?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 25.4,
+      "end": 36.7,
+      "text": "I mean, not great but like, I haven't spiraled or anything.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 36.7,
+      "end": 47.2,
+      "text": "I've been thinking about what we talked about last time.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 47.4,
+      "end": 54.6,
+      "text": "I'm glad to hear that.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 54.6,
+      "end": 62.9,
+      "text": "I know we covered a lot of heavy stuff in our first session.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 62.9,
+      "end": 72.8,
+      "text": "How are those passive suicidal thoughts you mentioned? Are you still experiencing those?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 73.1,
+      "end": 81.2,
+      "text": "Yeah, they're still there.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 81.2,
+      "end": 92.8,
+      "text": "But I don't know, they feel less scary now?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 92.8,
+      "end": 107.3,
+      "text": "Like, knowing that I can call that crisis line if things get bad, or text you... it helps.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 107.3,
+      "end": 118.6,
+      "text": "I haven't actually used them, but just knowing they're there is weirdly comforting.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 118.9,
+      "end": 127.4,
+      "text": "That's really good, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 127.4,
+      "end": 142.8,
+      "text": "That's exactly what a safety plan is for - to give you tools and options when you need them.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 142.8,
+      "end": 152.3,
+      "text": "Have you had any moments this week where those thoughts felt stronger or more intense?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 152.6,
+      "end": 159.7,
+      "text": "Um, yeah. Tuesday night was rough.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 159.7,
+      "end": 184.3,
+      "text": "I was scrolling through Instagram and saw Jamie posted pictures with friends at this restaurant we used to go to.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 184.3,
+      "end": 194.8,
+      "text": "And I just... I fell apart.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 194.8,
+      "end": 206.2,
+      "text": "I couldn't stop crying for like two hours.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 206.2,
+      "end": 214.8,
+      "text": "And those thoughts got really loud.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 215.1,
+      "end": 223.4,
+      "text": "That sounds really painful.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 223.4,
+      "end": 238.7,
+      "text": "What did you do when that happened? How did you get through those two hours?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 239.0,
+      "end": 249.8,
+      "text": "I don't know, I just kind of... rode it out?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 249.8,
+      "end": 265.3,
+      "text": "I stayed in my room, cried, listened to music.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 265.3,
+      "end": 274.6,
+      "text": "Eventually I fell asleep.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 274.6,
+      "end": 289.4,
+      "text": "My roommate knocked on my door at some point but I told them I was fine.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 289.4,
+      "end": 301.5,
+      "text": "Which was a lie, but I didn't want to burden them, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 301.8,
+      "end": 314.2,
+      "text": "So you got through it, which is important.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 314.2,
+      "end": 334.7,
+      "text": "But I'm noticing that you isolated yourself and didn't reach out for support even though your roommate was checking on you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 334.7,
+      "end": 348.2,
+      "text": "What was going through your mind when you told them you were fine?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 348.5,
+      "end": 358.3,
+      "text": "I mean, I didn't want to be a burden.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 358.3,
+      "end": 371.2,
+      "text": "They already have their own stuff going on.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 371.2,
+      "end": 389.7,
+      "text": "And like, what would I even say? I'm crying over someone who clearly doesn't care about me anymore?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 389.7,
+      "end": 412.9,
+      "text": "It feels pathetic when I say it out loud.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 413.2,
+      "end": 437.8,
+      "text": "I hear you saying that you felt pathetic and worried about being a burden.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 437.8,
+      "end": 452.1,
+      "text": "Those are really common feelings when we're depressed.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 452.1,
+      "end": 465.9,
+      "text": "But grief over a relationship ending isn't pathetic, Alex. It's human.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 465.9,
+      "end": 472.6,
+      "text": "You loved this person, and losing them hurts. That's valid.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 472.9,
+      "end": 478.6,
+      "text": "I guess.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 478.6,
+      "end": 489.3,
+      "text": "It's just hard to remember that when I'm in it, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 489.3,
+      "end": 502.3,
+      "text": "Like, when I'm crying at 2 AM over Instagram posts, it doesn't feel valid. It feels weak.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 502.6,
+      "end": 508.7,
+      "text": "That makes sense.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 508.7,
+      "end": 534.8,
+      "text": "And I want to give you some tools today that might help in those moments when the emotions feel overwhelming.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 534.8,
+      "end": 558.4,
+      "text": "Because what you're describing - scrolling social media, seeing triggering content, emotional flooding - these are things we can work on together.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 558.7,
+      "end": 578.2,
+      "text": "Okay. I'm open to that. I'm tired of feeling like this.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 578.5,
+      "end": 584.3,
+      "text": "Good.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 584.3,
+      "end": 618.9,
+      "text": "So today I want to introduce you to something called DBT, which stands for Dialectical Behavior Therapy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 618.9,
+      "end": 638.2,
+      "text": "It's a type of therapy that's really effective for managing intense emotions and building distress tolerance.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 638.2,
+      "end": 647.3,
+      "text": "Have you heard of it before?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 647.6,
+      "end": 672.4,
+      "text": "Um, maybe? I think I've seen it mentioned online but I don't really know what it is.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 672.7,
+      "end": 681.2,
+      "text": "Okay, so DBT was originally developed for people with borderline personality disorder,",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 681.2,
+      "end": 706.8,
+      "text": "but it's been adapted for lots of other conditions including depression and anxiety.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 706.8,
+      "end": 751.8,
+      "text": "It teaches skills in four main areas: mindfulness, distress tolerance, emotion regulation, and interpersonal effectiveness.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 752.1,
+      "end": 768.9,
+      "text": "That's a lot. My brain is already like, nope, too much information.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 769.2,
+      "end": 775.8,
+      "text": "I hear you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 775.8,
+      "end": 787.4,
+      "text": "We're not going to learn all of it today.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 787.4,
+      "end": 814.9,
+      "text": "I want to start with one specific skill that I think will be really helpful for those moments when your emotions feel like a ten out of ten.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 814.9,
+      "end": 823.6,
+      "text": "Sound okay?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 823.9,
+      "end": 837.5,
+      "text": "Yeah, okay. What's the skill?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 837.8,
+      "end": 851.3,
+      "text": "It's called TIPP. T-I-P-P.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 851.3,
+      "end": 882.7,
+      "text": "It stands for Temperature, Intense exercise, Paced breathing, and Paired muscle relaxation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 882.7,
+      "end": 912.4,
+      "text": "It's a crisis survival skill - something you use when you're in acute distress and need to bring your emotions down quickly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 912.7,
+      "end": 919.8,
+      "text": "Okay, I'm following.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 919.8,
+      "end": 931.4,
+      "text": "Temperature, intense exercise, paced breathing, paired muscle relaxation.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 931.4,
+      "end": 937.2,
+      "text": "What do those actually mean though?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 937.5,
+      "end": 944.2,
+      "text": "Let's break it down.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 944.2,
+      "end": 952.8,
+      "text": "The T is for Temperature.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 952.8,
+      "end": 989.3,
+      "text": "When you're in crisis, changing your body temperature can activate something called the dive reflex, which physically calms your nervous system.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 989.3,
+      "end": 1028.3,
+      "text": "The easiest way to do this is to hold your breath and put your face in a bowl of ice water for 30 seconds.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1028.6,
+      "end": 1058.9,
+      "text": "Wait, like actually dunk my face in ice water? That sounds... intense.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1059.2,
+      "end": 1072.8,
+      "text": "It is intense, and that's the point.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1072.8,
+      "end": 1098.4,
+      "text": "When your emotional pain is at like an eight or nine out of ten, you need something equally intense to interrupt it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1098.4,
+      "end": 1124.7,
+      "text": "But if dunking your face feels like too much, you can also hold an ice pack or frozen bag of peas against your face.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1125.0,
+      "end": 1152.8,
+      "text": "Okay, that makes sense I guess. Like fighting fire with fire but for emotions?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1153.1,
+      "end": 1159.7,
+      "text": "Exactly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1159.7,
+      "end": 1174.8,
+      "text": "The I is for Intense exercise.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1174.8,
+      "end": 1188.3,
+      "text": "Again, we're trying to match the intensity of your emotions.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1188.3,
+      "end": 1209.6,
+      "text": "If you're in crisis, doing jumping jacks or running up and down stairs for a few minutes can help discharge that emotional energy.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1209.6,
+      "end": 1218.9,
+      "text": "It's hard to stay in a panic when your body is focused on physical exertion.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1219.2,
+      "end": 1228.6,
+      "text": "Huh. I never thought about that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1228.6,
+      "end": 1243.7,
+      "text": "When I'm really upset I usually just like, curl up in bed.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1243.7,
+      "end": 1268.4,
+      "text": "But I guess that makes the ruminating worse because there's nothing else to focus on.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1268.7,
+      "end": 1276.3,
+      "text": "Exactly.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1276.3,
+      "end": 1289.8,
+      "text": "The P is for Paced breathing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1289.8,
+      "end": 1301.4,
+      "text": "This is something you can do anywhere, anytime.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1301.4,
+      "end": 1327.9,
+      "text": "You breathe in for a count of four, hold for a count of four, breathe out for a count of six, and hold for two.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1327.9,
+      "end": 1337.5,
+      "text": "The key is making your exhale longer than your inhale.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1337.8,
+      "end": 1358.6,
+      "text": "Can we try it right now? I want to make sure I get it right.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1358.9,
+      "end": 1365.8,
+      "text": "Absolutely. Let's do it together.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1365.8,
+      "end": 1382.4,
+      "text": "Breathe in through your nose for four... two, three, four. Hold... two, three, four.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1382.7,
+      "end": 1407.8,
+      "text": "Breathe out slowly through your mouth for six... two, three, four, five, six.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1407.8,
+      "end": 1423.5,
+      "text": "Hold for two... two. Good. How does that feel?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1423.8,
+      "end": 1434.6,
+      "text": "Weird? But like, good weird.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1434.6,
+      "end": 1458.9,
+      "text": "I can feel my heart rate slowing down a little bit.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1459.2,
+      "end": 1468.7,
+      "text": "That's exactly what should happen.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1468.7,
+      "end": 1503.8,
+      "text": "The longer exhale activates your parasympathetic nervous system, which is responsible for the rest and digest response.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1503.8,
+      "end": 1514.9,
+      "text": "It literally tells your body that you're safe.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1514.9,
+      "end": 1523.7,
+      "text": "Let's try one more round.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1524.0,
+      "end": 1548.3,
+      "text": "In for four... two, three, four. Hold... two, three, four.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1548.3,
+      "end": 1567.8,
+      "text": "Out for six... two, three, four, five, six.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1567.8,
+      "end": 1581.6,
+      "text": "Hold for two... two. Nice work, Alex.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1581.9,
+      "end": 1612.7,
+      "text": "Okay, I think I got it. What was the last P again? Paired muscle something?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1612.9,
+      "end": 1624.8,
+      "text": "Paired muscle relaxation.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1624.8,
+      "end": 1655.3,
+      "text": "This one is about tensing and then releasing different muscle groups while doing paced breathing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1655.3,
+      "end": 1693.8,
+      "text": "So you'd breathe in and tense your fists, hold the breath and the tension, then breathe out and release. Move through different body parts.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1694.1,
+      "end": 1702.8,
+      "text": "That sounds like it would take a while.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1702.8,
+      "end": 1728.3,
+      "text": "Like, if I'm in crisis mode, I don't know if I'd have the patience for that.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1728.6,
+      "end": 1734.2,
+      "text": "Fair point.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1734.2,
+      "end": 1764.8,
+      "text": "The muscle relaxation is more for when you're coming down from the crisis, not in the peak of it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1764.8,
+      "end": 1802.4,
+      "text": "In the acute moment, I'd say focus on the temperature change or intense exercise first, then move to paced breathing as you start to regulate.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1802.7,
+      "end": 1811.4,
+      "text": "Okay.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1811.4,
+      "end": 1829.8,
+      "text": "So like, if I'm having a meltdown, grab ice packs, do some jumping jacks, then do the breathing thing.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1829.8,
+      "end": 1837.5,
+      "text": "And maybe the muscle thing if I'm still wound up?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1837.8,
+      "end": 1846.3,
+      "text": "Exactly. You've got it.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1846.3,
+      "end": 1865.7,
+      "text": "And the key thing is to use these when your distress is above a seven out of ten.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1865.7,
+      "end": 1878.9,
+      "text": "These are crisis tools, not everyday coping strategies.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1879.2,
+      "end": 1912.6,
+      "text": "What do I do if my distress is like, a five or six? Just suffer through it?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 1912.9,
+      "end": 1921.8,
+      "text": "No, not at all.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1921.8,
+      "end": 1953.4,
+      "text": "We'll work on other skills for those medium-level emotions. Things like opposite action, self-soothing, mindfulness.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1953.4,
+      "end": 1989.7,
+      "text": "But today I wanted to give you the heavy-duty tools first because I know you've been having some really intense moments.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 1990.0,
+      "end": 2018.3,
+      "text": "Yeah. Tuesday night was definitely like a nine. Maybe even a ten.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2018.6,
+      "end": 2032.8,
+      "text": "So let's talk about that night specifically.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2032.8,
+      "end": 2048.7,
+      "text": "You saw the Instagram post, which was the trigger.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2048.7,
+      "end": 2074.6,
+      "text": "Then you had the emotional response - intense sadness, crying, those suicidal thoughts getting louder.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2074.6,
+      "end": 2087.4,
+      "text": "What were you thinking about in that moment?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2087.7,
+      "end": 2118.3,
+      "text": "I was thinking like, they're out there living their life, having fun, and I'm here falling apart.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2118.3,
+      "end": 2136.8,
+      "text": "They moved on so easily and I'm still stuck.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2136.8,
+      "end": 2148.7,
+      "text": "It made me feel worthless.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2148.7,
+      "end": 2164.2,
+      "text": "Like, I didn't matter to them at all.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2164.5,
+      "end": 2168.3,
+      "text": "Okay.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2168.3,
+      "end": 2199.7,
+      "text": "So the trigger was seeing the post, and the thoughts were 'they moved on, I'm worthless, I didn't matter.'",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2199.7,
+      "end": 2213.9,
+      "text": "Those thoughts then intensified your emotional pain.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2213.9,
+      "end": 2223.8,
+      "text": "Does that track?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2224.1,
+      "end": 2237.6,
+      "text": "Yeah, exactly.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2237.9,
+      "end": 2262.8,
+      "text": "This is really important work you're doing, identifying these patterns.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2262.8,
+      "end": 2283.4,
+      "text": "In DBT, we call this the emotion regulation cycle.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2283.4,
+      "end": 2299.8,
+      "text": "There's the trigger, the thoughts, the feelings, and the behaviors.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2299.8,
+      "end": 2312.7,
+      "text": "Understanding each piece gives us more places to intervene.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2313.0,
+      "end": 2336.4,
+      "text": "So like, I could have not looked at Instagram in the first place? Avoid the trigger?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2336.4,
+      "end": 2347.8,
+      "text": "",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2348.1,
+      "end": 2357.3,
+      "text": "That's one option, yes.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2357.3,
+      "end": 2397.8,
+      "text": "And honestly, taking a break from social media while you're grieving this relationship might be really protective for you.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2397.8,
+      "end": 2416.3,
+      "text": "Every time you check Jamie's posts, you're reopening the wound.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2416.3,
+      "end": 2423.9,
+      "text": "It's like picking at a scab - it never heals.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2424.2,
+      "end": 2441.7,
+      "text": "I know you're right, but it's so hard.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2441.7,
+      "end": 2455.8,
+      "text": "Like, I know I shouldn't look but I can't stop myself.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2455.8,
+      "end": 2465.3,
+      "text": "It's like this compulsion.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2465.3,
+      "end": 2478.5,
+      "text": "I'll be doing something else and then suddenly I'm on their profile again.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2478.8,
+      "end": 2492.7,
+      "text": "That's very common with breakups.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2492.7,
+      "end": 2527.8,
+      "text": "There's actually a neurological component to it - your brain is craving information about this person you were attached to.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2527.8,
+      "end": 2538.4,
+      "text": "It's like a withdrawal symptom.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2538.4,
+      "end": 2547.3,
+      "text": "Have you thought about blocking them or unfollowing them?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2547.6,
+      "end": 2567.8,
+      "text": "I've thought about it but it feels so final, you know?",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2567.8,
+      "end": 2582.3,
+      "text": "Like, if I block them, that's it. There's no going back.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2582.3,
+      "end": 2598.7,
+      "text": "And part of me still hopes that maybe...",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2599.0,
+      "end": 2617.8,
+      "text": "Part of you still hopes that they'll come back. Is that what you were going to say?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2617.8,
+      "end": 2634.2,
+      "text": "",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2634.5,
+      "end": 2641.7,
+      "text": "Yeah.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2641.7,
+      "end": 2651.3,
+      "text": "I know it's stupid. They literally ended it over text.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2651.3,
+      "end": 2658.6,
+      "text": "They don't want me.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2658.6,
+      "end": 2672.8,
+      "text": "But I can't let go of this fantasy that they'll realize they made a mistake.",
+      "speaker": "SPEAKER_01",
+      "speaker_id": "SPEAKER_01"
+    },
+    {
+      "start": 2673.1,
+      "end": 2684.7,
+      "text": "It's not stupid, Alex. It's hope.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2684.7,
+      "end": 2691.8,
+      "text": "And hope isn't a bad thing.",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    },
+    {
+      "start": 2691.8,
+      "end": 2700.0,
+      "text": "But I want you to ask yourself - is that hope serving you right now, or is it keeping you stuck in pain?",
+      "speaker": "SPEAKER_00",
+      "speaker_id": "SPEAKER_00"
+    }
+  ],
+  "quality": {
+    "total_segments": 133,
+    "speaker_segment_distribution": {
+      "SPEAKER_00": 62,
+      "SPEAKER_01": 71
+    },
+    "unknown_segments_count": 0,
+    "unknown_segments_percent": 0.0
+  },
+  "created_at": "2025-01-17T14:00:00Z",
+  "completed_at": "2025-01-17T14:49:58Z"
+}
