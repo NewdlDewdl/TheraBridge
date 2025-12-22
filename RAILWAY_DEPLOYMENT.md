@@ -121,7 +121,7 @@ Railway uses **nixpacks** to build your app. To specify Node.js 20 (required for
 
 ```toml
 [phases.setup]
-nixPkgs = ['nodejs-20_x']
+nixPkgs = ['nodejs_20']
 
 [phases.install]
 cmds = ['npm install']
