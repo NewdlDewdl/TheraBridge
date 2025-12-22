@@ -44,6 +44,7 @@ const TranscriptViewer = forwardRef<TranscriptViewerRef, TranscriptViewerProps>(
     const [autoScrollPaused, setAutoScrollPaused] = useState(false);
     const lastProgrammaticScrollTime = useRef<number>(0);
     const autoScrollResumeTimer = useRef<number | null>(null);
+    const lastAutoScrollSegment = useRef<number>(-1);
 
     // Flash animation state for double-click
     const [flashingSegmentIndex, setFlashingSegmentIndex] = useState<number | null>(null);
@@ -115,14 +116,33 @@ const TranscriptViewer = forwardRef<TranscriptViewerRef, TranscriptViewerProps>(
 
   // Handle double-click on transcript text for granular navigation
   const handleTextDoubleClick = (segment: Segment, segmentIndex: number) => {
-    // For now, just jump to the start of the current combined segment
-    // In a full implementation, we would calculate which aligned segment was clicked
-    // based on text position, but this requires more complex logic
+    // Find the clicked aligned segment if available
+    let targetTime = segment.start;
 
-    // Jump audio to segment start
-    onTimestampClick?.(segment.start);
+    if (alignedSegments && alignedSegments.length > 0) {
+      // Find all aligned segments within this combined segment
+      const alignedWithinSegment = alignedSegments.filter(
+        (alignedSeg) => alignedSeg.start >= segment.start && alignedSeg.start < segment.end
+      );
 
-    // Flash animation
+      if (alignedWithinSegment.length > 0) {
+        // If there's only one, use it
+        if (alignedWithinSegment.length === 1) {
+          targetTime = alignedWithinSegment[0].start;
+        } else {
+          // Find the closest aligned segment to the middle of the combined segment
+          // This is a heuristic since we don't have exact click position in text
+          const clickRatio = alignedWithinSegment.length > 3 ? 0.33 : 0;
+          const targetIndex = Math.floor(clickRatio * alignedWithinSegment.length);
+          targetTime = alignedWithinSegment[targetIndex].start;
+        }
+      }
+    }
+
+    // Jump audio to granular segment start
+    onTimestampClick?.(targetTime);
+
+    // Flash animation on the combined segment
     setFlashingSegmentIndex(segmentIndex);
     setTimeout(() => setFlashingSegmentIndex(null), 600);
 
@@ -139,7 +159,8 @@ const TranscriptViewer = forwardRef<TranscriptViewerRef, TranscriptViewerProps>(
       (seg) => currentTime >= seg.start && currentTime < seg.end
     );
 
-    if (activeIndex !== -1 && segmentRefs.current[activeIndex]) {
+    // Only scroll if we've moved to a NEW segment (prevents constant scrolling)
+    if (activeIndex !== -1 && activeIndex !== lastAutoScrollSegment.current && segmentRefs.current[activeIndex]) {
       const segmentElement = segmentRefs.current[activeIndex];
       const container = containerRef.current;
 
@@ -151,6 +172,7 @@ const TranscriptViewer = forwardRef<TranscriptViewerRef, TranscriptViewerProps>(
 
       // Mark this as programmatic scroll
       lastProgrammaticScrollTime.current = Date.now();
+      lastAutoScrollSegment.current = activeIndex;
 
       // Smooth scroll to center the active segment
       container.scrollTo({
@@ -330,16 +352,23 @@ const TranscriptViewer = forwardRef<TranscriptViewerRef, TranscriptViewerProps>(
           filteredSegments.map((segment, index) => {
             const speakerColor = getSpeakerColor(segment.speaker_id || 'UNKNOWN');
 
-            // Use aligned_segments for highlighting if available, otherwise use combined segments
-            const highlightSegments = alignedSegments || segments;
-            // Find if any granular segment within this combined segment is currently playing
-            const isActive = highlightSegments.some(
-              (alignedSeg) =>
-                currentTime >= alignedSeg.start &&
-                currentTime < alignedSeg.end &&
-                alignedSeg.start >= segment.start &&
-                alignedSeg.end <= segment.end
-            );
+            // Check if current time is within this combined segment
+            // AND if we have aligned segments, check if current time is within an aligned segment that overlaps
+            let isActive = false;
+            if (alignedSegments && alignedSegments.length > 0) {
+              // Use granular highlighting: only highlight if currentTime is within an aligned segment
+              // that also falls within this combined segment's time range
+              isActive = alignedSegments.some(
+                (alignedSeg) =>
+                  currentTime >= alignedSeg.start &&
+                  currentTime < alignedSeg.end &&
+                  alignedSeg.start >= segment.start &&
+                  alignedSeg.start < segment.end  // Aligned segment starts within combined segment
+              );
+            } else {
+              // Fallback: use combined segment highlighting
+              isActive = currentTime >= segment.start && currentTime < segment.end;
+            }
 
             // Check if this segment is flashing
             const isFlashing = flashingSegmentIndex === index;
@@ -389,7 +418,7 @@ const TranscriptViewer = forwardRef<TranscriptViewerRef, TranscriptViewerProps>(
                   <p
                     className="text-gray-800 leading-relaxed cursor-text select-text"
                     onDoubleClick={() => handleTextDoubleClick(segment, index)}
-                    title="Double-click to jump to this segment"
+                    title="Double-click to jump to granular segment"
                   >
                     {highlightSearchQuery(segment.text, searchQuery)}
                   </p>

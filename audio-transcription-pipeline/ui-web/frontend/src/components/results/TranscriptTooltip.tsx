@@ -19,12 +19,12 @@ const TOOLTIP_COLORS = {
 export default function TranscriptTooltip({ message, type, show, onHide }: TranscriptTooltipProps) {
   useEffect(() => {
     if (show) {
-      const timer = setTimeout(() => {
+      const timer = window.setTimeout(() => {
         onHide();
       }, 3000); // Fade out after 3 seconds
       return () => clearTimeout(timer);
     }
-  }, [show, onHide]);
+  }, [show, message, type]); // Removed onHide from deps to prevent timer reset
 
   return (
     <AnimatePresence>

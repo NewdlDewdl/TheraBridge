@@ -120,21 +120,22 @@ export default function AudioPlayer({ audioUrl, segments, duration: totalDuratio
   const handlePrevSegment = () => {
     if (!segments || segments.length === 0 || !wavesurferRef.current) return;
     const currentIndex = getCurrentSegmentIndex();
+    const audioDuration = totalDuration || duration;
 
     if (currentIndex === -1) {
       // Not in any segment, go to first segment
       const seekTime = segments[0].start;
-      wavesurferRef.current.seekTo(seekTime / duration);
+      wavesurferRef.current.seekTo(seekTime / audioDuration);
       onSeek?.(seekTime, true);
     } else if (currentIndex > 0) {
       // Go to previous segment
       const seekTime = segments[currentIndex - 1].start;
-      wavesurferRef.current.seekTo(seekTime / duration);
+      wavesurferRef.current.seekTo(seekTime / audioDuration);
       onSeek?.(seekTime, true);
     } else {
       // Already at first segment, go to its start
       const seekTime = segments[0].start;
-      wavesurferRef.current.seekTo(seekTime / duration);
+      wavesurferRef.current.seekTo(seekTime / audioDuration);
       onSeek?.(seekTime, true);
     }
   };
@@ -143,16 +144,17 @@ export default function AudioPlayer({ audioUrl, segments, duration: totalDuratio
   const handleNextSegment = () => {
     if (!segments || segments.length === 0 || !wavesurferRef.current) return;
     const currentIndex = getCurrentSegmentIndex();
+    const audioDuration = totalDuration || duration;
 
     if (currentIndex === -1 || currentIndex >= segments.length - 1) {
       // Not in any segment or at last segment, go to last segment start
       const seekTime = segments[segments.length - 1].start;
-      wavesurferRef.current.seekTo(seekTime / duration);
+      wavesurferRef.current.seekTo(seekTime / audioDuration);
       onSeek?.(seekTime, true);
     } else {
       // Go to next segment
       const seekTime = segments[currentIndex + 1].start;
-      wavesurferRef.current.seekTo(seekTime / duration);
+      wavesurferRef.current.seekTo(seekTime / audioDuration);
       onSeek?.(seekTime, true);
     }
   };
@@ -224,6 +226,13 @@ export default function AudioPlayer({ audioUrl, segments, duration: totalDuratio
                   }}
                   onMouseEnter={() => setHoveredSegmentIndex(index)}
                   onMouseLeave={() => setHoveredSegmentIndex(null)}
+                  onClick={() => {
+                    // Seek to segment start and trigger scroll
+                    const audioDuration = totalDuration || duration;
+                    wavesurferRef.current?.seekTo(segment.start / audioDuration);
+                    onSeek?.(segment.start, true);
+                  }}
+                  title={`Jump to ${segment.speaker_id || 'UNKNOWN'} segment`}
                 />
               );
             })}
