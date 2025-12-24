@@ -6,22 +6,19 @@
  * - Top bar with navigation
  * - FIXED: Dark mode support + gray border
  * - FIXED: Accessibility - focus trap, Escape key, focus restoration
- * - TEST: AI-labeled transcript integration
  */
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ArrowLeft, Star, Sparkles } from 'lucide-react';
-import { Session, TranscriptEntry } from '../lib/types';
-import { fullscreenVariants } from '../lib/utils';
+import { X, ArrowLeft, Star } from 'lucide-react';
+import { Session } from '../lib/types';
+import { getMoodEmoji, fullscreenVariants } from '../lib/utils';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { DeepAnalysisSection } from './DeepAnalysisSection';
-import { renderMoodEmoji } from './SessionIcons';
-import { useTheme } from '../contexts/ThemeContext';
 
-// Font families - matching SessionCard
-const fontSerif = '"Crimson Pro", Georgia, serif';
-const fontSans = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+// Font families - matching SessionCard (using system-ui throughout)
+const fontSerif = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+const fontSans = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 
 interface SessionDetailProps {
   session: Session | null;
@@ -30,9 +27,6 @@ interface SessionDetailProps {
 
 export function SessionDetail({ session, onClose }: SessionDetailProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const { isDark } = useTheme();
-  const [labeledTranscript, setLabeledTranscript] = useState<TranscriptEntry[] | null>(null);
-  const [loadingTranscript, setLoadingTranscript] = useState(false);
 
   // Accessibility: focus trap, Escape key, scroll lock
   useModalAccessibility({
@@ -41,36 +35,15 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
     modalRef,
   });
 
-  // TEST: Load AI-labeled transcript
-  const loadLabeledTranscript = async () => {
-    setLoadingTranscript(true);
-    try {
-      const response = await fetch('/api/test-labeled-transcript');
-      const data = await response.json();
-      setLabeledTranscript(data.transcript);
-      console.log('[SessionDetail] Loaded AI-labeled transcript:', data.metadata);
-    } catch (error) {
-      console.error('[SessionDetail] Failed to load labeled transcript:', error);
-    } finally {
-      setLoadingTranscript(false);
-    }
-  };
-
-  // Reset labeled transcript when session changes
-  useEffect(() => {
-    setLabeledTranscript(null);
-  }, [session?.id]);
-
   if (!session) return null;
-
-  // Use labeled transcript if loaded, otherwise use session transcript
-  const displayTranscript = labeledTranscript || session.transcript;
 
   // Debug: Check if deep_analysis exists
   console.log('[SessionDetail] Session:', session.id, 'has deep_analysis:', !!session.deep_analysis);
   if (session.deep_analysis) {
     console.log('[SessionDetail] Deep analysis data:', session.deep_analysis);
   }
+
+  const moodEmoji = getMoodEmoji(session.mood);
 
   return (
     <AnimatePresence>
@@ -97,12 +70,8 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
           </button>
 
           <div className="text-center">
-            <h2 id="session-detail-title" style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">
-              Session {session.id.replace('s', '')} - {session.rawDate?.toLocaleDateString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric'
-              }) || session.date}
+            <h2 id="session-detail-title" className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Session {session.id.replace('s', '')} - {session.date}, 2024
             </h2>
             {session.milestone && (
               <div className="flex items-center justify-center gap-2 mt-1">
@@ -126,15 +95,13 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
         <div className="flex-1 grid grid-cols-2 overflow-hidden">
           {/* Left Column - Transcript */}
           <div className="border-r border-[#E0DDD8] dark:border-[#3d3548] overflow-y-auto p-8 bg-[#F8F7F4] dark:bg-[#1a1625]">
-            <div className="flex flex-col items-center mb-6">
-              <h3 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">
-                Session Transcript
-              </h3>
-            </div>
+            <h3 style={{ fontFamily: fontSans }} className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
+              Session Transcript
+            </h3>
 
-            {displayTranscript && displayTranscript.length > 0 ? (
+            {session.transcript && session.transcript.length > 0 ? (
               <div className="space-y-6">
-                {displayTranscript.map((entry, idx) => (
+                {session.transcript.map((entry, idx) => (
                   <div key={idx} className="flex gap-4">
                     {/* Timestamp on the left */}
                     <div className="flex-shrink-0 w-[50px] pt-0.5">
@@ -166,23 +133,23 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
 
           {/* Right Column - Analysis */}
           <div className="overflow-y-auto p-8 bg-gray-50 dark:bg-[#2a2435]">
-            <h3 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-6 text-center">
+            <h3 style={{ fontFamily: fontSans }} className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">
               Session Analysis
             </h3>
 
             {/* Metadata */}
-            <div className="mb-6">
+            <div className="mb-6 p-4 bg-[#ECEAE5] dark:bg-[#1a1625] rounded-xl border border-[#E0DDD8] dark:border-[#3d3548]">
               <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p style={{ fontFamily: fontSans }} className="text-gray-500 dark:text-gray-500 mb-1">Duration</p>
+                  <p style={{ fontFamily: fontSerif }} className="text-gray-800 dark:text-gray-200 font-medium">{session.duration}</p>
+                </div>
                 <div>
                   <p style={{ fontFamily: fontSans }} className="text-gray-500 dark:text-gray-500 mb-1">Session Mood</p>
                   <p style={{ fontFamily: fontSerif }} className="text-gray-800 dark:text-gray-200 font-medium flex items-center gap-2">
-                    {renderMoodEmoji(session.mood, 20, isDark)}
+                    <span className="text-lg">{moodEmoji}</span>
                     <span className="capitalize">{session.mood}</span>
                   </p>
-                </div>
-                <div className="text-right">
-                  <p style={{ fontFamily: fontSans }} className="text-gray-500 dark:text-gray-500 mb-1">Duration</p>
-                  <p style={{ fontFamily: fontSerif }} className="text-gray-800 dark:text-gray-200 font-medium">{session.duration}</p>
                 </div>
               </div>
             </div>
@@ -237,6 +204,23 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
                 <p style={{ fontFamily: fontSerif }} className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {session.summary || session.patientSummary}
                 </p>
+              </div>
+            )}
+
+            {/* Milestone Description */}
+            {session.milestone && (
+              <div className="mt-6 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-700/50">
+                <div className="flex items-start gap-3">
+                  <Star className="w-5 h-5 text-amber-600 fill-amber-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 style={{ fontFamily: fontSans }} className="text-sm font-semibold text-amber-900 dark:text-amber-400 mb-2">
+                      {session.milestone.title}
+                    </h4>
+                    <p style={{ fontFamily: fontSerif }} className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">
+                      {session.milestone.description}
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
 

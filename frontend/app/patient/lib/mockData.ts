@@ -19,8 +19,7 @@ import {
 export const sessions: Session[] = [
   {
     id: 's10',
-    date: 'May 9',
-    rawDate: new Date('2025-05-09'),
+    date: 'Dec 17',
     duration: '50m',
     therapist: 'Dr. Sarah Chen',
     mood: 'positive',
@@ -28,17 +27,16 @@ export const sessions: Session[] = [
     strategy: 'Assertiveness training',
     actions: ['Set clear boundaries', 'Practice saying no'],
     transcript: [
-      { speaker: 'Therapist', text: 'How did the boundary-setting go this week?', timestamp: '01:23' },
-      { speaker: 'Patient', text: "It was tough but I actually said no to my mom's request to babysit on my work day.", timestamp: '01:45' },
-      { speaker: 'Therapist', text: 'That\'s a significant step. How did it feel?', timestamp: '03:12' },
-      { speaker: 'Patient', text: 'Scary at first, but then relieving. Like a weight lifted.', timestamp: '04:08' }
+      { speaker: 'Therapist', text: 'How did the boundary-setting go this week?' },
+      { speaker: 'Patient', text: "It was tough but I actually said no to my mom's request to babysit on my work day." },
+      { speaker: 'Therapist', text: 'That\'s a significant step. How did it feel?' },
+      { speaker: 'Patient', text: 'Scary at first, but then relieving. Like a weight lifted.' }
     ],
     patientSummary: 'Made breakthrough progress on setting boundaries with family. Successfully practiced assertiveness techniques learned in previous sessions.'
   },
   {
     id: 's9',
-    date: 'May 2',
-    rawDate: new Date('2025-05-02'),
+    date: 'Dec 10',
     duration: '45m',
     therapist: 'Dr. Sarah Chen',
     mood: 'positive',
@@ -159,8 +157,7 @@ export const sessions: Session[] = [
   },
   {
     id: 's8',
-    date: 'Apr 18',
-    rawDate: new Date('2025-04-18'),
+    date: 'Dec 3',
     duration: '48m',
     therapist: 'Dr. Sarah Chen',
     mood: 'neutral',
@@ -168,17 +165,16 @@ export const sessions: Session[] = [
     strategy: 'Cognitive restructuring',
     actions: ['Challenge catastrophizing', 'Priority matrix exercise'],
     transcript: [
-      { speaker: 'Therapist', text: 'What happened with the project deadline?', timestamp: '01:23' },
-      { speaker: 'Patient', text: 'I stayed late every night but still felt like it wasn\'t good enough.', timestamp: '01:45' },
-      { speaker: 'Therapist', text: 'Let\'s examine that thought - what\'s the evidence it wasn\'t good enough?', timestamp: '02:10' },
-      { speaker: 'Patient', text: 'Well... my boss said it was excellent. But I saw all the flaws.', timestamp: '02:35' }
+      { speaker: 'Therapist', text: 'What happened with the project deadline?' },
+      { speaker: 'Patient', text: 'I stayed late every night but still felt like it wasn\'t good enough.' },
+      { speaker: 'Therapist', text: 'Let\'s examine that thought - what\'s the evidence it wasn\'t good enough?' },
+      { speaker: 'Patient', text: 'Well... my boss said it was excellent. But I saw all the flaws.' }
     ],
     patientSummary: 'Identified perfectionism pattern at work. Began recognizing cognitive distortions around performance standards.'
   },
   {
     id: 's7',
-    date: 'Apr 4',
-    rawDate: new Date('2025-04-04'),
+    date: 'Nov 26',
     duration: '45m',
     therapist: 'Dr. Sarah Chen',
     mood: 'neutral',
@@ -193,8 +189,7 @@ export const sessions: Session[] = [
   },
   {
     id: 's6',
-    date: 'Mar 14',
-    rawDate: new Date('2025-03-14'),
+    date: 'Nov 19',
     duration: '50m',
     therapist: 'Dr. Sarah Chen',
     mood: 'low',
@@ -202,17 +197,16 @@ export const sessions: Session[] = [
     strategy: 'Behavioral activation',
     actions: ['Daily walk commitment', 'Social contact plan'],
     transcript: [
-      { speaker: 'Therapist', text: 'How has your mood been this week?', timestamp: '01:15' },
-      { speaker: 'Patient', text: 'Really low. I cancelled everything and stayed in bed most of Saturday.', timestamp: '01:30' },
-      { speaker: 'Therapist', text: 'I appreciate you sharing that. What\'s one small thing you could do today?', timestamp: '02:05' },
-      { speaker: 'Patient', text: 'Maybe... maybe just walk to the mailbox.', timestamp: '02:40' }
+      { speaker: 'Therapist', text: 'How has your mood been this week?' },
+      { speaker: 'Patient', text: 'Really low. I cancelled everything and stayed in bed most of Saturday.' },
+      { speaker: 'Therapist', text: 'I appreciate you sharing that. What\'s one small thing you could do today?' },
+      { speaker: 'Patient', text: 'Maybe... maybe just walk to the mailbox.' }
     ],
     patientSummary: 'Experiencing depressive episode. Developed behavioral activation plan starting with minimal achievable goals.'
   },
   {
     id: 's5',
-    date: 'Feb 28',
-    rawDate: new Date('2025-02-28'),
+    date: 'Nov 12',
     duration: '45m',
     therapist: 'Dr. Sarah Chen',
     mood: 'neutral',
@@ -227,8 +221,7 @@ export const sessions: Session[] = [
   },
   {
     id: 's4',
-    date: 'Feb 14',
-    rawDate: new Date('2025-02-14'),
+    date: 'Nov 5',
     duration: '50m',
     therapist: 'Dr. Sarah Chen',
     mood: 'low',
@@ -236,16 +229,15 @@ export const sessions: Session[] = [
     strategy: 'Trauma-focused CBT',
     actions: ['Grounding techniques', 'Safety plan review'],
     transcript: [
-      { speaker: 'Therapist', text: 'You mentioned feeling triggered this week. Can you tell me more?', timestamp: '01:20' },
-      { speaker: 'Patient', text: 'My partner raised his voice and I just... froze. Like I was a kid again.', timestamp: '01:50' },
-      { speaker: 'Therapist', text: 'Thank you for trusting me with that. Let\'s practice the grounding technique we discussed.', timestamp: '03:25' }
+      { speaker: 'Therapist', text: 'You mentioned feeling triggered this week. Can you tell me more?' },
+      { speaker: 'Patient', text: 'My partner raised his voice and I just... froze. Like I was a kid again.' },
+      { speaker: 'Therapist', text: 'Thank you for trusting me with that. Let\'s practice the grounding technique we discussed.' }
     ],
     patientSummary: 'Processing childhood trauma memories. Experiencing flashback triggers. Reinforced grounding and safety strategies.'
   },
   {
     id: 's3',
-    date: 'Jan 31',
-    rawDate: new Date('2025-01-31'),
+    date: 'Oct 29',
     duration: '45m',
     therapist: 'Dr. Sarah Chen',
     mood: 'low',
@@ -256,8 +248,7 @@ export const sessions: Session[] = [
   },
   {
     id: 's2',
-    date: 'Jan 17',
-    rawDate: new Date('2025-01-17'),
+    date: 'Oct 22',
     duration: '50m',
     therapist: 'Dr. Sarah Chen',
     mood: 'neutral',
@@ -272,8 +263,7 @@ export const sessions: Session[] = [
   },
   {
     id: 's1',
-    date: 'Jan 10',
-    rawDate: new Date('2025-01-10'),
+    date: 'Oct 15',
     duration: '50m',
     therapist: 'Dr. Sarah Chen',
     mood: 'neutral',
@@ -289,15 +279,15 @@ export const sessions: Session[] = [
 ];
 
 export const tasks: Task[] = [
-  { id: 't1', text: 'Practice saying no to one request', completed: true, sessionId: 's10', sessionDate: 'May 9' },
-  { id: 't2', text: 'Write compassion letter to younger self', completed: true, sessionId: 's9', sessionDate: 'May 2' },
-  { id: 't3', text: 'Daily 10-minute walk', completed: true, sessionId: 's6', sessionDate: 'Mar 14' },
-  { id: 't4', text: 'Challenge one catastrophic thought per day', completed: false, sessionId: 's8', sessionDate: 'Apr 18' },
-  { id: 't5', text: 'Maintain sleep schedule (10pm bedtime)', completed: false, sessionId: 's7', sessionDate: 'Apr 4' },
-  { id: 't6', text: 'Practice I-statements with partner', completed: false, sessionId: 's5', sessionDate: 'Feb 28' },
-  { id: 't7', text: 'Grounding exercise when triggered', completed: true, sessionId: 's4', sessionDate: 'Feb 14' },
-  { id: 't8', text: 'Keep anxiety journal', completed: false, sessionId: 's3', sessionDate: 'Jan 31' },
-  { id: 't9', text: 'Practice TIPP technique daily', completed: true, sessionId: 's2', sessionDate: 'Jan 17' }
+  { id: 't1', text: 'Practice saying no to one request', completed: true, sessionId: 's10', sessionDate: 'Dec 17' },
+  { id: 't2', text: 'Write compassion letter to younger self', completed: true, sessionId: 's9', sessionDate: 'Dec 10' },
+  { id: 't3', text: 'Daily 10-minute walk', completed: true, sessionId: 's6', sessionDate: 'Nov 19' },
+  { id: 't4', text: 'Challenge one catastrophic thought per day', completed: false, sessionId: 's8', sessionDate: 'Dec 3' },
+  { id: 't5', text: 'Maintain sleep schedule (10pm bedtime)', completed: false, sessionId: 's7', sessionDate: 'Nov 26' },
+  { id: 't6', text: 'Practice I-statements with partner', completed: false, sessionId: 's5', sessionDate: 'Nov 12' },
+  { id: 't7', text: 'Grounding exercise when triggered', completed: true, sessionId: 's4', sessionDate: 'Nov 5' },
+  { id: 't8', text: 'Keep anxiety journal', completed: false, sessionId: 's3', sessionDate: 'Oct 29' },
+  { id: 't9', text: 'Practice TIPP technique daily', completed: true, sessionId: 's2', sessionDate: 'Oct 22' }
 ];
 
 export const progressMetrics: ProgressMetric[] = [

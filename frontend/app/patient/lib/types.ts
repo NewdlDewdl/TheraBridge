@@ -67,8 +67,7 @@ export interface DeepAnalysis {
 
 export interface Session {
   id: string;
-  date: string;  // Display format: "Jan 10" or "May 9"
-  rawDate?: Date;  // For sorting - Date object parsed from backend or mock data
+  date: string;
   duration: string;
   therapist: string;
   mood: MoodType;
@@ -94,9 +93,9 @@ export interface Milestone {
 }
 
 export interface TranscriptEntry {
-  speaker: string; // "Therapist" or "You"
+  speaker: 'Therapist' | 'Patient';
   text: string;
-  timestamp: string; // Format: "MM:SS" (e.g., "02:15")
+  timestamp?: string; // Format: "MM:SS" (e.g., "02:15")
 }
 
 export interface Task {
