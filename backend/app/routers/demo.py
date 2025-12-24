@@ -441,7 +441,10 @@ async def get_demo_status(
         ))
 
     # Determine overall analysis status
-    if wave2_complete_count == session_count:
+    if session_count == 0:
+        # No sessions yet - still pending
+        analysis_status = "pending"
+    elif wave2_complete_count == session_count:
         analysis_status = "wave2_complete"
     elif wave1_complete_count == session_count:
         analysis_status = "wave1_complete"
