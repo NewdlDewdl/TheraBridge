@@ -37,6 +37,24 @@ export function usePatientSessions() {
   const [error, setError] = useState<string | null>(null);
   const [analysisStatus, setAnalysisStatus] = useState<string>('pending');
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [patientId, setPatientId] = useState<string | null>(null);
+
+  // Watch for patient ID changes (demo initialization)
+  useEffect(() => {
+    const checkPatientId = () => {
+      const id = demoTokenStorage.getPatientId();
+      if (id !== patientId) {
+        setPatientId(id);
+      }
+    };
+
+    // Check immediately
+    checkPatientId();
+
+    // Poll every 500ms for changes
+    const interval = setInterval(checkPatientId, 500);
+    return () => clearInterval(interval);
+  }, [patientId]);
 
   useEffect(() => {
     const loadAllSessions = async () => {
@@ -44,21 +62,15 @@ export function usePatientSessions() {
       setError(null);
 
       try {
-        // Step 1: Initialize demo if needed
-        if (!demoTokenStorage.isInitialized()) {
-          console.log('[Demo] Initializing...');
-          const initResult = await apiClient.initializeDemo();
-
-          if (!initResult.success || !initResult.data) {
-            throw new Error(initResult.error || 'Failed to initialize demo');
-          }
-
-          const { demo_token, patient_id, session_ids, expires_at } = initResult.data;
-          demoTokenStorage.store(demo_token, patient_id, session_ids, expires_at);
-          console.log('[Demo] ✓ Initialized:', { patient_id, sessionCount: session_ids.length });
+        // WaveCompletionBridge handles demo initialization
+        // We only load sessions here after initialization is complete
+        if (!patientId) {
+          console.log('[Sessions] Waiting for demo initialization...');
+          setIsLoading(false);
+          return;
         }
 
-        // Step 2: Fetch ALL sessions from API (NEW - fully dynamic)
+        // Fetch ALL sessions from API (fully dynamic)
         console.log('[Sessions] Fetching all sessions from API...');
         const result = await apiClient.getAllSessions();
 
@@ -125,7 +137,7 @@ export function usePatientSessions() {
     };
 
     loadAllSessions();
-  }, []);
+  }, [patientId]); // Re-run when patient ID is set
 
   // Polling effect: Auto-refresh sessions while analysis is in progress
   useEffect(() => {
