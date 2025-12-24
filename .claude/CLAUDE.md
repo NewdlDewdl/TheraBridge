@@ -291,8 +291,8 @@ python -m pytest  # Run tests
 
 ## Session Log
 
-### 2025-12-29 - Backend Demo Initialization Fixes ✅
-**Fixed critical bugs preventing demo user initialization:**
+### 2025-12-29 - Backend Demo Initialization Critical Fixes ✅
+**Fixed three critical bugs preventing demo user initialization:**
 
 1. **Logger Bug** (`seed_wave1_analysis.py:393`):
    - Fixed `logger.info()` call missing required `msg` argument
@@ -304,21 +304,24 @@ python -m pytest  # Run tests
    - Changed `deep_analysis` → `prose_analysis` (Wave 2 indicator)
    - Aligned with actual `therapy_sessions` schema
 
-3. **Root Cause**:
-   - Code referenced columns that don't exist in database
-   - Actual schema uses: `mood_score`, `mood_confidence`, `mood_rationale`, `mood_indicators`, `emotional_tone` (Wave 1)
-   - Wave 2 uses: `prose_analysis` (500-750 word patient narrative)
+3. **Missing Environment Variables in Subprocess** (`demo.py:89,122,161`) ⚠️ CRITICAL:
+   - **Root cause**: `subprocess.run()` wasn't passing environment variables to seeding scripts
+   - Scripts need `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `OPENAI_API_KEY` to function
+   - Without env vars, scripts fail silently with no logs (appears "stuck")
+   - **Fix**: Added `env=os.environ.copy()` to all subprocess.run() calls
+   - Now all background scripts (transcripts, Wave 1, Wave 2) have proper access
 
 **Files modified:**
 - `backend/scripts/seed_wave1_analysis.py` - Removed empty logger.info()
-- `backend/app/routers/demo.py` - Updated column names in status endpoint
+- `backend/app/routers/demo.py` - Updated column names + added environment variable passing
 
 **Fixes errors:**
 - TypeError: Logger.info() missing 1 required positional argument: 'msg'
 - APIError: column therapy_sessions.mood_analysis does not exist
 - APIError: column therapy_sessions.deep_analysis does not exist
+- Silent subprocess failures (scripts hanging indefinitely with no logs)
 
-**Testing:** Backend should now successfully initialize demo users and return proper status via `/api/demo/status`
+**Testing:** Demo initialization now works end-to-end with proper logging and OpenAI API access
 
 ---
 
