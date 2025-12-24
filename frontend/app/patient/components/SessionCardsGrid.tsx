@@ -37,6 +37,11 @@ export function SessionCardsGrid({
   // Use real data from context instead of mock imports
   const { sessions, isLoading, isError, isEmpty } = useSessionData();
 
+  // DEBUG: Log isLoading changes
+  useEffect(() => {
+    console.log('[DEBUG SessionCardsGrid] isLoading changed:', isLoading);
+  }, [isLoading]);
+
   // Page 1: AddSessionCard + 5 sessions (6 cards total)
   // Page 2+: 6 sessions only (no AddSessionCard)
   const isFirstPage = currentPage === 0;

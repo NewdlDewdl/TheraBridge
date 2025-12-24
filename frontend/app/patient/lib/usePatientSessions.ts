@@ -197,6 +197,7 @@ export function usePatientSessions() {
 
   useEffect(() => {
     const loadAllSessions = async () => {
+      console.log('[DEBUG] loadAllSessions triggered - setting isLoading = TRUE');
       setIsLoading(true);
       setError(null);
 
@@ -205,6 +206,7 @@ export function usePatientSessions() {
         // We only load sessions here after initialization is complete
         if (!patientId) {
           console.log('[Sessions] Waiting for demo initialization...');
+          console.log('[DEBUG] No patientId - setting isLoading = FALSE');
           setIsLoading(false);
           return;
         }
@@ -218,6 +220,7 @@ export function usePatientSessions() {
           // If sessions aren't ready yet, wait and let polling handle it
           if (result.error?.includes('timeout')) {
             console.log('[Sessions] API timeout - sessions may still be initializing. Polling will retry...');
+            console.log('[DEBUG] API timeout - setting isLoading = FALSE');
             setIsLoading(false);
             return;
           }
@@ -288,6 +291,7 @@ export function usePatientSessions() {
         setError(err instanceof Error ? err.message : 'Failed to load sessions');
         setSessions([]); // Empty state on error (no fallback to mock)
       } finally {
+        console.log('[DEBUG] loadAllSessions complete - setting isLoading = FALSE');
         setIsLoading(false);
       }
     };
@@ -395,11 +399,13 @@ export function usePatientSessions() {
   // Manual refresh function - reloads from API without triggering global loading state
   // Returns a Promise that resolves when refresh completes
   const refresh = async (): Promise<void> => {
+    console.log('[DEBUG] refresh() called - NOT setting isLoading');
     // Don't debounce - just refresh immediately
     // The SSE callbacks handle their own timing with loading overlays
     try {
       const result = await apiClient.getAllSessions();
       if (result.success && result.data) {
+        console.log('[DEBUG] refresh() - transforming sessions, calling setSessions()');
         const transformed = result.data.map((backendSession) => {
           const sessionDate = new Date(backendSession.session_date);
           return {
