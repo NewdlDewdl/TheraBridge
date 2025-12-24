@@ -77,7 +77,7 @@ async def run_mood_analysis(session: Dict[str, Any]) -> Dict[str, Any]:
             transcript = json.loads(transcript)
 
         # Run analysis (assumes SPEAKER_01 is patient)
-        result = analyzer.analyze_session_mood(
+        result = await analyzer.analyze_session_mood(
             session_id=session["id"],
             segments=transcript,
             patient_speaker_id="SPEAKER_01"
@@ -113,7 +113,7 @@ async def run_topic_extraction(session: Dict[str, Any]) -> Dict[str, Any]:
             transcript = json.loads(transcript)
 
         # Run extraction
-        result = extractor.extract_metadata(
+        result = await extractor.extract_metadata(
             session_id=session["id"],
             segments=transcript,
             speaker_roles={"SPEAKER_00": "Therapist", "SPEAKER_01": "Client"}
@@ -150,7 +150,7 @@ async def run_breakthrough_detection(session: Dict[str, Any]) -> Dict[str, Any]:
             transcript = json.loads(transcript)
 
         # Run detection
-        result = detector.analyze_session(
+        result = await detector.analyze_session(
             transcript=transcript,
             session_metadata={"session_id": session["id"]}
         )
