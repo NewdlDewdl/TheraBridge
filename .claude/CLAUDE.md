@@ -344,13 +344,24 @@ python -m pytest  # Run tests
 - `ccc4923` (21:46:52) - Fix SSE CORS: Add explicit headers for streaming response
 - `d584c1a` (21:47:22) - Fix duplicate demo init: WaveCompletionBridge now uses shared patient ID
 - `35fff6d` (21:47:52) - Fix SSE CORS: Remove credentials requirement from headers
+- `85a17b8` (21:48:22) - Add SSE keep-alive pings and connection event for Railway compatibility
+- `0ba234b` (21:48:52) - Fix SSE reconnection loop: Use ref to prevent dependency cycle
+- `10951e4` (21:49:22) - Fix TypeScript error: Initialize handleEventRef with null
+- `99e709a` (21:49:52) - Reduce SSE keep-alive interval to 5 seconds for Railway
 
 **Current Status:**
 - ✅ SSE infrastructure complete on all pages
 - ✅ Single demo initialization (no more patient ID mismatches)
 - ✅ CORS headers fixed for EventSource connections
 - ✅ Railway backend logging shows full pipeline completion
-- ⏳ Awaiting final CORS fix deployment to verify SSE connection
+- ✅ SSE connection working (connects successfully, receives initial event, auto-reconnects)
+- ✅ Keep-alive pings prevent Railway timeout
+- ❌ **CRITICAL BUG DISCOVERED**: PipelineLogger uses in-memory queue, but seed scripts run in subprocess
+  - Root cause: `subprocess.Popen()` creates separate Python process with separate memory space
+  - Events logged in subprocess `_event_queue` don't appear in main FastAPI process `_event_queue`
+  - SSE endpoint reads empty event queue → no Wave 1/Wave 2 events reach frontend
+  - Backend logs show "✅ Step 2/3 Complete" but events aren't in shared memory
+  - **Solution needed**: Redis, database, or file-based event queue for cross-process communication
 
 **Expected Behavior After Deploy:**
 ```
