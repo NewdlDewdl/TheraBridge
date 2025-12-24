@@ -291,37 +291,28 @@ python -m pytest  # Run tests
 
 ## Session Log
 
-### 2025-12-29 - Backend Demo Initialization Critical Fixes ✅
-**Fixed three critical bugs preventing demo user initialization:**
+### 2025-12-29 - Backend Demo Initialization Complete Fix ✅
+**Fixed all critical bugs blocking demo initialization:**
 
-1. **Logger Bug** (`seed_wave1_analysis.py:393`):
-   - Fixed `logger.info()` call missing required `msg` argument
-   - Was causing TypeError during Wave 1 analysis seeding
+**Phase 1: Database Schema Migration**
+- Created migration `009_add_mood_and_topic_analysis_columns.sql`
+- Renamed duplicate migration files (004→010, 005→011) to fix numbering conflicts
+- Applied migrations 005-011 via `supabase db push`
+- Added all Wave 1 AI analysis columns: mood_score, mood_confidence, mood_rationale, mood_indicators, emotional_tone, topics, action_items, technique, summary, extraction_confidence, has_breakthrough, breakthrough_label, breakthrough_data
 
-2. **Wrong Database Columns** (`demo.py:346`):
-   - Fixed demo status endpoint using non-existent columns
-   - Changed `mood_analysis` → `mood_score` (Wave 1 indicator)
-   - Changed `deep_analysis` → `prose_analysis` (Wave 2 indicator)
-   - Aligned with actual `therapy_sessions` schema
-
-3. **Missing Environment Variables in Subprocess** (`demo.py:89,122,161`) ⚠️ CRITICAL:
-   - **Root cause**: `subprocess.run()` wasn't passing environment variables to seeding scripts
-   - Scripts need `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `OPENAI_API_KEY` to function
-   - Without env vars, scripts fail silently with no logs (appears "stuck")
-   - **Fix**: Added `env=os.environ.copy()` to all subprocess.run() calls
-   - Now all background scripts (transcripts, Wave 1, Wave 2) have proper access
+**Phase 2: Code Fixes**
+- Fixed `logger.info()` bug in seed_wave1_analysis.py
+- Updated demo.py column names (mood_analysis→mood_score, deep_analysis→prose_analysis)
+- Added `env=os.environ.copy()` to all subprocess calls for environment variable access
+- Fixed SSE CORS headers for cross-origin EventSource connections
 
 **Files modified:**
+- `backend/supabase/migrations/` - Renamed duplicates, added 009 migration
 - `backend/scripts/seed_wave1_analysis.py` - Removed empty logger.info()
-- `backend/app/routers/demo.py` - Updated column names + added environment variable passing
+- `backend/app/routers/demo.py` - Column names + environment variables
+- `backend/app/routers/sse.py` - Added CORS headers
 
-**Fixes errors:**
-- TypeError: Logger.info() missing 1 required positional argument: 'msg'
-- APIError: column therapy_sessions.mood_analysis does not exist
-- APIError: column therapy_sessions.deep_analysis does not exist
-- Silent subprocess failures (scripts hanging indefinitely with no logs)
-
-**Testing:** Demo initialization now works end-to-end with proper logging and OpenAI API access
+**All systems operational:** Demo initialization, database schema, environment variables, CORS
 
 ---
 
