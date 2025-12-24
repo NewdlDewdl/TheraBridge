@@ -211,6 +211,22 @@ export function AIChatCard({ isFullscreen: externalFullscreen, onFullscreenChang
     };
     setMessages(prev => [...prev, assistantMessage]);
 
+    // Check if in therapist mode - show work-in-progress message
+    if (mode === 'therapist') {
+      // Simulate a brief delay for better UX
+      setTimeout(() => {
+        setMessages(prev =>
+          prev.map(msg =>
+            msg.id === assistantMessageId
+              ? { ...msg, content: "Hello, unfortunately this feature is still being worked on. Stay tuned for future updates!" }
+              : msg
+          )
+        );
+        setIsLoading(false);
+      }, 500);
+      return;
+    }
+
     let fullContent = ''; // Declare outside try block so it's accessible in catch
 
     try {
