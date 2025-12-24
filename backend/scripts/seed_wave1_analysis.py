@@ -229,110 +229,101 @@ async def process_session(session: Dict[str, Any], index: int, total: int):
     print(f"[{index + 1}/{total}] Processing session {session_date} ({session_id})", flush=True)
     logger.info(f"\n[{index + 1}/{total}] Processing session {session_date} ({session_id})")
 
-    # Run all 3 analyses with individual logging
-    updates = {}
-    mood_duration = 0
-    topic_duration = 0
-    breakthrough_duration = 0
+    # Run all 3 analyses in parallel
+    parallel_start = datetime.now()
 
-    # MOOD_ANALYSIS
-    mood_start = datetime.now()
-    logger_instance.log_event(
-        LogEvent.MOOD_ANALYSIS,
-        session_id=session_id,
-        session_date=session_date,
-        status="started"
+    # Start all three analyses simultaneously
+    mood_task = run_mood_analysis(session)
+    topic_task = run_topic_extraction(session)
+    breakthrough_task = run_breakthrough_detection(session)
+
+    # Wait for all to complete
+    mood_result, topic_result, breakthrough_result = await asyncio.gather(
+        mood_task,
+        topic_task,
+        breakthrough_task,
+        return_exceptions=True  # Prevent one failure from canceling others
     )
 
-    mood_result = await run_mood_analysis(session)
+    parallel_duration = (datetime.now() - parallel_start).total_seconds() * 1000
 
-    if mood_result:
-        mood_duration = (datetime.now() - mood_start).total_seconds() * 1000
+    # Handle individual results (including potential exceptions)
+    updates = {}
+
+    # Process mood result
+    if isinstance(mood_result, Exception):
+        logger.error(f"  ✗ Mood analysis failed: {mood_result}")
+        print(f"  ✗ Mood analysis failed: {mood_result}", flush=True)
+        logger_instance.log_event(
+            LogEvent.MOOD_ANALYSIS,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed",
+            details={"error": str(mood_result)}
+        )
+    elif mood_result:
         logger_instance.log_event(
             LogEvent.MOOD_ANALYSIS,
             session_id=session_id,
             session_date=session_date,
             status="complete",
-            duration_ms=mood_duration,
             details={
                 "mood_score": mood_result.get("mood_score"),
                 "confidence": mood_result.get("mood_confidence")
             }
         )
         updates.update(mood_result)
-    else:
+
+    # Process topic result
+    if isinstance(topic_result, Exception):
+        logger.error(f"  ✗ Topic extraction failed: {topic_result}")
+        print(f"  ✗ Topic extraction failed: {topic_result}", flush=True)
         logger_instance.log_event(
-            LogEvent.MOOD_ANALYSIS,
+            LogEvent.TOPIC_EXTRACTION,
             session_id=session_id,
             session_date=session_date,
-            status="failed"
+            status="failed",
+            details={"error": str(topic_result)}
         )
-
-    # TOPIC_EXTRACTION
-    topic_start = datetime.now()
-    logger_instance.log_event(
-        LogEvent.TOPIC_EXTRACTION,
-        session_id=session_id,
-        session_date=session_date,
-        status="started"
-    )
-
-    topic_result = await run_topic_extraction(session)
-
-    if topic_result:
-        topic_duration = (datetime.now() - topic_start).total_seconds() * 1000
+    elif topic_result:
         logger_instance.log_event(
             LogEvent.TOPIC_EXTRACTION,
             session_id=session_id,
             session_date=session_date,
             status="complete",
-            duration_ms=topic_duration,
             details={
                 "topics_count": len(topic_result.get("topics", [])),
                 "technique": topic_result.get("technique")
             }
         )
         updates.update(topic_result)
-    else:
+
+    # Process breakthrough result
+    if isinstance(breakthrough_result, Exception):
+        logger.error(f"  ✗ Breakthrough detection failed: {breakthrough_result}")
+        print(f"  ✗ Breakthrough detection failed: {breakthrough_result}", flush=True)
         logger_instance.log_event(
-            LogEvent.TOPIC_EXTRACTION,
+            LogEvent.BREAKTHROUGH_DETECTION,
             session_id=session_id,
             session_date=session_date,
-            status="failed"
+            status="failed",
+            details={"error": str(breakthrough_result)}
         )
-
-    # BREAKTHROUGH_DETECTION
-    breakthrough_start = datetime.now()
-    logger_instance.log_event(
-        LogEvent.BREAKTHROUGH_DETECTION,
-        session_id=session_id,
-        session_date=session_date,
-        status="started"
-    )
-
-    breakthrough_result = await run_breakthrough_detection(session)
-
-    if breakthrough_result:
-        breakthrough_duration = (datetime.now() - breakthrough_start).total_seconds() * 1000
+    elif breakthrough_result:
         logger_instance.log_event(
             LogEvent.BREAKTHROUGH_DETECTION,
             session_id=session_id,
             session_date=session_date,
             status="complete",
-            duration_ms=breakthrough_duration,
             details={
                 "has_breakthrough": breakthrough_result.get("has_breakthrough"),
                 "candidates": len(breakthrough_result.get("breakthrough_candidates", []))
             }
         )
         updates.update(breakthrough_result)
-    else:
-        logger_instance.log_event(
-            LogEvent.BREAKTHROUGH_DETECTION,
-            session_id=session_id,
-            session_date=session_date,
-            status="failed"
-        )
+
+    logger.info(f"  ✓ All analyses complete in {parallel_duration:.0f}ms (parallel execution)")
+    print(f"  ✓ All analyses complete in {parallel_duration:.0f}ms", flush=True)
 
     # Update database
     if updates:
@@ -357,7 +348,7 @@ async def process_session(session: Dict[str, Any], index: int, total: int):
         )
 
         # COMPLETE event
-        total_duration = mood_duration + topic_duration + breakthrough_duration + db_duration
+        total_duration = parallel_duration + db_duration
         logger_instance.log_event(
             LogEvent.COMPLETE,
             session_id=session_id,

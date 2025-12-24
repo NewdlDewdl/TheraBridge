@@ -9,7 +9,7 @@ without relying on hardcoded keywords or patterns.
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
-import openai
+from openai import AsyncOpenAI
 import os
 import json
 from app.config.model_config import get_model_name
@@ -54,7 +54,7 @@ class BreakthroughDetector:
 
     def __init__(self, api_key: Optional[str] = None, override_model: Optional[str] = None):
         """
-        Initialize with OpenAI API key and model selection.
+        Initialize with async OpenAI client and model selection.
 
         Args:
             api_key: OpenAI API key. If None, uses OPENAI_API_KEY env var.
@@ -63,10 +63,10 @@ class BreakthroughDetector:
         self.api_key = api_key or settings.openai_api_key
         if not self.api_key:
             raise ValueError("OpenAI API key required for breakthrough detection")
-        openai.api_key = self.api_key
+        self.client = AsyncOpenAI(api_key=self.api_key)
         self.model = get_model_name("breakthrough_detection", override_model=override_model)
 
-    def analyze_session(
+    async def analyze_session(
         self,
         transcript: List[Dict[str, Any]],
         session_metadata: Optional[Dict[str, Any]] = None
@@ -85,7 +85,7 @@ class BreakthroughDetector:
         conversation = self._extract_conversation_turns(transcript)
 
         # Use AI to identify potential breakthrough moment
-        breakthrough_candidates = self._identify_breakthrough_candidates(
+        breakthrough_candidates = await self._identify_breakthrough_candidates(
             conversation,
             session_metadata
         )
@@ -149,7 +149,7 @@ class BreakthroughDetector:
 
         return conversation_turns
 
-    def _identify_breakthrough_candidates(
+    async def _identify_breakthrough_candidates(
         self,
         conversation: List[Dict[str, Any]],
         session_metadata: Optional[Dict[str, Any]] = None
@@ -167,7 +167,7 @@ class BreakthroughDetector:
         # Call OpenAI API
         # NOTE: GPT-5 series does NOT support custom temperature - uses internal calibration
         try:
-            response = openai.chat.completions.create(
+            response = await self.client.chat.completions.create(
                 model=self.model,
                 messages=[
                     {"role": "system", "content": system_prompt},

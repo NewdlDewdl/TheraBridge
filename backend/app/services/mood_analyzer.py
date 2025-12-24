@@ -12,7 +12,7 @@ to produce a single 0.0-10.0 mood score (0.5 increments) where:
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
-import openai
+from openai import AsyncOpenAI
 import os
 import json
 from app.config.model_config import get_model_name
@@ -47,7 +47,7 @@ class MoodAnalyzer:
 
     def __init__(self, api_key: Optional[str] = None, override_model: Optional[str] = None):
         """
-        Initialize the mood analyzer.
+        Initialize the mood analyzer with async OpenAI client.
 
         Args:
             api_key: OpenAI API key. If None, uses OPENAI_API_KEY env var.
@@ -57,10 +57,10 @@ class MoodAnalyzer:
         if not self.api_key:
             raise ValueError("OpenAI API key required for mood analysis")
 
-        openai.api_key = self.api_key
+        self.client = AsyncOpenAI(api_key=self.api_key)
         self.model = get_model_name("mood_analysis", override_model=override_model)
 
-    def analyze_session_mood(
+    async def analyze_session_mood(
         self,
         session_id: str,
         segments: List[Dict[str, Any]],
@@ -92,7 +92,7 @@ class MoodAnalyzer:
         # Call OpenAI API
         # NOTE: GPT-5 series does NOT support custom temperature - uses internal calibration
         try:
-            response = openai.chat.completions.create(
+            response = await self.client.chat.completions.create(
                 model=self.model,
                 messages=[
                     {

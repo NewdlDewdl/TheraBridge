@@ -14,7 +14,7 @@ individual components, optimizing AI usage and consistency.
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
-import openai
+from openai import AsyncOpenAI
 import os
 import json
 from app.services.technique_library import get_technique_library, TechniqueLibrary
@@ -50,7 +50,7 @@ class TopicExtractor:
 
     def __init__(self, api_key: Optional[str] = None, override_model: Optional[str] = None):
         """
-        Initialize the topic extractor with technique library.
+        Initialize the topic extractor with async OpenAI client and technique library.
 
         Args:
             api_key: OpenAI API key. If None, uses OPENAI_API_KEY env var.
@@ -60,13 +60,13 @@ class TopicExtractor:
         if not self.api_key:
             raise ValueError("OpenAI API key required for topic extraction")
 
-        openai.api_key = self.api_key
+        self.client = AsyncOpenAI(api_key=self.api_key)
         self.model = get_model_name("topic_extraction", override_model=override_model)
 
         # Load technique library for validation
         self.technique_library: TechniqueLibrary = get_technique_library()
 
-    def extract_metadata(
+    async def extract_metadata(
         self,
         session_id: str,
         segments: List[Dict[str, Any]],
@@ -96,7 +96,7 @@ class TopicExtractor:
         # Call OpenAI API
         # NOTE: GPT-5 series does NOT support custom temperature - uses internal calibration
         try:
-            response = openai.chat.completions.create(
+            response = await self.client.chat.completions.create(
                 model=self.model,
                 messages=[
                     {
