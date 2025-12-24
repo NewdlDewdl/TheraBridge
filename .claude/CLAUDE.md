@@ -421,6 +421,62 @@ python -m pytest  # Run tests
 
 ## Session Log
 
+### 2025-12-31 - Refresh Behavior & SSE Connection Fixes (Phases 1-3 Complete) ✅
+**Implemented comprehensive fix for browser refresh behavior and SSE connection timing:**
+
+**Phase 1: Hard Refresh Detection ✅**
+- Created `lib/refresh-detection.ts` utility for detecting Cmd+Shift+R vs Cmd+R
+- Added global keydown listener in `layout.tsx` to mark hard refresh in sessionStorage
+- Flag auto-clears after read (one-time use)
+- Commit: `9976fdb` - Phase 1: Add hard refresh detection
+
+**Phase 2: Demo Initialization & localStorage Persistence ✅**
+- Added initialization status tracking (`pending`/`complete`/`none`) to `demo-token-storage.ts`
+- Enhanced `page.tsx` with hard refresh detection and localStorage clearing
+- Added pending state detection to prevent duplicate initializations
+- Increased API timeout from 30s → 120s for demo initialization (Wave 1 + Wave 2 takes ~90s)
+- Fixed verification of patient ID storage before SSE connection
+- Commits:
+  - `b1df235` - Phase 2: Fix demo initialization & localStorage persistence
+  - `dc90b3c` - Fix demo initialization timeout (30s → 120s)
+
+**Phase 3: SSE Connection Timing & Reconnection ✅**
+- Updated `WaveCompletionBridge.tsx` to wait for patient ID before connecting SSE
+- Added timeout (20s) and init status checking with detailed error logging
+- Enhanced `use-pipeline-events.ts` with connection error tracking and readyState monitoring
+- Fixed critical polling restart bug (removed patientId from dependency array)
+- Auto-reconnection handled by browser EventSource on simple refresh
+- Commits:
+  - `e9bd78e` - Phase 3: Fix SSE connection timing & reconnection
+  - `b1d6950` - Fix WaveCompletionBridge polling restart bug
+
+**Current Behavior:**
+- **Hard Refresh (Cmd+Shift+R)**: Clears localStorage → New patient ID → New demo initialization
+- **Simple Refresh (Cmd+R)**: Preserves localStorage → Same patient ID → SSE reconnects automatically
+- **SSE Connection**: Waits for patient ID → Connects within 1-2 seconds → No timeout errors
+- **Demo Init**: Completes successfully in ~30-40 seconds with 120s timeout buffer
+
+**Files Modified:**
+- `frontend/lib/refresh-detection.ts` (NEW)
+- `frontend/lib/demo-token-storage.ts` - Added init status tracking
+- `frontend/lib/demo-api-client.ts` - Increased timeout to 120s
+- `frontend/app/layout.tsx` - Added hard refresh detection
+- `frontend/app/page.tsx` - Enhanced demo initialization flow
+- `frontend/app/patient/components/WaveCompletionBridge.tsx` - Fixed polling and SSE timing
+- `frontend/hooks/use-pipeline-events.ts` - Enhanced error handling
+
+**Testing Results on Railway:**
+- ✅ Fresh visit: Patient ID found → SSE connects → No timeout
+- ✅ Simple refresh: Same patient ID → SSE reconnects → Data preserved
+- ✅ Hard refresh: localStorage cleared → New patient ID → New initialization
+- ✅ Network tab: SSE connection shows 200 status, eventsource type, stays connected
+
+**Next Step:**
+- Phase 4: Show session cards immediately with "Analyzing..." placeholders (PENDING)
+- Phase 5: Integration testing and final verification (PENDING)
+
+---
+
 ### 2025-12-30 - Critical Fix: Session Analysis Loading + Railway Logging ✅
 **Fixed two critical bugs preventing UI from displaying session analysis results:**
 
