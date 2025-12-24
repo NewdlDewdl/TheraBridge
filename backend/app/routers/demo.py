@@ -225,7 +225,7 @@ async def run_wave2_analysis_background(patient_id: str):
 
 
 async def run_full_initialization_pipeline(patient_id: str):
-    """Run complete initialization: transcripts → Wave 1 → Wave 2"""
+    """Run complete initialization: transcripts → Wave 1 → Wave 2 (background)"""
     print("=" * 80, flush=True)
     print(f"🔥 BACKGROUND TASK EXECUTING: patient_id={patient_id}", flush=True)
     print("=" * 80, flush=True)
@@ -239,11 +239,16 @@ async def run_full_initialization_pipeline(patient_id: str):
     # Step 2: Run Wave 1 analysis (topics, mood, summary)
     await run_wave1_analysis_background(patient_id)
 
-    # Step 3: Run Wave 2 analysis (deep analysis, patterns)
-    await run_wave2_analysis_background(patient_id)
+    print(f"✅ Essential initialization complete (transcripts + Wave 1)", flush=True)
+    logger.info(f"✅ Essential initialization complete for patient {patient_id}")
 
-    print(f"🎉 Full initialization pipeline complete", flush=True)
-    logger.info(f"🎉 Full initialization pipeline complete for patient {patient_id}")
+    # Step 3: Run Wave 2 analysis in TRUE background (non-blocking, fire-and-forget)
+    # This allows new demo requests to proceed while Wave 2 runs independently
+    import asyncio
+    asyncio.create_task(run_wave2_analysis_background(patient_id))
+
+    print(f"🚀 Wave 2 analysis started in background (non-blocking)", flush=True)
+    logger.info(f"🚀 Wave 2 analysis running independently for patient {patient_id}")
 
 
 # ============================================================================
