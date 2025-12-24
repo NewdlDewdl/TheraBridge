@@ -108,13 +108,12 @@ Before creating any new file, ask:
 
 # TherapyBridge - Project State
 
-## Current Focus: Phase 4 Complete - Database Column Fixes In Progress
+## Current Focus: Phase 5 Complete - Wave 2 Prose Generation Implemented ✅
 
-**⚠️ CRITICAL BLOCKER:** Backend overloaded by stuck Wave 2 process - demo initialization timing out
+**Latest:** Sessions now load immediately after transcripts (~30s), Wave 1 + Wave 2 run in background
 
 **Full Documentation:** See `Project MDs/TherapyBridge.md`
 **Detailed Session History:** See `.claude/SESSION_LOG.md`
-**Implementation Plan:** See `thoughts/shared/plans/2026-01-01-phase-5-backend-database-fixes.md`
 
 ---
 
@@ -258,8 +257,10 @@ peerbridge proj/
 **Backend API:**
 - ✅ FastAPI structure
 - ✅ Database schema (Neon PostgreSQL)
-- ✅ AI note extraction service (GPT-4o)
-- ✅ Session endpoints
+- ✅ Wave 1 analysis (topics, mood, summary, breakthrough detection)
+- ✅ Wave 2 analysis (deep_analysis JSONB + prose_analysis TEXT)
+- ✅ Session endpoints with analysis data
+- ✅ Non-blocking demo initialization (~30s load time)
 
 **Frontend (Initial Prototype):**
 - ✅ Next.js 16 + React 19 + Tailwind CSS setup
