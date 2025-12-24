@@ -156,8 +156,8 @@ async def initialize_demo(
     logger.info(f"Initializing demo user with token: {demo_token}")
 
     try:
-        # Call SQL function to seed demo data
-        response = db.rpc("seed_demo_v2", {"p_demo_token": demo_token}).execute()
+        # Call SQL function to seed demo data (v3 uses fixed date for Session 1)
+        response = db.rpc("seed_demo_v3", {"p_demo_token": demo_token}).execute()
 
         if not response.data or len(response.data) == 0:
             raise HTTPException(
