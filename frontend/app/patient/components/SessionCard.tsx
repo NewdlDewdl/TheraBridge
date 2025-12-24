@@ -64,13 +64,19 @@ export function SessionCard({ session, onClick, id, scale = 1.0 }: SessionCardPr
   const isBreakthrough = !!session.milestone;
 
   // Extract summary from AI-generated Wave 1 analysis (with fallback to legacy field)
-  const summary = session.summary || session.patientSummary || 'Summary not yet generated.';
+  const summary = session.summary || session.patientSummary || '';
+
+  // Determine if session is still being analyzed (no Wave 1 data yet)
+  const isAnalyzing = !session.topics || session.topics.length === 0;
 
   // Extract 1 strategy + 1 action (show both types)
   const techniquesAndActions = [
     session.strategy,
     ...(session.actions.slice(0, 1))
   ].filter(Boolean);
+
+  // Check if we have any strategies/actions to display
+  const hasStrategiesOrActions = techniquesAndActions.length > 0;
 
   if (isBreakthrough) {
     // ============ BREAKTHROUGH CARD ============
@@ -269,22 +275,36 @@ export function SessionCard({ session, onClick, id, scale = 1.0 }: SessionCardPr
           }}>
             Session Summary
           </h3>
-          <p style={{
-            fontFamily: fontSerif,
-            color: text,
-            fontSize: '14px',
-            fontWeight: 400,
-            lineHeight: 1.6,
-            margin: 0,
-            wordWrap: 'break-word',
-            overflowWrap: 'break-word',
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-          }}>
-            {summary}
-          </p>
+          {isAnalyzing || !summary ? (
+            <p style={{
+              fontFamily: fontSerif,
+              color: mutedText,
+              fontSize: '14px',
+              fontWeight: 400,
+              fontStyle: 'italic',
+              lineHeight: 1.6,
+              margin: 0,
+            }}>
+              Analyzing...
+            </p>
+          ) : (
+            <p style={{
+              fontFamily: fontSerif,
+              color: text,
+              fontSize: '14px',
+              fontWeight: 400,
+              lineHeight: 1.6,
+              margin: 0,
+              wordWrap: 'break-word',
+              overflowWrap: 'break-word',
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}>
+              {summary}
+            </p>
+          )}
         </div>
 
         {/* Divider */}
@@ -309,36 +329,49 @@ export function SessionCard({ session, onClick, id, scale = 1.0 }: SessionCardPr
           }}>
             Strategies / Action Items
           </h3>
-          <ul style={{
-            margin: 0,
-            paddingLeft: '0',
-            listStyle: 'none',
-          }}>
-            {techniquesAndActions.map((item, i) => (
-              <li key={i} style={{
-                fontFamily: fontSerif,
-                color: accent,
-                fontSize: '13px',
-                fontWeight: 300,
-                lineHeight: 1.5,
-                marginBottom: '6px',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '8px',
-              }}>
-                <span style={{ color: accent, flexShrink: 0 }}>•</span>
-                <span style={{
-                  flex: 1,
-                  minWidth: 0,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
+          {!hasStrategiesOrActions ? (
+            <p style={{
+              fontFamily: fontSerif,
+              color: mutedText,
+              fontSize: '13px',
+              fontWeight: 300,
+              fontStyle: 'italic',
+              margin: 0,
+            }}>
+              Analyzing...
+            </p>
+          ) : (
+            <ul style={{
+              margin: 0,
+              paddingLeft: '0',
+              listStyle: 'none',
+            }}>
+              {techniquesAndActions.map((item, i) => (
+                <li key={i} style={{
+                  fontFamily: fontSerif,
+                  color: accent,
+                  fontSize: '13px',
+                  fontWeight: 300,
+                  lineHeight: 1.5,
+                  marginBottom: '6px',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '8px',
                 }}>
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
+                  <span style={{ color: accent, flexShrink: 0 }}>•</span>
+                  <span style={{
+                    flex: 1,
+                    minWidth: 0,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         {/* Loading Overlay */}
@@ -426,22 +459,36 @@ export function SessionCard({ session, onClick, id, scale = 1.0 }: SessionCardPr
         }}>
           Session Summary
         </h3>
-        <p style={{
-          fontFamily: fontSerif,
-          color: text,
-          fontSize: '14px',
-          fontWeight: 400,
-          lineHeight: 1.6,
-          margin: 0,
-          wordWrap: 'break-word',
-          overflowWrap: 'break-word',
-          display: '-webkit-box',
-          WebkitLineClamp: 3,
-          WebkitBoxOrient: 'vertical',
-          overflow: 'hidden',
-        }}>
-          {summary}
-        </p>
+        {isAnalyzing || !summary ? (
+          <p style={{
+            fontFamily: fontSerif,
+            color: mutedText,
+            fontSize: '14px',
+            fontWeight: 400,
+            fontStyle: 'italic',
+            lineHeight: 1.6,
+            margin: 0,
+          }}>
+            Analyzing...
+          </p>
+        ) : (
+          <p style={{
+            fontFamily: fontSerif,
+            color: text,
+            fontSize: '14px',
+            fontWeight: 400,
+            lineHeight: 1.6,
+            margin: 0,
+            wordWrap: 'break-word',
+            overflowWrap: 'break-word',
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}>
+            {summary}
+          </p>
+        )}
       </div>
 
       {/* Divider */}
@@ -466,36 +513,49 @@ export function SessionCard({ session, onClick, id, scale = 1.0 }: SessionCardPr
         }}>
           Strategies / Action Items
         </h3>
-        <ul style={{
-          margin: 0,
-          paddingLeft: '0',
-          listStyle: 'none',
-        }}>
-          {techniquesAndActions.map((item, i) => (
-            <li key={i} style={{
-              fontFamily: fontSerif,
-              color: accent,
-              fontSize: '13px',
-              fontWeight: 300,
-              lineHeight: 1.5,
-              marginBottom: '6px',
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '8px',
-            }}>
-              <span style={{ color: accent, flexShrink: 0 }}>•</span>
-              <span style={{
-                flex: 1,
-                minWidth: 0,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+        {!hasStrategiesOrActions ? (
+          <p style={{
+            fontFamily: fontSerif,
+            color: mutedText,
+            fontSize: '13px',
+            fontWeight: 300,
+            fontStyle: 'italic',
+            margin: 0,
+          }}>
+            Analyzing...
+          </p>
+        ) : (
+          <ul style={{
+            margin: 0,
+            paddingLeft: '0',
+            listStyle: 'none',
+          }}>
+            {techniquesAndActions.map((item, i) => (
+              <li key={i} style={{
+                fontFamily: fontSerif,
+                color: accent,
+                fontSize: '13px',
+                fontWeight: 300,
+                lineHeight: 1.5,
+                marginBottom: '6px',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '8px',
               }}>
-                {item}
-              </span>
-            </li>
-          ))}
-        </ul>
+                <span style={{ color: accent, flexShrink: 0 }}>•</span>
+                <span style={{
+                  flex: 1,
+                  minWidth: 0,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Loading Overlay */}

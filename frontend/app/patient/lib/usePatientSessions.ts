@@ -83,10 +83,10 @@ export function usePatientSessions() {
             duration: `${backendSession.duration_minutes || 60} min`,
             therapist: 'Dr. Rodriguez',
             mood: mapMoodScore(backendSession.mood_score), // Map 0-10 score to MoodType
-            topics: backendSession.topics || [],
-            strategy: backendSession.technique || 'Not yet analyzed',
+            topics: backendSession.topics || [], // Empty array = "Analyzing..." in UI
+            strategy: backendSession.technique || '', // Empty string = "Analyzing..." in UI
             actions: backendSession.action_items || [],
-            summary: backendSession.summary || 'Summary not yet generated.',
+            summary: backendSession.summary || '', // Empty string = "Analyzing..." in UI
             transcript: backendSession.transcript || [],
             extraction_confidence: backendSession.extraction_confidence,
             topics_extracted_at: backendSession.topics_extracted_at,
@@ -104,6 +104,10 @@ export function usePatientSessions() {
 
         console.log('[Sessions] ✓ Loaded:', sortedSessions.length, 'sessions');
         console.log('[Sessions] ✓ Date range:', sortedSessions[sortedSessions.length - 1]?.date, '→', sortedSessions[0]?.date);
+
+        // Log how many sessions have Wave 1 analysis complete (topics extracted)
+        const analyzedCount = sortedSessions.filter(s => s.topics && s.topics.length > 0).length;
+        console.log('[Sessions] ✓ Analyzed:', analyzedCount + '/' + sortedSessions.length, 'sessions have Wave 1 data');
 
         setSessions(sortedSessions);
         setTasks(mockTasks);
@@ -198,10 +202,10 @@ export function usePatientSessions() {
               duration: `${backendSession.duration_minutes || 60} min`,
               therapist: 'Dr. Rodriguez',
               mood: mapMoodScore(backendSession.mood_score),
-              topics: backendSession.topics || [],
-              strategy: backendSession.technique || 'Not yet analyzed',
+              topics: backendSession.topics || [], // Empty array = "Analyzing..." in UI
+              strategy: backendSession.technique || '', // Empty string = "Analyzing..." in UI
               actions: backendSession.action_items || [],
-              summary: backendSession.summary || 'Summary not yet generated.',
+              summary: backendSession.summary || '', // Empty string = "Analyzing..." in UI
               transcript: backendSession.transcript || [],
               extraction_confidence: backendSession.extraction_confidence,
               topics_extracted_at: backendSession.topics_extracted_at,
