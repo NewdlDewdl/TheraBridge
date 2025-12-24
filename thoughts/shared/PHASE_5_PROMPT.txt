@@ -1,0 +1,28 @@
+I need to continue Phase 5 of the TherapyBridge dashboard implementation.
+
+**Context:**
+- Phase 4 (frontend) is COMPLETE and deployed: Session cards show "Analyzing..." placeholders immediately
+- Backend has 2 database column fixes deployed, 1 pending
+- Backend currently BLOCKED by stuck Wave 2 process - demo init timing out after 120 seconds
+
+**Comprehensive Plan:**
+See `thoughts/shared/plans/2026-01-01-phase-5-backend-database-fixes.md`
+
+**Current Status:**
+See `.claude/CLAUDE.md` lines 111-117 for blocker details
+
+**Your tasks:**
+1. Fix Wave 2 `deep_analysis` → `prose_analysis` column mismatch in `backend/scripts/seed_wave2_analysis.py`
+2. Restart Railway backend to kill stuck process
+3. Test full flow: fresh demo → cards with placeholders → Wave 1 completes → data appears
+4. Verify no database errors in Railway logs
+5. Confirm all 10 sessions get Wave 1 data within 60-90 seconds
+
+**Success criteria:**
+- Demo init completes in 30-40 seconds (not timeout)
+- Session cards load in 3-5 seconds with "Analyzing..." placeholders
+- Polling detects Wave 1 completion and updates cards
+- Railway logs show no column mismatch errors
+- All database writes succeed
+
+Start by reading the comprehensive plan, then proceed with Task 1 (fix Wave 2 column).
