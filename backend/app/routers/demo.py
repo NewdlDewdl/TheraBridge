@@ -169,8 +169,11 @@ async def initialize_demo(
         patient_id = result["patient_id"]
         session_ids = result["session_ids"]
 
-        # Fetch demo user to get expiry
-        user_response = db.table("users").select("demo_expires_at").eq("id", patient_id).single().execute()
+        # Fetch patient record to get user_id, then get expiry from users table
+        patient_response = db.table("patients").select("user_id").eq("id", patient_id).single().execute()
+        user_id = patient_response.data["user_id"]
+
+        user_response = db.table("users").select("demo_expires_at").eq("id", user_id).single().execute()
         expires_at = user_response.data["demo_expires_at"]
 
         logger.info(f"✓ Demo user created: {patient_id} with {len(session_ids)} sessions")
