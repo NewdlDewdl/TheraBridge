@@ -43,7 +43,12 @@
 
 ### ⚠️ ABSOLUTE RULE: NO COMMITS AFTER DEC 23, 2025 11:45 PM
 
-**All commits must be backdated to December 23, 2025, starting at 9:00 PM (21:00:00), incrementing by 1 minute each.**
+**All commits must be backdated to December 23, 2025.**
+
+**CRITICAL:** Before creating ANY commit, you MUST:
+1. Check the most recent commit timestamp: `git log --format="%ci" -n 1`
+2. Add exactly 30 seconds to that timestamp
+3. Use that new timestamp for your commit
 
 ### Automated Setup Complete
 
@@ -60,26 +65,25 @@
 3. **Backdate Script** (`backdate-commits.sh`):
    - Automatically finds commits after Dec 23, 2025 11:45 PM
    - Backdates them starting at 9:00 PM on Dec 23
-   - Increments by 1 minute per commit
+   - Increments by 30 seconds per commit
 
 ### How to Make Commits (REQUIRED WORKFLOW)
 
 **Option A: Manual Backdating (Recommended for Single Commits)**
 ```bash
-# 1. Make your changes
+# 1. Check the most recent commit timestamp
+git log --format="%ci" -n 1
+# Example output: 2025-12-23 21:54:52 -0600
+
+# 2. Add 30 seconds to that timestamp
+# If last commit was 21:54:52, next should be 21:55:22
+
+# 3. Make your changes and commit with backdated timestamp
 git add .
+GIT_COMMITTER_DATE="2025-12-23 21:55:22 -0600" \
+git commit -m "your commit message" --date="2025-12-23 21:55:22 -0600"
 
-# 2. Commit with message (will create with current timestamp)
-git commit -m "your commit message"
-
-# 3. IMMEDIATELY backdate the commit
-git commit --amend --date="2025-12-23 21:00:00"
-
-# 4. For next commit, increment by 1 minute
-git commit -m "next commit message"
-git commit --amend --date="2025-12-23 21:01:00"
-
-# 5. Push when ready
+# 4. Push when ready
 git push
 ```
 
@@ -104,17 +108,25 @@ git push --force-with-lease
 
 ### How Claude Code Will Handle Commits
 
-When Claude Code needs to create commits:
+**CRITICAL WORKFLOW - Claude MUST follow these steps EXACTLY:**
 
-1. **First commit of session**: Will be backdated to `2025-12-23 21:00:00`
-2. **Second commit**: Will be backdated to `2025-12-23 21:01:00`
-3. **Third commit**: Will be backdated to `2025-12-23 21:02:00`
-4. And so on...
+1. **FIRST:** Check the most recent commit timestamp:
+   ```bash
+   git log --format="%ci" -n 1
+   ```
 
-**Claude will ALWAYS use this format:**
-```bash
-git add -A && git commit -m "message" && git commit --amend --date="2025-12-23 HH:MM:SS"
-```
+2. **SECOND:** Calculate new timestamp (add 30 seconds to the result from step 1)
+   - Example: If last commit was `2025-12-23 21:54:52 -0600`
+   - Next commit should be `2025-12-23 21:55:22 -0600`
+
+3. **THIRD:** Create commit with calculated timestamp:
+   ```bash
+   git add -A && \
+   GIT_COMMITTER_DATE="2025-12-23 HH:MM:SS -0600" \
+   git commit -m "message" --date="2025-12-23 HH:MM:SS -0600"
+   ```
+
+**NEVER hardcode timestamps. ALWAYS check the previous commit first.**
 
 ### Verification Commands
 
