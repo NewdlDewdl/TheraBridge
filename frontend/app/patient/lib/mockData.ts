@@ -197,10 +197,10 @@ export const sessions: Session[] = [
     strategy: 'Behavioral activation',
     actions: ['Daily walk commitment', 'Social contact plan'],
     transcript: [
-      { speaker: 'Therapist', text: 'How has your mood been this week?' },
-      { speaker: 'Patient', text: 'Really low. I cancelled everything and stayed in bed most of Saturday.' },
-      { speaker: 'Therapist', text: 'I appreciate you sharing that. What\'s one small thing you could do today?' },
-      { speaker: 'Patient', text: 'Maybe... maybe just walk to the mailbox.' }
+      { speaker: 'Therapist', text: 'How has your mood been this week?', timestamp: '01:15' },
+      { speaker: 'Patient', text: 'Really low. I cancelled everything and stayed in bed most of Saturday.', timestamp: '01:30' },
+      { speaker: 'Therapist', text: 'I appreciate you sharing that. What\'s one small thing you could do today?', timestamp: '02:05' },
+      { speaker: 'Patient', text: 'Maybe... maybe just walk to the mailbox.', timestamp: '02:40' }
     ],
     patientSummary: 'Experiencing depressive episode. Developed behavioral activation plan starting with minimal achievable goals.'
   },
@@ -229,9 +229,9 @@ export const sessions: Session[] = [
     strategy: 'Trauma-focused CBT',
     actions: ['Grounding techniques', 'Safety plan review'],
     transcript: [
-      { speaker: 'Therapist', text: 'You mentioned feeling triggered this week. Can you tell me more?' },
-      { speaker: 'Patient', text: 'My partner raised his voice and I just... froze. Like I was a kid again.' },
-      { speaker: 'Therapist', text: 'Thank you for trusting me with that. Let\'s practice the grounding technique we discussed.' }
+      { speaker: 'Therapist', text: 'You mentioned feeling triggered this week. Can you tell me more?', timestamp: '01:20' },
+      { speaker: 'Patient', text: 'My partner raised his voice and I just... froze. Like I was a kid again.', timestamp: '01:50' },
+      { speaker: 'Therapist', text: 'Thank you for trusting me with that. Let\'s practice the grounding technique we discussed.', timestamp: '03:25' }
     ],
     patientSummary: 'Processing childhood trauma memories. Experiencing flashback triggers. Reinforced grounding and safety strategies.'
   },
