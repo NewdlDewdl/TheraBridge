@@ -129,7 +129,7 @@ async def run_topic_extraction(session: Dict[str, Any]) -> Dict[str, Any]:
             "summary": result.summary,
             "raw_meta_summary": result.raw_meta_summary,
             "extraction_confidence": result.confidence,
-            "extracted_at": datetime.utcnow().isoformat()
+            "topics_extracted_at": datetime.utcnow().isoformat()
         }
 
     except Exception as e:
