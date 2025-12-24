@@ -108,20 +108,33 @@ Before creating any new file, ask:
 
 # TherapyBridge - Project State
 
-## Current Focus: Debugging SSE Connection + Session Loading Issues ⚠️
+## Current Focus: Railway Deployment Network Error - All Endpoints Unreachable ⚠️
 
-**Backend Status:** ✅ Fully functional
-- Non-blocking demo init (~1-2s response)
-- Background transcripts, Wave 1, Wave 2 processing
-- Version 1.0.1 deployed (commits: fe18a8d, 59803fe, e41eff4)
+**Critical Issue:** Railway deployment experiencing complete network failure
 
-**Frontend Issues:** ⚠️
-- SSE connections failing with CORS error (status: null)
-- GET /api/sessions requests timing out (30s, not reaching backend)
-- GET /api/demo/status polling timing out
-- Only POST /api/demo/initialize works
+**Symptoms (03:03:40 logs):**
+- ❌ SSE connection fails: "CORS request did not succeed. Status code: (null)"
+- ❌ GET /api/sessions returns 401 (no demo token)
+- ❌ POST /api/demo/initialize fails: "NetworkError when attempting to fetch resource"
+- ❌ Frontend redirects to /auth/login (404)
+- ⚠️ Hard refresh cleared localStorage (expected behavior)
 
-**Root Cause:** Browser blocking EventSource and fetch GET requests after demo init. Railway logs show NO incoming GET requests, suggesting client-side blocking or proxy issue.
+**Latest Fix Attempt (Commit b477185):**
+- Removed duplicate CORS headers from SSE router (let global middleware handle)
+- Added detailed request logging to frontend api-client.ts
+- Awaiting Railway deployment completion to test
+
+**Root Cause Analysis:**
+- Initial hypothesis: CORS header conflicts between route-level and global middleware
+- New logs show complete network failure - Railway backend may be down or unreachable
+- Demo token not present in GET /api/sessions request (expected after hard refresh)
+- POST /api/demo/initialize network error suggests Railway routing issue
+
+**Next Steps:**
+1. Wait for Railway deployment to complete
+2. Test if SSE CORS fix resolved connection issues
+3. If network errors persist, investigate Railway service health
+4. Verify backend is responding at https://therabridge-backend.up.railway.app/health
 
 **Full Documentation:** See `Project MDs/TherapyBridge.md`
 **Detailed Session History:** See `.claude/SESSION_LOG.md`
