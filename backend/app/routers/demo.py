@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from uuid import uuid4
 from datetime import datetime
+from pathlib import Path
 import logging
 import subprocess
 import sys
@@ -66,9 +67,14 @@ async def populate_session_transcripts_background(patient_id: str):
         # Get Python executable from current environment
         python_exe = sys.executable
 
+        # Resolve absolute path to script
+        script_path = Path(__file__).parent.parent.parent / "scripts" / "seed_all_sessions.py"
+
+        logger.info(f"Running transcript population: {python_exe} {script_path} {patient_id}")
+
         # Run transcript population script
         result = subprocess.run(
-            [python_exe, "backend/scripts/seed_all_sessions.py", patient_id],
+            [python_exe, str(script_path), patient_id],
             capture_output=True,
             text=True,
             timeout=300  # 5 minute timeout
@@ -94,9 +100,14 @@ async def run_wave1_analysis_background(patient_id: str):
         # Get Python executable from current environment
         python_exe = sys.executable
 
+        # Resolve absolute path to script
+        script_path = Path(__file__).parent.parent.parent / "scripts" / "seed_wave1_analysis.py"
+
+        logger.info(f"Running Wave 1 analysis: {python_exe} {script_path} {patient_id}")
+
         # Run Wave 1 script
         result = subprocess.run(
-            [python_exe, "backend/scripts/seed_wave1_analysis.py", patient_id],
+            [python_exe, str(script_path), patient_id],
             capture_output=True,
             text=True,
             timeout=600  # 10 minute timeout
@@ -121,9 +132,14 @@ async def run_wave2_analysis_background(patient_id: str):
         # Get Python executable from current environment
         python_exe = sys.executable
 
+        # Resolve absolute path to script
+        script_path = Path(__file__).parent.parent.parent / "scripts" / "seed_wave2_analysis.py"
+
+        logger.info(f"Running Wave 2 analysis: {python_exe} {script_path} {patient_id}")
+
         # Run Wave 2 script
         result = subprocess.run(
-            [python_exe, "backend/scripts/seed_wave2_analysis.py", patient_id],
+            [python_exe, str(script_path), patient_id],
             capture_output=True,
             text=True,
             timeout=900  # 15 minute timeout
