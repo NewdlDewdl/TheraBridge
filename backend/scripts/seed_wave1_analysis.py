@@ -127,7 +127,6 @@ async def run_topic_extraction(session: Dict[str, Any]) -> Dict[str, Any]:
             "action_items": result.action_items,
             "technique": result.technique,
             "summary": result.summary,
-            "raw_meta_summary": result.raw_meta_summary,
             "extraction_confidence": result.confidence,
             "topics_extracted_at": datetime.utcnow().isoformat()
         }
