@@ -154,6 +154,7 @@ export function usePatientSessions() {
   const lastWave1Count = useRef<number>(0);
   const lastWave2Count = useRef<number>(0);
   const lastSessionCount = useRef<number>(0);
+  const refreshTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // NEW: Track individual session states for change detection
   const sessionStatesRef = useRef<Map<string, SessionState>>(new Map());
@@ -392,10 +393,16 @@ export function usePatientSessions() {
   }, [analysisStatus]); // Only re-run if analysisStatus changes
 
   // Manual refresh function - reloads from API without triggering global loading state
+  // Debounced to prevent multiple rapid refreshes when multiple SSE events arrive
   const refresh = () => {
+    // Cancel any pending refresh
+    if (refreshTimeoutRef.current) {
+      clearTimeout(refreshTimeoutRef.current);
+    }
+
     // Don't set global loading state - this would cause full page re-render
     // Individual cards show their own loading overlays via setSessionLoading
-    setTimeout(async () => {
+    refreshTimeoutRef.current = setTimeout(async () => {
       try {
         const result = await apiClient.getAllSessions();
         if (result.success && result.data) {
@@ -435,7 +442,8 @@ export function usePatientSessions() {
       } catch (err) {
         console.error('[refresh] Error:', err);
       }
-    }, 300);
+      refreshTimeoutRef.current = null;
+    }, 500); // Increased to 500ms to better batch rapid SSE events
   };
 
   // Update a major event's reflection
