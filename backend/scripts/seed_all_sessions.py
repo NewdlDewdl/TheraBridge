@@ -22,6 +22,8 @@ import json
 from pathlib import Path
 from datetime import datetime
 import os
+import asyncio
+from typing import Tuple, Dict, Any
 
 # Add backend to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -69,13 +71,13 @@ def load_transcript_from_file(filename: str) -> dict:
     return data
 
 
-def populate_session_transcript(
+async def populate_session_transcript(
     patient_id: str,
     session_date: str,
     transcript_data: dict
 ) -> bool:
     """
-    Update a session's transcript field in the database
+    Update a session's transcript field in the database (async)
 
     Args:
         patient_id: UUID of the patient
@@ -85,79 +87,120 @@ def populate_session_transcript(
     Returns:
         True if successful, False otherwise
     """
-    db = get_supabase_admin()
+    # Run database operation in thread pool to avoid blocking
+    loop = asyncio.get_event_loop()
 
-    try:
-        # Extract just the segments array (what we store in DB)
-        segments = transcript_data.get("segments", [])
+    def _update_db():
+        db = get_supabase_admin()
 
-        # Also extract duration from metadata for accuracy
-        duration_seconds = transcript_data.get("metadata", {}).get("duration", 3600)
-        duration_minutes = int(duration_seconds / 60)
+        try:
+            # Extract just the segments array (what we store in DB)
+            segments = transcript_data.get("segments", [])
 
-        # Update the session
-        response = db.table("therapy_sessions").update({
-            "transcript": segments,
-            "duration_minutes": duration_minutes,
-            "updated_at": datetime.now().isoformat()
-        }).eq("patient_id", patient_id).eq("session_date", session_date).execute()
+            # Also extract duration from metadata for accuracy
+            duration_seconds = transcript_data.get("metadata", {}).get("duration", 3600)
+            duration_minutes = int(duration_seconds / 60)
 
-        if response.data:
-            return True
-        else:
-            print(f"  ⚠️  No session found for date {session_date}")
+            # Update the session
+            response = db.table("therapy_sessions").update({
+                "transcript": segments,
+                "duration_minutes": duration_minutes,
+                "updated_at": datetime.now().isoformat()
+            }).eq("patient_id", patient_id).eq("session_date", session_date).execute()
+
+            if response.data:
+                return True
+            else:
+                print(f"  ⚠️  No session found for date {session_date}")
+                return False
+
+        except Exception as e:
+            print(f"  ❌ Error updating session {session_date}: {e}")
             return False
 
-    except Exception as e:
-        print(f"  ❌ Error updating session {session_date}: {e}")
-        return False
+    return await loop.run_in_executor(None, _update_db)
 
 
-def seed_all_sessions(patient_id: str):
+async def process_single_session(
+    patient_id: str,
+    filename: str,
+    session_date: str,
+    index: int,
+    total: int
+) -> Tuple[bool, str]:
     """
-    Main function: Load all 10 transcripts and populate database
+    Process a single session file (async)
+
+    Args:
+        patient_id: UUID of the patient
+        filename: Name of the JSON file
+        session_date: Date of the session
+        index: Current index (for progress display)
+        total: Total number of sessions
+
+    Returns:
+        Tuple of (success: bool, message: str)
+    """
+    try:
+        # Load transcript from file (I/O bound, run in thread pool)
+        loop = asyncio.get_event_loop()
+        transcript_data = await loop.run_in_executor(
+            None, load_transcript_from_file, filename
+        )
+
+        segment_count = len(transcript_data.get("segments", []))
+        duration = transcript_data.get("metadata", {}).get("duration", 0) / 60
+
+        print(f"[{index}/{total}] ✓ Loaded {filename}: {segment_count} segments, {duration:.0f} min")
+
+        # Update database (already async)
+        if await populate_session_transcript(patient_id, session_date, transcript_data):
+            print(f"[{index}/{total}] ✓ Updated session {session_date}")
+            return (True, f"Success: {filename}")
+        else:
+            return (False, f"Failed: No session found for {session_date}")
+
+    except FileNotFoundError as e:
+        return (False, f"File not found: {filename}")
+    except Exception as e:
+        return (False, f"Error processing {filename}: {e}")
+
+
+async def seed_all_sessions_async(patient_id: str):
+    """
+    Main async function: Load all transcripts and populate database in parallel
 
     Args:
         patient_id: UUID of the patient to populate sessions for
+
+    Returns:
+        0 if all successful, 1 if any failures
     """
     print("=" * 70)
-    print("🌱 Seeding All 10 Sessions with Transcripts")
+    print("🌱 Seeding All Sessions with Transcripts (Parallel)")
     print("=" * 70)
     print(f"Patient ID: {patient_id}")
     print(f"Total sessions: {len(SESSION_FILES)}")
+    print(f"Concurrency: {len(SESSION_FILES)} parallel operations")
     print()
 
-    success_count = 0
-    fail_count = 0
+    # Create tasks for all sessions (dynamic parallelization)
+    tasks = [
+        process_single_session(patient_id, filename, session_date, i, len(SESSION_FILES))
+        for i, (filename, session_date) in enumerate(SESSION_FILES, 1)
+    ]
 
-    for i, (filename, session_date) in enumerate(SESSION_FILES, 1):
-        print(f"[{i}/{len(SESSION_FILES)}] Processing {filename}...")
+    # Run all tasks concurrently
+    print(f"🚀 Starting parallel processing of {len(tasks)} sessions...")
+    print()
+    results = await asyncio.gather(*tasks, return_exceptions=True)
 
-        try:
-            # Load transcript from file
-            transcript_data = load_transcript_from_file(filename)
-            segment_count = len(transcript_data.get("segments", []))
-            duration = transcript_data.get("metadata", {}).get("duration", 0) / 60
-
-            print(f"  ✓ Loaded: {segment_count} segments, {duration:.0f} minutes")
-
-            # Update database
-            if populate_session_transcript(patient_id, session_date, transcript_data):
-                print(f"  ✓ Updated session {session_date}")
-                success_count += 1
-            else:
-                fail_count += 1
-
-        except FileNotFoundError as e:
-            print(f"  ❌ File not found: {e}")
-            fail_count += 1
-        except Exception as e:
-            print(f"  ❌ Error: {e}")
-            fail_count += 1
-
-        print()
+    # Count successes and failures
+    success_count = sum(1 for r in results if isinstance(r, tuple) and r[0])
+    fail_count = len(results) - success_count
 
     # Summary
+    print()
     print("=" * 70)
     print("📊 Summary")
     print("=" * 70)
@@ -171,6 +214,19 @@ def seed_all_sessions(patient_id: str):
     else:
         print("⚠️  Some sessions failed. Check errors above.")
         return 1
+
+
+def seed_all_sessions(patient_id: str):
+    """
+    Synchronous wrapper for async seed function (for backward compatibility)
+
+    Args:
+        patient_id: UUID of the patient to populate sessions for
+
+    Returns:
+        0 if all successful, 1 if any failures
+    """
+    return asyncio.run(seed_all_sessions_async(patient_id))
 
 
 def main():
