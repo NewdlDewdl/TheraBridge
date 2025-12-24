@@ -20,10 +20,11 @@ import { apiClient } from '@/lib/api-client';
 import { demoTokenStorage } from '@/lib/demo-token-storage';
 
 // ═══════════════════════════════════════════════════════════════════════════
-// TOGGLE THIS TO SWITCH BETWEEN MOCK AND REAL DATA
-// Set to `false` when you have a working authenticated backend
+// TOGGLE THIS TO SWITCH BETWEEN HYBRID AND MOCK DATA
+// HYBRID MODE: Session 1 from API, Sessions 2-10 from mock data
+// Set USE_HYBRID_MODE to `false` to use full mock data
 // ═══════════════════════════════════════════════════════════════════════════
-const USE_MOCK_DATA = true;  // Using mock data for development
+const USE_HYBRID_MODE = true;
 
 /**
  * Hook to provide session data for the dashboard.
@@ -36,13 +37,103 @@ export function usePatientSessions() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [timeline, setTimeline] = useState<TimelineEntry[]>([]);
-  // New: unified timeline with sessions + major events
   const [unifiedTimeline, setUnifiedTimeline] = useState<TimelineEvent[]>([]);
   const [majorEvents, setMajorEvents] = useState<MajorEventEntry[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (USE_MOCK_DATA) {
-      // Simulate a brief loading state for realistic UX
+    const initializeAndFetch = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        // Step 1: Initialize demo if needed
+        if (!demoTokenStorage.isInitialized()) {
+          console.log('[Demo] No token found, initializing demo...');
+          const initResult = await apiClient.initializeDemo();
+
+          if (!initResult.success || !initResult.data) {
+            throw new Error(initResult.error || 'Failed to initialize demo');
+          }
+
+          // Store demo credentials
+          const { demo_token, patient_id, session_ids, expires_at } = initResult.data;
+          demoTokenStorage.store(demo_token, patient_id, session_ids, expires_at);
+          console.log('[Demo] ✓ Initialized:', { patient_id, sessionCount: session_ids.length });
+        }
+
+        // Step 2: Get session IDs
+        const sessionIds = demoTokenStorage.getSessionIds();
+        if (!sessionIds || sessionIds.length === 0) {
+          throw new Error('No session IDs found');
+        }
+
+        // Step 3: Fetch Session 1 from API
+        const session1Id = sessionIds[0];
+        console.log('[Session1] Fetching from API:', session1Id);
+
+        const sessionResult = await apiClient.getSessionById(session1Id);
+
+        let session1Data: Session;
+        if (!sessionResult.success || !sessionResult.data) {
+          console.error('[Session1] Failed to fetch:', sessionResult.error);
+          // Use mock Session 1 with error text
+          session1Data = {
+            ...mockSessions[0],
+            summary: 'Error loading session summary'
+          };
+        } else {
+          // Transform backend session to frontend Session type
+          const backendSession = sessionResult.data;
+          session1Data = {
+            id: backendSession.id,
+            date: new Date(backendSession.session_date).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric'
+            }),
+            duration: `${backendSession.duration_minutes || 60} min`,
+            therapist: 'Dr. Rodriguez',
+            mood: 'neutral' as const, // TODO: Map mood_score to MoodType
+            topics: backendSession.topics || [],
+            strategy: backendSession.technique || 'Not yet analyzed',
+            actions: backendSession.action_items || [],
+            summary: backendSession.summary || 'Summary not yet generated.',
+            transcript: backendSession.transcript || [],
+            extraction_confidence: backendSession.extraction_confidence,
+            topics_extracted_at: backendSession.topics_extracted_at,
+          };
+          console.log('[Session1] ✓ Loaded summary:', session1Data.summary);
+        }
+
+        // Step 4: Merge Session 1 (real) + Sessions 2-10 (mock)
+        const hybridSessions = [session1Data, ...mockSessions.slice(1)];
+
+        // Step 5: Update state
+        setSessions(hybridSessions);
+        setTasks(mockTasks);
+        setTimeline(mockTimeline);
+        setUnifiedTimeline(mockUnifiedTimeline);
+        setMajorEvents(mockMajorEvents);
+
+      } catch (err) {
+        console.error('[usePatientSessions] Error:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load sessions');
+
+        // Fallback to full mock data on error
+        setSessions(mockSessions);
+        setTasks(mockTasks);
+        setTimeline(mockTimeline);
+        setUnifiedTimeline(mockUnifiedTimeline);
+        setMajorEvents(mockMajorEvents);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (USE_HYBRID_MODE) {
+      initializeAndFetch();
+    } else {
+      // Full mock mode (legacy)
       const timer = setTimeout(() => {
         setSessions(mockSessions);
         setTasks(mockTasks);
@@ -50,48 +141,9 @@ export function usePatientSessions() {
         setUnifiedTimeline(mockUnifiedTimeline);
         setMajorEvents(mockMajorEvents);
         setIsLoading(false);
-      }, 300); // 300ms delay simulates network request
-
+      }, 300);
       return () => clearTimeout(timer);
     }
-
-    // Fetch real data from API
-    const fetchSessions = async () => {
-      // Get demo patient ID
-      const patientId = demoTokenStorage.getPatientId();
-      if (!patientId) {
-        console.error('[SessionData] No patient ID found');
-        setIsLoading(false);
-        return;
-      }
-
-      console.log('[SessionData] Fetching sessions for patient:', patientId);
-
-      try {
-        // Fetch sessions from API
-        const result = await apiClient.get<{ sessions: Session[] }>(
-          `/api/sessions/patient/${patientId}`
-        );
-
-        if (result.success) {
-          console.log('[SessionData] ✓ Loaded sessions:', result.data.sessions.length);
-          setSessions(result.data.sessions);
-          // TODO: Fetch tasks from API when endpoint is ready
-          setTasks([]);
-          setTimeline([]);
-          setUnifiedTimeline([]);
-          setMajorEvents([]);
-        } else {
-          console.error('[SessionData] ✗ Failed to fetch sessions:', result.error);
-        }
-      } catch (error) {
-        console.error('[SessionData] Error:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchSessions();
   }, []);
 
   // Manual refresh function - reloads mock data
@@ -128,8 +180,8 @@ export function usePatientSessions() {
     unifiedTimeline,
     majorEvents,
     isLoading,
-    isError: false,
-    error: null,
+    isError: error !== null,
+    error,
     refresh,
     updateMajorEventReflection,
     sessionCount: sessions.length,

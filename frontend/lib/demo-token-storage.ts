@@ -1,108 +1,87 @@
 /**
  * Demo Token Storage Utility
- * Manages demo token persistence in localStorage
+ * Manages demo token lifecycle in localStorage
  */
 
 const DEMO_TOKEN_KEY = 'therapybridge_demo_token';
-const DEMO_PATIENT_ID_KEY = 'therapybridge_demo_patient_id';
-const DEMO_EXPIRES_AT_KEY = 'therapybridge_demo_expires_at';
+const PATIENT_ID_KEY = 'therapybridge_patient_id';
+const SESSION_IDS_KEY = 'therapybridge_session_ids';
+const EXPIRES_AT_KEY = 'therapybridge_demo_expires';
 
 export const demoTokenStorage = {
   /**
-   * Save demo token and metadata to localStorage
+   * Store demo credentials after initialization
    */
-  saveToken(token: string, patientId: string, expiresAt: string): void {
+  store(demoToken: string, patientId: string, sessionIds: string[], expiresAt: string) {
     if (typeof window === 'undefined') return;
 
-    try {
-      localStorage.setItem(DEMO_TOKEN_KEY, token);
-      localStorage.setItem(DEMO_PATIENT_ID_KEY, patientId);
-      localStorage.setItem(DEMO_EXPIRES_AT_KEY, expiresAt);
-      console.log('[Demo] Token saved to localStorage:', { token, patientId });
-    } catch (error) {
-      console.error('[Demo] Failed to save token:', error);
-    }
+    localStorage.setItem(DEMO_TOKEN_KEY, demoToken);
+    localStorage.setItem(PATIENT_ID_KEY, patientId);
+    localStorage.setItem(SESSION_IDS_KEY, JSON.stringify(sessionIds));
+    localStorage.setItem(EXPIRES_AT_KEY, expiresAt);
   },
 
   /**
-   * Get demo token from localStorage
+   * Retrieve stored demo token (returns null if expired or missing)
    */
   getToken(): string | null {
     if (typeof window === 'undefined') return null;
 
-    try {
-      return localStorage.getItem(DEMO_TOKEN_KEY);
-    } catch (error) {
-      console.error('[Demo] Failed to get token:', error);
+    const token = localStorage.getItem(DEMO_TOKEN_KEY);
+    const expiresAt = localStorage.getItem(EXPIRES_AT_KEY);
+
+    if (!token || !expiresAt) return null;
+
+    // Check if expired
+    const expiry = new Date(expiresAt);
+    if (expiry < new Date()) {
+      this.clear();
       return null;
     }
+
+    return token;
   },
 
   /**
-   * Get demo patient ID from localStorage
+   * Get patient ID
    */
   getPatientId(): string | null {
     if (typeof window === 'undefined') return null;
-
-    try {
-      return localStorage.getItem(DEMO_PATIENT_ID_KEY);
-    } catch (error) {
-      console.error('[Demo] Failed to get patient ID:', error);
-      return null;
-    }
+    return localStorage.getItem(PATIENT_ID_KEY);
   },
 
   /**
-   * Get demo expiry timestamp from localStorage
+   * Get session IDs
    */
-  getExpiresAt(): string | null {
+  getSessionIds(): string[] | null {
     if (typeof window === 'undefined') return null;
 
+    const sessionIdsJson = localStorage.getItem(SESSION_IDS_KEY);
+    if (!sessionIdsJson) return null;
+
     try {
-      return localStorage.getItem(DEMO_EXPIRES_AT_KEY);
-    } catch (error) {
-      console.error('[Demo] Failed to get expiry:', error);
+      return JSON.parse(sessionIdsJson);
+    } catch {
       return null;
     }
   },
 
   /**
-   * Check if demo token is expired
+   * Check if demo is initialized
    */
-  isExpired(): boolean {
-    const expiresAt = this.getExpiresAt();
-    if (!expiresAt) return true;
-
-    try {
-      const expiry = new Date(expiresAt);
-      return expiry < new Date();
-    } catch (error) {
-      console.error('[Demo] Invalid expiry date:', error);
-      return true;
-    }
+  isInitialized(): boolean {
+    return this.getToken() !== null && this.getPatientId() !== null;
   },
 
   /**
-   * Clear demo token and metadata from localStorage
+   * Clear all demo data
    */
-  clearToken(): void {
+  clear() {
     if (typeof window === 'undefined') return;
 
-    try {
-      localStorage.removeItem(DEMO_TOKEN_KEY);
-      localStorage.removeItem(DEMO_PATIENT_ID_KEY);
-      localStorage.removeItem(DEMO_EXPIRES_AT_KEY);
-      console.log('[Demo] Token cleared from localStorage');
-    } catch (error) {
-      console.error('[Demo] Failed to clear token:', error);
-    }
-  },
-
-  /**
-   * Check if demo token exists and is valid
-   */
-  hasValidToken(): boolean {
-    const token = this.getToken();
-    return !!token && !this.isExpired();
-  },
+    localStorage.removeItem(DEMO_TOKEN_KEY);
+    localStorage.removeItem(PATIENT_ID_KEY);
+    localStorage.removeItem(SESSION_IDS_KEY);
+    localStorage.removeItem(EXPIRES_AT_KEY);
+  }
 };

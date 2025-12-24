@@ -436,6 +436,59 @@ class ApiClient {
   ): Promise<ApiResult<T>> {
     return this.get<T>(`/api/sessions/patient/${patientId}/consistency?days=${days}`, options);
   }
+
+  // ============================================================================
+  // Demo Mode API Methods
+  // ============================================================================
+
+  /**
+   * Initialize demo user and get demo token
+   * @returns ApiResult with demo credentials
+   */
+  async initializeDemo(): Promise<{
+    success: boolean;
+    data?: {
+      demo_token: string;
+      patient_id: string;
+      session_ids: string[];
+      expires_at: string;
+      message: string;
+    };
+    error?: string;
+  }> {
+    const result = await this.post<{
+      demo_token: string;
+      patient_id: string;
+      session_ids: string[];
+      expires_at: string;
+      message: string;
+    }>('/api/demo/initialize', {});
+
+    if (result.success) {
+      return { success: true, data: result.data };
+    } else {
+      return { success: false, error: result.error };
+    }
+  }
+
+  /**
+   * Fetch single session by ID
+   * @param sessionId - The session ID to fetch
+   * @returns ApiResult with session data
+   */
+  async getSessionById(sessionId: string): Promise<{
+    success: boolean;
+    data?: any;
+    error?: string;
+  }> {
+    const result = await this.get<any>(`/api/sessions/${sessionId}`);
+
+    if (result.success) {
+      return { success: true, data: result.data };
+    } else {
+      return { success: false, error: result.error };
+    }
+  }
 }
 
 export const apiClient = new ApiClient();
