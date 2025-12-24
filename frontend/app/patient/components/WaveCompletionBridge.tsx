@@ -25,80 +25,66 @@ export function WaveCompletionBridge() {
   const [isReady, setIsReady] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
 
-  // Poll for patient ID - restarts if patient ID is cleared (hard refresh)
+  // Continuously poll for patient ID - detects when it changes or gets cleared (hard refresh)
   useEffect(() => {
-    let attempts = 0;
-    const maxAttempts = 240; // 120 seconds max wait (240 * 500ms)
-
     const checkPatientId = () => {
-      attempts++;
-
       const id = demoTokenStorage.getPatientId();
       const initStatus = demoTokenStorage.getInitStatus();
 
+      // Patient ID exists - set it and mark as ready
       if (id) {
-        console.log('[WaveCompletionBridge] ✓ Patient ID found:', id);
+        // Only log if patient ID changed
+        if (id !== patientId) {
+          console.log('[WaveCompletionBridge] ✓ Patient ID found:', id);
+        }
         setPatientId(id);
         setIsReady(true);
         setIsInitializing(false);
-        return true; // Stop polling
+        return;
       }
 
-      // Check if initialization is in progress
+      // No patient ID - check if we need to initialize
+      if (!id && patientId) {
+        // Patient ID was cleared (hard refresh!)
+        console.log('[WaveCompletionBridge] Patient ID cleared - resetting state');
+        setPatientId(null);
+        setIsReady(false);
+        setIsInitializing(false);
+        return;
+      }
+
+      // No patient ID and initialization pending
       if (initStatus === 'pending') {
         if (!isInitializing) {
           console.log('[WaveCompletionBridge] Demo initialization in progress...');
           setIsInitializing(true);
         }
-        return false; // Keep polling
+        return;
       }
 
-      // Check if initialization failed
-      if (initStatus === 'none' && attempts > 10) {
-        console.warn('[WaveCompletionBridge] No patient ID after 5 seconds - may need manual initialization');
+      // No patient ID and no initialization - trigger it
+      if (initStatus === 'none' && !isInitializing && !patientId) {
+        console.log('[WaveCompletionBridge] Triggering demo initialization...');
+        setIsInitializing(true);
 
-        // Trigger demo initialization if not started
-        if (attempts === 11) {
-          console.log('[WaveCompletionBridge] Triggering demo initialization...');
-          setIsInitializing(true);
-
-          // Import and call demo initialization
-          import('@/lib/demo-api-client').then(({ demoApiClient }) => {
-            demoApiClient.initialize().catch(err => {
-              console.error('[WaveCompletionBridge] Demo init failed:', err);
-              setIsInitializing(false);
-            });
+        // Import and call demo initialization
+        import('@/lib/demo-api-client').then(({ demoApiClient }) => {
+          demoApiClient.initialize().catch(err => {
+            console.error('[WaveCompletionBridge] Demo init failed:', err);
+            setIsInitializing(false);
           });
-        }
-
-        return false; // Keep polling
+        });
       }
-
-      // Timeout after 120 seconds
-      if (attempts >= maxAttempts) {
-        console.error('[WaveCompletionBridge] ✗ Timeout waiting for patient ID (120s)');
-        setIsReady(false);
-        setIsInitializing(false);
-        return true; // Stop polling
-      }
-
-      return false; // Continue polling
     };
 
     // Check immediately
-    if (checkPatientId()) {
-      return;
-    }
+    checkPatientId();
 
-    // Poll every 500ms until we have a patient ID or timeout
-    const interval = setInterval(() => {
-      if (checkPatientId()) {
-        clearInterval(interval);
-      }
-    }, 500);
+    // Poll every 500ms continuously
+    const interval = setInterval(checkPatientId, 500);
 
     return () => clearInterval(interval);
-  }, [isInitializing]); // Restart effect when initialization state changes
+  }, [patientId, isInitializing]); // Re-run when patient ID or init state changes
 
   // Connect to SSE and handle events (only after we have patient ID)
   const { isConnected, events, errorType, connectionError } = usePipelineEvents({
