@@ -136,10 +136,9 @@ export default function FileUploader({ onUploadSuccess }: FileUploaderProps) {
           className={`
             min-h-[280px] border-2 border-dashed rounded-xl p-9 text-center cursor-pointer transition-all duration-200 flex flex-col justify-center
             ${isDragging
-              ? 'border-[#5AB9B4] bg-[#5AB9B4]/[0.03] dark:border-[#a78bfa] dark:bg-[#a78bfa]/[0.05]'
-              : 'border-[#D0D0D0] hover:border-[#5AB9B4] hover:bg-[#5AB9B4]/[0.03] dark:border-[#3a3545] dark:hover:border-[#a78bfa] dark:hover:bg-[#a78bfa]/[0.05]'
+              ? 'border-[#5AB9B4] bg-white dark:border-[#a78bfa] dark:bg-[#1a1625]'
+              : 'border-[#D0D0D0] hover:border-[#5AB9B4] dark:border-[#3a3545] dark:hover:border-[#a78bfa] bg-white dark:bg-[#1a1625]'
             }
-            ${selectedFile ? 'bg-gray-50/50 dark:bg-[#252030]' : 'dark:bg-[#252030]'}
           `}
         >
           <input

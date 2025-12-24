@@ -52,12 +52,14 @@ function UploadPageContent() {
       <main className="w-full px-4 py-8 flex justify-center">
         {view === 'upload' && (
           <div className="w-full max-w-[900px] space-y-8">
-            {/* Demo Transcript Uploader */}
-            <DemoTranscriptUploader onUploadSuccess={(sessionId) => {
-              console.log('[Upload] Demo upload success:', sessionId);
-              setSessionId(sessionId);
-              setView('processing');
-            }} />
+            {/* Demo Transcript Uploader - Centered */}
+            <div className="flex justify-center">
+              <DemoTranscriptUploader onUploadSuccess={(sessionId) => {
+                console.log('[Upload] Demo upload success:', sessionId);
+                setSessionId(sessionId);
+                setView('processing');
+              }} />
+            </div>
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
