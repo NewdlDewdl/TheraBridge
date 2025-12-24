@@ -63,9 +63,12 @@ export function usePatientSessions() {
           throw new Error(result.error || 'Failed to fetch sessions');
         }
 
+        // Store backend data for sorting reference
+        const backendSessions = result.data;
+
         // Step 3: Transform ALL backend sessions to frontend Session type
         // Store raw backend session_date for sorting, then transform
-        const transformedSessions: Session[] = result.data.map((backendSession) => {
+        const transformedSessions: Session[] = backendSessions.map((backendSession) => {
           const sessionDate = new Date(backendSession.session_date);
 
           return {
@@ -90,8 +93,8 @@ export function usePatientSessions() {
         // Step 4: Sort by date (newest first)
         // Use backend session_date for accurate sorting
         const sortedSessions = transformedSessions.sort((a, b) => {
-          const dateA = result.data.find(s => s.id === a.id)?.session_date;
-          const dateB = result.data.find(s => s.id === b.id)?.session_date;
+          const dateA = backendSessions.find(s => s.id === a.id)?.session_date;
+          const dateB = backendSessions.find(s => s.id === b.id)?.session_date;
           if (!dateA || !dateB) return 0;
           return new Date(dateB).getTime() - new Date(dateA).getTime();
         });
