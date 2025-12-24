@@ -12,6 +12,8 @@
  */
 
 import { Brain, TrendingUp, Lightbulb, Wrench, Heart, CheckCircle2, Target, Sparkles } from 'lucide-react';
+import { DobbyLogoGeometric } from './DobbyLogoGeometric';
+import { useTheme } from '../contexts/ThemeContext';
 
 // Font families - matching SessionCard (using system-ui throughout)
 const fontSans = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
@@ -81,14 +83,15 @@ interface DeepAnalysisSectionProps {
 
 export function DeepAnalysisSection({ analysis, confidence }: DeepAnalysisSectionProps) {
   const { progress_indicators, therapeutic_insights, coping_skills, therapeutic_relationship, recommendations } = analysis;
+  const { isDark } = useTheme();
 
   return (
     <div className="mb-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-            <Brain className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 flex items-center justify-center">
+            <DobbyLogoGeometric size={40} color={isDark ? '#a78bfa' : '#5AB9B4'} />
           </div>
           <div>
             <h3 style={{ fontFamily: fontSans }} className="text-xl font-semibold text-gray-800 dark:text-gray-200">

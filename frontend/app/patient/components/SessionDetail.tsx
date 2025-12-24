@@ -123,28 +123,9 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
           {/* Left Column - Transcript */}
           <div className="border-r border-[#E0DDD8] dark:border-[#3d3548] overflow-y-auto p-8 bg-[#F8F7F4] dark:bg-[#1a1625]">
             <div className="flex flex-col items-center mb-6">
-              <h3 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-3">
+              <h3 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">
                 Session Transcript
               </h3>
-
-              {/* TEST: Button to load AI-labeled transcript */}
-              {!labeledTranscript && (
-                <button
-                  onClick={loadLabeledTranscript}
-                  disabled={loadingTranscript}
-                  className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  {loadingTranscript ? 'Loading AI Labels...' : 'Load AI Labels (TEST)'}
-                </button>
-              )}
-
-              {labeledTranscript && (
-                <div className="flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400">
-                  <Sparkles className="w-4 h-4" />
-                  <span className="font-medium">AI-Labeled Transcript Active</span>
-                </div>
-              )}
             </div>
 
             {displayTranscript && displayTranscript.length > 0 ? (
