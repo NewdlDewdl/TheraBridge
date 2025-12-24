@@ -51,9 +51,9 @@ async def event_generator(patient_id: str, request: Request):
 
                 last_event_index = len(events)
             else:
-                # Send keep-alive ping every 15 seconds to prevent Railway timeout
+                # Send keep-alive ping every 5 seconds to prevent Railway timeout
                 ping_counter += 1
-                if ping_counter >= 30:  # 30 * 0.5s = 15 seconds
+                if ping_counter >= 10:  # 10 * 0.5s = 5 seconds
                     yield ": keep-alive\n\n"
                     ping_counter = 0
 
