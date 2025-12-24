@@ -216,6 +216,7 @@ async def process_session_wave2(
         }
     )
 
+    print(f"[{index + 1}/{total}] Processing Wave 2 for session {session_date}", flush=True)
     logger.info(f"\n[{index + 1}/{total}] Processing session {session_date} ({session_id})")
 
     # Build cumulative context
@@ -281,6 +282,7 @@ async def process_session_wave2(
             duration_ms=total_duration
         )
 
+        print(f"[{index + 1}/{total}] ✅ Wave 2 complete", flush=True)
         logger.info(f"[{index + 1}/{total}] ✅ Session complete")
         return deep_analysis, cumulative_context
     else:
@@ -336,9 +338,13 @@ async def main(patient_id: str):
     duration = (end_time - start_time).total_seconds()
 
     logger.info("\n" + "=" * 80)
+    print("\n" + "=" * 80, flush=True)
     logger.info("✅ Wave 2 Analysis Complete")
+    print("✅ Wave 2 Analysis Complete", flush=True)
     logger.info("=" * 80)
+    print(f"Sessions processed: {len(sessions)}", flush=True)
     logger.info(f"Sessions processed: {len(sessions)}")
+    print(f"Total time: {duration:.1f} seconds ({duration / 60:.1f} minutes)", flush=True)
     logger.info(f"Total time: {duration:.1f} seconds ({duration / 60:.1f} minutes)")
     logger.info(f"Average per session: {duration / len(sessions):.1f} seconds")
     logger.info(f"Finished: {end_time.isoformat()}")

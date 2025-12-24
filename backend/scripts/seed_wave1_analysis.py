@@ -220,6 +220,7 @@ async def process_session(session: Dict[str, Any], index: int, total: int):
         details={"index": index + 1, "total": total}
     )
 
+    print(f"[{index + 1}/{total}] Processing session {session_date} ({session_id})", flush=True)
     logger.info(f"\n[{index + 1}/{total}] Processing session {session_date} ({session_id})")
 
     # Run all 3 analyses with individual logging
@@ -358,6 +359,7 @@ async def process_session(session: Dict[str, Any], index: int, total: int):
             duration_ms=total_duration
         )
 
+        print(f"[{index + 1}/{total}] ✅ Session complete", flush=True)
         logger.info(f"[{index + 1}/{total}] ✅ Session complete")
     else:
         logger_instance.log_event(
@@ -389,6 +391,7 @@ async def main(patient_id: str):
     start_time = datetime.utcnow()
 
     logger.info(f"🚀 Starting parallel processing of {len(sessions)} sessions...")
+    print(f"🚀 Processing {len(sessions)} sessions in parallel...", flush=True)
     logger.info(f"Concurrency: {len(sessions)} parallel operations")
 
     # Create tasks for all sessions
@@ -405,9 +408,13 @@ async def main(patient_id: str):
     duration = (end_time - start_time).total_seconds()
 
     logger.info("\n" + "=" * 80)
+    print("\n" + "=" * 80, flush=True)
     logger.info("✅ Wave 1 Analysis Complete")
+    print("✅ Wave 1 Analysis Complete", flush=True)
     logger.info("=" * 80)
+    print(f"Sessions processed: {len(sessions)}", flush=True)
     logger.info(f"Sessions processed: {len(sessions)}")
+    print(f"Total time: {duration:.1f} seconds ({duration / 60:.1f} minutes)", flush=True)
     logger.info(f"Total time: {duration:.1f} seconds ({duration / 60:.1f} minutes)")
     logger.info(f"Average per session: {duration / len(sessions):.1f} seconds")
     logger.info(f"Finished: {end_time.isoformat()}")

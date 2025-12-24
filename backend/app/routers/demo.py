@@ -75,6 +75,7 @@ class DemoStatusResponse(BaseModel):
 
 async def populate_session_transcripts_background(patient_id: str):
     """Background task to populate session transcripts from JSON files"""
+    print(f"📝 Step 1/3: Populating session transcripts for patient {patient_id}", flush=True)
     logger.info(f"📝 Populating session transcripts for patient {patient_id}")
 
     try:
@@ -96,9 +97,11 @@ async def populate_session_transcripts_background(patient_id: str):
         )
 
         if result.returncode == 0:
+            print(f"✅ Step 1/3 Complete: Session transcripts populated", flush=True)
             logger.info(f"✅ Session transcripts populated for patient {patient_id}")
             logger.info(result.stdout)
         else:
+            print(f"❌ Step 1/3 Failed: {result.stderr}", flush=True)
             logger.error(f"❌ Transcript population failed: {result.stderr}")
 
     except subprocess.TimeoutExpired:
@@ -109,6 +112,7 @@ async def populate_session_transcripts_background(patient_id: str):
 
 async def run_wave1_analysis_background(patient_id: str):
     """Background task to run Wave 1 analysis"""
+    print(f"🚀 Step 2/3: Starting Wave 1 analysis for patient {patient_id}", flush=True)
     logger.info(f"🚀 Starting Wave 1 analysis for patient {patient_id}")
 
     try:
@@ -130,6 +134,7 @@ async def run_wave1_analysis_background(patient_id: str):
         )
 
         if result.returncode == 0:
+            print(f"✅ Step 2/3 Complete: Wave 1 analysis complete", flush=True)
             logger.info(f"✅ Wave 1 analysis complete for patient {patient_id}")
             # Mark Wave 1 as complete
             if patient_id not in analysis_status:
@@ -137,6 +142,7 @@ async def run_wave1_analysis_background(patient_id: str):
             analysis_status[patient_id]["wave1_complete"] = True
             analysis_status[patient_id]["wave1_completed_at"] = datetime.now().isoformat()
         else:
+            print(f"❌ Step 2/3 Failed: {result.stderr}", flush=True)
             logger.error(f"❌ Wave 1 analysis failed: {result.stderr}")
 
     except subprocess.TimeoutExpired:
@@ -147,6 +153,7 @@ async def run_wave1_analysis_background(patient_id: str):
 
 async def run_wave2_analysis_background(patient_id: str):
     """Background task to run Wave 2 analysis (after Wave 1 completes)"""
+    print(f"🚀 Step 3/3: Starting Wave 2 analysis for patient {patient_id}", flush=True)
     logger.info(f"🚀 Starting Wave 2 analysis for patient {patient_id}")
 
     try:
@@ -168,6 +175,7 @@ async def run_wave2_analysis_background(patient_id: str):
         )
 
         if result.returncode == 0:
+            print(f"✅ Step 3/3 Complete: Wave 2 analysis complete", flush=True)
             logger.info(f"✅ Wave 2 analysis complete for patient {patient_id}")
             # Mark Wave 2 as complete
             if patient_id not in analysis_status:
@@ -175,6 +183,7 @@ async def run_wave2_analysis_background(patient_id: str):
             analysis_status[patient_id]["wave2_complete"] = True
             analysis_status[patient_id]["wave2_completed_at"] = datetime.now().isoformat()
         else:
+            print(f"❌ Step 3/3 Failed: {result.stderr}", flush=True)
             logger.error(f"❌ Wave 2 analysis failed: {result.stderr}")
 
     except subprocess.TimeoutExpired:
@@ -201,6 +210,7 @@ async def run_full_initialization_pipeline(patient_id: str):
     # Step 3: Run Wave 2 analysis (deep analysis, patterns)
     await run_wave2_analysis_background(patient_id)
 
+    print(f"🎉 Full initialization pipeline complete", flush=True)
     logger.info(f"🎉 Full initialization pipeline complete for patient {patient_id}")
 
 
