@@ -312,14 +312,33 @@ async def initialize_demo(
 
         logger.info(f"✓ Demo user created: {patient_id} with {len(session_ids)} sessions")
 
-        # Trigger background initialization pipeline if enabled
+        # Initialize demo data if enabled
         analysis_status = "pending"
         logger.info(f"📝 run_analysis parameter: {run_analysis}")
         if run_analysis:
-            logger.info(f"📝 Adding background task for patient {patient_id}")
-            background_tasks.add_task(run_full_initialization_pipeline, str(patient_id))
+            logger.info(f"📝 Loading transcripts for patient {patient_id} (BLOCKING)")
+
+            # Step 1: Load transcripts synchronously BEFORE returning response
+            # This ensures sessions are queryable when frontend loads
+            await populate_session_transcripts_background(str(patient_id))
+
+            print(f"✅ Transcripts loaded - demo ready for frontend", flush=True)
+            logger.info(f"✅ Transcripts loaded for patient {patient_id}")
+
+            # Step 2 & 3: Queue Wave 1 and Wave 2 to run in background AFTER response
+            # Frontend will poll and update when analysis completes
+            import asyncio
+
+            async def run_wave1_then_wave2():
+                """Run Wave 1, then start Wave 2 when Wave 1 completes"""
+                await run_wave1_analysis_background(str(patient_id))
+                # After Wave 1 completes, start Wave 2
+                asyncio.create_task(run_wave2_analysis_background(str(patient_id)))
+
+            background_tasks.add_task(run_wave1_then_wave2)
+
             analysis_status = "processing"
-            logger.info(f"🎬 Queued full initialization (transcripts + Wave 1 + Wave 2) for patient {patient_id}")
+            logger.info(f"🎬 Queued Wave 1 + Wave 2 analysis for patient {patient_id}")
 
         return DemoInitResponse(
             demo_token=demo_token,

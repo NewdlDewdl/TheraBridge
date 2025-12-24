@@ -12,11 +12,22 @@ import json
 router = APIRouter(prefix="/api/sse", tags=["sse"])
 
 @router.options("/events/{patient_id}")
-async def sse_preflight(patient_id: str):
+async def sse_preflight(patient_id: str, request: Request):
     """Handle CORS preflight for SSE endpoint"""
-    return {
-        "message": "OK"
-    }
+    from fastapi.responses import Response
+
+    # Get origin from request (must match the frontend making the request)
+    origin = request.headers.get("origin", "https://therabridge.up.railway.app")
+
+    return Response(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": origin,
+            "Access-Control-Allow-Methods": "GET, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Max-Age": "86400"  # Cache preflight for 24 hours
+        }
+    )
 
 async def event_generator(patient_id: str, request: Request):
     """
