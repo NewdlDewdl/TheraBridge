@@ -6,10 +6,12 @@
  * Connects to SSE endpoint and triggers per-session updates as they complete.
  *
  * Behavior:
+ *   - Waits for patient ID to exist in localStorage before connecting
  *   - Connects to SSE stream on mount
  *   - When Wave 1 completes for a session: triggers loading state + refresh for that session
  *   - When Wave 2 completes for a session: triggers loading state + refresh for that session
  *   - Disconnects when all analysis complete
+ *   - Automatically reconnects on simple refresh (preserves patient ID)
  */
 
 import { useEffect, useState } from "react";
@@ -20,22 +22,53 @@ import { demoTokenStorage } from "@/lib/demo-token-storage";
 export function WaveCompletionBridge() {
   const { refresh, setSessionLoading } = useSessionData();
   const [patientId, setPatientId] = useState<string | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
-  // Get patient ID from localStorage (populated by SessionDataContext's usePatientSessions)
+  // Get patient ID from localStorage (populated by demo initialization)
   useEffect(() => {
+    let attempts = 0;
+    const maxAttempts = 40; // 20 seconds max wait (40 * 500ms)
+
     const checkPatientId = () => {
+      attempts++;
+
       const id = demoTokenStorage.getPatientId();
+      const initStatus = demoTokenStorage.getInitStatus();
+
       if (id && id !== patientId) {
-        console.log('[WaveCompletionBridge] Patient ID found:', id);
+        console.log('[WaveCompletionBridge] ✓ Patient ID found:', id);
         setPatientId(id);
+        setIsReady(true);
+        return true; // Stop polling
       }
+
+      // Check if initialization failed
+      if (initStatus === 'none' && attempts > 10) {
+        console.error('[WaveCompletionBridge] ✗ No patient ID after 5 seconds - initialization may have failed');
+        return false; // Keep polling
+      }
+
+      // Timeout after 20 seconds
+      if (attempts >= maxAttempts) {
+        console.error('[WaveCompletionBridge] ✗ Timeout waiting for patient ID');
+        setIsReady(false);
+        return true; // Stop polling
+      }
+
+      return false; // Continue polling
     };
 
     // Check immediately
-    checkPatientId();
+    if (checkPatientId()) {
+      return;
+    }
 
-    // Poll every 500ms until we have a patient ID
-    const interval = setInterval(checkPatientId, 500);
+    // Poll every 500ms until we have a patient ID or timeout
+    const interval = setInterval(() => {
+      if (checkPatientId()) {
+        clearInterval(interval);
+      }
+    }, 500);
 
     return () => clearInterval(interval);
   }, [patientId]);
@@ -43,7 +76,7 @@ export function WaveCompletionBridge() {
   // Connect to SSE and handle events (only after we have patient ID)
   const { isConnected, events } = usePipelineEvents({
     patientId: patientId || "",
-    enabled: !!patientId,
+    enabled: isReady && !!patientId,
 
     onWave1SessionComplete: async (sessionId, sessionDate) => {
       console.log(
@@ -84,10 +117,10 @@ export function WaveCompletionBridge() {
 
   // Log connection status
   useEffect(() => {
-    if (isConnected) {
-      console.log("✅ Real-time pipeline events connected");
+    if (isConnected && patientId) {
+      console.log(`📡 SSE connected to patient ${patientId} - listening for pipeline events`);
     }
-  }, [isConnected]);
+  }, [isConnected, patientId]);
 
   // Log events for debugging
   useEffect(() => {

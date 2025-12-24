@@ -32,6 +32,7 @@ export function usePipelineEvents(options: UsePipelineEventsOptions) {
   } = options;
 
   const [isConnected, setIsConnected] = useState(false);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
   const [events, setEvents] = useState<PipelineEvent[]>([]);
   const eventSourceRef = useRef<EventSource | null>(null);
   const handleEventRef = useRef<((event: PipelineEvent) => void) | null>(null);
@@ -88,36 +89,62 @@ export function usePipelineEvents(options: UsePipelineEventsOptions) {
 
   useEffect(() => {
     if (!enabled || !patientId) {
+      console.log('[SSE] Connection disabled or no patient ID');
       return;
     }
 
+    console.log(`[SSE] Connecting to patient ${patientId}...`);
+
     // Create EventSource connection
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-    const eventSource = new EventSource(`${apiUrl}/api/sse/events/${patientId}`);
+    const sseUrl = `${apiUrl}/api/sse/events/${patientId}`;
 
+    console.log(`[SSE] URL: ${sseUrl}`);
+
+    const eventSource = new EventSource(sseUrl);
     eventSourceRef.current = eventSource;
 
     eventSource.onopen = () => {
       console.log("📡 SSE connected - listening for pipeline events");
       setIsConnected(true);
+      setConnectionError(null);
     };
 
     eventSource.onmessage = (messageEvent) => {
       try {
         const event: PipelineEvent = JSON.parse(messageEvent.data);
+
+        // Ignore initial "connected" event
+        if (event.event === 'connected') {
+          console.log('[SSE] ✓ Connection confirmed by server');
+          return;
+        }
+
         // Use ref to avoid stale closure
         if (handleEventRef.current) {
           handleEventRef.current(event);
         }
       } catch (error) {
-        console.error("Failed to parse SSE event:", error);
+        console.error("[SSE] Failed to parse event:", error);
+        console.error("[SSE] Raw data:", messageEvent.data);
       }
     };
 
     eventSource.onerror = (error) => {
-      console.error("SSE connection error:", error);
+      console.error("[SSE] Connection error:", error);
       setIsConnected(false);
-      // Don't close - let browser handle reconnection
+
+      // Check readyState to determine error type
+      if (eventSource.readyState === EventSource.CLOSED) {
+        setConnectionError('Connection closed by server');
+      } else if (eventSource.readyState === EventSource.CONNECTING) {
+        setConnectionError('Reconnecting...');
+      } else {
+        setConnectionError('Connection failed');
+      }
+
+      // Browser will automatically attempt to reconnect
+      console.log(`[SSE] Browser will attempt reconnection (readyState: ${eventSource.readyState})`);
     };
 
     // Cleanup on unmount
@@ -125,11 +152,13 @@ export function usePipelineEvents(options: UsePipelineEventsOptions) {
       console.log("📡 SSE disconnected");
       eventSource.close();
       setIsConnected(false);
+      setConnectionError(null);
     };
-  }, [enabled, patientId]);  // Removed handleEvent to prevent reconnection loop
+  }, [enabled, patientId]);
 
   return {
     isConnected,
+    connectionError,
     events,
     latestEvent: events[events.length - 1] || null,
   };
