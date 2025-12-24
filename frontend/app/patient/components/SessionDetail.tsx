@@ -16,9 +16,9 @@ import { getMoodEmoji, fullscreenVariants } from '../lib/utils';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { DeepAnalysisSection } from './DeepAnalysisSection';
 
-// Font families - matching SessionCard
-const fontSerif = '"Crimson Pro", Georgia, serif';
-const fontSans = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+// Font families - matching SessionCard (using system-ui throughout)
+const fontSerif = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+const fontSans = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 
 interface SessionDetailProps {
   session: Session | null;
@@ -177,14 +177,14 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
               </ul>
             </div>
 
-            {/* Patient Summary */}
-            {session.patientSummary && (
+            {/* Patient Summary (AI-generated from Wave 1 analysis) */}
+            {(session.summary || session.patientSummary) && (
               <div className="p-4 bg-[#5AB9B4]/5 dark:bg-[#a78bfa]/10 rounded-xl border border-[#5AB9B4]/20 dark:border-[#a78bfa]/30">
                 <h4 style={{ fontFamily: fontSans }} className="text-sm font-semibold text-[#5AB9B4] dark:text-[#a78bfa] uppercase tracking-wide mb-3">
-                  Patient Summary
+                  Session Summary
                 </h4>
                 <p style={{ fontFamily: fontSerif }} className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-                  {session.patientSummary}
+                  {session.summary || session.patientSummary}
                 </p>
               </div>
             )}
@@ -208,7 +208,7 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
 
             {/* Deep Clinical Analysis */}
             {session.deep_analysis && (
-              <div className="mt-6">
+              <div className="mt-6 p-4 bg-[#5AB9B4]/5 dark:bg-[#a78bfa]/10 rounded-xl border border-[#5AB9B4]/20 dark:border-[#a78bfa]/30">
                 <DeepAnalysisSection
                   analysis={session.deep_analysis}
                   confidence={session.analysis_confidence || 0.8}

@@ -8,7 +8,7 @@
  */
 
 import { useRouter, usePathname } from 'next/navigation';
-import { useTheme } from '@/app/patient/contexts/ThemeContext';
+import { useTheme } from 'next-themes';
 import { CombinedLogo, BridgeIcon } from './TheraBridgeLogo';
 
 // Theme Toggle Icon
@@ -48,9 +48,12 @@ function ThemeIcon({ isDark }: { isDark: boolean }) {
 }
 
 export function NavigationBar() {
-  const { isDark, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+
+  const isDark = theme === 'dark';
+  const toggleTheme = () => setTheme(isDark ? 'light' : 'dark');
 
   // Determine active page
   const isSessionsPage = pathname === '/sessions';

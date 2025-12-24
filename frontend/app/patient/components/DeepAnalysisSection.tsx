@@ -13,9 +13,9 @@
 
 import { Brain, TrendingUp, Lightbulb, Wrench, Heart, CheckCircle2, Target, Sparkles } from 'lucide-react';
 
-// Font families
-const fontSans = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-const fontSerif = '"Crimson Pro", Georgia, serif';
+// Font families - matching SessionCard (using system-ui throughout)
+const fontSans = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+const fontSerif = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 
 interface ProgressIndicator {
   symptom_reduction?: {

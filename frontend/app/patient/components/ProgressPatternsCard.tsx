@@ -323,12 +323,9 @@ export function ProgressPatternsCard({ patientId, useRealData = false }: Progres
         <div className="relative z-10 p-5 flex flex-col h-full">
           {/* Header */}
           <div className="flex flex-col mb-3 flex-shrink-0 text-center">
-            <h3 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-2">
+            <h3 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">
               {currentMetric.title}
             </h3>
-            <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500 }} className="text-gray-500 dark:text-gray-400">
-              {currentMetric.description}
-            </p>
           </div>
 
           {/* Chart Area */}

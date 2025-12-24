@@ -11,7 +11,6 @@
 import { useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import '../patient/styles.css';
-import { ThemeProvider } from '@/app/patient/contexts/ThemeContext';
 import { SessionDataProvider } from '@/app/patient/contexts/SessionDataContext';
 import { ProcessingProvider } from '@/contexts/ProcessingContext';
 import { NavigationBar } from '@/components/NavigationBar';
@@ -27,32 +26,30 @@ export default function DashboardPage() {
   const router = useRouter();
 
   return (
-    <ThemeProvider>
-      <ProcessingProvider>
-        <SessionDataProvider>
-          <ProcessingRefreshBridge />
-          <Suspense fallback={<DashboardSkeleton />}>
-            <div className="min-h-screen bg-[#ECEAE5] dark:bg-[#1a1625] transition-colors duration-300 relative">
-              <NavigationBar />
+    <ProcessingProvider>
+      <SessionDataProvider>
+        <ProcessingRefreshBridge />
+        <Suspense fallback={<DashboardSkeleton />}>
+          <div className="min-h-screen bg-[#ECEAE5] dark:bg-[#1a1625] transition-colors duration-300 relative">
+            <NavigationBar />
 
-              <main className="w-full max-w-[1400px] mx-auto px-12 py-12">
-                {/* Top Row - 50/50 Split */}
-                <div className="grid grid-cols-2 gap-6 mb-10">
-                  <NotesGoalsCard />
-                  <AIChatCard />
-                </div>
+            <main className="w-full max-w-[1400px] mx-auto px-12 py-12">
+              {/* Top Row - 50/50 Split */}
+              <div className="grid grid-cols-2 gap-6 mb-10">
+                <NotesGoalsCard />
+                <AIChatCard />
+              </div>
 
-                {/* Middle Row - 3 Equal Cards */}
-                <div className="grid grid-cols-3 gap-6 mb-10">
-                  <ToDoCard />
-                  <ProgressPatternsCard />
-                  <TherapistBridgeCard />
-                </div>
-              </main>
-            </div>
-          </Suspense>
-        </SessionDataProvider>
-      </ProcessingProvider>
-    </ThemeProvider>
+              {/* Middle Row - 3 Equal Cards */}
+              <div className="grid grid-cols-3 gap-6 mb-10">
+                <ToDoCard />
+                <ProgressPatternsCard />
+                <TherapistBridgeCard />
+              </div>
+            </main>
+          </div>
+        </Suspense>
+      </SessionDataProvider>
+    </ProcessingProvider>
   );
 }

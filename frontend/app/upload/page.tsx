@@ -5,7 +5,7 @@
  */
 
 import { Suspense, useState } from 'react';
-import { ThemeProvider, useTheme } from '@/app/patient/contexts/ThemeContext';
+import { useTheme } from '@/app/patient/contexts/ThemeContext';
 import { ProcessingProvider, useProcessing } from '@/contexts/ProcessingContext';
 import { NavigationBar } from '@/components/NavigationBar';
 import FileUploader from '@/app/patient/upload/components/FileUploader';
@@ -86,12 +86,10 @@ function UploadPageContent() {
 
 export default function UploadPage() {
   return (
-    <ThemeProvider>
-      <ProcessingProvider>
-        <Suspense fallback={<DashboardSkeleton />}>
-          <UploadPageContent />
-        </Suspense>
-      </ProcessingProvider>
-    </ThemeProvider>
+    <ProcessingProvider>
+      <Suspense fallback={<DashboardSkeleton />}>
+        <UploadPageContent />
+      </Suspense>
+    </ProcessingProvider>
   );
 }

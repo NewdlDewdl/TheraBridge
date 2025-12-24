@@ -1,68 +1,42 @@
 'use client';
 
 /**
- * ThemeContext - Dark mode state management
- * - Provides dark mode toggle functionality
- * - Persists preference to sessionStorage (shared with auth page)
- * - Applies dark class to document root
- * - Syncs with auth page theme preference
+ * ThemeContext - Bridge to next-themes
+ * This file now acts as a compatibility layer between the old patient theme context
+ * and the new next-themes implementation in the root layout.
+ *
+ * All components using this context will automatically work with next-themes.
  */
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { getTheme, setTheme as saveTheme } from '@/lib/theme-storage';
+import { ReactNode } from 'react';
+import { useTheme as useNextTheme } from 'next-themes';
 
 interface ThemeContextType {
   isDark: boolean;
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
+/**
+ * ThemeProvider - Now a compatibility wrapper
+ * NOTE: This is no longer needed in pages since ThemeProvider is in the root layout.
+ * This export exists only for backwards compatibility with existing code.
+ */
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [isDark, setIsDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  // Initialize theme from sessionStorage (syncs with auth page)
-  useEffect(() => {
-    setMounted(true);
-    const storedTheme = getTheme();
-    if (storedTheme === 'dark') {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  // Apply dark class when theme changes
-  useEffect(() => {
-    if (!mounted) return;
-
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      saveTheme('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      saveTheme('light');
-    }
-  }, [isDark, mounted]);
-
-  const toggleTheme = useCallback(() => setIsDark(prev => !prev), []);
-
-  // Prevent flash of wrong theme
-  if (!mounted) {
-    return null;
-  }
-
-  return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  // Just pass through - the real provider is in the root layout
+  return <>{children}</>;
 }
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within ThemeProvider');
-  }
-  return context;
+/**
+ * useTheme hook - Bridges to next-themes
+ */
+export function useTheme(): ThemeContextType {
+  const { theme, setTheme } = useNextTheme();
+
+  const isDark = theme === 'dark';
+  const toggleTheme = () => setTheme(isDark ? 'light' : 'dark');
+
+  return {
+    isDark,
+    toggleTheme,
+  };
 }

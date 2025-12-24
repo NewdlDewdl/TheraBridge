@@ -571,16 +571,16 @@ for session_num in target_sessions:
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Script runs without errors: `cd backend && source venv/bin/activate && python tests/test_full_pipeline_demo.py`
-- [ ] JSON output file is created in `mock-therapy-data/`
-- [ ] JSON file contains all 3 sessions with Wave 2 results (no "deep_error")
+- [x] Script runs without errors: `cd backend && source venv/bin/activate && python tests/test_full_pipeline_demo.py`
+- [x] JSON output file is created in `mock-therapy-data/`
+- [x] JSON file contains all 3 sessions with Wave 2 results (no "deep_error")
 
 #### Manual Verification:
-- [ ] Terminal output shows "No cumulative context" for Session 10
-- [ ] Terminal output shows "Cumulative context depth: 1" for Session 11
-- [ ] Terminal output shows "Cumulative context depth: 2" for Session 12
-- [ ] JSON output file shows Session 11 references Session 10 patterns
-- [ ] JSON output file shows Session 12 references Sessions 10 and 11
+- [x] Terminal output shows "No cumulative context" for Session 10
+- [x] Terminal output shows "Cumulative context depth: 1" for Session 11
+- [x] Terminal output shows "Cumulative context depth: 2" for Session 12
+- [x] JSON output file shows Session 11 references Session 10 patterns
+- [x] JSON output file shows Session 12 references Sessions 10 and 11
 
 **Implementation Note**: Review JSON output to verify deep analysis quality improves with cumulative context.
 
@@ -656,15 +656,15 @@ Audit all algorithm system prompts to ensure they're optimized for their assigne
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] All system prompts are valid Python strings
-- [ ] No syntax errors in any service file
+- [x] All system prompts are valid Python strings
+- [x] No syntax errors in any service file
 
 #### Manual Verification:
-- [ ] Mood analyzer prompt is concise and task-focused (suited for gpt-5-nano)
-- [ ] Topic extractor prompt is structured and clear (suited for gpt-5-mini)
-- [ ] Breakthrough detector prompt is nuanced and strict (suited for gpt-5)
-- [ ] Deep analyzer prompt references GPT-5.2 capabilities (suited for gpt-5.2)
-- [ ] No prompts ask for capabilities beyond the model's tier
+- [x] Mood analyzer prompt is concise and task-focused (suited for gpt-5-nano)
+- [x] Topic extractor prompt is structured and clear (suited for gpt-5-mini)
+- [x] Breakthrough detector prompt is nuanced and strict (suited for gpt-5)
+- [x] Deep analyzer prompt references GPT-5.2 capabilities (suited for gpt-5.2)
+- [x] No prompts ask for capabilities beyond the model's tier
 
 **Implementation Note**: These are verification-only changes. No code modifications needed for Phases 4.1-4.3.
 

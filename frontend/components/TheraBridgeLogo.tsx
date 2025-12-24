@@ -10,7 +10,7 @@
  * Colors: Teal (light mode) / Purple (dark mode) for accent
  */
 
-import { useTheme } from '@/app/patient/contexts/ThemeContext';
+import { useTheme } from 'next-themes';
 
 interface LogoProps {
   className?: string;
@@ -21,7 +21,8 @@ interface LogoProps {
  * Geometric Bridge Icon - Mountain-shaped bridge with support pillars
  */
 export function BridgeIcon({ size = 48 }: LogoProps) {
-  const { isDark } = useTheme();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const accent = isDark ? '#7882E7' : '#4ECDC4';
   const supportColor = isDark ? '#ffffff' : '#333333';
 
@@ -48,7 +49,8 @@ export function BridgeIcon({ size = 48 }: LogoProps) {
  * Text Logo - THERA (muted) + BRIDGE (accent)
  */
 export function TextLogo({ fontSize = 18 }: { fontSize?: number }) {
-  const { isDark } = useTheme();
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const theraColor = isDark ? '#B8B5B0' : '#6B6560';
   const accent = isDark ? '#7882E7' : '#4ECDC4';
 

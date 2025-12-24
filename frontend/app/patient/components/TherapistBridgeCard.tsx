@@ -46,8 +46,7 @@ export function TherapistBridgeCard() {
         transition={{ duration: 0.2 }}
       >
         <div className="flex flex-col mb-6 text-center">
-          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-2">Session Bridge</h2>
-          <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500 }} className="text-gray-500 dark:text-gray-400">Prepare for upcoming sessions</p>
+          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">Session Bridge</h2>
         </div>
 
         <div className="space-y-5 flex-1 overflow-hidden">
@@ -156,7 +155,7 @@ export function TherapistBridgeCard() {
                 <ul className="space-y-3">
                   {therapistBridgeContent.shareProgress.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#B8A5D6] dark:bg-[#c084fc] mt-2 flex-shrink-0" />
+                      <span className="w-2 h-2 rounded-full bg-[#5AB9B4] dark:bg-[#a78bfa] mt-2 flex-shrink-0" />
                       <p style={{ fontFamily: fontSerif, fontSize: '14px', fontWeight: 400, lineHeight: 1.6 }} className="text-gray-700 dark:text-gray-300">{item}</p>
                     </li>
                   ))}
@@ -169,7 +168,7 @@ export function TherapistBridgeCard() {
                 <ul className="space-y-3">
                   {therapistBridgeContent.sessionPrep.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-3">
-                      <span className="w-2 h-2 rounded-full bg-[#F4A69D] dark:bg-[#f4a69d] mt-2 flex-shrink-0" />
+                      <span className="w-2 h-2 rounded-full bg-[#5AB9B4] dark:bg-[#a78bfa] mt-2 flex-shrink-0" />
                       <p style={{ fontFamily: fontSerif, fontSize: '14px', fontWeight: 400, lineHeight: 1.6 }} className="text-gray-700 dark:text-gray-300">{item}</p>
                     </li>
                   ))}

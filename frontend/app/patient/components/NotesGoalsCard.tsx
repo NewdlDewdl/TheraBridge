@@ -41,8 +41,7 @@ export function NotesGoalsCard() {
         transition={{ duration: 0.2 }}
       >
         <div className="flex flex-col mb-5 text-center">
-          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-2">Your Journey</h2>
-          <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500 }} className="text-gray-500 dark:text-gray-400">Therapy progress and key milestones</p>
+          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">Your Journey</h2>
         </div>
 
         <p style={{ fontFamily: fontSerif, fontSize: '14px', fontWeight: 400, lineHeight: 1.6, color: 'var(--text-gray-600)' }} className="dark:text-gray-400 mb-5">{notesGoalsContent.summary}</p>

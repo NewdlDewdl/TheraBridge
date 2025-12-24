@@ -62,8 +62,7 @@ export function ToDoCard() {
         transition={{ duration: 0.2 }}
       >
         <div className="flex flex-col mb-3 text-center">
-          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-2">To-Do</h2>
-          <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500 }} className="text-gray-500 dark:text-gray-400">Action items from your sessions</p>
+          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">To-Do</h2>
         </div>
 
         {/* Progress Bar - percentage on left, bar on right */}

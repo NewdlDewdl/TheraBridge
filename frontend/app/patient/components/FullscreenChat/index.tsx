@@ -58,6 +58,8 @@ export interface FullscreenChatProps {
   // Conversation tracking - shared with compact card
   conversationId: string | undefined;
   setConversationId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  // NEW: Control whether chat is fullscreen overlay or embedded in page
+  isEmbedded?: boolean;
 }
 
 // Mock data for recent chats
@@ -97,8 +99,9 @@ export function FullscreenChat({
   setMode,
   conversationId,
   setConversationId,
+  isEmbedded = false,
 }: FullscreenChatProps) {
-  const { isDark } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
   const { user, isLoading: authLoading } = useAuth();
   const router = useRouter();
 
@@ -363,7 +366,10 @@ export function FullscreenChat({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-        className="fixed inset-0 z-[2000] flex fullscreen-chat-container"
+        className={isEmbedded
+          ? "flex fullscreen-chat-container h-[calc(100vh-60px)]"
+          : "fixed inset-0 z-[2000] flex fullscreen-chat-container"
+        }
       >
         {/* Sidebar */}
         <ChatSidebar
@@ -375,8 +381,8 @@ export function FullscreenChat({
           userName={USER.name}
           isDark={isDark}
           onHomeClick={() => {
+            // Removed dashboard navigation - Dobby chat stays in chat
             onClose();
-            router.push('/dashboard');
           }}
           onThemeToggle={toggleTheme}
         />

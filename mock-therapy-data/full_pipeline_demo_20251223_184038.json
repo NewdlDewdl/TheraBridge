@@ -1,0 +1,551 @@
+{
+  "demo_info": {
+    "timestamp": "2025-12-24T00:32:16.881575",
+    "sessions_analyzed": [
+      10,
+      11,
+      12
+    ],
+    "pipeline_version": "Wave 1 + Wave 2 (Full Orchestration)"
+  },
+  "sessions": [
+    {
+      "session_num": 10,
+      "session_id": "session_10_alex_chen",
+      "wave1": {
+        "session_id": "session_10",
+        "session_num": 10,
+        "mood_score": 5.5,
+        "mood_confidence": 0.85,
+        "mood_rationale": "The patient is experiencing intense grief, guilt, and anger in response to coming out to their parents, with a pervasive sense of loss and concern about future rejection. They describe emotional states such as grief (\u201cGrief. Like, I'm grieving the parents I thought I had.\u201d), guilt (\u201cI feel so guilty. Like I broke our family.\u201d), and anger (\u201cI am so angry. I\u2019m furious.\u201d), alongside fear about ongoing rejection (\u201cWhat if they never come around? What if I just lost my family because I wanted to be honest?\u201d). These are coupled with somatic distress (chest tightness), and disruption in appetite, though sleep is surprisingly preserved. There are also positive, protective signals: moments of relief about not having to pretend anymore, and active support from Jordan (\u201cJordan was amazing\u2026 they held me while I cried\u201d; \u201cI\u2019m happy with who I am\u201d). The absence of active suicidal ideation is noted, but the overall tone remains distressed with significant emotional fluctuation and concern about family relationships. The blend of severe distress with some hopeful/relief signals places the mood in a mid-range with substantial distress but not crisis-level (no SI/plan).",
+        "mood_indicators": [
+          "Grief and loss of expected parental relationship (e.g., \u201cGrief\u2026 grieving the parents I thought I had\u201d).",
+          "Guilt and self-blame (\u201cI feel so guilty. Like I broke our family.\u201d).",
+          "Anger and hopelessness about parental acceptance and future (e.g., \u201cWhat if they never come around?\u201d).",
+          "Relief and pride in self-identity (\u201cI\u2019m happy with who I am\u201d) and support from Jordan.",
+          "Somatic distress (chest tightness, exhaustion) with decreased appetite and sleep preservation.",
+          "Active rumination about family dynamics and cultural conflict; heightened emotional engagement."
+        ],
+        "emotional_tone": "overwhelmed, grieving, with moments of relief/hope and intermittent anger",
+        "topics": [
+          "Parental rejection after coming out",
+          "Ambiguous loss/grief with mixed emotions (anger, guilt, relief)"
+        ],
+        "action_items": [
+          "Respect parents' request for time/space and refrain from contacting them for now",
+          "Prioritize basic self-care: eat regular meals, monitor sleep, and use Jordan/support when distressed"
+        ],
+        "technique": "Other - Validation",
+        "summary": "Parental rejection after coming out; client grieving, angry, guilty; advised to respect space and prioritize self-care.",
+        "extraction_confidence": 0.9,
+        "has_breakthrough": false,
+        "breakthrough_data": null
+      },
+      "wave2": {
+        "session_id": "session_10",
+        "deep_analysis": {
+          "progress_indicators": {
+            "symptom_reduction": {
+              "detected": false,
+              "description": "This session showed an acute increase in distress following your parents\u2019 reaction (\"my chest feels tight all the time,\" \"not really\" eating, feeling \"all over the place\" with anger/guilt/grief). One stabilizing sign: you reported sleep is \"okay though, surprisingly\" and you actively sought support (moved the session up; stayed with Jordan so you weren\u2019t alone).",
+              "confidence": 0.8
+            },
+            "skill_development": [
+              {
+                "skill": "Reaching for support and reducing isolation during crisis",
+                "proficiency": "developing",
+                "evidence": "You contacted your therapist for an earlier session (\"I got your text yesterday\"), and you chose not to be alone (\"I stayed [at Jordan\u2019s] Saturday and Sunday night... I couldn't be alone\")."
+              },
+              {
+                "skill": "Values-based action (authenticity) under pressure (ACT)",
+                "proficiency": "developing",
+                "evidence": "Even with fear, you acted in line with being truthful/authentic: \"I couldn't keep hiding anymore... every phone call... felt like lying\" and \"I'm happy with who I am.\""
+              },
+              {
+                "skill": "Emotion differentiation/labeling mixed feelings",
+                "proficiency": "developing",
+                "evidence": "You clearly named multiple simultaneous emotions: \"angry... guilty... grief\" and \"also feel kind of relieved.\""
+              },
+              {
+                "skill": "Boundary-respect and pacing contact",
+                "proficiency": "beginner",
+                "evidence": "You considered honoring their request: \"my mom said they need space\" and recognized your window of tolerance: \"I don't know if I can handle more rejection right now.\""
+              }
+            ],
+            "goal_progress": [
+              {
+                "goal": "Disclose non-binary/pansexual identity to culturally traditional parents in a values-aligned way",
+                "status": "achieved",
+                "evidence": "You disclosed clearly and directly: \"I'm also non-binary and pansexual... I use they/them... my name is Alex.\""
+              },
+              {
+                "goal": "Build more secure attachment patterns with Jordan through support-seeking and direct communication",
+                "status": "on_track",
+                "evidence": "You leaned on Jordan in a direct, connected way: \"I texted Jordan and they picked me up\" and \"They just held me while I cried.\""
+              },
+              {
+                "goal": "Use interpersonal effectiveness/boundary skills with family (DBT DEAR MAN / pacing)",
+                "status": "needs_attention",
+                "evidence": "You\u2019re torn between urgently reaching out (\"Say something. Anything.\") and protecting yourself from further harm (\"What if I reach out and they just... ignore me?\"). This is a good moment to apply a plan before acting."
+              }
+            ],
+            "behavioral_changes": [
+              "You chose authenticity over concealment by coming out despite high fear.",
+              "You proactively increased support (moved session up; stayed with Jordan; allowed them to help you eat).",
+              "You are (so far) honoring your parents\u2019 stated boundary by not contacting them immediately."
+            ]
+          },
+          "therapeutic_insights": {
+            "key_realizations": [
+              "You identified this as grief\u2014specifically grief for the parents/relationship you hoped for: \"I'm grieving the parents I thought I had.\" Naming it helps reduce self-blame and gives you a map for what kind of healing is needed.",
+              "You recognized mixed emotions are real and valid\u2014anger, guilt, grief, and relief can coexist: \"I'm also... relieved... at least I don't have to pretend anymore.\" This is an important step toward emotional self-trust.",
+              "You surfaced the core wound underneath the crisis: not just disagreement, but the feeling of being chosen *against* (\"their expectations over me\"). That clarity can guide future boundary decisions.",
+              "You showed insight that \u2018keeping quiet\u2019 would have maintained suffering: \"every phone call... felt like lying.\" That\u2019s you distinguishing short-term peace from long-term wellbeing."
+            ],
+            "patterns": [
+              "A consistent theme across sessions is fear of abandonment and longing for secure connection. Previously it showed up in the romantic relationship; here it\u2019s activated intensely with your parents (\"What if they never come around?\" and the pain of your dad\u2019s silence).",
+              "You tend to default to self-blame when others react strongly (\"I feel so guilty. Like I broke our family\"), even when the situation involves other people\u2019s choices and beliefs. This mirrors anxious-attachment loops: \u2018If I caused it, I can fix it.\u2019",
+              "You use courageous, values-aligned actions even while feeling terrified (planning disclosure in the prior session; following through this week). Your feelings don\u2019t stop your movement\u2014this is a strength pattern."
+            ],
+            "growth_areas": [
+              "Strengthening self-compassion and responsibility boundaries: practicing the difference between \u2018I influenced this conversation\u2019 and \u2018I\u2019m responsible for their emotions/choices.\u2019",
+              "Building a paced contact plan with your parents that protects you from repeated injury (deciding *when* to reach out, *what* you\u2019re willing to discuss, and *what* you\u2019ll do if they are silent/rejecting).",
+              "Supporting your body through grief (nutrition, hydration, soothing strategies for chest tightness) so your emotions are easier to tolerate."
+            ],
+            "strengths": [
+              "Courage and clarity: you spoke plainly about identity and pronouns even under pressure (you shared name, pronouns, relationship, and that you\u2019re in therapy).",
+              "Help-seeking and connection: you reached out for therapy sooner and accepted Jordan\u2019s care (\"I couldn't be alone\"; \"they picked me up\").",
+              "Emotional honesty: you allowed yourself to name anger without collapsing into shame (\"I am so angry. I'm furious.\").",
+              "Nuance and empathy: you can hold complexity\u2014recognizing cultural context while still naming harm (\"It can be hard for them AND you can still be angry\")."
+            ]
+          },
+          "coping_skills": {
+            "learned": [
+              "Ambiguous loss framing (naming the type of grief)",
+              "Dual-awareness of emotions (allowing grief + relief + anger)",
+              "Self-protective pacing with contact (respecting space, delaying action when vulnerable)"
+            ],
+            "proficiency": {
+              "Ambiguous loss framing (naming the type of grief)": "beginner",
+              "Dual-awareness of emotions (allowing grief + relief + anger)": "developing",
+              "Self-protective pacing with contact (respecting space, delaying action when vulnerable)": "beginner",
+              "Support-seeking/anti-isolation plan": "developing"
+            },
+            "practice_recommendations": [
+              "When chest tightness spikes, try a 90-second body reset before making any decision about contacting your parents: slow exhale breathing (inhale 4, exhale 6) for 10 cycles while naming: \u2018This is grief in my body; I can ride this wave.\u2019",
+              "Use a \u2018contact decision rule\u2019: no contacting parents on a day you\u2019ve eaten less than 2 meals or slept poorly, and only contact after you\u2019ve talked it through with Jordan or written a draft message and waited 24 hours.",
+              "Create a brief daily grief ritual (5\u201310 minutes): write one sentence starting with \u2018What I lost is\u2026\u2019 and one sentence starting with \u2018What I\u2019m choosing is\u2026\u2019 to help your mind hold both grief and authenticity."
+            ]
+          },
+          "therapeutic_relationship": {
+            "engagement_level": "high",
+            "engagement_evidence": "You gave detailed narrative, answered questions, and collaborated on next steps (e.g., discussed whether to contact parents, named bodily symptoms, and explored multiple emotions).",
+            "openness": "very_open",
+            "openness_evidence": "You shared vulnerable material including guilt, grief, anger, fear of permanent rejection, and somatic distress: \"I feel so guilty,\" \"I'm grieving,\" \"My chest feels tight all the time.\"",
+            "alliance_strength": "strong",
+            "alliance_evidence": "You sought increased support by moving the session up, accepted the therapist\u2019s validation, and explored meanings together (e.g., therapist named ambiguous loss; you engaged and elaborated rather than withdrawing)."
+          },
+          "recommendations": {
+            "practices": [
+              "Minimum self-care plan for the next 7 days (non-negotiable basics): 2\u20133 simple meals/day (even small), water with each meal, and keep your current sleep routine since it\u2019s holding.",
+              "Write (but don\u2019t send yet) two letters: (1) to your parents saying everything you wish they could hear, (2) to yourself from a protective, loving voice reminding you what is and isn\u2019t your responsibility.",
+              "Prepare a one-sentence boundary for if/when contact resumes: \u2018I can talk about our relationship, but I won\u2019t debate whether my identity is real.\u2019 Practice saying it out loud once per day.",
+              "Create a \u2018rejection buffer\u2019 plan: if you receive a painful text or silence continues, your next three steps are (1) message Jordan/friend, (2) 10-minute walk or grounding, (3) eat something small\u2014before any reply."
+            ],
+            "resources": [
+              "The Trevor Project (LGBTQ crisis + support): 24/7 chat/text resources and coping tools for moments of acute rejection.",
+              "PFLAG: resources for you and (if they ever become open) family education materials about gender identity and coming out.",
+              "Worksheet idea (self-guided): \u2018Circle of Control\u2019\u2014two columns: what you control (your pace, boundaries, self-care) vs. what you don\u2019t (their timeline, beliefs, reactions)."
+            ],
+            "reflection_prompts": [
+              "When I say \u2018I broke our family,\u2019 what am I assuming about my role\u2014what would be a more accurate, kinder statement?",
+              "What does my anger protect in me (needs, values, dignity)?",
+              "What kind of relationship with my parents would be \u2018good enough\u2019 for me if full acceptance takes a long time\u2014or never happens?",
+              "What did I do this week that aligns with who I want to be, even while I was hurting?"
+            ]
+          },
+          "confidence_score": 0.86,
+          "analyzed_at": "2025-12-24T00:36:26.514094"
+        },
+        "confidence_score": 0.86
+      },
+      "cumulative_context_used": false
+    },
+    {
+      "session_num": 11,
+      "session_id": "session_11_alex_chen",
+      "wave1": {
+        "session_id": "session_11",
+        "session_num": 11,
+        "mood_score": 6.5,
+        "mood_confidence": 0.85,
+        "mood_rationale": "The patient shows a clear shift from acute distress to emerging hope and functioning. Positive indicators dominate: supportive family responses (mom: 'We need time to understand. We love you.' and dad researching gender identity), engagement with an LGBTQ+ support group (felt like 'breathing'), and ongoing use of coping strategies (daily meditation, nighttime three-items gratitude). There are concrete improvements in functioning (sleep improving to 6\u20137 hours, eating more regularly, cooking with Jordan, staying engaged with therapy and social supports). The patient also articulates a growing sense of agency ('I have some control here') and a more flexible outlook on the future (recognizing progress is gradual and not all-or-nothing). However, fear and anxiety persist (intrusive thoughts like 'my dad hates me,' worry about acceptance), and there are still hard days, which prevents labeling as fully positive. No active suicidal ideation is reported, and there is evidence of protective factors (support network, acceptance, coping skills).",
+        "mood_indicators": [
+          "No active suicidal ideation; ongoing anxious thoughts but no plan",
+          "Sleep improving to 6\u20137 hours per night",
+          "Regular appetite and meals resumed; cooking with Jordan",
+          "Engagement with LGBTQ+ support group and plan to attend again",
+          "Medita\u00e7\u00e3o practice reducing intensity of distress; sense of personal agency"
+        ],
+        "emotional_tone": "hopeful and cautiously optimistic, with ongoing fear",
+        "topics": [
+          "Parental processing of client's coming out and acceptance",
+          "Mindfulness/ACT skills for grief, anxiety, and emotion regulation"
+        ],
+        "action_items": [
+          "Practice 10-minute guided meditation each morning",
+          "Complete nightly gratitude journal listing three things before bed"
+        ],
+        "technique": "ACT - Cognitive Defusion",
+        "summary": "Parent reached out; client practicing 10-min daily meditation and nightly gratitude; reports less anxiety and increased support.",
+        "extraction_confidence": 0.92,
+        "has_breakthrough": true,
+        "breakthrough_data": {
+          "type": "Positive Discovery",
+          "label": "Identity Independence",
+          "description": "Alex realizes their identity and validity are not contingent on parental approval. They shift from seeking external validation to trusting their own self-knowledge, recognizing that their parents\u2019 understanding is a separate process. This differentiation relieves pressure, reduces shame, and opens space for patience and self-acceptance.",
+          "evidence": "\u201cI don\u2019t need them to understand me to know who I am.\u201d \u2026 \u201cThat\u2019s like, the biggest thing I\u2019ve realized. For so long I thought I needed my parents\u2019 approval to be valid\u2026 But I know who I am. Their journey to understanding is separate from my truth.\u201d",
+          "confidence": 0.9,
+          "timestamp_start": 2523.0,
+          "timestamp_end": 2769.0
+        }
+      },
+      "wave2": {
+        "session_id": "session_11",
+        "deep_analysis": {
+          "progress_indicators": {
+            "symptom_reduction": {
+              "detected": true,
+              "description": "Compared with last session\u2019s acute distress and appetite disruption, you reported clear stabilization: sleep is now \u201csix to seven hours most nights\u201d and it\u2019s \u201cnot the all-night panic spiral anymore\u201d; appetite is \u201cmore regularly\u201d with cooking (\u201cwe made stir fry last night\u201d); anxiety is \u201cbetter\u201d and meditation helps you \u201cobserve the grief without drowning in it.\u201d You also reported no active suicidal ideation and increased connection (LGBTQ+ support group, ongoing support from Jordan).",
+              "confidence": 0.88
+            },
+            "skill_development": [
+              {
+                "skill": "ACT cognitive defusion (creating distance from thoughts)",
+                "proficiency": "developing",
+                "evidence": "\u201cThoughts will come up\u2026 \u2018my dad hates me\u2019\u2026 but instead of spiraling, I just notice it\u2026 \u2018oh, there\u2019s that thought again.\u2019 And then I go back to my breath.\u201d"
+              },
+              {
+                "skill": "Mindfulness practice for emotion regulation (observing grief without avoidance)",
+                "proficiency": "developing",
+                "evidence": "\u201cI\u2019ve been doing the meditation every morning\u2026 And it\u2019s helping. I can\u2026 observe the grief without drowning in it.\u201d"
+              },
+              {
+                "skill": "Gratitude practice as attentional retraining",
+                "proficiency": "developing",
+                "evidence": "\u201cEvery night before bed, three things\u2026 Jordan\u2019s laugh\u2026 my advisor actually listened\u2026 my mom\u2019s text\u2026 The sunshine.\u201d"
+              },
+              {
+                "skill": "Cognitive flexibility / reducing all-or-nothing thinking",
+                "proficiency": "developing",
+                "evidence": "\u201cSome days are hard. Some days are okay. And that doesn\u2019t mean I\u2019m failing.\u201d"
+              },
+              {
+                "skill": "Differentiation / self-validation (identity not contingent on parental approval)",
+                "proficiency": "beginner",
+                "evidence": "\u201cI don\u2019t need them to understand me to know who I am\u2026 Their journey to understanding is separate from my truth.\u201d"
+              },
+              {
+                "skill": "Healthy support-seeking and community building",
+                "proficiency": "proficient",
+                "evidence": "\u201cJordan\u2026 took me to this LGBTQ+ support group\u2026 I\u2019m planning to keep going\u2026 Jordan\u2019s coming with me next week too.\u201d"
+              }
+            ],
+            "goal_progress": [
+              {
+                "goal": "Disclose non-binary identity to culturally traditional parents in a values-aligned way",
+                "status": "achieved",
+                "evidence": "This remains completed from last session; this week you began navigating the aftermath with steadier grounding and more nuanced expectations after receiving your mom\u2019s text: \u201cWe need time to understand. We love you.\u201d"
+              },
+              {
+                "goal": "Build more secure attachment patterns with Jordan through support-seeking and direct communication",
+                "status": "on_track",
+                "evidence": "You described accepting care while tolerating fear of abandonment: \u201cScary sometimes\u2026 I keep waiting for them to leave\u2026 But they keep showing up. And I\u2019m trying to just trust that instead of sabotaging it.\u201d"
+              },
+              {
+                "goal": "Strengthen emotion regulation and anxiety management through daily practices",
+                "status": "on_track",
+                "evidence": "You implemented both agreed practices: \u201cdoing the meditation every morning\u2026 ten minutes\u201d and \u201cEvery night\u2026 three things\u201d in the gratitude journal, with associated improvements in sleep/anxiety."
+              },
+              {
+                "goal": "Maintain protective pacing/boundaries with parents while they process",
+                "status": "on_track",
+                "evidence": "You reframed \u201clower expectations\u201d into acceptance of reality and timeline: \u201cI think this is just\u2026 accepting what is\u2026 change can be slow and non-linear.\u201d"
+              }
+            ],
+            "behavioral_changes": [
+              "Established consistent daily meditation (10 minutes each morning).",
+              "Implemented nightly gratitude journaling (three items before bed).",
+              "Re-engaged with community support (attended LGBTQ+ support group; plan to attend weekly).",
+              "Improved sleep routine (6\u20137 hours most nights; reduced nocturnal panic spirals).",
+              "Resumed regular eating and shared meal preparation with Jordan (e.g., cooking stir fry).",
+              "Shifted language toward agency (\u201cI survived,\u201d \u201cI\u2019m doing it anyway\u201d), indicating increased self-efficacy."
+            ]
+          },
+          "therapeutic_insights": {
+            "key_realizations": [
+              "You can hold two truths at once: grief for the \u201cfantasy of instant acceptance\u201d and appreciation for real signs of effort (your mom\u2019s \u201cWe love you\u201d and your dad \u201creading articles\u201d). This reduces pressure to force one single feeling.",
+              "Your identity is valid independent of your parents\u2019 understanding: \u201cI don\u2019t need them to understand me to know who I am.\u201d This is a major reduction in shame leverage and a shift from external validation to internal anchoring.",
+              "Progress is non-linear, and non-linearity is not failure: \u201cSome days are hard\u2026 and that doesn\u2019t mean I\u2019m failing.\u201d This directly counters the anxious/depressed cycle of interpreting setbacks as personal defects.",
+              "Courage is acting with fear present, not the absence of fear: \u201cI\u2019m scared all the time. I\u2019m just doing it anyway.\u201d This reframing strengthens willingness and persistence (core ACT processes).",
+              "You\u2019re recognizing and using personal agency: noticing your shift from \u201cthis happened to me\u201d to \u201cI\u2019m making choices\u2026 I have some control here.\u201d"
+            ],
+            "patterns": [
+              "Across sessions, abandonment sensitivity shows up in both family and relationship contexts. Previously, it centered on fear around coming out and being left; this week it surfaced as \u201cwaiting for [Jordan] to leave\u201d and the pain of your father\u2019s silence\u2014yet you\u2019re increasingly choosing connection rather than protective withdrawal.",
+              "A recurring self-blame loop (\u201cI ruined everything\u201d/\u201cI broke our family\u201d in prior material) is now being interrupted by defusion: you\u2019re labeling these as thoughts rather than facts (\u201coh, there\u2019s that thought again\u201d), which is a meaningful pattern shift.",
+              "Values-based action continues to be a stable strength: you came out despite fear, sought community support, and are building routines that support the life you want\u2014showing consistency between values (authenticity, connection) and behavior."
+            ],
+            "growth_areas": [
+              "Consolidating self-validation so it holds on harder days: practicing returning to \u201cmy truth is separate from their process\u201d when old approval-seeking urges flare up.",
+              "Continuing to build tolerance for receiving love without bracing for loss\u2014learning to notice the \u2018waiting for the other shoe to drop\u2019 feeling and respond with soothing + direct communication rather than sabotage.",
+              "Clarifying boundaries for future family conversations (what you will/won\u2019t debate, what pacing protects your mental health) so you can stay connected without self-erasure."
+            ],
+            "strengths": [
+              "Psychological flexibility: you\u2019re staying present with fear/grief while still engaging in meaningful actions (support group, therapy, routines).",
+              "Skillful self-observation: you described thoughts and their impact with precision (\u201cless sharp\u2026 less like it\u2019s the only truth\u201d), showing strong metacognitive awareness.",
+              "Relational openness and trust-building: you\u2019re allowing Jordan to support you even when it\u2019s scary (\u201ctrying to just trust that\u201d).",
+              "Resilience and perseverance: \u201cI genuinely didn\u2019t know if I would [survive], and I did,\u201d paired with tangible follow-through on daily practices."
+            ]
+          },
+          "coping_skills": {
+            "learned": [
+              "ACT cognitive defusion (noticing thoughts as thoughts)",
+              "Mindfulness of breath/body to ride waves of grief/anxiety",
+              "Gratitude journaling for attentional retraining",
+              "Non-linear progress mindset (self-compassionate appraisal)",
+              "Differentiation/self-validation regarding identity"
+            ],
+            "proficiency": {
+              "ACT cognitive defusion (noticing thoughts as thoughts)": "developing",
+              "Mindfulness of breath/body to ride waves of grief/anxiety": "developing",
+              "Gratitude journaling for attentional retraining": "developing",
+              "Non-linear progress mindset (self-compassionate appraisal)": "developing",
+              "Differentiation/self-validation regarding identity": "beginner",
+              "Support-seeking/community engagement": "proficient"
+            },
+            "practice_recommendations": [
+              "During morning meditation, add a 30-second defusion step: when a painful thought shows up, label it explicitly (\u201cI\u2019m having the thought that\u2026\u201d), then return to the breath for 3 slow exhales.",
+              "When you notice approval-seeking or shame, use your own metaphor: \u201cMy truth is the sky; their understanding is the weather.\u201d Say it once, hand on chest, then choose one values-based action (text a supportive person, eat, attend group, or do 5 minutes of movement).",
+              "Keep the gratitude journal, but on hard nights allow \u201cmicro-gratitudes\u201d (one sensory detail, one person, one \u2018I did\u2019 effort) so the practice stays compassionate rather than forced."
+            ]
+          },
+          "therapeutic_relationship": {
+            "engagement_level": "high",
+            "engagement_evidence": "You offered detailed updates, reflected on therapist observations (\u201cWhoa. Yeah\u2026 I do\u201d), and collaborated actively on meaning-making around acceptance, progress, and agency.",
+            "openness": "very_open",
+            "openness_evidence": "You shared tears, fear of abandonment, and core beliefs about validity: \u201cI cried\u2026 twenty minutes,\u201d \u201cI keep waiting for them to leave,\u201d and \u201cI thought I needed my parents\u2019 approval to be valid.\u201d",
+            "alliance_strength": "strong",
+            "alliance_evidence": "You responded receptively to interpretations and skills framing (acceptance vs lowering expectations; defusion named explicitly), and the dialogue shows trust and safety (you invited feedback: \u201cSure, yeah.\u201d)."
+          },
+          "recommendations": {
+            "practices": [
+              "Continue: 10-minute guided meditation each morning + nightly \u201c3 things\u201d gratitude list (as planned).",
+              "Add a 2-minute bedtime \u201cdownshift\u201d if you wake at night: 6 slow exhales while labeling whatever is present (\u201cfear is here,\u201d \u201cgrief is here\u201d), then one grounding cue (feel feet/blanket) before returning to sleep.",
+              "Write a short \u201cdifferentiation card\u201d in your notes app to read when triggered by family uncertainty: 3 lines\u2014(1) What I know about myself, (2) What they are responsible for, (3) What I will do today to care for me.",
+              "Before any future parent contact escalates, use a 24-hour rule: draft your response, share it with Jordan or pause with it, then decide after one sleep whether it matches your values and protects your wellbeing."
+            ],
+            "resources": [
+              "ACT defusion resources: Russ Harris\u2019s short exercises (e.g., \u201cLeaves on a Stream\u201d)\u2014simple guided practices that match what you\u2019re already doing with \u201cclouds in the sky.\u201d",
+              "PFLAG family guides (optional/when appropriate): educational materials you can share if your parents become receptive to learning in structured ways.",
+              "The Trevor Project (support + crisis resources): a backup plan for moments when rejection fears spike, even if you\u2019re not suicidal\u2014good for grounding and connection."
+            ],
+            "reflection_prompts": [
+              "When I notice the thought \u201cI ruined everything,\u201d what does this thought try to protect me from feeling\u2014and what would a kinder, more accurate statement be?",
+              "What does \u201cbeing in relationship with my parents without shrinking myself\u201d look like in one concrete boundary?",
+              "Where did I practice courage this week (even in small ways), and what did it cost me\u2014and give me?",
+              "How do I want to measure progress that isn\u2019t dependent on my parents (sleep, routines, community, self-trust, values-based choices)?"
+            ]
+          },
+          "confidence_score": 0.87,
+          "analyzed_at": "2025-12-24T00:38:25.173181"
+        },
+        "confidence_score": 0.87
+      },
+      "cumulative_context_used": true
+    },
+    {
+      "session_num": 12,
+      "session_id": "session_12_alex_chen",
+      "wave1": {
+        "session_id": "session_12",
+        "session_num": 12,
+        "mood_score": 7.5,
+        "mood_confidence": 0.85,
+        "mood_rationale": "Overall mood and functioning are markedly improved with multiple positive signals, though with lingering anxiety about relapse. Key positive indicators include: milestone achievement (first author on a paper) and reduced imposter syndrome; shift from prior panic experiences to effective emotion regulation (grounding techniques, Adderall aiding focus and regulation); improved sleep and exercise leading to better energy and productivity; stable, more communicative relationships; meaningful engagement in mentoring LGBTQ+ students; and prideful, emotionally meaningful family interactions (dad\u2019s supportive message). Severity markers (PHQ-9 7, GAD-7 7) suggest mild-to-moderate distress rather than acute symptoms. However, there is noticeable worry about relapse and access to care if difficulties recur (e.g., fear of needing support and wait times for sessions). This combination supports a high but not peak mood level, consistent with a 7.5.",
+        "mood_indicators": [
+          "Publication milestone: first author on conference paper (reduces imposter thoughts, enhances self-efficacy)",
+          "Past panic attacks contrasted with current use of grounding and medication for emotion regulation",
+          "Sleep regularity and enhanced energy via sleep hygiene and regular exercise",
+          "Strong social connections and meaningful work: mentoring queer students; fulfilling relationships with Jordan, Sarah, Marcus",
+          "Ongoing relapse worry with proactive coping plan (reach out to support network, consult psychiatrist, schedule sessions)"
+        ],
+        "emotional_tone": "hopeful and energized with residual anxiety about relapse",
+        "topics": [
+          "Relapse prevention and maintenance of remission",
+          "ADHD medication adherence and emotion regulation (grounding, sleep hygiene)"
+        ],
+        "action_items": [
+          "Create a wellness action plan before next session documenting healthy habits, warning signs, and concrete action steps.",
+          "Continue mentoring LGBTQ+ students and maintain coping routines (box breathing, consistent sleep, exercise); contact psychiatrist about dose or call therapist if warning signs appear."
+        ],
+        "technique": "Other - Relapse Prevention",
+        "summary": "Remission from depression/anxiety; established relapse-prevention wellness plan; continuing ADHD meds and grounding skills.",
+        "extraction_confidence": 0.9,
+        "has_breakthrough": false,
+        "breakthrough_data": null
+      },
+      "wave2": {
+        "session_id": "session_12",
+        "deep_analysis": {
+          "progress_indicators": {
+            "symptom_reduction": {
+              "detected": true,
+              "description": "You described broad, concrete improvements in mood, anxiety, and functioning consistent with sustained recovery: you reported PHQ-9 = 7 and GAD-7 = 7 and compared this to January scores of PHQ-9 = 18 and GAD-7 = 16, with your therapist explicitly noting you\u2019re \u201ctechnically in remission.\u201d Functionally, you named stable sleep and energy (\u201cgo to bed at the same time every night\u2026 don\u2019t scroll on my phone in bed\u201d), fewer panic/avoidance patterns than earlier (\u201cI couldn't even open my laptop without having a panic attack. And now I'm like, publishing papers\u201d), and increased social engagement (\u201changing out more, going to trivia nights\u201d). You also reported reduced relationship anxiety and less compulsive reassurance-seeking (\u201cuse those grounding techniques\u2026 instead of texting them a million times\u201d).",
+              "confidence": 0.92
+            },
+            "skill_development": [
+              {
+                "skill": "Relapse prevention planning (warning signs + action steps)",
+                "proficiency": "developing",
+                "evidence": "You identified early warning signs (\u201cstarted sleeping a lot again\u2026 stopped wanting to see Jordan or my friends\u2026 avoiding my research\u2026 intrusive thoughts about being worthless\u201d) and outlined a concrete plan (\u201creach out to Jordan or Sarah or Marcus\u2026 taking my medication consistently\u2026 check in with my psychiatrist\u2026 call you to schedule a session\u201d)."
+              },
+              {
+                "skill": "Cognitive restructuring / reframing imposter thoughts",
+                "proficiency": "proficient",
+                "evidence": "You noticed the thought and re-attributed it (\u201cI keep waiting for someone to tell me there was a mistake\u2026 that\u2019s my old brain talking\u2026 I actually did this\u201d)."
+              },
+              {
+                "skill": "Grounding and breathwork for emotion regulation (box breathing)",
+                "proficiency": "proficient",
+                "evidence": "You described using skills preventatively and instead of impulsive reassurance behaviors (\u201cwhen I start feeling anxious, I actually use those grounding techniques\u2026 The box breathing, for sure\u201d)."
+              },
+              {
+                "skill": "Sleep hygiene as a mood-stability strategy",
+                "proficiency": "developing",
+                "evidence": "You implemented consistent routines (\u201cgo to bed at the same time every night\u2026 don\u2019t scroll on my phone in bed\u201d) and linked them to outcomes (\u201cmade such a difference in my mood and energy levels\u201d)."
+              },
+              {
+                "skill": "Secure-attachment behaviors: direct communication + reduced protest behavior",
+                "proficiency": "developing",
+                "evidence": "You reported handling relational distress with communication and self-soothing (\u201cWe actually talk about things when there\u2019s an issue instead of me just spiraling\u2026 instead of texting them a million times\u201d)."
+              },
+              {
+                "skill": "ACT-style decentering from anxious relapse thoughts (holding optimism + realism)",
+                "proficiency": "developing",
+                "evidence": "You named fear without letting it drive the bus (\u201csometimes I get scared that it\u2019s all going to fall apart\u2026 I\u2019m trying to be optimistic but realistic\u201d)."
+              }
+            ],
+            "goal_progress": [
+              {
+                "goal": "Maintain depression/anxiety recovery with sustainable routines and supports",
+                "status": "on_track",
+                "evidence": "You\u2019re maintaining multiple protective factors at once\u2014sleep routine, exercise, grounding, medication adherence, and social connection\u2014and actively planning for future dips (\u201cMaintenance is key\u2026 create a wellness action plan\u201d)."
+              },
+              {
+                "goal": "Strengthen functioning and confidence in PhD/work identity",
+                "status": "achieved",
+                "evidence": "You reached a major mastery milestone (\u201cpaper\u2026 accepted! And I\u2019m first author!\u201d) and described decreased avoidance and increased productivity (\u201cpublishing papers\u2026 mentoring other students\u2026 advisor noticed the difference in my productivity\u201d)."
+              },
+              {
+                "goal": "Build healthy relationship patterns with Jordan",
+                "status": "on_track",
+                "evidence": "You described more secure behaviors and less anxiety-driven escalation (\u201cI\u2019m not constantly anxious about them leaving\u2026 We actually talk about things\u201d)."
+              },
+              {
+                "goal": "Navigate family relationship with realistic hope while protecting your wellbeing",
+                "status": "on_track",
+                "evidence": "You responded to your dad\u2019s text with both openness and grounded expectations (\u201cIt\u2019s not like my dad suddenly accepts everything\u2026 But he\u2019s trying\u2026 I texted back saying thank you\u201d)."
+              }
+            ],
+            "behavioral_changes": [
+              "Sustained engagement in sleep hygiene (consistent bedtime; reduced phone use in bed).",
+              "Resumed regular exercise (\u201crunning a couple times a week\u201d).",
+              "Increased meaningful social connection (trivia nights; deeper engagement with Jordan, Sarah, and Marcus).",
+              "Shifted from reassurance-seeking to self-regulation in relationships (\u201cinstead of texting\u2026 a million times\u201d).",
+              "Active mentorship/leadership in LGBTQ+ community (\u201cmet with two students\u2026 really rewarding\u201d).",
+              "Proactive healthcare and relapse-safety planning (willingness to contact psychiatrist/therapist if warning signs appear)."
+            ]
+          },
+          "therapeutic_insights": {
+            "key_realizations": [
+              "You\u2019re starting to treat \u201cimposter syndrome\u201d as a familiar mental habit\u2014not a fact\u2014and you can answer it with evidence (\u201cthat\u2019s my old brain talking\u2026 I actually did this\u201d).",
+              "Remission feels both validating and scary: you can genuinely enjoy life again while still having a protective fear of relapse (\u201cIt does feel good\u2026 actually enjoy life again\u2026 sometimes I get scared that it\u2019s all going to fall apart again\u201d).",
+              "Your stability is not accidental; it\u2019s built from repeatable behaviors (sleep, exercise, skills, medication, connection). You articulated the maintenance mindset clearly (\u201cI can\u2019t just stop doing the things that got me here\u201d).",
+              "You can hold complex family change without forcing a fantasy ending: your dad\u2019s message wasn\u2019t full acceptance, but it was meaningful movement (\u201cfirst time he\u2019s ever acknowledged my identity\u2026 he\u2019s trying\u201d).",
+              "Independence is becoming emotionally possible: shifting to biweekly sessions felt both \u201cnervous\u201d and \u201cempowering,\u201d and you named it as trusting yourself."
+            ],
+            "patterns": [
+              "Across sessions, your fear of abandonment/invalidity has been a central trigger (parents and relationships). This session shows a notable pattern shift: instead of collapsing into panic or self-blame, you\u2019re using grounding, communication, and evidence-based thinking (\u201cuse grounding\u2026 instead of texting\u2026 a million times\u201d; \u201cold brain talking\u201d).",
+              "The earlier theme of ambiguous loss and longing for parental acceptance is evolving into a \u2018realistic hope\u2019 stance: you\u2019re allowing small steps to matter (dad\u2019s text) while keeping boundaries/expectations grounded (\u201cbaby steps\u2026 I\u2019m not holding my breath\u201d).",
+              "Values-based living is becoming a stabilizing identity: you\u2019re turning your experience into meaning through mentoring queer students, which also strengthens protective connection and purpose (\u201ctaking your pain and your growth and using it to help others\u201d)."
+            ],
+            "growth_areas": [
+              "Building a relapse plan that is detailed enough to reduce the \u201cwhat if I wake up and it\u2019s all gone\u201d fear\u2014so your anxious brain has a script to follow, not a catastrophe to rehearse.",
+              "Practicing \u201creceiving success\u201d without immediately scanning for disconfirmation (letting pride land alongside the \u2018waiting for a mistake\u2019 feeling).",
+              "Continuing to strengthen boundaries and pacing with family as contact increases\u2014so you can stay open to change without making your wellbeing depend on it."
+            ],
+            "strengths": [
+              "Insight and metacognition: you catch old patterns in real time (\u201cthat\u2019s my old brain talking\u201d).",
+              "Consistency and follow-through: you described multiple routines that require daily/weekly effort (sleep hygiene, exercise, box breathing, medication adherence).",
+              "Relational maturity: you\u2019re choosing communication and self-regulation over spiraling and protest behaviors (\u201cWe actually talk about things\u2026 instead of me just spiraling\u201d).",
+              "Meaning-making and leadership: mentoring LGBTQ+ students and integrating your intersectional experience (queer, Asian, STEM, family expectations) into support for others.",
+              "Balanced realism: you acknowledge vulnerability to relapse without treating it as inevitable doom (\u201coptimistic but realistic\u201d)."
+            ]
+          },
+          "coping_skills": {
+            "learned": [
+              "Relapse prevention (maintenance mindset, warning signs, action steps)",
+              "Box breathing / grounding for anxiety and attachment triggers",
+              "Sleep hygiene routines for mood stability",
+              "Cognitive reframing of imposter syndrome",
+              "Support-network activation plan (reach out early; consult psychiatrist/therapist)"
+            ],
+            "proficiency": {
+              "Relapse prevention (maintenance mindset, warning signs, action steps)": "developing",
+              "Box breathing / grounding for anxiety and attachment triggers": "proficient",
+              "Sleep hygiene routines for mood stability": "developing",
+              "Cognitive reframing of imposter syndrome": "proficient",
+              "Support-network activation plan (reach out early; consult psychiatrist/therapist)": "developing"
+            },
+            "practice_recommendations": [
+              "Write your Wellness Action Plan in three columns: (1) Daily maintenance (sleep window, movement, meds, brief breathing), (2) Early warning signs (sleeping more, isolating, avoidance, intrusive worthlessness/abandonment thoughts), (3) 24\u201348 hour actions (tell Jordan/Sarah/Marcus; schedule therapist; message psychiatrist; reduce load/ask advisor for short-term scaffolding).",
+              "Practice maintenance on good days: choose one \u201csmall dose\u201d daily (e.g., 2 minutes box breathing + 10-minute walk) so skills stay automatic under stress.",
+              "Create a one-sentence \u2018relapse fear\u2019 defusion line to repeat when anxiety spikes (e.g., \u201cThis is my brain trying to protect me; I can follow my plan\u201d)."
+            ]
+          },
+          "therapeutic_relationship": {
+            "engagement_level": "high",
+            "engagement_evidence": "You brought multiple updates, reflected on past-to-present change, and collaborated actively on planning (you identified warning signs and generated step-by-step actions; you also discussed session frequency change thoughtfully).",
+            "openness": "very_open",
+            "openness_evidence": "You shared pride and vulnerability side-by-side: crying with your dad\u2019s text (\u201cI cried\u2026 full-on sobbed\u201d), fear of relapse (\u201cwhat if I wake up one day and I\u2019m back where I started?\u201d), and relationship anxiety patterns (\u201cinstead of texting them a million times\u201d).",
+            "alliance_strength": "strong",
+            "alliance_evidence": "The conversation shows trust, responsiveness to interventions, and mutual goal focus: you accepted the therapist\u2019s framing of remission and relapse prevention, agreed to biweekly with a safety net (\u201cyou can always reach out\u201d), and committed to homework (\u201cI can do that\u201d)."
+          },
+          "recommendations": {
+            "practices": [
+              "Complete the Wellness Action Plan before next session and share it with one trusted person (Jordan or a close friend) so support can activate quickly if needed.",
+              "Set a simple weekly \u201cstability check-in\u201d (10 minutes): rate sleep regularity, social contact, research avoidance, and intrusive self-worth thoughts from 0\u201310; if any two are >6 for a week, follow your action steps (reach out + schedule support).",
+              "Keep one celebration ritual for achievements to counter the \u2018it was a mistake\u2019 story (e.g., write a short note: what you did, what skills it took, who helped, what it means).",
+              "Maintain the core routine stack: consistent sleep window + 2 runs/week (or equivalent movement) + brief daily box breathing + ADHD medication as prescribed."
+            ],
+            "resources": [
+              "Wellness Recovery Action Plan (WRAP) framework: a structured template for triggers, early warning signs, and action steps (useful for relapse prevention planning).",
+              "CBT thought record (brief version): for imposter spikes\u2014situation, automatic thought, evidence for/against, balanced thought (keeps your new skill sharp).",
+              "Sleep hygiene handout (e.g., CBT-I basics): to protect the sleep routine that\u2019s currently acting as a key mood stabilizer."
+            ],
+            "reflection_prompts": [
+              "When I notice the thought \u201cthis will fall apart,\u201d what is it asking me to protect\u2014and what does my plan say to do within 24 hours?",
+              "What are the top 3 signs that I\u2019m thriving (not just \u201cnot depressed\u201d)?",
+              "How do I want to relate to my dad\u2019s \u2018trying\u2019\u2014what contact feels supportive to me, and what is too costly right now?",
+              "What evidence do I have that I earned my wins (paper acceptance, mentoring, relationship growth), and what qualities in me made them possible?"
+            ]
+          },
+          "confidence_score": 0.88,
+          "analyzed_at": "2025-12-24T00:40:38.210076"
+        },
+        "confidence_score": 0.88
+      },
+      "cumulative_context_used": true
+    }
+  ]
+}
