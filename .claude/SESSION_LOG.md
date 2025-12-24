@@ -4,9 +4,11 @@ Detailed history of all development sessions, architectural decisions, and imple
 
 ---
 
-## 2026-01-03 - Real-Time Granular Session Updates - Planning Phase 📋
+## 2026-01-03 - Real-Time Granular Session Updates - Phases 1-2 (Partial) ✅
 
 **Goal:** Implement per-session real-time updates with loading overlays, fix SSE subprocess isolation bug, optimize polling for granular updates.
+
+**Status:** ✅ Phase 1 Complete, ✅ Phase 2 Partial Complete (awaiting completion in separate session)
 
 **Current Issues Identified:**
 1. **Bulk refresh problem**: Polling refreshes ALL 10 sessions when ANY Wave 1/Wave 2 completion detected
@@ -137,15 +139,55 @@ NEXT_PUBLIC_DEBUG_POLLING=true             # Verbose logging
 **Plan Location:**
 - `.claude/plans/2026-01-03-realtime-session-updates.md`
 
-**Next Steps:**
-1. Create comprehensive implementation plan with all 4 phases
-2. Get user approval on plan
-3. Implement Phase 1 (backend delta data)
-4. Implement Phase 2 (frontend granular updates)
-5. Implement Phase 3 (SSE database-backed events)
-6. Implement Phase 4 (SSE integration + testing)
+**Implementation Completed:**
 
-**Status:** 📋 Planning complete, awaiting plan document creation
+**Phase 1: Backend Delta Data Enhancement ✅** (Commit `87ea06d`)
+- Enhanced `SessionStatus` schema in `backend/app/routers/demo.py`
+- Added Wave 1 fields: `topics`, `mood_score`, `summary`, `technique`, `action_items`
+- Added Wave 2 fields: `prose_analysis`, `deep_analysis`
+- Added timestamps: `last_wave1_update`, `last_wave2_update`
+- Enhanced database query to fetch all analysis fields
+- **Deployed to Railway and verified in production**
+
+**Phase 2: Frontend Granular Polling - PARTIAL ✅** (Commit `b2f9802`)
+- ✅ Added environment variables (`.env.local`, `.env.local.example`)
+  - Feature flags: `GRANULAR_UPDATES=true`, `SSE_ENABLED=false`
+  - Polling intervals: `WAVE1=1000ms`, `WAVE2=3000ms`
+  - Loading overlay timing: `DURATION=500ms`, `FADE=200ms`, `STAGGER=100ms`
+  - Debug logging: `DEBUG_POLLING=true`
+- ✅ Created `frontend/lib/polling-config.ts` module
+  - Centralized configuration with type safety
+  - `SessionState` interface for tracking
+  - `logPolling()` debug helper
+- ✅ Refactored `frontend/app/patient/lib/usePatientSessions.ts`
+  - Added helper functions: `determinePollingInterval()`, `detectChangedSessions()`, `updateSessionStatesRef()`, `updateChangedSessions()`
+  - Implemented adaptive polling (1s → 3s based on analysis phase)
+  - Added per-session state tracking via `Map<sessionId, SessionState>`
+  - Implemented loading overlay management (`loadingSessions` Set)
+  - Staggered visual updates (100ms delay between batch changes)
+- ✅ Updated `frontend/app/patient/contexts/SessionDataContext.tsx`
+  - Now uses loading state from hook directly (no duplication)
+- ⏳ **Still To Do in Phase 2:**
+  - SessionDetail scroll preservation
+  - Backend test endpoint for manual session completion
+  - Automated verification (TypeScript, build, lint)
+  - Manual verification in production
+
+**Next Session Tasks:**
+1. Complete Phase 2: SessionDetail scroll preservation + test endpoint + verification
+2. Implement Phase 3: Database-backed SSE event queue
+3. Implement Phase 4: SSE integration + documentation updates + TheraBridge rename
+
+**Key Files Modified:**
+- `backend/app/routers/demo.py` - Enhanced SessionStatus schema
+- `frontend/.env.local`, `frontend/.env.local.example` - Added config variables
+- `frontend/lib/polling-config.ts` - NEW: Polling configuration module
+- `frontend/app/patient/lib/usePatientSessions.ts` - Granular change detection logic
+- `frontend/app/patient/contexts/SessionDataContext.tsx` - Updated to use hook state
+
+**Commits:**
+- `87ea06d` - Phase 1: Enhance /api/demo/status with full analysis data per session
+- `b2f9802` - Phase 2 (Partial): Add polling config and refactor usePatientSessions with granular change detection
 
 ---
 

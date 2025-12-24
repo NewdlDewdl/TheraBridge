@@ -108,36 +108,50 @@ Before creating any new file, ask:
 
 # TherapyBridge - Project State
 
-## Current Focus: Planning Real-Time Granular Session Updates 🔄
+## Current Focus: Real-Time Granular Session Updates - Phase 2 In Progress 🔄
 
-**Current State (as of 2026-01-03):**
-- ✅ Polling logic working - detects Wave 1/Wave 2 completion via count changes
-- ✅ Full flow functional - transcripts load → Wave 1 analysis → Wave 2 prose generation
-- ✅ SSE connects successfully but doesn't receive events (subprocess isolation bug)
-- ⚠️ **Issue**: Polling refreshes ALL sessions when ANY count changes
-- ⚠️ **Issue**: SessionDetail page refreshes even when viewing different session
-- ⚠️ **Issue**: No per-card loading indicators during analysis completion
+**Implementation Status (as of 2026-01-03):**
 
-**Verified Production Behavior (Railway logs 2026-01-03 05:46):**
-1. **Demo Init (0-3s)**: Demo initialized, patient ID stored
-2. **Transcripts Loading (0-30s)**: Sessions endpoint may timeout, polling starts
-3. **Transcripts Complete (~30s)**: Polling detects `sessions: 0 → 10`, loads sessions
-4. **Wave 1 Complete (~60s)**: Polling detects `wave1: 0 → 10`, **refreshes ALL 10 sessions**
-5. **Wave 2 Complete (~9.6 min)**: Polling detects `wave2: 0 → 10`, **refreshes ALL 10 sessions again**
-6. **Polling Stops**: When status reaches `wave2_complete`
+**✅ Phase 1: Backend Delta Data Enhancement - COMPLETE**
+- Enhanced `/api/demo/status` SessionStatus schema with full analysis data
+- Added Wave 1 fields: `topics`, `mood_score`, `summary`, `technique`, `action_items`
+- Added Wave 2 fields: `prose_analysis`, `deep_analysis`
+- Added timestamps: `last_wave1_update`, `last_wave2_update` for change detection
+- Enhanced database query to fetch all analysis fields and timestamps
+- **Deployed to Railway**: Commit `87ea06d` (2025-12-23 22:16:22)
+- **Verified in Production**: All new fields present in API response
 
-**Next Phase: Real-Time Granular Updates**
-- Goal: Individual session cards update with loading overlay only when THAT session completes
-- Approach: Enhance `/api/demo/status` for delta data + frontend per-session state tracking
-- SSE Fix: Database-backed event queue to solve subprocess isolation
-- See implementation plan: `.claude/plans/2026-01-03-realtime-session-updates.md`
+**✅ Phase 2: Frontend Granular Polling - PARTIAL COMPLETE**
+- ✅ Added environment variables for feature flags and polling configuration
+- ✅ Created `frontend/lib/polling-config.ts` module with centralized config
+- ✅ Refactored `usePatientSessions` hook with granular change detection
+- ✅ Implemented adaptive polling intervals (1s Wave 1 → 3s Wave 2)
+- ✅ Added per-session state tracking via `Map<sessionId, state>`
+- ✅ Implemented loading overlay management (`loadingSessions` Set)
+- ✅ Added staggered visual updates (100ms delay for batch changes)
+- ⏳ **Still To Do**: SessionDetail scroll preservation + backend test endpoint + verification
+- **Deployed to Railway**: Commit `b2f9802` (2025-12-23 22:16:52)
 
-**Previous Fixes (Commits 952e574, f0fe777, cd8cf3d, 9fe5344):**
-- ✅ Added session count tracking to detect when transcripts finish loading (0 → 10 sessions)
-- ✅ Fixed polling to only refresh when counts actually change (not on every poll)
-- ✅ Fixed polling to continue through `wave1_complete` status until `wave2_complete`
-- ✅ Fixed `/api/demo/status` endpoint using patient_id instead of user_id
-- ✅ Removed duplicate demo initialization from usePatientSessions hook
+**⏳ Phase 3: Backend - Database-Backed SSE Event Queue - PENDING**
+- Database migration for `pipeline_events` table
+- Refactor PipelineLogger to write events to database
+- Update SSE endpoint to read from database
+- Fix subprocess isolation bug
+
+**⏳ Phase 4: Frontend SSE Integration + Documentation - PENDING**
+- Update WaveCompletionBridge for no-stagger SSE updates
+- Update polling to respect SSE feature flag
+- Remove test endpoint
+- Update all documentation
+- Rename TherapyBridge → TheraBridge
+
+**Implementation Plan:** `.claude/plans/2026-01-03-realtime-session-updates.md`
+
+**Next Steps:**
+1. Complete Phase 2: SessionDetail scroll preservation + test endpoint
+2. Test Phase 2 in production with Railway deployment
+3. Implement Phase 3: Database-backed SSE event queue
+4. Implement Phase 4: SSE integration + documentation updates
 
 **Full Documentation:** See `Project MDs/TherapyBridge.md`
 **Detailed Session History:** See `.claude/SESSION_LOG.md`
