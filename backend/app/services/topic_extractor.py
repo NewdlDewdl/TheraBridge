@@ -19,6 +19,7 @@ import os
 import json
 from app.services.technique_library import get_technique_library, TechniqueLibrary
 from app.config.model_config import get_model_name
+from app.config import settings
 
 
 @dataclass
@@ -55,7 +56,7 @@ class TopicExtractor:
             api_key: OpenAI API key. If None, uses OPENAI_API_KEY env var.
             override_model: Optional model override for testing (default: uses gpt-5-mini from config)
         """
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.api_key = api_key or settings.openai_api_key
         if not self.api_key:
             raise ValueError("OpenAI API key required for topic extraction")
 
