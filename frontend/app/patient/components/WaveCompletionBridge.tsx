@@ -101,7 +101,7 @@ export function WaveCompletionBridge() {
   }, [isInitializing]); // Restart effect when initialization state changes
 
   // Connect to SSE and handle events (only after we have patient ID)
-  const { isConnected, events } = usePipelineEvents({
+  const { isConnected, events, errorType, connectionError } = usePipelineEvents({
     patientId: patientId || "",
     enabled: isReady && !!patientId,
 
@@ -159,6 +159,23 @@ export function WaveCompletionBridge() {
       );
     }
   }, [events]);
+
+  // Log error state changes
+  useEffect(() => {
+    if (errorType !== 'none' && connectionError) {
+      console.group('[WaveCompletionBridge] SSE Error Detected');
+      console.error('Error type:', errorType);
+      console.error('Error message:', connectionError);
+      console.log('Patient ID:', patientId);
+      console.log('Is ready:', isReady);
+      console.groupEnd();
+
+      // If patient not found, patient ID may be stale
+      if (errorType === 'patient_not_found' && patientId) {
+        console.warn('[WaveCompletionBridge] Patient not found - may need to reinitialize demo');
+      }
+    }
+  }, [errorType, connectionError, patientId, isReady]);
 
   return null;
 }
