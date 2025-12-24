@@ -225,7 +225,7 @@ async def run_wave2_analysis_background(patient_id: str):
 
 
 async def run_full_initialization_pipeline(patient_id: str):
-    """Run complete initialization: transcripts → Wave 1 → Wave 2 (background)"""
+    """Run complete initialization: transcripts (blocking) → Wave 1 + Wave 2 (background)"""
     print("=" * 80, flush=True)
     print(f"🔥 BACKGROUND TASK EXECUTING: patient_id={patient_id}", flush=True)
     print("=" * 80, flush=True)
@@ -233,22 +233,26 @@ async def run_full_initialization_pipeline(patient_id: str):
     logger.info(f"🎬 BACKGROUND TASK STARTED: Full initialization pipeline for patient {patient_id}")
     logger.info("=" * 80)
 
-    # Step 1: Populate transcripts from JSON files
+    # Step 1: Populate transcripts from JSON files (BLOCKING - required for frontend)
     await populate_session_transcripts_background(patient_id)
 
-    # Step 2: Run Wave 1 analysis (topics, mood, summary)
-    await run_wave1_analysis_background(patient_id)
+    print(f"✅ Transcripts loaded - demo ready for frontend", flush=True)
+    logger.info(f"✅ Transcripts loaded for patient {patient_id}")
 
-    print(f"✅ Essential initialization complete (transcripts + Wave 1)", flush=True)
-    logger.info(f"✅ Essential initialization complete for patient {patient_id}")
-
-    # Step 3: Run Wave 2 analysis in TRUE background (non-blocking, fire-and-forget)
-    # This allows new demo requests to proceed while Wave 2 runs independently
+    # Step 2 & 3: Run Wave 1 and Wave 2 in background (non-blocking)
+    # Frontend will poll and update when analysis completes
     import asyncio
-    asyncio.create_task(run_wave2_analysis_background(patient_id))
 
-    print(f"🚀 Wave 2 analysis started in background (non-blocking)", flush=True)
-    logger.info(f"🚀 Wave 2 analysis running independently for patient {patient_id}")
+    async def run_wave1_then_wave2():
+        """Run Wave 1, then start Wave 2 when Wave 1 completes"""
+        await run_wave1_analysis_background(patient_id)
+        # After Wave 1 completes, start Wave 2
+        asyncio.create_task(run_wave2_analysis_background(patient_id))
+
+    asyncio.create_task(run_wave1_then_wave2())
+
+    print(f"🚀 Wave 1 + Wave 2 analysis running in background (non-blocking)", flush=True)
+    logger.info(f"🚀 Analysis pipeline running independently for patient {patient_id}")
 
 
 # ============================================================================
