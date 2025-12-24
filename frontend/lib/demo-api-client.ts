@@ -44,11 +44,15 @@ export interface DemoStatusResponse {
 export const demoApiClient = {
   /**
    * Initialize a new demo user with 10 pre-loaded sessions
+   * Note: This can take 60-90 seconds due to Wave 1 + Wave 2 analysis
    */
   async initialize(): Promise<DemoInitResponse | null> {
     console.log('[Demo API] Initializing demo user...');
 
-    const result = await apiClient.post<DemoInitResponse>('/api/demo/initialize');
+    // Use 120-second timeout for demo initialization (Wave 1 + Wave 2 takes ~90s)
+    const result = await apiClient.post<DemoInitResponse>('/api/demo/initialize', {}, {
+      timeout: 120000, // 2 minutes
+    });
 
     if (result.success) {
       console.log('[Demo API] ✓ Demo initialized:', result.data);
@@ -70,6 +74,7 @@ export const demoApiClient = {
 
   /**
    * Reset demo user (delete all sessions and re-seed with 10 fresh ones)
+   * Note: This can take 60-90 seconds due to Wave 1 + Wave 2 analysis
    */
   async reset(): Promise<DemoResetResponse | null> {
     const token = demoTokenStorage.getToken();
@@ -87,6 +92,7 @@ export const demoApiClient = {
         headers: {
           'X-Demo-Token': token,
         },
+        timeout: 120000, // 2 minutes for Wave 1 + Wave 2 analysis
       }
     );
 
