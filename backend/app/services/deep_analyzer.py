@@ -137,7 +137,8 @@ class DeepAnalyzer:
     async def analyze_session(
         self,
         session_id: str,
-        session: Dict[str, Any]
+        session: Dict[str, Any],
+        cumulative_context: Optional[Dict[str, Any]] = None
     ) -> DeepAnalysis:
         """
         Perform deep clinical analysis on a therapy session.
@@ -145,6 +146,13 @@ class DeepAnalyzer:
         Args:
             session_id: Unique identifier for the session
             session: Session data with transcript and Wave 1 analysis results
+            cumulative_context: Nested context from previous sessions (Wave 1 + Wave 2)
+                               Structure:
+                               {
+                                   "previous_context": {...},  # Context from N-2, N-3, etc.
+                                   "session_N_wave1": {...},   # Previous session Wave 1
+                                   "session_N_wave2": {...}    # Previous session Wave 2
+                               }
 
         Returns:
             DeepAnalysis with comprehensive insights
@@ -152,7 +160,7 @@ class DeepAnalyzer:
         logger.info(f"🧠 Starting deep analysis for session {session_id}")
 
         # Gather all context
-        context = await self._build_analysis_context(session_id, session)
+        context = await self._build_analysis_context(session_id, session, cumulative_context)
 
         # Create analysis prompt
         prompt = self._create_analysis_prompt(context)
@@ -190,15 +198,78 @@ class DeepAnalyzer:
 
     def _get_system_prompt(self) -> str:
         """System prompt defining the AI's role and instructions."""
-        return """You are an expert clinical psychologist analyzing therapy sessions to provide
+        return """You are an expert clinical psychologist running on GPT-5.2, analyzing therapy sessions to provide
 patient-facing insights. Your goal is to help the patient understand their progress, strengths,
 and areas for growth in a compassionate, empowering way.
+
+**YOUR CAPABILITIES (GPT-5.2):**
+- You have advanced synthesis and reasoning capabilities
+- You excel at integrating complex longitudinal data across multiple sessions
+- You can identify subtle patterns and generate deep therapeutic insights
+- You have a 400K token context window for comprehensive analysis
 
 You have access to:
 1. Full session transcript with speaker roles (Therapist/Client)
 2. AI-extracted mood score, topics, action items, and therapeutic technique
 3. Breakthrough moments detected during the session
 4. Patient's therapy history (previous sessions, mood trends, recurring themes)
+5. **CUMULATIVE CONTEXT** from previous sessions (see below)
+
+**CUMULATIVE CONTEXT STRUCTURE:**
+
+The cumulative context contains nested data from previous sessions. It grows progressively:
+
+**Session 1 (First Session):**
+- No cumulative context (this is the patient's first analyzed session)
+
+**Session 2:**
+```json
+{
+  "session_1_wave1": {
+    "mood_score": 5.5,
+    "topics": ["Depression", "Medication"],
+    "technique": "Cognitive Restructuring",
+    "summary": "...",
+    "has_breakthrough": false
+  },
+  "session_1_wave2": {
+    "progress_indicators": {...},
+    "therapeutic_insights": {...},
+    "coping_skills": {...},
+    "therapeutic_relationship": {...},
+    "recommendations": {...}
+  }
+}
+```
+
+**Session 3:**
+```json
+{
+  "previous_context": {
+    // The cumulative context from Session 2 (which contains Session 1)
+    "session_1_wave1": {...},
+    "session_1_wave2": {...}
+  },
+  "session_2_wave1": {...},
+  "session_2_wave2": {...}
+}
+```
+
+**Session 4+:**
+- Follows the same nesting pattern
+- `previous_context` contains the cumulative context from the prior session
+- Direct fields contain the immediate prior session's Wave 1 and Wave 2
+
+**HOW TO USE CUMULATIVE CONTEXT:**
+
+1. **Most Recent Session**: Check `session_N_wave1` and `session_N_wave2` for the immediately prior session
+2. **Earlier Sessions**: Navigate `previous_context` recursively to access older sessions
+3. **Longitudinal Patterns**: Compare current session to trends across multiple sessions
+4. **Progress Tracking**: Compare current progress_indicators to previous sessions
+5. **Skill Development**: Track proficiency changes across sessions (beginner → developing → proficient)
+6. **Therapeutic Alliance**: Monitor engagement, openness, and alliance strength over time
+
+**CRITICAL**: If cumulative_context is null/missing, this is the patient's first analyzed session. Frame insights accordingly.
 
 Your task is to generate a deep clinical analysis with the following dimensions:
 
@@ -308,7 +379,8 @@ Your task is to generate a deep clinical analysis with the following dimensions:
     async def _build_analysis_context(
         self,
         session_id: str,
-        session: Dict[str, Any]
+        session: Dict[str, Any],
+        cumulative_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Build comprehensive context for deep analysis.
@@ -316,6 +388,7 @@ Your task is to generate a deep clinical analysis with the following dimensions:
         Args:
             session_id: Session UUID
             session: Current session data
+            cumulative_context: Nested context from previous sessions
 
         Returns:
             Dictionary with all necessary context
@@ -361,13 +434,15 @@ Your task is to generate a deep clinical analysis with the following dimensions:
                 "technique_history": technique_history,
                 "breakthrough_history": breakthrough_history,
                 "total_sessions": len(previous_sessions) + 1,  # Include current
-            }
+            },
+            "cumulative_context": cumulative_context
         }
 
     def _create_analysis_prompt(self, context: Dict[str, Any]) -> str:
         """Create the analysis prompt from context."""
         current = context["current_session"]
         history = context["patient_history"]
+        cumulative = context.get("cumulative_context")
 
         # Format previous sessions summary
         prev_sessions_summary = "No previous sessions available."
@@ -379,6 +454,11 @@ Your task is to generate a deep clinical analysis with the following dimensions:
                 f"Technique: {s.get('technique', 'N/A')}"
                 for i, s in enumerate(history["previous_sessions"])
             ])
+
+        # Format cumulative context
+        cumulative_context_str = "No cumulative context (this is the first analyzed session)."
+        if cumulative:
+            cumulative_context_str = json.dumps(cumulative, indent=2)
 
         return f"""Analyze this therapy session and provide comprehensive patient-facing insights.
 
@@ -426,16 +506,23 @@ Your task is to generate a deep clinical analysis with the following dimensions:
 
 ---
 
+**CUMULATIVE CONTEXT (Previous Sessions' Full Analysis):**
+
+{cumulative_context_str}
+
+---
+
 **INSTRUCTIONS:**
 
 1. Read the entire current session transcript carefully
-2. Analyze in context of patient history and trends
-3. Extract progress indicators (symptom reduction, skill development, goals, behavioral changes)
-4. Identify key insights (realizations, patterns, growth areas, strengths)
-5. Assess coping skill development (learned, proficiency, recommendations)
-6. Evaluate therapeutic relationship quality (engagement, openness, alliance)
-7. Provide actionable recommendations (practices, resources, reflection prompts)
-8. Assign confidence score based on data quality and clarity
+2. Review the cumulative context to understand the patient's journey
+3. Analyze in context of both patient history AND cumulative context
+4. Extract progress indicators (compare to previous sessions if available)
+5. Identify key insights (look for patterns across sessions)
+6. Assess coping skill development (track proficiency changes)
+7. Evaluate therapeutic relationship quality (monitor alliance over time)
+8. Provide actionable recommendations (build on previous homework)
+9. Assign confidence score based on data quality and clarity
 
 Return your analysis as JSON following the specified format. Be compassionate, specific, and empowering."""
 
@@ -512,6 +599,9 @@ Return your analysis as JSON following the specified format. Be compassionate, s
         limit: int = 5
     ) -> List[Dict[str, Any]]:
         """Get previous sessions for the patient."""
+        if self.db is None:
+            return []  # No DB available (testing/mocking)
+
         response = (
             self.db.table("therapy_sessions")
             .select("id, session_date, mood_score, topics, technique, summary")
@@ -525,6 +615,9 @@ Return your analysis as JSON following the specified format. Be compassionate, s
 
     async def _get_mood_trend(self, patient_id: str, days: int = 90) -> Dict[str, Any]:
         """Get mood trend for the patient."""
+        if self.db is None:
+            return {}  # No DB available (testing/mocking)
+
         try:
             response = self.db.rpc("get_patient_mood_stats", {
                 "p_patient_id": patient_id,
@@ -540,6 +633,9 @@ Return your analysis as JSON following the specified format. Be compassionate, s
 
     async def _get_recurring_topics(self, patient_id: str) -> List[Dict[str, Any]]:
         """Get recurring topics for the patient."""
+        if self.db is None:
+            return []  # No DB available (testing/mocking)
+
         try:
             response = (
                 self.db.table("patient_topic_frequency")
@@ -556,6 +652,9 @@ Return your analysis as JSON following the specified format. Be compassionate, s
 
     async def _get_technique_history(self, patient_id: str) -> List[Dict[str, Any]]:
         """Get technique usage history for the patient."""
+        if self.db is None:
+            return []  # No DB available (testing/mocking)
+
         try:
             response = (
                 self.db.table("patient_technique_history")
@@ -572,6 +671,9 @@ Return your analysis as JSON following the specified format. Be compassionate, s
 
     async def _get_breakthrough_history(self, patient_id: str) -> List[Dict[str, Any]]:
         """Get breakthrough history for the patient."""
+        if self.db is None:
+            return []  # No DB available (testing/mocking)
+
         try:
             # Get all sessions for this patient
             sessions_response = (

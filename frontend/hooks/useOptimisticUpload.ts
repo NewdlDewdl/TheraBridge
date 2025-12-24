@@ -93,6 +93,13 @@ export function useOptimisticUpload(callbacks?: {
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
           processed_at: null,
+          // Wave 1 AI Analysis - Topic Extraction
+          summary: null,
+          topics: null,
+          action_items: null,
+          technique: null,
+          extraction_confidence: null,
+          topics_extracted_at: null,
         };
 
         setState((prev) => ({

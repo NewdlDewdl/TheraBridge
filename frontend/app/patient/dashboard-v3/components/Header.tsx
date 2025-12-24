@@ -89,7 +89,7 @@ export function Header({ onAskAIClick }: HeaderProps) {
 
   // Determine active page
   const isSessionsPage = pathname?.includes('/sessions');
-  const isDashboardPage = pathname === '/patient';
+  const isDashboardPage = pathname === '/dashboard';
 
   // Triple-click detection for home icon (dev testing feature) - Sessions page only
   const homeClickCountRef = useRef(0);
@@ -114,7 +114,7 @@ export function Header({ onAskAIClick }: HeaderProps) {
 
     // Single/double click behavior: navigate to dashboard
     if (homeClickCountRef.current === 1) {
-      router.push('/patient');
+      router.push('/dashboard');
     }
 
     // Reset click count after 500ms
@@ -167,7 +167,7 @@ export function Header({ onAskAIClick }: HeaderProps) {
 
   // Navigate to dashboard
   const handleDashboardClick = () => {
-    router.push('/patient');
+    router.push('/dashboard');
   };
 
   // Sessions page layout: TheraBridge logo left, Navigation center, Empty right

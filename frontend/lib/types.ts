@@ -226,6 +226,14 @@ export interface Session {
   readonly created_at: string;
   readonly updated_at: string;
   readonly processed_at: string | null;
+
+  // Wave 1 AI Analysis - Topic Extraction
+  readonly summary: string | null;  // Ultra-brief summary (max 150 chars)
+  readonly topics: ReadonlyArray<string> | null;  // 1-2 main topics
+  readonly action_items: ReadonlyArray<string> | null;  // 2 action items
+  readonly technique: string | null;  // Primary therapeutic technique
+  readonly extraction_confidence: number | null;  // 0.0 to 1.0
+  readonly topics_extracted_at: string | null;  // ISO timestamp
 }
 
 export interface Patient {

@@ -3,7 +3,7 @@
 /**
  * Notes/Goals panel - AI-generated therapy summary
  * - Compact state: Preview with key achievements
- * - Expanded modal: Collapsible sections with full details
+ * - Expanded modal: Flat display with all sections visible
  * - Spring animation on expansion
  * - FIXED: Dark mode support + gray border on modal
  * - FIXED: Accessibility - focus trap, Escape key, focus restoration
@@ -11,7 +11,7 @@
 
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronDown } from 'lucide-react';
+import { X } from 'lucide-react';
 import { notesGoalsContent } from '../lib/mockData';
 import { modalVariants, backdropVariants } from '../lib/utils';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
@@ -22,7 +22,6 @@ const fontSans = '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto
 
 export function NotesGoalsCard() {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [openSections, setOpenSections] = useState<Set<number>>(new Set([0]));
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Accessibility: focus trap, Escape key, scroll lock
@@ -31,16 +30,6 @@ export function NotesGoalsCard() {
     onClose: () => setIsExpanded(false),
     modalRef,
   });
-
-  const toggleSection = (index: number) => {
-    const newOpenSections = new Set(openSections);
-    if (newOpenSections.has(index)) {
-      newOpenSections.delete(index);
-    } else {
-      newOpenSections.add(index);
-    }
-    setOpenSections(newOpenSections);
-  };
 
   return (
     <>
@@ -51,7 +40,10 @@ export function NotesGoalsCard() {
         whileHover={{ scale: 1.01, boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
         transition={{ duration: 0.2 }}
       >
-        <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600, color: 'var(--text-gray-800)' }} className="dark:text-gray-200 mb-6 text-center">Your Journey</h2>
+        <div className="flex flex-col mb-5 text-center">
+          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-2">Your Journey</h2>
+          <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500 }} className="text-gray-500 dark:text-gray-400">Therapy progress and key milestones</p>
+        </div>
 
         <p style={{ fontFamily: fontSerif, fontSize: '14px', fontWeight: 400, lineHeight: 1.6, color: 'var(--text-gray-600)' }} className="dark:text-gray-400 mb-5">{notesGoalsContent.summary}</p>
 
@@ -65,8 +57,15 @@ export function NotesGoalsCard() {
         </ul>
 
         <div className="mt-4 pt-4 border-t border-gray-200 dark:border-[#3d3548]">
-          <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px' }} className="text-gray-500 dark:text-gray-500">Current focus:</p>
-          <p style={{ fontFamily: fontSerif, fontSize: '13px', fontWeight: 300, lineHeight: 1.5 }} className="text-gray-700 dark:text-gray-300 mt-1">{notesGoalsContent.currentFocus.join(', ')}</p>
+          <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px' }} className="text-gray-500 dark:text-gray-500 mb-2">Current focus:</p>
+          <ul className="space-y-2">
+            {notesGoalsContent.currentFocus.slice(0, 3).map((focus, idx) => (
+              <li key={idx} style={{ fontFamily: fontSerif, fontSize: '13px', fontWeight: 300, lineHeight: 1.5 }} className="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#5AB9B4] dark:bg-[#a78bfa] mt-1.5 flex-shrink-0" />
+                <span>{focus}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </motion.div>
 
@@ -125,7 +124,7 @@ export function NotesGoalsCard() {
                 <ul className="space-y-2">
                   {notesGoalsContent.achievements.map((achievement, idx) => (
                     <li key={idx} style={{ fontFamily: fontSerif, fontSize: '13px', fontWeight: 300, lineHeight: 1.5 }} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-                      <span className="w-2 h-2 rounded-full bg-[#5AB9B4] dark:bg-[#a78bfa] mt-1.5 flex-shrink-0" />
+                      <span className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 bg-[#5AB9B4] dark:bg-[#a78bfa]" />
                       <span>{achievement}</span>
                     </li>
                   ))}
@@ -139,36 +138,38 @@ export function NotesGoalsCard() {
                 <ul className="space-y-2">
                   {notesGoalsContent.currentFocus.map((focus, idx) => (
                     <li key={idx} style={{ fontFamily: fontSerif, fontSize: '13px', fontWeight: 300, lineHeight: 1.5 }} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-                      <span className="w-2 h-2 rounded-full bg-[#B8A5D6] dark:bg-[#c084fc] mt-1.5 flex-shrink-0" />
+                      <span className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 bg-[#5AB9B4] dark:bg-[#a78bfa]" />
                       <span>{focus}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Collapsible Sections */}
-              <div className="space-y-3">
-                {notesGoalsContent.sections.map((section, idx) => (
-                  <div key={idx} className="border border-gray-200 dark:border-[#3d3548] rounded-xl overflow-hidden">
-                    <button
-                      onClick={() => toggleSection(idx)}
-                      className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-[#1a1625] hover:bg-gray-100 dark:hover:bg-[#3d3548] transition-colors"
-                    >
-                      <span style={{ fontFamily: fontSans, fontSize: '13px', fontWeight: 500 }} className="text-gray-800 dark:text-gray-200">{section.title}</span>
-                      <ChevronDown
-                        className={`w-5 h-5 text-gray-600 dark:text-gray-400 transition-transform ${
-                          openSections.has(idx) ? 'rotate-180' : ''
-                        }`}
-                      />
-                    </button>
-                    {openSections.has(idx) && (
-                      <div className="p-4 bg-white dark:bg-[#2a2435]">
-                        <p style={{ fontFamily: fontSerif, fontSize: '14px', fontWeight: 400, lineHeight: 1.6 }} className="text-gray-700 dark:text-gray-300">{section.content}</p>
-                      </div>
-                    )}
+              {/* Additional Sections - Flat Display with Bullets */}
+              {notesGoalsContent.sections.map((section, idx) => {
+                // Split content into sentences for bullet points
+                const bullets = section.content
+                  .split('. ')
+                  .map(s => s.trim())
+                  .filter(s => s.length > 0)
+                  .map(s => s.endsWith('.') ? s : s + '.');
+
+                return (
+                  <div key={idx} className="mb-6">
+                    <h3 style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '1px' }} className="text-gray-600 dark:text-gray-400 mb-3">
+                      {section.title}
+                    </h3>
+                    <ul className="space-y-2">
+                      {bullets.map((bullet, bulletIdx) => (
+                        <li key={bulletIdx} style={{ fontFamily: fontSerif, fontSize: '13px', fontWeight: 300, lineHeight: 1.5 }} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                          <span className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 bg-[#5AB9B4] dark:bg-[#a78bfa]" />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </motion.div>
           </>
         )}

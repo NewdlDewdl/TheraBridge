@@ -74,6 +74,13 @@ export function createMockSession(overrides?: Partial<Session>): Session {
     created_at: now,
     updated_at: now,
     processed_at: null,
+    // Wave 1 AI Analysis - Topic Extraction
+    summary: null,
+    topics: null,
+    action_items: null,
+    technique: null,
+    extraction_confidence: null,
+    topics_extracted_at: null,
     ...overrides,
   };
 }

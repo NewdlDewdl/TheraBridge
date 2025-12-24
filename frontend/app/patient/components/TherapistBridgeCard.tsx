@@ -45,7 +45,10 @@ export function TherapistBridgeCard() {
         }}
         transition={{ duration: 0.2 }}
       >
-        <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-6 text-center">Session Bridge</h2>
+        <div className="flex flex-col mb-6 text-center">
+          <h2 style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200 mb-2">Session Bridge</h2>
+          <p style={{ fontFamily: fontSans, fontSize: '11px', fontWeight: 500 }} className="text-gray-500 dark:text-gray-400">Prepare for upcoming sessions</p>
+        </div>
 
         <div className="space-y-5 flex-1 overflow-hidden">
           {/* Next Session Topics */}

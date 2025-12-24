@@ -133,6 +133,54 @@ class MockSessionDatabase:
         return previous
 
 
+def build_cumulative_context(
+    previous_context: Optional[Dict[str, Any]],
+    previous_session_num: int,
+    wave1_results: Dict[str, Any],
+    wave2_results: Dict[str, Any]
+) -> Dict[str, Any]:
+    """
+    Build cumulative context blob for the next session.
+
+    Args:
+        previous_context: The cumulative context from the previous session (or None)
+        previous_session_num: Session number of the previous session
+        wave1_results: Wave 1 results from previous session
+        wave2_results: Wave 2 results from previous session
+
+    Returns:
+        New cumulative context blob with nested structure
+
+    Example:
+        For Session 11 (using Session 10 results):
+        {
+            "session_10_wave1": {...},
+            "session_10_wave2": {...}
+        }
+
+        For Session 12 (using Session 11 results + its context):
+        {
+            "previous_context": {
+                "session_10_wave1": {...},
+                "session_10_wave2": {...}
+            },
+            "session_11_wave1": {...},
+            "session_11_wave2": {...}
+        }
+    """
+    context = {}
+
+    # If there was a previous context, nest it
+    if previous_context:
+        context["previous_context"] = previous_context
+
+    # Add previous session's Wave 1 and Wave 2 results
+    context[f"session_{previous_session_num}_wave1"] = wave1_results
+    context[f"session_{previous_session_num}_wave2"] = wave2_results
+
+    return context
+
+
 def run_wave1_analysis(session_num: int, session_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Run Wave 1 analyses: mood, topics, breakthrough (parallel simulation)
@@ -315,7 +363,8 @@ async def run_wave2_analysis(
     session_num: int,
     session_data: Dict[str, Any],
     wave1_results: Dict[str, Any],
-    mock_db: MockSessionDatabase
+    mock_db: MockSessionDatabase,
+    cumulative_context: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """
     Run Wave 2 deep analysis with session history context
@@ -325,6 +374,7 @@ async def run_wave2_analysis(
         session_data: Raw session JSON
         wave1_results: Wave 1 analysis results
         mock_db: Mock database with previous sessions
+        cumulative_context: Cumulative context from previous sessions
 
     Returns:
         Deep analysis results
@@ -335,11 +385,23 @@ async def run_wave2_analysis(
 
     session_id = f"session_{session_num:02d}"
 
+    # Display cumulative context info
+    if cumulative_context:
+        print(f"\n🧠 Running Deep Clinical Analysis with Cumulative Context")
+        # Count how many sessions are in the cumulative context
+        context_depth = 1  # At least one session
+        temp_context = cumulative_context
+        while "previous_context" in temp_context:
+            context_depth += 1
+            temp_context = temp_context["previous_context"]
+        print(f"   Cumulative context depth: {context_depth} previous session(s)")
+    else:
+        print(f"\n🧠 Running Deep Clinical Analysis (No cumulative context - first session)")
+
     # Get previous sessions for context
     previous_sessions = mock_db.get_previous_sessions(session_num, limit=2)
 
-    print(f"\n🧠 Running Deep Clinical Analysis...")
-    print(f"   Context: Using {len(previous_sessions)} previous session(s) as history")
+    print(f"   History: Using {len(previous_sessions)} previous session(s) for patient history")
 
     if previous_sessions:
         for i, prev in enumerate(previous_sessions, 1):
@@ -417,8 +479,12 @@ async def run_wave2_analysis(
         deep_analyzer._get_technique_history = mock_get_technique_history
         deep_analyzer._get_breakthrough_history = mock_get_breakthrough_history
 
-        # Run analysis
-        analysis = await deep_analyzer.analyze_session(session_id, session_context)
+        # Run analysis WITH cumulative context
+        analysis = await deep_analyzer.analyze_session(
+            session_id,
+            session_context,
+            cumulative_context=cumulative_context
+        )
 
         # Display results
         print(f"\n   ✓ Deep Analysis Complete")
@@ -511,6 +577,8 @@ async def main():
     # Process Sessions 10, 11, 12 (full analysis with output)
     target_sessions = [10, 11, 12]
 
+    cumulative_context = None  # Start with no context for Session 10
+
     for session_num in target_sessions:
         print(f"\n{'#' * 80}")
         print(f"SESSION {session_num} - FULL PIPELINE")
@@ -527,12 +595,13 @@ async def main():
         # Add to mock database
         mock_db.add_session(session_num, session_data, wave1_results)
 
-        # Wave 2
+        # Wave 2 (with cumulative context)
         wave2_results = await run_wave2_analysis(
             session_num,
             session_data,
             wave1_results,
-            mock_db
+            mock_db,
+            cumulative_context=cumulative_context
         )
 
         # Combine results
@@ -541,9 +610,19 @@ async def main():
             "session_id": session_data.get("id"),
             "wave1": wave1_results,
             "wave2": wave2_results,
+            "cumulative_context_used": cumulative_context is not None,
         }
 
         all_results["sessions"].append(session_result)
+
+        # Build cumulative context for NEXT session
+        # (Session 10 results become context for Session 11, etc.)
+        cumulative_context = build_cumulative_context(
+            previous_context=cumulative_context,
+            previous_session_num=session_num,
+            wave1_results=wave1_results,
+            wave2_results=wave2_results
+        )
 
     # Save to JSON file
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

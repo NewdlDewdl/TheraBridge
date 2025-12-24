@@ -39,10 +39,7 @@ export default function DashboardPage() {
                 {/* Top Row - 50/50 Split */}
                 <div className="grid grid-cols-2 gap-6 mb-10">
                   <NotesGoalsCard />
-                  <AIChatCard
-                    isFullscreen={false}
-                    onFullscreenChange={() => {}}
-                  />
+                  <AIChatCard />
                 </div>
 
                 {/* Middle Row - 3 Equal Cards */}

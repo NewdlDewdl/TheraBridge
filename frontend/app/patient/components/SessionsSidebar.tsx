@@ -29,7 +29,7 @@ export function SessionsSidebar() {
       <div className="flex-1 px-2 pt-8 flex flex-col gap-8 overflow-visible items-center">
         {/* Home Button */}
         <button
-          onClick={() => router.push('/patient')}
+          onClick={() => router.push('/dashboard')}
           className={`relative flex items-center gap-3 rounded-lg transition-colors ${hoverBg} w-10 h-10 justify-center group`}
         >
           <svg

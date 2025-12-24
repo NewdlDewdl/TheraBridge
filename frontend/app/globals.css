@@ -58,3 +58,60 @@
     color: hsl(var(--foreground));
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL SCROLLBAR STYLING
+   Applied consistently across all components and modals
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #2a2435;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4a4458;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5AB9B4; /* Teal in light mode */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa; /* Purple in dark mode */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.dark * {
+  scrollbar-color: #4a4458 #2a2435;
+}
+
+/* Utility: Hide scrollbar completely */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
