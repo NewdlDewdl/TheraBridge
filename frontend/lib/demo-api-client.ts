@@ -42,9 +42,10 @@ export const demoApiClient = {
       console.log('[Demo API] ✓ Demo initialized:', result.data);
 
       // Save token to localStorage
-      demoTokenStorage.saveToken(
+      demoTokenStorage.store(
         result.data.demo_token,
         result.data.patient_id,
+        result.data.session_ids,
         result.data.expires_at
       );
 

@@ -13,7 +13,7 @@
  */
 
 import { BridgeIcon, TextLogo } from '@/components/TheraBridgeLogo';
-import type { ChatSession } from './index';
+import type { ChatSession } from '@/app/patient/components/FullscreenChat';
 
 interface ChatSidebarProps {
   isExpanded: boolean;

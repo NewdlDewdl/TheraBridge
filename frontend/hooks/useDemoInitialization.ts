@@ -19,7 +19,7 @@ export function useDemoInitialization() {
       console.log('[Demo Init] Checking demo status...');
 
       // Check if valid token exists
-      if (demoTokenStorage.hasValidToken()) {
+      if (demoTokenStorage.isInitialized()) {
         const existingPatientId = demoTokenStorage.getPatientId();
         console.log('[Demo Init] ✓ Valid token found, patient ID:', existingPatientId);
         setPatientId(existingPatientId);
