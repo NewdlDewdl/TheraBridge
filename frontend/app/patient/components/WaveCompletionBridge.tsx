@@ -101,30 +101,30 @@ export function WaveCompletionBridge() {
       // Show loading overlay on this session card
       setSessionLoading(sessionId, true);
 
-      // Debounced refresh: if multiple events arrive quickly, batch them
-      if (refreshDebounceRef.current) {
-        clearTimeout(refreshDebounceRef.current);
-      }
-
-      // Create or reuse pending refresh promise
+      // Create or reuse pending refresh promise (don't clear existing timeout)
       if (!pendingRefreshRef.current) {
         pendingRefreshRef.current = new Promise(resolve => {
           refreshDebounceRef.current = setTimeout(async () => {
+            console.log('[DEBUG] Debounced refresh executing...');
             await refresh();
             pendingRefreshRef.current = null;
             refreshDebounceRef.current = null;
+            console.log('[DEBUG] Debounced refresh complete');
             resolve();
           }, 200); // Wait 200ms to batch rapid events
         });
       }
 
       // Wait for the batched refresh to complete
+      console.log(`[DEBUG] ${sessionDate} waiting for refresh...`);
       await pendingRefreshRef.current;
+      console.log(`[DEBUG] ${sessionDate} refresh complete, clearing overlay in 300ms`);
 
       // Small delay to ensure user sees the overlay before it disappears
       await new Promise(resolve => setTimeout(resolve, 300));
 
       // Hide loading overlay
+      console.log(`[DEBUG] ${sessionDate} clearing loading overlay`);
       setSessionLoading(sessionId, false);
     },
 
@@ -136,30 +136,30 @@ export function WaveCompletionBridge() {
       // Show loading overlay on this session card
       setSessionLoading(sessionId, true);
 
-      // Debounced refresh: if multiple events arrive quickly, batch them
-      if (refreshDebounceRef.current) {
-        clearTimeout(refreshDebounceRef.current);
-      }
-
-      // Create or reuse pending refresh promise
+      // Create or reuse pending refresh promise (don't clear existing timeout)
       if (!pendingRefreshRef.current) {
         pendingRefreshRef.current = new Promise(resolve => {
           refreshDebounceRef.current = setTimeout(async () => {
+            console.log('[DEBUG] Debounced refresh executing...');
             await refresh();
             pendingRefreshRef.current = null;
             refreshDebounceRef.current = null;
+            console.log('[DEBUG] Debounced refresh complete');
             resolve();
           }, 200); // Wait 200ms to batch rapid events
         });
       }
 
       // Wait for the batched refresh to complete
+      console.log(`[DEBUG] ${sessionDate} waiting for refresh...`);
       await pendingRefreshRef.current;
+      console.log(`[DEBUG] ${sessionDate} refresh complete, clearing overlay in 300ms`);
 
       // Small delay to ensure user sees the overlay before it disappears
       await new Promise(resolve => setTimeout(resolve, 300));
 
       // Hide loading overlay
+      console.log(`[DEBUG] ${sessionDate} clearing loading overlay`);
       setSessionLoading(sessionId, false);
     },
   });
