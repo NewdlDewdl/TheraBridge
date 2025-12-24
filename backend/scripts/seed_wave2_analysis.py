@@ -37,6 +37,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from app.database import get_supabase_admin
 from app.services.deep_analyzer import DeepAnalyzer
 from app.config import settings
+from app.utils.pipeline_logger import PipelineLogger, LogPhase, LogEvent
 
 # Configure logging
 logging.basicConfig(
@@ -195,9 +196,25 @@ async def process_session_wave2(
     previous_sessions: List[Dict[str, Any]],
     previous_cumulative_context: Optional[Dict[str, Any]]
 ):
-    """Process a single session with Wave 2 analysis"""
+    """Process a single session with Wave 2 analysis - granular logging"""
     session_id = session["id"]
     session_date = session.get("session_date", "unknown")
+    patient_id = session.get("patient_id")
+
+    logger_instance = PipelineLogger(patient_id, LogPhase.WAVE2)
+
+    # START event with context depth
+    context_depth = len(previous_sessions)
+    logger_instance.log_event(
+        LogEvent.START,
+        session_id=session_id,
+        session_date=session_date,
+        details={
+            "index": index + 1,
+            "total": total,
+            "context_depth": context_depth
+        }
+    )
 
     logger.info(f"\n[{index + 1}/{total}] Processing session {session_date} ({session_id})")
 
@@ -205,20 +222,74 @@ async def process_session_wave2(
     cumulative_context = build_cumulative_context(previous_sessions, previous_cumulative_context)
 
     if cumulative_context:
-        context_depth = str(cumulative_context).count("previous_context") + 1
         logger.info(f"  📚 Context depth: {context_depth} previous session(s)")
     else:
         logger.info(f"  📚 No previous context (first session)")
 
-    # Run deep analysis
+    # DEEP_ANALYSIS
+    analysis_start = datetime.now()
+    logger_instance.log_event(
+        LogEvent.DEEP_ANALYSIS,
+        session_id=session_id,
+        session_date=session_date,
+        status="started",
+        details={"context_depth": context_depth}
+    )
+
     deep_analysis = await run_deep_analysis(session, cumulative_context)
 
-    # Update database
     if deep_analysis:
+        analysis_duration = (datetime.now() - analysis_start).total_seconds() * 1000
+        logger_instance.log_event(
+            LogEvent.DEEP_ANALYSIS,
+            session_id=session_id,
+            session_date=session_date,
+            status="complete",
+            duration_ms=analysis_duration,
+            details={
+                "confidence": deep_analysis.get("confidence_score"),
+                "has_insights": bool(deep_analysis.get("insights"))
+            }
+        )
+
+        # DB_UPDATE
+        db_start = datetime.now()
+        logger_instance.log_event(
+            LogEvent.DB_UPDATE,
+            session_id=session_id,
+            session_date=session_date,
+            status="started"
+        )
+
         await update_session_wave2(session_id, deep_analysis)
+
+        db_duration = (datetime.now() - db_start).total_seconds() * 1000
+        logger_instance.log_event(
+            LogEvent.DB_UPDATE,
+            session_id=session_id,
+            session_date=session_date,
+            status="complete",
+            duration_ms=db_duration
+        )
+
+        # COMPLETE event
+        total_duration = analysis_duration + db_duration
+        logger_instance.log_event(
+            LogEvent.COMPLETE,
+            session_id=session_id,
+            session_date=session_date,
+            duration_ms=total_duration
+        )
+
         logger.info(f"[{index + 1}/{total}] ✅ Session complete")
         return deep_analysis, cumulative_context
     else:
+        logger_instance.log_event(
+            LogEvent.FAILED,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed"
+        )
         logger.warning(f"[{index + 1}/{total}] ⚠️  No results to update")
         return None, cumulative_context
 

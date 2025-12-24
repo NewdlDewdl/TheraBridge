@@ -33,6 +33,7 @@ from app.services.mood_analyzer import MoodAnalyzer
 from app.services.topic_extractor import TopicExtractor
 from app.services.breakthrough_detector import BreakthroughDetector
 from app.config import settings
+from app.utils.pipeline_logger import PipelineLogger, LogPhase, LogEvent
 
 # Configure logging
 logging.basicConfig(
@@ -204,31 +205,168 @@ async def update_session_wave1(session_id: str, updates: Dict[str, Any]) -> bool
 
 
 async def process_session(session: Dict[str, Any], index: int, total: int):
-    """Process a single session with all Wave 1 analyses"""
+    """Process a single session with all Wave 1 analyses - granular logging"""
     session_id = session["id"]
     session_date = session.get("session_date", "unknown")
+    patient_id = session.get("patient_id")
+
+    logger_instance = PipelineLogger(patient_id, LogPhase.WAVE1)
+
+    # START event
+    logger_instance.log_event(
+        LogEvent.START,
+        session_id=session_id,
+        session_date=session_date,
+        details={"index": index + 1, "total": total}
+    )
 
     logger.info(f"\n[{index + 1}/{total}] Processing session {session_date} ({session_id})")
 
-    # Run all 3 analyses (can be parallelized in production)
+    # Run all 3 analyses with individual logging
+    updates = {}
+    mood_duration = 0
+    topic_duration = 0
+    breakthrough_duration = 0
+
+    # MOOD_ANALYSIS
+    mood_start = datetime.now()
+    logger_instance.log_event(
+        LogEvent.MOOD_ANALYSIS,
+        session_id=session_id,
+        session_date=session_date,
+        status="started"
+    )
+
     mood_result = await run_mood_analysis(session)
+
+    if mood_result:
+        mood_duration = (datetime.now() - mood_start).total_seconds() * 1000
+        logger_instance.log_event(
+            LogEvent.MOOD_ANALYSIS,
+            session_id=session_id,
+            session_date=session_date,
+            status="complete",
+            duration_ms=mood_duration,
+            details={
+                "mood_score": mood_result.get("mood_score"),
+                "confidence": mood_result.get("mood_confidence")
+            }
+        )
+        updates.update(mood_result)
+    else:
+        logger_instance.log_event(
+            LogEvent.MOOD_ANALYSIS,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed"
+        )
+
+    # TOPIC_EXTRACTION
+    topic_start = datetime.now()
+    logger_instance.log_event(
+        LogEvent.TOPIC_EXTRACTION,
+        session_id=session_id,
+        session_date=session_date,
+        status="started"
+    )
+
     topic_result = await run_topic_extraction(session)
+
+    if topic_result:
+        topic_duration = (datetime.now() - topic_start).total_seconds() * 1000
+        logger_instance.log_event(
+            LogEvent.TOPIC_EXTRACTION,
+            session_id=session_id,
+            session_date=session_date,
+            status="complete",
+            duration_ms=topic_duration,
+            details={
+                "topics_count": len(topic_result.get("topics", [])),
+                "technique": topic_result.get("technique")
+            }
+        )
+        updates.update(topic_result)
+    else:
+        logger_instance.log_event(
+            LogEvent.TOPIC_EXTRACTION,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed"
+        )
+
+    # BREAKTHROUGH_DETECTION
+    breakthrough_start = datetime.now()
+    logger_instance.log_event(
+        LogEvent.BREAKTHROUGH_DETECTION,
+        session_id=session_id,
+        session_date=session_date,
+        status="started"
+    )
+
     breakthrough_result = await run_breakthrough_detection(session)
 
-    # Combine results
-    updates = {}
-    if mood_result:
-        updates.update(mood_result)
-    if topic_result:
-        updates.update(topic_result)
     if breakthrough_result:
+        breakthrough_duration = (datetime.now() - breakthrough_start).total_seconds() * 1000
+        logger_instance.log_event(
+            LogEvent.BREAKTHROUGH_DETECTION,
+            session_id=session_id,
+            session_date=session_date,
+            status="complete",
+            duration_ms=breakthrough_duration,
+            details={
+                "has_breakthrough": breakthrough_result.get("has_breakthrough"),
+                "candidates": len(breakthrough_result.get("breakthrough_candidates", []))
+            }
+        )
         updates.update(breakthrough_result)
+    else:
+        logger_instance.log_event(
+            LogEvent.BREAKTHROUGH_DETECTION,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed"
+        )
 
     # Update database
     if updates:
+        db_start = datetime.now()
+        logger_instance.log_event(
+            LogEvent.DB_UPDATE,
+            session_id=session_id,
+            session_date=session_date,
+            status="started"
+        )
+
         await update_session_wave1(session_id, updates)
+
+        db_duration = (datetime.now() - db_start).total_seconds() * 1000
+        logger_instance.log_event(
+            LogEvent.DB_UPDATE,
+            session_id=session_id,
+            session_date=session_date,
+            status="complete",
+            duration_ms=db_duration,
+            details={"fields_updated": len(updates)}
+        )
+
+        # COMPLETE event
+        total_duration = mood_duration + topic_duration + breakthrough_duration + db_duration
+        logger_instance.log_event(
+            LogEvent.COMPLETE,
+            session_id=session_id,
+            session_date=session_date,
+            duration_ms=total_duration
+        )
+
         logger.info(f"[{index + 1}/{total}] ✅ Session complete")
     else:
+        logger_instance.log_event(
+            LogEvent.FAILED,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed",
+            details={"error": "No results to update"}
+        )
         logger.warning(f"[{index + 1}/{total}] ⚠️  No results to update")
 
 

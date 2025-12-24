@@ -45,17 +45,27 @@ class DemoResetResponse(BaseModel):
     message: str
 
 
+class SessionStatus(BaseModel):
+    """Individual session completion status"""
+    session_id: str
+    session_date: str
+    has_transcript: bool
+    wave1_complete: bool
+    wave2_complete: bool
+
+
 class DemoStatusResponse(BaseModel):
-    """Response for demo status check"""
+    """Enhanced demo status with per-session completion tracking"""
     demo_token: str
     patient_id: str
     session_count: int
     created_at: str
     expires_at: str
     is_expired: bool
-    analysis_status: str  # "pending", "wave1_complete", "wave2_complete"
-    wave1_complete: int  # Count of sessions with Wave 1 analysis
-    wave2_complete: int  # Count of sessions with Wave 2 analysis
+    analysis_status: str  # "pending" | "processing" | "wave1_complete" | "wave2_complete"
+    wave1_complete: int  # Total sessions with Wave 1 complete
+    wave2_complete: int  # Total sessions with Wave 2 complete
+    sessions: List[SessionStatus]  # Per-session status
 
 
 # ============================================================================
@@ -324,31 +334,50 @@ async def get_demo_status(
     db: Client = Depends(get_db)
 ):
     """
-    Get current demo user status with analysis progress
+    Get current demo user status with per-session analysis progress
 
     Returns:
-        DemoStatusResponse with user info, session count, and analysis status
+        DemoStatusResponse with user info, session count, and per-session completion
     """
     patient_id = demo_user["id"]
 
-    # Count sessions
-    session_response = db.table("therapy_sessions").select("id", count="exact").eq("patient_id", patient_id).execute()
-    session_count = session_response.count or 0
+    # Fetch all sessions with analysis data
+    sessions_response = db.table("therapy_sessions").select(
+        "id, session_date, transcript, mood_score, deep_analysis"
+    ).eq("patient_id", patient_id).order("session_date").execute()
 
-    # Count sessions with Wave 1 analysis (have mood_score)
-    wave1_response = db.table("therapy_sessions").select("id", count="exact").eq("patient_id", patient_id).not_.is_("mood_score", "null").execute()
-    wave1_complete = wave1_response.count or 0
+    sessions = sessions_response.data or []
+    session_count = len(sessions)
 
-    # Count sessions with Wave 2 analysis (have deep_analysis)
-    wave2_response = db.table("therapy_sessions").select("id", count="exact").eq("patient_id", patient_id).not_.is_("deep_analysis", "null").execute()
-    wave2_complete = wave2_response.count or 0
+    # Build per-session status
+    session_statuses = []
+    wave1_complete_count = 0
+    wave2_complete_count = 0
+
+    for session in sessions:
+        has_transcript = bool(session.get("transcript"))
+        wave1_complete = session.get("mood_score") is not None
+        wave2_complete = session.get("deep_analysis") is not None
+
+        if wave1_complete:
+            wave1_complete_count += 1
+        if wave2_complete:
+            wave2_complete_count += 1
+
+        session_statuses.append(SessionStatus(
+            session_id=session["id"],
+            session_date=session["session_date"],
+            has_transcript=has_transcript,
+            wave1_complete=wave1_complete,
+            wave2_complete=wave2_complete
+        ))
 
     # Determine overall analysis status
-    if wave2_complete == session_count:
+    if wave2_complete_count == session_count:
         analysis_status = "wave2_complete"
-    elif wave1_complete == session_count:
+    elif wave1_complete_count == session_count:
         analysis_status = "wave1_complete"
-    elif wave1_complete > 0 or wave2_complete > 0:
+    elif wave1_complete_count > 0 or wave2_complete_count > 0:
         analysis_status = "processing"
     else:
         analysis_status = "pending"
@@ -366,6 +395,49 @@ async def get_demo_status(
         expires_at=demo_user["demo_expires_at"],
         is_expired=is_expired,
         analysis_status=analysis_status,
-        wave1_complete=wave1_complete,
-        wave2_complete=wave2_complete
+        wave1_complete=wave1_complete_count,
+        wave2_complete=wave2_complete_count,
+        sessions=session_statuses
     )
+
+
+@router.get("/logs/{patient_id}")
+async def get_pipeline_logs(
+    patient_id: str,
+    demo_user: dict = Depends(require_demo_auth)
+):
+    """
+    Get pipeline logs for a patient
+
+    Returns:
+        JSON array of log events
+
+    Note: Logs are ephemeral and reset on deployment
+    """
+    from pathlib import Path
+    import json
+
+    # Verify patient_id matches demo user
+    if demo_user["id"] != patient_id:
+        raise HTTPException(status_code=403, detail="Not authorized to view these logs")
+
+    log_dir = Path(__file__).parent.parent.parent / "logs"
+    log_file = log_dir / f"pipeline_{patient_id}.log"
+
+    if not log_file.exists():
+        return {"logs": [], "message": "No logs found for this patient"}
+
+    # Read log file and parse JSON lines
+    logs = []
+    with open(log_file, "r") as f:
+        for line in f:
+            try:
+                logs.append(json.loads(line.strip()))
+            except json.JSONDecodeError:
+                continue
+
+    return {
+        "patient_id": patient_id,
+        "log_count": len(logs),
+        "logs": logs
+    }

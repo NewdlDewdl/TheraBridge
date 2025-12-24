@@ -12,7 +12,7 @@
  *   const { sessions, tasks, isLoading } = useSessionData();
  */
 
-import { createContext, useContext, useEffect, ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { usePatientSessions } from '../lib/usePatientSessions';
 import { Session, Task, TimelineEntry, TimelineEvent, MajorEventEntry } from '../lib/types';
 
@@ -33,6 +33,10 @@ interface SessionDataContextType {
   sessionCount: number;
   majorEventCount: number;
   isEmpty: boolean;
+  /** Session IDs currently loading (showing overlay) */
+  loadingSessions: Set<string>;
+  /** Set a session as loading */
+  setSessionLoading: (sessionId: string, loading: boolean) => void;
 }
 
 const SessionDataContext = createContext<SessionDataContextType | null>(null);
@@ -45,9 +49,22 @@ const SessionDataContext = createContext<SessionDataContextType | null>(null);
  */
 export function SessionDataProvider({ children }: { children: ReactNode }) {
   const data = usePatientSessions();
+  const [loadingSessions, setLoadingSessions] = useState<Set<string>>(new Set());
+
+  const setSessionLoading = useCallback((sessionId: string, loading: boolean) => {
+    setLoadingSessions((prev) => {
+      const next = new Set(prev);
+      if (loading) {
+        next.add(sessionId);
+      } else {
+        next.delete(sessionId);
+      }
+      return next;
+    });
+  }, []);
 
   return (
-    <SessionDataContext.Provider value={data}>
+    <SessionDataContext.Provider value={{ ...data, loadingSessions, setSessionLoading }}>
       {children}
     </SessionDataContext.Provider>
   );

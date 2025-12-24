@@ -29,6 +29,7 @@ from typing import Tuple, Dict, Any
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from app.database import get_supabase_admin
+from app.utils.pipeline_logger import PipelineLogger, LogPhase, LogEvent
 
 
 # Session file mapping (ordered by date)
@@ -128,41 +129,98 @@ async def process_single_session(
     index: int,
     total: int
 ) -> Tuple[bool, str]:
-    """
-    Process a single session file (async)
+    """Process a single session file (async) with granular logging"""
 
-    Args:
-        patient_id: UUID of the patient
-        filename: Name of the JSON file
-        session_date: Date of the session
-        index: Current index (for progress display)
-        total: Total number of sessions
+    logger = PipelineLogger(patient_id, LogPhase.TRANSCRIPT)
+    session_id = f"session_{session_date}"  # Temporary ID for logging
 
-    Returns:
-        Tuple of (success: bool, message: str)
-    """
     try:
-        # Load transcript from file (I/O bound, run in thread pool)
+        # START event
+        logger.log_event(
+            LogEvent.START,
+            session_id=session_id,
+            session_date=session_date,
+            details={"index": index, "total": total, "filename": filename}
+        )
+
+        # FILE_LOAD start
+        load_start = datetime.now()
         loop = asyncio.get_event_loop()
         transcript_data = await loop.run_in_executor(
             None, load_transcript_from_file, filename
         )
+        load_duration = (datetime.now() - load_start).total_seconds() * 1000
 
         segment_count = len(transcript_data.get("segments", []))
         duration = transcript_data.get("metadata", {}).get("duration", 0) / 60
 
+        # FILE_LOAD complete
+        logger.log_event(
+            LogEvent.FILE_LOAD,
+            session_id=session_id,
+            session_date=session_date,
+            duration_ms=load_duration,
+            details={
+                "segments": segment_count,
+                "duration_minutes": round(duration, 1),
+                "file_size_kb": round(len(json.dumps(transcript_data)) / 1024, 2)
+            }
+        )
+
         print(f"[{index}/{total}] ✓ Loaded {filename}: {segment_count} segments, {duration:.0f} min")
 
-        # Update database (already async)
+        # DB_UPDATE start
+        db_start = datetime.now()
         if await populate_session_transcript(patient_id, session_date, transcript_data):
+            db_duration = (datetime.now() - db_start).total_seconds() * 1000
+
+            # DB_UPDATE complete
+            logger.log_event(
+                LogEvent.DB_UPDATE,
+                session_id=session_id,
+                session_date=session_date,
+                duration_ms=db_duration
+            )
+
             print(f"[{index}/{total}] ✓ Updated session {session_date}")
+
+            # COMPLETE event
+            total_duration = load_duration + db_duration
+            logger.log_event(
+                LogEvent.COMPLETE,
+                session_id=session_id,
+                session_date=session_date,
+                duration_ms=total_duration
+            )
+
             return (True, f"Success: {filename}")
         else:
+            logger.log_event(
+                LogEvent.FAILED,
+                session_id=session_id,
+                session_date=session_date,
+                status="failed",
+                details={"error": "No session found in database"}
+            )
             return (False, f"Failed: No session found for {session_date}")
 
     except FileNotFoundError as e:
+        logger.log_event(
+            LogEvent.FAILED,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed",
+            details={"error": f"File not found: {filename}"}
+        )
         return (False, f"File not found: {filename}")
     except Exception as e:
+        logger.log_event(
+            LogEvent.FAILED,
+            session_id=session_id,
+            session_date=session_date,
+            status="failed",
+            details={"error": str(e)}
+        )
         return (False, f"Error processing {filename}: {e}")
 
 
