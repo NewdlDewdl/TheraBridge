@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 import { SessionDataProvider } from '@/app/patient/contexts/SessionDataContext';
 import { ProcessingProvider } from '@/contexts/ProcessingContext';
 import { NavigationBar } from '@/components/NavigationBar';
-import { SessionCardsGrid } from '@/app/patient/dashboard-v3/components/SessionCardsGrid';
+import { SessionCardsGrid } from '@/app/patient/components/SessionCardsGrid';
 import { ProcessingRefreshBridge } from '@/app/patient/components/ProcessingRefreshBridge';
 import { DashboardSkeleton } from '@/app/patient/components/DashboardSkeleton';
 
