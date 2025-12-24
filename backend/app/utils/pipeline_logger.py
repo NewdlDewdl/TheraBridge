@@ -26,6 +26,7 @@ class LogEvent(str, Enum):
     TOPIC_EXTRACTION = "TOPIC_EXTRACTION"
     BREAKTHROUGH_DETECTION = "BREAKTHROUGH_DETECTION"
     DEEP_ANALYSIS = "DEEP_ANALYSIS"
+    PROSE_GENERATION = "PROSE_GENERATION"
 
 # Global event queue for SSE (in-memory)
 _event_queue: Dict[str, list] = {}

@@ -36,6 +36,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from app.database import get_supabase_admin
 from app.services.deep_analyzer import DeepAnalyzer
+from app.services.prose_generator import ProseGenerator
 from app.config import settings
 from app.utils.pipeline_logger import PipelineLogger, LogPhase, LogEvent
 
@@ -168,23 +169,62 @@ async def run_deep_analysis(
         return None
 
 
-async def update_session_wave2(session_id: str, deep_analysis: Dict[str, Any]) -> bool:
-    """Update session with Wave 2 deep analysis"""
+async def run_prose_generation(
+    session_id: str,
+    deep_analysis_dict: Dict[str, Any],
+    confidence: float
+) -> Optional[str]:
+    """Generate patient-facing prose from deep analysis"""
+    try:
+        generator = ProseGenerator()
+
+        prose_result = await generator.generate_prose(
+            session_id=session_id,
+            deep_analysis=deep_analysis_dict,
+            confidence_score=confidence
+        )
+
+        logger.info(f"  ✓ Prose generated: {prose_result.word_count} words, {prose_result.paragraph_count} paragraphs")
+        print(f"  ✓ Prose generated: {prose_result.word_count} words, {prose_result.paragraph_count} paragraphs", flush=True)
+
+        return prose_result.prose_text
+
+    except Exception as e:
+        logger.error(f"  ✗ Prose generation failed: {e}")
+        print(f"  ✗ Prose generation failed: {e}", flush=True)
+        return None
+
+
+async def update_session_wave2(
+    session_id: str,
+    deep_analysis_dict: Dict[str, Any],
+    prose_text: Optional[str],
+    deep_analyzed_at: datetime,
+    prose_generated_at: Optional[datetime]
+) -> bool:
+    """Update session with Wave 2 deep analysis and prose"""
     db = get_supabase_admin()
 
     try:
+        update_data = {
+            "deep_analysis": deep_analysis_dict,
+            "deep_analyzed_at": deep_analyzed_at.isoformat()
+        }
+
+        # Add prose fields if generation succeeded
+        if prose_text:
+            update_data["prose_analysis"] = prose_text
+            update_data["prose_generated_at"] = prose_generated_at.isoformat()
+
         response = (
             db.table("therapy_sessions")
-            .update({
-                "deep_analysis": deep_analysis,
-                "deep_analyzed_at": datetime.utcnow().isoformat()
-            })
+            .update(update_data)
             .eq("id", session_id)
             .execute()
         )
 
-        logger.info(f"  ✓ Database updated with deep analysis")
-        print(f"  ✓ Database updated", flush=True)
+        logger.info(f"  ✓ Database updated with deep analysis{' and prose' if prose_text else ''}")
+        print(f"  ✓ Database updated{' with prose' if prose_text else ''}", flush=True)
         return True
 
     except Exception as e:
@@ -244,7 +284,8 @@ async def process_session_wave2(
     deep_analysis = await run_deep_analysis(session, cumulative_context)
 
     if deep_analysis:
-        analysis_duration = (datetime.now() - analysis_start).total_seconds() * 1000
+        deep_analyzed_at = datetime.now()
+        analysis_duration = (deep_analyzed_at - analysis_start).total_seconds() * 1000
         logger_instance.log_event(
             LogEvent.DEEP_ANALYSIS,
             session_id=session_id,
@@ -253,9 +294,49 @@ async def process_session_wave2(
             duration_ms=analysis_duration,
             details={
                 "confidence": deep_analysis.get("confidence_score"),
-                "has_insights": bool(deep_analysis.get("insights"))
+                "has_insights": bool(deep_analysis.get("therapeutic_insights"))
             }
         )
+
+        # PROSE_GENERATION
+        prose_start = datetime.now()
+        logger_instance.log_event(
+            LogEvent.PROSE_GENERATION,
+            session_id=session_id,
+            session_date=session_date,
+            status="started",
+            details={"confidence": deep_analysis.get("confidence_score")}
+        )
+
+        prose_text = await run_prose_generation(
+            session_id,
+            deep_analysis,
+            deep_analysis.get("confidence_score", 0.7)
+        )
+
+        if prose_text:
+            prose_generated_at = datetime.now()
+            prose_duration = (prose_generated_at - prose_start).total_seconds() * 1000
+
+            logger_instance.log_event(
+                LogEvent.PROSE_GENERATION,
+                session_id=session_id,
+                session_date=session_date,
+                status="complete",
+                duration_ms=prose_duration,
+                details={
+                    "word_count": len(prose_text.split()),
+                    "char_count": len(prose_text)
+                }
+            )
+        else:
+            logger_instance.log_event(
+                LogEvent.PROSE_GENERATION,
+                session_id=session_id,
+                session_date=session_date,
+                status="failed"
+            )
+            prose_generated_at = None
 
         # DB_UPDATE
         db_start = datetime.now()
@@ -266,7 +347,13 @@ async def process_session_wave2(
             status="started"
         )
 
-        await update_session_wave2(session_id, deep_analysis)
+        await update_session_wave2(
+            session_id,
+            deep_analysis,
+            prose_text,
+            deep_analyzed_at,
+            prose_generated_at
+        )
 
         db_duration = (datetime.now() - db_start).total_seconds() * 1000
         logger_instance.log_event(
@@ -278,7 +365,7 @@ async def process_session_wave2(
         )
 
         # COMPLETE event
-        total_duration = analysis_duration + db_duration
+        total_duration = analysis_duration + (prose_duration if prose_text else 0) + db_duration
         logger_instance.log_event(
             LogEvent.COMPLETE,
             session_id=session_id,
