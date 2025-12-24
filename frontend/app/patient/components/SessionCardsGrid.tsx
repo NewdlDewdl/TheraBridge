@@ -74,8 +74,8 @@ export function SessionCardsGrid({
       const availableWidthPerCard = (containerWidth - (gap * (cols - 1))) / cols;
       const scale = availableWidthPerCard / cardWidth;
 
-      // Set scale (capped at 1.5x for reasonable max size)
-      setCardScale(Math.min(scale, 1.5));
+      // Set scale (NEVER scale up beyond 1.0, only scale down for smaller screens)
+      setCardScale(Math.min(scale, 1.0));
     };
 
     calculateScale();
