@@ -3,7 +3,7 @@ Demo Mode API Router
 Handles demo initialization, reset, and status
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Request, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Optional
 from uuid import uuid4
@@ -261,7 +261,6 @@ async def run_full_initialization_pipeline(patient_id: str):
 
 @router.post("/initialize", response_model=DemoInitResponse)
 async def initialize_demo(
-    background_tasks: BackgroundTasks,
     db: Client = Depends(get_db),
     run_analysis: bool = True  # Query param to enable/disable analysis
 ):
@@ -316,11 +315,12 @@ async def initialize_demo(
         analysis_status = "pending"
         logger.info(f"📝 run_analysis parameter: {run_analysis}")
         if run_analysis:
-            # Queue ALL initialization steps (transcripts + Wave 1 + Wave 2) in background
-            # This ensures the endpoint returns immediately and can handle concurrent requests
-            background_tasks.add_task(run_full_initialization_pipeline, str(patient_id))
+            # Use asyncio.create_task() instead of background_tasks to avoid blocking other requests
+            # This allows multiple demo initializations to run concurrently without blocking
+            import asyncio
+            asyncio.create_task(run_full_initialization_pipeline(str(patient_id)))
             analysis_status = "processing"
-            logger.info(f"🎬 Queued full initialization pipeline (transcripts + Wave 1 + Wave 2) for patient {patient_id}")
+            logger.info(f"🎬 Started full initialization pipeline (transcripts + Wave 1 + Wave 2) for patient {patient_id}")
 
         return DemoInitResponse(
             demo_token=demo_token,
