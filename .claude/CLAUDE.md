@@ -108,10 +108,13 @@ Before creating any new file, ask:
 
 # TherapyBridge - Project State
 
-## Current Focus: Backend AI extraction complete, Frontend dashboard next
+## Current Focus: Phase 4 Complete - Database Column Fixes In Progress
+
+**⚠️ CRITICAL BLOCKER:** Backend overloaded by stuck Wave 2 process - demo initialization timing out
 
 **Full Documentation:** See `Project MDs/TherapyBridge.md`
 **Detailed Session History:** See `.claude/SESSION_LOG.md`
+**Implementation Plan:** See `thoughts/shared/plans/2026-01-01-phase-5-backend-database-fixes.md`
 
 ---
 
