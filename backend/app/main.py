@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 from app.config import settings
-from app.routers import sessions
+from app.routers import sessions, demo
 
 # Configure logging
 logging.basicConfig(
@@ -37,6 +37,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(sessions.router)
+app.include_router(demo.router)
 
 # Health check endpoint
 @app.get("/")

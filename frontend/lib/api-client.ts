@@ -85,11 +85,18 @@ class ApiClient {
 
         const accessToken = tokenStorage.getAccessToken();
 
+        // Import demo token storage
+        const { demoTokenStorage } = await import('./demo-token-storage');
+        const demoToken = demoTokenStorage.getToken();
+
         const config: RequestInit = {
           ...fetchOptions,
           headers: {
             'Content-Type': 'application/json',
+            // Regular auth token (if not demo mode)
             ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+            // Demo token (if in demo mode)
+            ...(demoToken ? { 'X-Demo-Token': demoToken } : {}),
             ...fetchOptions.headers,
           },
         };

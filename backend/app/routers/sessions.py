@@ -3,10 +3,10 @@ Therapy Sessions API Router
 Handles session management, transcript upload, and breakthrough detection
 """
 
-from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, BackgroundTasks, Request
 from typing import List, Optional
 from pydantic import BaseModel, field_validator
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import logging
 
@@ -17,6 +17,7 @@ from app.services.topic_extractor import TopicExtractor
 from app.services.prose_generator import ProseGenerator
 from app.services.analysis_orchestrator import AnalysisOrchestrator, analyze_session_full_pipeline
 from app.services.technique_library import get_technique_library
+from app.middleware.demo_auth import get_demo_user
 from app.config import settings
 from supabase import Client
 
@@ -1291,3 +1292,114 @@ async def get_technique_definition(technique_name: str):
         technique=technique_name,
         definition=definition
     )
+
+
+# ============================================================================
+# Demo Mode - Transcript Upload
+# ============================================================================
+
+@router.post("/upload-demo-transcript")
+async def upload_demo_transcript(
+    request: Request,
+    session_file: str,  # e.g., "session_12_thriving.json"
+    background_tasks: BackgroundTasks,
+    db: Client = Depends(get_db)
+):
+    """
+    Upload a pre-selected demo transcript from mock-therapy-data/
+
+    This endpoint:
+    1. Validates demo token from headers
+    2. Loads JSON transcript from mock-therapy-data/sessions/{session_file}
+    3. Creates new session with transcript
+    4. Triggers full AI analysis pipeline (mood, topics, breakthrough, deep)
+    5. Returns session ID for status tracking
+
+    Args:
+        session_file: Filename from mock-therapy-data/sessions/ (e.g., "session_12_thriving.json")
+
+    Returns:
+        Session ID and processing status
+    """
+    # Get demo user from token
+    demo_user = await get_demo_user(request)
+    if not demo_user:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or missing demo token. Initialize demo first."
+        )
+
+    patient_id = demo_user["id"]
+
+    # Load transcript JSON
+    from pathlib import Path
+
+    mock_data_dir = Path(__file__).parent.parent.parent.parent / "mock-therapy-data" / "sessions"
+    transcript_path = mock_data_dir / session_file
+
+    if not transcript_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail=f"Demo transcript not found: {session_file}"
+        )
+
+    try:
+        with open(transcript_path, "r") as f:
+            transcript_data = json.load(f)
+    except Exception as e:
+        logger.error(f"Failed to load transcript {session_file}: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to load demo transcript: {str(e)}"
+        )
+
+    # Extract transcript segments
+    segments = transcript_data.get("segments", [])
+    if not segments:
+        raise HTTPException(
+            status_code=400,
+            detail="Demo transcript has no segments"
+        )
+
+    # Get therapist ID (find demo therapist with same demo_token)
+    therapist_response = db.table("users").select("id").eq("demo_token", demo_user["demo_token"]).eq("role", "therapist").single().execute()
+    therapist_id = therapist_response.data["id"]
+
+    # Calculate session date (after last existing session)
+    last_session_response = db.table("therapy_sessions").select("session_date").eq("patient_id", patient_id).order("session_date", desc=True).limit(1).execute()
+
+    if last_session_response.data:
+        last_date = datetime.fromisoformat(last_session_response.data[0]["session_date"].replace("Z", "+00:00"))
+        new_session_date = last_date + timedelta(days=7)  # 1 week later
+    else:
+        new_session_date = datetime.now()
+
+    session_data = {
+        "patient_id": patient_id,
+        "therapist_id": therapist_id,
+        "session_date": new_session_date.isoformat(),
+        "duration_minutes": transcript_data.get("metadata", {}).get("duration", 3600) // 60,
+        "processing_status": "wave1_in_progress",
+        "analysis_status": "wave1_in_progress",
+        "transcript": segments,
+    }
+
+    session_response = db.table("therapy_sessions").insert(session_data).execute()
+
+    if not session_response.data:
+        raise HTTPException(status_code=500, detail="Failed to create session")
+
+    session = session_response.data[0]
+    session_id = session["id"]
+
+    # Trigger full AI analysis in background
+    background_tasks.add_task(analyze_session_full_pipeline, session_id)
+
+    logger.info(f"✓ Demo transcript uploaded: {session_file} → Session {session_id}")
+
+    return {
+        "session_id": session_id,
+        "status": "processing",
+        "message": f"Demo session created from {session_file}. AI analysis in progress.",
+        "transcript_segments": len(segments)
+    }

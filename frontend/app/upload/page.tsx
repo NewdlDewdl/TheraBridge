@@ -11,6 +11,7 @@ import { NavigationBar } from '@/components/NavigationBar';
 import FileUploader from '@/app/patient/upload/components/FileUploader';
 import AudioRecorder from '@/app/patient/upload/components/AudioRecorder';
 import TranscriptUploader from '@/app/patient/upload/components/TranscriptUploader';
+import DemoTranscriptUploader from './components/DemoTranscriptUploader';
 import UploadProgress from '@/app/patient/upload/components/UploadProgress';
 import ResultsView from '@/app/patient/upload/components/ResultsView';
 import { DashboardSkeleton } from '@/app/patient/components/DashboardSkeleton';
@@ -50,7 +51,25 @@ function UploadPageContent() {
 
       <main className="w-full px-4 py-8 flex justify-center">
         {view === 'upload' && (
-          <div className="w-full max-w-[900px] space-y-0">
+          <div className="w-full max-w-[900px] space-y-8">
+            {/* Demo Transcript Uploader */}
+            <DemoTranscriptUploader onUploadSuccess={(sessionId) => {
+              console.log('[Upload] Demo upload success:', sessionId);
+              setSessionId(sessionId);
+              setView('processing');
+            }} />
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-[#ECEAE5] dark:bg-[#1a1625] text-gray-500 dark:text-gray-400 font-medium">
+                  OR UPLOAD AUDIO
+                </span>
+              </div>
+            </div>
+
             {/* Horizontal Layout Container */}
             <div className="flex items-stretch gap-0">
               {/* Upload Section */}
