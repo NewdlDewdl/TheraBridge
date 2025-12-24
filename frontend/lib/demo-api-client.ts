@@ -20,6 +20,14 @@ export interface DemoResetResponse {
   message: string;
 }
 
+export interface SessionStatus {
+  session_id: string;
+  session_date: string;
+  has_transcript: boolean;
+  wave1_complete: boolean;
+  wave2_complete: boolean;
+}
+
 export interface DemoStatusResponse {
   demo_token: string;
   patient_id: string;
@@ -27,6 +35,10 @@ export interface DemoStatusResponse {
   created_at: string;
   expires_at: string;
   is_expired: boolean;
+  analysis_status: string;
+  wave1_complete: number;
+  wave2_complete: number;
+  sessions: SessionStatus[];
 }
 
 export const demoApiClient = {
