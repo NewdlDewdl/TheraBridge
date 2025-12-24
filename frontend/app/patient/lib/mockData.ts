@@ -165,10 +165,10 @@ export const sessions: Session[] = [
     strategy: 'Cognitive restructuring',
     actions: ['Challenge catastrophizing', 'Priority matrix exercise'],
     transcript: [
-      { speaker: 'Therapist', text: 'What happened with the project deadline?' },
-      { speaker: 'Patient', text: 'I stayed late every night but still felt like it wasn\'t good enough.' },
-      { speaker: 'Therapist', text: 'Let\'s examine that thought - what\'s the evidence it wasn\'t good enough?' },
-      { speaker: 'Patient', text: 'Well... my boss said it was excellent. But I saw all the flaws.' }
+      { speaker: 'Therapist', text: 'What happened with the project deadline?', timestamp: '01:23' },
+      { speaker: 'Patient', text: 'I stayed late every night but still felt like it wasn\'t good enough.', timestamp: '01:45' },
+      { speaker: 'Therapist', text: 'Let\'s examine that thought - what\'s the evidence it wasn\'t good enough?', timestamp: '02:10' },
+      { speaker: 'Patient', text: 'Well... my boss said it was excellent. But I saw all the flaws.', timestamp: '02:35' }
     ],
     patientSummary: 'Identified perfectionism pattern at work. Began recognizing cognitive distortions around performance standards.'
   },
