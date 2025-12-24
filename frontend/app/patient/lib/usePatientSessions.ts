@@ -405,7 +405,14 @@ export function usePatientSessions() {
     try {
       const result = await apiClient.getAllSessions();
       if (result.success && result.data) {
-        console.log('[DEBUG] refresh() - transforming sessions, calling setSessions()');
+        console.log('[DEBUG] refresh() - got', result.data.length, 'sessions from API');
+        console.log('[DEBUG] Sample session data:', {
+          id: result.data[0]?.id,
+          topics: result.data[0]?.topics,
+          summary: result.data[0]?.summary,
+          technique: result.data[0]?.technique,
+          topics_extracted_at: result.data[0]?.topics_extracted_at,
+        });
         const transformed = result.data.map((backendSession) => {
           const sessionDate = new Date(backendSession.session_date);
           return {

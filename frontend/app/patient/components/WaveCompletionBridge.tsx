@@ -105,7 +105,10 @@ export function WaveCompletionBridge() {
       if (!pendingRefreshRef.current) {
         pendingRefreshRef.current = new Promise(resolve => {
           refreshDebounceRef.current = setTimeout(async () => {
-            console.log('[DEBUG] Debounced refresh executing...');
+            console.log('[DEBUG] Debounced refresh executing after delay...');
+            // Extra delay to allow backend database write to complete
+            await new Promise(r => setTimeout(r, 1000));
+            console.log('[DEBUG] Starting refresh API call...');
             await refresh();
             pendingRefreshRef.current = null;
             refreshDebounceRef.current = null;
@@ -140,7 +143,10 @@ export function WaveCompletionBridge() {
       if (!pendingRefreshRef.current) {
         pendingRefreshRef.current = new Promise(resolve => {
           refreshDebounceRef.current = setTimeout(async () => {
-            console.log('[DEBUG] Debounced refresh executing...');
+            console.log('[DEBUG] Debounced refresh executing after delay...');
+            // Extra delay to allow backend database write to complete
+            await new Promise(r => setTimeout(r, 1000));
+            console.log('[DEBUG] Starting refresh API call...');
             await refresh();
             pendingRefreshRef.current = null;
             refreshDebounceRef.current = null;
