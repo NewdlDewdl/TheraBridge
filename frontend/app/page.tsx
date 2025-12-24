@@ -4,43 +4,88 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { demoApiClient } from '@/lib/demo-api-client'
 import { demoTokenStorage } from '@/lib/demo-token-storage'
+import { refreshDetection } from '@/lib/refresh-detection'
 
 export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
     const initializeDemo = async () => {
-      // Check if demo token already exists
-      const existingToken = demoTokenStorage.getToken()
+      // STEP 1: Check if this is a hard refresh
+      const isHardRefresh = refreshDetection.isHardRefresh();
 
-      if (existingToken) {
-        // Token exists, redirect to dashboard immediately
-        console.log('✅ Demo token exists, redirecting to dashboard')
-        router.push('/dashboard')
-        return
+      if (isHardRefresh) {
+        console.log('🔥 Hard refresh detected - clearing all demo data');
+        demoTokenStorage.clear();
       }
 
-      // No token exists, create new demo user
-      console.log('🚀 Initializing demo user...')
+      // STEP 2: Check if demo token already exists
+      const existingToken = demoTokenStorage.getToken();
+      const existingPatientId = demoTokenStorage.getPatientId();
+
+      if (existingToken && existingPatientId) {
+        // Token exists and is valid - redirect to dashboard
+        console.log('✅ Demo token exists, redirecting to dashboard');
+        console.log('   Patient ID:', existingPatientId);
+        router.push('/dashboard');
+        return;
+      }
+
+      // STEP 3: Check if initialization is already in progress
+      const initStatus = demoTokenStorage.getInitStatus();
+
+      if (initStatus === 'pending') {
+        console.log('⏳ Demo initialization already in progress, waiting...');
+        // Wait for initialization to complete (polling)
+        const checkInterval = setInterval(() => {
+          if (demoTokenStorage.isInitialized()) {
+            console.log('✅ Initialization complete, redirecting...');
+            clearInterval(checkInterval);
+            router.push('/dashboard');
+          }
+        }, 500);
+
+        // Timeout after 10 seconds
+        setTimeout(() => {
+          clearInterval(checkInterval);
+          console.error('❌ Initialization timeout - restarting');
+          demoTokenStorage.clear();
+          window.location.reload();
+        }, 10000);
+
+        return;
+      }
+
+      // STEP 4: No token exists - create new demo user
+      console.log('🚀 Initializing new demo user...');
+      demoTokenStorage.markInitPending();
 
       try {
-        const result = await demoApiClient.initialize()
+        const result = await demoApiClient.initialize();
 
         if (result) {
           // Token is automatically stored in localStorage by demoApiClient
-          console.log('✅ Demo initialized:', result)
+          console.log('✅ Demo initialized:', result);
+          console.log('   Patient ID:', result.patient_id);
+          console.log('   Session count:', result.session_ids.length);
+
+          // Verify storage worked
+          const storedPatientId = demoTokenStorage.getPatientId();
+          if (!storedPatientId) {
+            throw new Error('Failed to store patient ID in localStorage');
+          }
 
           // Redirect to dashboard
-          router.push('/dashboard')
+          router.push('/dashboard');
         } else {
-          console.error('❌ Demo initialization failed: result is null')
-          // Still redirect to dashboard (it will handle the error)
-          router.push('/dashboard')
+          throw new Error('Demo initialization returned null');
         }
       } catch (err) {
-        console.error('❌ Demo initialization error:', err)
-        // Still redirect to dashboard (it will handle the error)
-        router.push('/dashboard')
+        console.error('❌ Demo initialization error:', err);
+        demoTokenStorage.clear();
+
+        // Show error to user
+        alert('Failed to initialize demo. Please refresh the page.');
       }
     }
 
