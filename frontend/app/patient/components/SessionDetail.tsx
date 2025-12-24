@@ -98,7 +98,11 @@ export function SessionDetail({ session, onClose }: SessionDetailProps) {
 
           <div className="text-center">
             <h2 id="session-detail-title" style={{ fontFamily: fontSerif, fontSize: '20px', fontWeight: 600 }} className="text-gray-800 dark:text-gray-200">
-              Session {session.id.replace('s', '')} - {session.date}, 2024
+              Session {session.id.replace('s', '')} - {session.rawDate?.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+              }) || session.date}
             </h2>
             {session.milestone && (
               <div className="flex items-center justify-center gap-2 mt-1">
