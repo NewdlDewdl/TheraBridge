@@ -133,7 +133,7 @@ export function SessionCard({ session, onClick, id, scale = 1.0 }: SessionCardPr
               ? (isDark ? `0 8px 32px rgba(0,0,0,0.5), 0 0 0 4px ${goldColor}40` : '0 8px 32px rgba(0,0,0,0.3), 0 0 0 4px rgba(255,255,255,0.8)')
               : 'none',
           }}
-          whileHover={{ scale: scale * 1.01, boxShadow: isStarHovered ? undefined : '0 4px 16px rgba(0,0,0,0.12)' }}
+          whileHover={{ scale: 1.01, boxShadow: isStarHovered ? undefined : '0 4px 16px rgba(0,0,0,0.12)' }}
           transition={{ duration: 0.2 }}
           role="button"
           tabIndex={0}
@@ -402,7 +402,7 @@ export function SessionCard({ session, onClick, id, scale = 1.0 }: SessionCardPr
         transform: `scale(${scale})`,
         transformOrigin: 'center center',
       }}
-      whileHover={{ scale: scale * 1.01, boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
+      whileHover={{ scale: 1.01, boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}
       transition={{ duration: 0.2 }}
       role="button"
       tabIndex={0}

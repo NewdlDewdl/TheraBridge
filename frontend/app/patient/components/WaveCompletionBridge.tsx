@@ -14,7 +14,7 @@
  *   - Automatically reconnects on simple refresh (preserves patient ID)
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSessionData } from "../contexts/SessionDataContext";
 import { usePipelineEvents } from "@/hooks/use-pipeline-events";
 import { demoTokenStorage } from "@/lib/demo-token-storage";
@@ -24,6 +24,8 @@ export function WaveCompletionBridge() {
   const [patientId, setPatientId] = useState<string | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
+  const refreshDebounceRef = useRef<NodeJS.Timeout | null>(null);
+  const pendingRefreshRef = useRef<Promise<void> | null>(null);
 
   // Continuously poll for patient ID - detects when it changes or gets cleared (hard refresh)
   useEffect(() => {
@@ -99,8 +101,25 @@ export function WaveCompletionBridge() {
       // Show loading overlay on this session card
       setSessionLoading(sessionId, true);
 
-      // Refresh data to get mood/topics (now actually waits for completion)
-      await refresh();
+      // Debounced refresh: if multiple events arrive quickly, batch them
+      if (refreshDebounceRef.current) {
+        clearTimeout(refreshDebounceRef.current);
+      }
+
+      // Create or reuse pending refresh promise
+      if (!pendingRefreshRef.current) {
+        pendingRefreshRef.current = new Promise(resolve => {
+          refreshDebounceRef.current = setTimeout(async () => {
+            await refresh();
+            pendingRefreshRef.current = null;
+            refreshDebounceRef.current = null;
+            resolve();
+          }, 200); // Wait 200ms to batch rapid events
+        });
+      }
+
+      // Wait for the batched refresh to complete
+      await pendingRefreshRef.current;
 
       // Small delay to ensure user sees the overlay before it disappears
       await new Promise(resolve => setTimeout(resolve, 300));
@@ -117,8 +136,25 @@ export function WaveCompletionBridge() {
       // Show loading overlay on this session card
       setSessionLoading(sessionId, true);
 
-      // Refresh data to get deep analysis (now actually waits for completion)
-      await refresh();
+      // Debounced refresh: if multiple events arrive quickly, batch them
+      if (refreshDebounceRef.current) {
+        clearTimeout(refreshDebounceRef.current);
+      }
+
+      // Create or reuse pending refresh promise
+      if (!pendingRefreshRef.current) {
+        pendingRefreshRef.current = new Promise(resolve => {
+          refreshDebounceRef.current = setTimeout(async () => {
+            await refresh();
+            pendingRefreshRef.current = null;
+            refreshDebounceRef.current = null;
+            resolve();
+          }, 200); // Wait 200ms to batch rapid events
+        });
+      }
+
+      // Wait for the batched refresh to complete
+      await pendingRefreshRef.current;
 
       // Small delay to ensure user sees the overlay before it disappears
       await new Promise(resolve => setTimeout(resolve, 300));
