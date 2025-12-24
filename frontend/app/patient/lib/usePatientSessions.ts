@@ -247,6 +247,16 @@ export function usePatientSessions() {
             transcript: backendSession.transcript || [],
             extraction_confidence: backendSession.extraction_confidence,
             topics_extracted_at: backendSession.topics_extracted_at,
+            // Wave 2 fields (prose analysis)
+            prose_analysis: backendSession.prose_analysis,
+            prose_generated_at: backendSession.prose_generated_at,
+            // Deep analysis (JSONB)
+            deep_analysis: backendSession.deep_analysis,
+            deep_analyzed_at: backendSession.deep_analyzed_at,
+            // Breakthrough data
+            has_breakthrough: backendSession.has_breakthrough,
+            breakthrough_data: backendSession.breakthrough_data,
+            breakthrough_analyzed_at: backendSession.breakthrough_analyzed_at,
           };
         });
 
@@ -407,6 +417,16 @@ export function usePatientSessions() {
               transcript: backendSession.transcript || [],
               extraction_confidence: backendSession.extraction_confidence,
               topics_extracted_at: backendSession.topics_extracted_at,
+              // Wave 2 fields (prose analysis)
+              prose_analysis: backendSession.prose_analysis,
+              prose_generated_at: backendSession.prose_generated_at,
+              // Deep analysis (JSONB)
+              deep_analysis: backendSession.deep_analysis,
+              deep_analyzed_at: backendSession.deep_analyzed_at,
+              // Breakthrough data
+              has_breakthrough: backendSession.has_breakthrough,
+              breakthrough_data: backendSession.breakthrough_data,
+              breakthrough_analyzed_at: backendSession.breakthrough_analyzed_at,
             };
           });
           setSessions(transformed);
