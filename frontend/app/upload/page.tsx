@@ -10,6 +10,7 @@ import { ProcessingProvider, useProcessing } from '@/contexts/ProcessingContext'
 import { NavigationBar } from '@/components/NavigationBar';
 import FileUploader from '@/app/patient/upload/components/FileUploader';
 import AudioRecorder from '@/app/patient/upload/components/AudioRecorder';
+import TranscriptUploader from '@/app/patient/upload/components/TranscriptUploader';
 import UploadProgress from '@/app/patient/upload/components/UploadProgress';
 import ResultsView from '@/app/patient/upload/components/ResultsView';
 import { DashboardSkeleton } from '@/app/patient/components/DashboardSkeleton';
@@ -49,7 +50,7 @@ function UploadPageContent() {
 
       <main className="w-full px-4 py-8 flex justify-center">
         {view === 'upload' && (
-          <div className="w-full max-w-[900px]">
+          <div className="w-full max-w-[900px] space-y-0">
             {/* Horizontal Layout Container */}
             <div className="flex items-stretch gap-0">
               {/* Upload Section */}
@@ -69,6 +70,9 @@ function UploadPageContent() {
                 <AudioRecorder onUploadSuccess={handleUploadSuccess} />
               </div>
             </div>
+
+            {/* Transcript Upload Section */}
+            <TranscriptUploader />
           </div>
         )}
 

@@ -131,7 +131,7 @@ export default function AudioRecorder({ onUploadSuccess }: AudioRecorderProps) {
 
       <div className="space-y-4">
         {/* Recording Area */}
-        <div className="bg-[#F8F8F6] dark:bg-[#252030] rounded-xl p-7 text-center">
+        <div className="min-h-[280px] bg-[#F8F8F6] dark:bg-[#252030] rounded-xl p-7 text-center flex flex-col justify-center">
           <div className="flex flex-col items-center gap-4">
             {/* Mic Button */}
             <button
