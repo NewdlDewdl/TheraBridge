@@ -12,6 +12,7 @@ from pathlib import Path
 import logging
 import subprocess
 import sys
+import os
 
 from app.database import get_db, get_supabase_admin
 from app.middleware.demo_auth import get_demo_user, require_demo_auth
@@ -85,12 +86,13 @@ async def populate_session_transcripts_background(patient_id: str):
 
         logger.info(f"Running transcript population: {python_exe} {script_path} {patient_id}")
 
-        # Run transcript population script
+        # Run transcript population script with environment variables
         result = subprocess.run(
             [python_exe, str(script_path), patient_id],
             capture_output=True,
             text=True,
-            timeout=300  # 5 minute timeout
+            timeout=300,  # 5 minute timeout
+            env=os.environ.copy()  # Pass all environment variables
         )
 
         if result.returncode == 0:
@@ -118,12 +120,13 @@ async def run_wave1_analysis_background(patient_id: str):
 
         logger.info(f"Running Wave 1 analysis: {python_exe} {script_path} {patient_id}")
 
-        # Run Wave 1 script
+        # Run Wave 1 script with environment variables
         result = subprocess.run(
             [python_exe, str(script_path), patient_id],
             capture_output=True,
             text=True,
-            timeout=600  # 10 minute timeout
+            timeout=600,  # 10 minute timeout
+            env=os.environ.copy()  # Pass all environment variables
         )
 
         if result.returncode == 0:
@@ -155,12 +158,13 @@ async def run_wave2_analysis_background(patient_id: str):
 
         logger.info(f"Running Wave 2 analysis: {python_exe} {script_path} {patient_id}")
 
-        # Run Wave 2 script
+        # Run Wave 2 script with environment variables
         result = subprocess.run(
             [python_exe, str(script_path), patient_id],
             capture_output=True,
             text=True,
-            timeout=900  # 15 minute timeout
+            timeout=900,  # 15 minute timeout
+            env=os.environ.copy()  # Pass all environment variables
         )
 
         if result.returncode == 0:
