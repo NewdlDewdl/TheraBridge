@@ -42,6 +42,17 @@ export function SessionCardsGrid({
     console.log('[DEBUG SessionCardsGrid] isLoading changed:', isLoading);
   }, [isLoading]);
 
+  // Update selectedSession when sessions data changes (fixes stale data in SessionDetail)
+  useEffect(() => {
+    if (selectedSession) {
+      const updatedSession = sessions.find(s => s.id === selectedSession.id);
+      if (updatedSession) {
+        console.log('[DEBUG SessionCardsGrid] Updating selectedSession with fresh data');
+        setSelectedSession(updatedSession);
+      }
+    }
+  }, [sessions]); // Only depend on sessions, not selectedSession (avoid infinite loop)
+
   // Page 1: AddSessionCard + 5 sessions (6 cards total)
   // Page 2+: 6 sessions only (no AddSessionCard)
   const isFirstPage = currentPage === 0;
