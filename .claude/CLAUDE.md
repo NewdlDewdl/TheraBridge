@@ -108,52 +108,43 @@ Before creating any new file, ask:
 
 # TherapyBridge - Project State
 
-## Current Focus: Real-Time Granular Session Updates - Phase 2 In Progress 🔄
+## Current Focus: Real-Time Granular Session Updates - COMPLETE ✅
 
-**Implementation Status (as of 2026-01-03):**
+**Implementation Complete (2026-01-03):**
+- ✅ Backend `/api/demo/status` enhanced with full analysis data per session
+- ✅ Frontend granular polling with per-session loading overlays
+- ✅ Adaptive polling: 1s during Wave 1 → 3s during Wave 2 → stop
+- ✅ Database-backed SSE event queue (fixes subprocess isolation bug)
+- ✅ SSE integration with feature flags (disabled by default)
+- ✅ SessionDetail scroll preservation with smooth animation
+- ✅ Test endpoint removed, documentation updated
 
-**✅ Phase 1: Backend Delta Data Enhancement - COMPLETE**
-- Enhanced `/api/demo/status` SessionStatus schema with full analysis data
-- Added Wave 1 fields: `topics`, `mood_score`, `summary`, `technique`, `action_items`
-- Added Wave 2 fields: `prose_analysis`, `deep_analysis`
-- Added timestamps: `last_wave1_update`, `last_wave2_update` for change detection
-- Enhanced database query to fetch all analysis fields and timestamps
-- **Deployed to Railway**: Commit `87ea06d` (2025-12-23 22:16:22)
-- **Verified in Production**: All new fields present in API response
+**Production Behavior:**
+1. **Demo Init (0-3s)**: Demo initialized, patient ID stored, polling starts at 1s
+2. **Transcripts Loading (0-30s)**: Sessions endpoint may timeout, polling detects sessions
+3. **Wave 1 Complete (~60s)**: Individual cards show loading overlay as each session completes
+4. **Polling Switch**: Automatically switches to 3s interval after Wave 1 complete
+5. **Wave 2 Complete (~9.6 min)**: Individual cards update with prose analysis, polling stops
+6. **SSE Support**: Real-time events via database queue (enable with `NEXT_PUBLIC_SSE_ENABLED=true`)
 
-**✅ Phase 2: Frontend Granular Polling - PARTIAL COMPLETE**
-- ✅ Added environment variables for feature flags and polling configuration
-- ✅ Created `frontend/lib/polling-config.ts` module with centralized config
-- ✅ Refactored `usePatientSessions` hook with granular change detection
-- ✅ Implemented adaptive polling intervals (1s Wave 1 → 3s Wave 2)
-- ✅ Added per-session state tracking via `Map<sessionId, state>`
-- ✅ Implemented loading overlay management (`loadingSessions` Set)
-- ✅ Added staggered visual updates (100ms delay for batch changes)
-- ⏳ **Still To Do**: SessionDetail scroll preservation + backend test endpoint + verification
-- **Deployed to Railway**: Commit `b2f9802` (2025-12-23 22:16:52)
+**Feature Flags:**
+- `NEXT_PUBLIC_GRANULAR_UPDATES=true` - Per-session updates enabled
+- `NEXT_PUBLIC_SSE_ENABLED=false` - SSE disabled (polling fallback active)
+- `NEXT_PUBLIC_POLLING_INTERVAL_WAVE1=1000` - 1s during Wave 1
+- `NEXT_PUBLIC_POLLING_INTERVAL_WAVE2=3000` - 3s during Wave 2
 
-**⏳ Phase 3: Backend - Database-Backed SSE Event Queue - PENDING**
-- Database migration for `pipeline_events` table
-- Refactor PipelineLogger to write events to database
-- Update SSE endpoint to read from database
-- Fix subprocess isolation bug
-
-**⏳ Phase 4: Frontend SSE Integration + Documentation - PENDING**
-- Update WaveCompletionBridge for no-stagger SSE updates
-- Update polling to respect SSE feature flag
-- Remove test endpoint
-- Update all documentation
-- Rename TherapyBridge → TheraBridge
-
-**Implementation Plan:** `.claude/plans/2026-01-03-realtime-session-updates.md`
+**Implementation Commits:**
+- Phase 1: `87ea06d` - Backend delta data enhancement
+- Phase 2: `6e78b5b` - SessionDetail scroll + test endpoint
+- Phase 3: `51ac1fc` - Database-backed SSE event queue
+- Phase 4: (next commit) - SSE integration + documentation + TheraBridge rename
 
 **Next Steps:**
-1. Complete Phase 2: SessionDetail scroll preservation + test endpoint
-2. Test Phase 2 in production with Railway deployment
-3. Implement Phase 3: Database-backed SSE event queue
-4. Implement Phase 4: SSE integration + documentation updates
+1. Monitor production logs for granular update behavior
+2. Enable SSE in production once verified (`NEXT_PUBLIC_SSE_ENABLED=true`)
+3. Implement Feature 2: Analytics Dashboard
 
-**Full Documentation:** See `Project MDs/TherapyBridge.md`
+**Full Documentation:** See `Project MDs/TheraBridge.md`
 **Detailed Session History:** See `.claude/SESSION_LOG.md`
 
 ---

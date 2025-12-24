@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { useSessionData } from "../contexts/SessionDataContext";
 import { usePipelineEvents } from "@/hooks/use-pipeline-events";
 import { demoTokenStorage } from "@/lib/demo-token-storage";
+import { POLLING_CONFIG, logPolling } from "@/lib/polling-config";
 
 export function WaveCompletionBridge() {
   const { refresh, setSessionLoading } = useSessionData();
@@ -92,39 +93,43 @@ export function WaveCompletionBridge() {
     enabled: isReady && !!patientId,
 
     onWave1SessionComplete: async (sessionId, sessionDate) => {
-      console.log(
-        `🔄 Wave 1 complete for ${sessionDate}! Showing loading state...`
-      );
+      if (!POLLING_CONFIG.sseEnabled) {
+        logPolling('[SSE] SSE disabled via feature flag, ignoring event');
+        return;
+      }
 
-      // Show loading overlay on this session card
+      logPolling(`[SSE] Wave 1 complete for session ${sessionDate} (${sessionId})`);
+
+      // Show loading overlay immediately (no stagger for real-time)
       setSessionLoading(sessionId, true);
 
-      // Small delay to ensure loading state is visible
-      await new Promise(resolve => setTimeout(resolve, 100));
-
-      // Refresh data to get mood/topics
+      // Fetch updated session data
       await refresh();
 
-      // Hide loading overlay
-      setSessionLoading(sessionId, false);
+      // Hide loading overlay after duration + fade
+      setTimeout(() => {
+        setSessionLoading(sessionId, false);
+      }, POLLING_CONFIG.overlayDuration + POLLING_CONFIG.fadeDuration);
     },
 
     onWave2SessionComplete: async (sessionId, sessionDate) => {
-      console.log(
-        `🔄 Wave 2 complete for ${sessionDate}! Showing loading state...`
-      );
+      if (!POLLING_CONFIG.sseEnabled) {
+        logPolling('[SSE] SSE disabled via feature flag, ignoring event');
+        return;
+      }
 
-      // Show loading overlay on this session card
+      logPolling(`[SSE] Wave 2 complete for session ${sessionDate} (${sessionId})`);
+
+      // Show loading overlay immediately (no stagger for real-time)
       setSessionLoading(sessionId, true);
 
-      // Small delay to ensure loading state is visible
-      await new Promise(resolve => setTimeout(resolve, 100));
-
-      // Refresh data to get deep analysis
+      // Fetch updated session data
       await refresh();
 
-      // Hide loading overlay
-      setSessionLoading(sessionId, false);
+      // Hide loading overlay after duration + fade
+      setTimeout(() => {
+        setSessionLoading(sessionId, false);
+      }, POLLING_CONFIG.overlayDuration + POLLING_CONFIG.fadeDuration);
     },
   });
 

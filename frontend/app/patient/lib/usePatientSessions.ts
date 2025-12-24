@@ -286,6 +286,12 @@ export function usePatientSessions() {
 
   // Polling effect: Granular per-session updates with adaptive intervals
   useEffect(() => {
+    // If SSE enabled, disable polling (SSE will handle real-time updates)
+    if (POLLING_CONFIG.sseEnabled) {
+      logPolling('SSE enabled, polling disabled');
+      return;
+    }
+
     // Don't poll if feature disabled or status is complete
     if (!POLLING_CONFIG.granularUpdatesEnabled || analysisStatus === 'wave2_complete') {
       return;
