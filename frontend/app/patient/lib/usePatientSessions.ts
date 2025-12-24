@@ -40,6 +40,7 @@ export function usePatientSessions() {
   const [patientId, setPatientId] = useState<string | null>(null);
   const lastWave1Count = useRef<number>(0);
   const lastWave2Count = useRef<number>(0);
+  const lastSessionCount = useRef<number>(0);
 
   // Watch for patient ID changes (demo initialization)
   useEffect(() => {
@@ -73,10 +74,17 @@ export function usePatientSessions() {
         }
 
         // Fetch ALL sessions from API (fully dynamic)
+        // Note: Sessions may not have transcripts for ~30s after demo init
         console.log('[Sessions] Fetching all sessions from API...');
         const result = await apiClient.getAllSessions();
 
         if (!result.success || !result.data) {
+          // If sessions aren't ready yet, wait and let polling handle it
+          if (result.error?.includes('timeout')) {
+            console.log('[Sessions] API timeout - sessions may still be initializing. Polling will retry...');
+            setIsLoading(false);
+            return;
+          }
           throw new Error(result.error || 'Failed to fetch sessions');
         }
 
@@ -168,15 +176,18 @@ export function usePatientSessions() {
 
           setAnalysisStatus(status.analysis_status);
 
-          // Only refresh if counts actually changed (not just > 0)
+          // Refresh if any counts changed (sessions, wave1, wave2)
+          const sessionCountChanged = status.session_count !== lastSessionCount.current;
           const wave1Changed = status.wave1_complete !== lastWave1Count.current;
           const wave2Changed = status.wave2_complete !== lastWave2Count.current;
 
-          if (wave1Changed || wave2Changed) {
-            console.log('[Polling] Analysis progress detected:', {
+          if (sessionCountChanged || wave1Changed || wave2Changed) {
+            console.log('[Polling] Progress detected:', {
+              sessions: `${lastSessionCount.current} → ${status.session_count}`,
               wave1: `${lastWave1Count.current} → ${status.wave1_complete}`,
               wave2: `${lastWave2Count.current} → ${status.wave2_complete}`
             });
+            lastSessionCount.current = status.session_count;
             lastWave1Count.current = status.wave1_complete;
             lastWave2Count.current = status.wave2_complete;
             refresh();
