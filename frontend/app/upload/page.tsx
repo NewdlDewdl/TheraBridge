@@ -47,21 +47,28 @@ function UploadPageContent() {
     }`}>
       <NavigationBar />
 
-      <main className="w-full px-4 py-8">
+      <main className="w-full px-4 py-8 flex justify-center">
         {view === 'upload' && (
-          <div className="space-y-8">
-            <FileUploader onUploadSuccess={handleUploadSuccess} />
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+          <div className="w-full max-w-[900px]">
+            {/* Horizontal Layout Container */}
+            <div className="flex items-stretch gap-0">
+              {/* Upload Section */}
+              <div className="flex-1">
+                <FileUploader onUploadSuccess={handleUploadSuccess} />
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-gray-50 text-gray-500 font-medium">OR</span>
+
+              {/* Vertical Divider with OR */}
+              <div className="relative w-px bg-[#D0D0D0] dark:bg-[#3a3545]">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#ECEAE5] dark:bg-[#1a1625] px-0 py-3">
+                  <span className="text-[11px] font-semibold tracking-wider text-gray-400 dark:text-gray-600">OR</span>
+                </div>
+              </div>
+
+              {/* Record Section */}
+              <div className="flex-1">
+                <AudioRecorder onUploadSuccess={handleUploadSuccess} />
               </div>
             </div>
-
-            <AudioRecorder onUploadSuccess={handleUploadSuccess} />
           </div>
         )}
 

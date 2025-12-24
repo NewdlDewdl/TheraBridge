@@ -87,6 +87,7 @@ TASK_MODEL_ASSIGNMENTS = {
     "topic_extraction": "gpt-5-mini",       # Structured metadata extraction
     "breakthrough_detection": "gpt-5",      # Complex clinical reasoning required
     "deep_analysis": "gpt-5.2",             # Comprehensive synthesis of all data
+    "prose_generation": "gpt-5.2",          # Patient-facing prose narrative
 }
 
 
@@ -96,6 +97,7 @@ ESTIMATED_TOKEN_USAGE = {
     "topic_extraction": {"input": 3000, "output": 300},    # ~$0.0013 per session
     "breakthrough_detection": {"input": 3500, "output": 400}, # ~$0.0084 per session
     "deep_analysis": {"input": 5000, "output": 800},       # ~$0.0200 per session
+    "prose_generation": {"input": 2000, "output": 600},    # ~$0.0118 per session
 }
 
 

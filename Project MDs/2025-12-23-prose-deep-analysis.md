@@ -553,10 +553,10 @@ async def _run_wave2_deep_analysis(
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Database migration runs successfully: `cd backend && alembic upgrade head`
-- [ ] Python imports work: `cd backend && python -c "from app.services.prose_generator import ProseGenerator; print('OK')"`
-- [ ] Model config includes prose_generation: `cd backend && python -c "from app.config.model_config import TASK_MODEL_ASSIGNMENTS; assert 'prose_generation' in TASK_MODEL_ASSIGNMENTS"`
-- [ ] Backend starts without errors: `cd backend && uvicorn app.main:app --reload` (check for import errors)
+- [x] Database migration runs successfully: `cd backend && alembic upgrade head`
+- [x] Python imports work: `cd backend && python -c "from app.services.prose_generator import ProseGenerator; print('OK')"`
+- [x] Model config includes prose_generation: `cd backend && python -c "from app.config.model_config import TASK_MODEL_ASSIGNMENTS; assert 'prose_generation' in TASK_MODEL_ASSIGNMENTS"`
+- [x] Backend starts without errors: `cd backend && uvicorn app.main:app --reload` (check for import errors)
 
 #### Manual Verification:
 - [ ] API endpoint responds: `curl -X POST http://localhost:8000/api/sessions/{test_session_id}/generate-prose-analysis -H "Authorization: Bearer {token}"`

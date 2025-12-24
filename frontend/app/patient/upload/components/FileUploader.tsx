@@ -120,46 +120,57 @@ export default function FileUploader({ onUploadSuccess }: FileUploaderProps) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h2 className="text-xl font-semibold mb-6">Upload Audio File</h2>
-        <div className="space-y-4">
-          {/* Dropzone */}
-          <div
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onClick={() => document.getElementById('file-input')?.click()}
-            className={`
-              border-2 border-dashed rounded-lg p-12 text-center cursor-pointer transition-colors
-              ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-500'}
-              ${selectedFile ? 'bg-gray-50' : ''}
-            `}
-          >
-            <input
-              id="file-input"
-              type="file"
-              accept={ACCEPTED_EXTENSIONS.join(',')}
-              onChange={handleFileSelect}
-              className="hidden"
-            />
-            <div className="flex flex-col items-center gap-4">
-              <div className="p-4 rounded-full bg-blue-100">
-                <Upload className="h-8 w-8 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-lg font-medium">
-                  {isDragging ? 'Drop the file here' : 'Drag & drop audio file'}
-                </p>
-                <p className="text-sm text-gray-500 mt-1">
-                  or click to browse
-                </p>
-              </div>
-              <p className="text-xs text-gray-400">
-                Supported: MP3, WAV, M4A, OGG, FLAC, AAC, WEBM (max {formatFileSize(MAX_FILE_SIZE)})
+    <div className="px-8 py-8">
+      {/* Section Title */}
+      <h2 className="text-[18px] font-semibold text-center mb-5 text-gray-800 dark:text-gray-200">
+        Upload Audio File
+      </h2>
+
+      <div className="space-y-4">
+        {/* Dropzone */}
+        <div
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onClick={() => document.getElementById('file-input')?.click()}
+          className={`
+            border-2 border-dashed rounded-xl p-9 text-center cursor-pointer transition-all duration-200
+            ${isDragging
+              ? 'border-[#5AB9B4] bg-[#5AB9B4]/[0.03] dark:border-[#a78bfa] dark:bg-[#a78bfa]/[0.05]'
+              : 'border-[#D0D0D0] hover:border-[#5AB9B4] hover:bg-[#5AB9B4]/[0.03] dark:border-[#3a3545] dark:hover:border-[#a78bfa] dark:hover:bg-[#a78bfa]/[0.05]'
+            }
+            ${selectedFile ? 'bg-gray-50/50 dark:bg-[#252030]' : 'dark:bg-[#252030]'}
+          `}
+        >
+          <input
+            id="file-input"
+            type="file"
+            accept={ACCEPTED_EXTENSIONS.join(',')}
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+          <div className="flex flex-col items-center gap-3.5">
+            {/* Icon */}
+            <div className="w-[52px] h-[52px] rounded-full bg-[#5AB9B4]/[0.12] dark:bg-[#a78bfa]/[0.15] flex items-center justify-center">
+              <Upload className="h-[26px] w-[26px] text-[#5AB9B4] dark:text-[#a78bfa]" />
+            </div>
+
+            {/* Text */}
+            <div>
+              <p className="text-[14px] font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                {isDragging ? 'Drop the file here' : 'Drag & drop audio file'}
+              </p>
+              <p className="text-[12px] text-gray-500 dark:text-gray-400">
+                or click to browse
               </p>
             </div>
+
+            {/* Formats */}
+            <p className="text-[10px] text-gray-400 dark:text-gray-500">
+              MP3, WAV, M4A, OGG, FLAC, AAC (max 100 MB)
+            </p>
           </div>
+        </div>
 
           {/* Validation Error */}
           {validationError && (
@@ -199,21 +210,20 @@ export default function FileUploader({ onUploadSuccess }: FileUploaderProps) {
               <button
                 onClick={handleUpload}
                 disabled={isUploading}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="flex-1 px-4 py-2 bg-[#5AB9B4] dark:bg-[#8B6AAE] text-white rounded-lg font-semibold text-[13px] hover:bg-[#4AA9A4] dark:hover:bg-[#7B5A9E] hover:shadow-[0_4px_16px_rgba(90,185,180,0.35)] dark:hover:shadow-[0_4px_16px_rgba(139,106,174,0.35)] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
               >
                 {isUploading ? 'Uploading...' : 'Upload & Transcribe'}
               </button>
               <button
                 onClick={handleClear}
                 disabled={isUploading}
-                className="px-4 py-2 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-2 border border-gray-300 dark:border-[#3a3545] rounded-lg font-medium text-[13px] hover:bg-gray-50 dark:hover:bg-[#252030] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Clear
               </button>
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 }

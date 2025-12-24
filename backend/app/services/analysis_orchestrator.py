@@ -28,6 +28,7 @@ from app.services.mood_analyzer import MoodAnalyzer
 from app.services.topic_extractor import TopicExtractor
 from app.services.breakthrough_detector import BreakthroughDetector
 from app.services.deep_analyzer import DeepAnalyzer
+from app.services.prose_generator import ProseGenerator
 from app.database import get_db
 from supabase import Client
 
@@ -422,6 +423,31 @@ class AnalysisOrchestrator:
             "analysis_confidence": analysis.confidence_score,
             "deep_analyzed_at": datetime.utcnow().isoformat(),
         }).eq("id", session_id).execute()
+
+        logger.info(f"✓ Wave 2 deep analysis complete for session {session_id}")
+
+        # Auto-generate prose from deep analysis
+        try:
+            logger.info(f"📝 Auto-generating prose for session {session_id}")
+            prose_generator = ProseGenerator()
+            prose = await prose_generator.generate_prose(
+                session_id=session_id,
+                deep_analysis=analysis.to_dict(),
+                confidence_score=analysis.confidence_score
+            )
+
+            # Update session with prose
+            self.db.table("therapy_sessions").update({
+                "prose_analysis": prose.prose_text,
+                "prose_generated_at": prose.generated_at.isoformat()
+            }).eq("id", session_id).execute()
+
+            logger.info(f"✓ Prose auto-generated: {prose.word_count} words, {prose.paragraph_count} paragraphs")
+
+        except Exception as e:
+            # Don't fail entire Wave 2 if prose generation fails
+            logger.error(f"Prose auto-generation failed for session {session_id}: {e}")
+            logger.warning("Wave 2 deep analysis succeeded, but prose generation failed (non-critical)")
 
     # =============================================================================
     # Helper Functions

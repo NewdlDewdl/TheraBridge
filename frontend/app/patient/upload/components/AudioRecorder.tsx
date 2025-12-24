@@ -123,69 +123,72 @@ export default function AudioRecorder({ onUploadSuccess }: AudioRecorderProps) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-        <h2 className="text-xl font-semibold mb-6">Record Audio</h2>
-        <div className="space-y-4">
-          {/* Recording Status */}
-          <div className="bg-gray-50 rounded-lg p-8 text-center">
-            <div className="flex flex-col items-center gap-4">
-              <div className={`p-6 rounded-full ${isRecording ? 'bg-red-100' : 'bg-blue-100'}`}>
-                <Mic className={`h-12 w-12 ${isRecording ? 'text-red-600' : 'text-blue-600'}`} />
+    <div className="px-8 py-8">
+      {/* Section Title */}
+      <h2 className="text-[18px] font-semibold text-center mb-5 text-gray-800 dark:text-gray-200">
+        Record Audio
+      </h2>
+
+      <div className="space-y-4">
+        {/* Recording Area */}
+        <div className="bg-[#F8F8F6] dark:bg-[#252030] rounded-xl p-7 text-center">
+          <div className="flex flex-col items-center gap-4">
+            {/* Mic Button */}
+            <button
+              onClick={isRecording ? stopRecording : startRecording}
+              disabled={isUploading}
+              className={`
+                w-16 h-16 rounded-full flex items-center justify-center transition-all duration-200
+                ${isRecording
+                  ? 'bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 shadow-[0_0_0_6px_rgba(220,38,38,0.08)] hover:shadow-[0_0_0_10px_rgba(220,38,38,0.12),0_0_24px_rgba(220,38,38,0.2)] hover:scale-105'
+                  : 'bg-[#5AB9B4]/[0.12] dark:bg-[#a78bfa]/[0.15] text-[#5AB9B4] dark:text-[#a78bfa] shadow-[0_0_0_6px_rgba(90,185,180,0.08)] dark:shadow-[0_0_0_6px_rgba(167,139,250,0.08)] hover:bg-[#5AB9B4]/[0.2] dark:hover:bg-[#a78bfa]/[0.25] hover:shadow-[0_0_0_10px_rgba(90,185,180,0.12),0_0_24px_rgba(90,185,180,0.2)] dark:hover:shadow-[0_0_0_10px_rgba(167,139,250,0.12),0_0_24px_rgba(167,139,250,0.2)] hover:scale-105'
+                }
+                disabled:opacity-50 disabled:cursor-not-allowed
+              `}
+            >
+              <Mic className="h-7 w-7" />
+            </button>
+
+            {/* Recording Timer */}
+            {isRecording && (
+              <div className="text-center">
+                <div className="text-3xl font-mono font-medium text-gray-800 dark:text-gray-200">
+                  {formatTime(recordingTime)}
+                </div>
+                <div className="text-sm text-red-600 dark:text-red-400 mt-1 flex items-center justify-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-red-600 dark:bg-red-400 rounded-full animate-pulse"></span>
+                  Recording...
+                </div>
               </div>
+            )}
 
-              {isRecording && (
-                <div className="text-center">
-                  <div className="text-3xl font-mono font-medium">
-                    {formatTime(recordingTime)}
-                  </div>
-                  <div className="text-sm text-red-600 mt-1 flex items-center justify-center gap-2">
-                    <span className="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
-                    Recording...
-                  </div>
+            {/* Upload Status */}
+            {isUploading && (
+              <div className="text-center">
+                <div className="text-lg text-[#5AB9B4] dark:text-[#a78bfa]">
+                  Uploading recording...
                 </div>
-              )}
+              </div>
+            )}
 
-              {isUploading && (
-                <div className="text-center">
-                  <div className="text-lg text-blue-600">
-                    Uploading recording...
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Control Buttons */}
-          <div className="flex gap-3 justify-center">
+            {/* Start Recording Button (when not recording) */}
             {!isRecording && !isUploading && (
               <button
                 onClick={startRecording}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[20px] bg-[#5AB9B4] dark:bg-[#8B6AAE] text-white text-[13px] font-semibold hover:bg-[#4AA9A4] dark:hover:bg-[#7B5A9E] hover:shadow-[0_4px_16px_rgba(90,185,180,0.35)] dark:hover:shadow-[0_4px_16px_rgba(139,106,174,0.35)] transition-all duration-200"
               >
-                <Mic className="h-4 w-4" />
+                <div className="w-3.5 h-3.5 rounded-full bg-white"></div>
                 Start Recording
               </button>
             )}
 
-            {isRecording && (
-              <button
-                onClick={stopRecording}
-                className="px-6 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors flex items-center gap-2"
-              >
-                <Square className="h-4 w-4" />
-                Stop Recording
-              </button>
+            {/* Instructions */}
+            {!isRecording && !isUploading && (
+              <div className="text-[11px] text-gray-500 dark:text-gray-400 mt-3 leading-relaxed">
+                Recording will automatically<br />upload when you stop.
+              </div>
             )}
           </div>
-
-          {/* Instructions */}
-          {!isRecording && !isUploading && (
-            <div className="text-center text-sm text-gray-500">
-              <p>Click "Start Recording" to begin recording from your microphone.</p>
-              <p className="mt-1">Recording will automatically upload when you stop.</p>
-            </div>
-          )}
         </div>
       </div>
     </div>

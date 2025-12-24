@@ -14,6 +14,7 @@ from app.database import get_db, get_session_with_breakthrough, store_breakthrou
 from app.services.breakthrough_detector import BreakthroughDetector
 from app.services.mood_analyzer import MoodAnalyzer
 from app.services.topic_extractor import TopicExtractor
+from app.services.prose_generator import ProseGenerator
 from app.services.analysis_orchestrator import AnalysisOrchestrator, analyze_session_full_pipeline
 from app.services.technique_library import get_technique_library
 from app.config import settings
@@ -87,6 +88,16 @@ class DeepAnalysisResponse(BaseModel):
     analysis: dict  # Complete JSONB analysis structure
     confidence: float  # 0.0 to 1.0
     analyzed_at: datetime
+
+
+class ProseAnalysisResponse(BaseModel):
+    """Response model for prose analysis"""
+    session_id: str
+    prose_text: str
+    word_count: int
+    paragraph_count: int
+    confidence: float
+    generated_at: datetime
 
 
 class PipelineStatusResponse(BaseModel):
@@ -1149,6 +1160,73 @@ async def analyze_deep(
             status_code=500,
             detail=f"Deep analysis failed: {str(e)}"
         )
+
+
+@router.post("/{session_id}/generate-prose-analysis", response_model=ProseAnalysisResponse)
+async def generate_prose_analysis(
+    session_id: str,
+    db: Client = Depends(get_db)
+):
+    """
+    Generate patient-facing prose narrative from existing deep analysis.
+
+    Requires:
+    - Session must have completed deep_analysis
+
+    Returns:
+    - 500-750 word prose narrative
+    - Word/paragraph counts
+    - Generation timestamp
+    """
+    try:
+        # Fetch session
+        session_response = db.table("therapy_sessions").select("*").eq("id", session_id).single().execute()
+        session = session_response.data
+
+        if not session:
+            raise HTTPException(status_code=404, detail="Session not found")
+
+        # Check if deep_analysis exists
+        if not session.get("deep_analysis"):
+            raise HTTPException(
+                status_code=400,
+                detail="Deep analysis must be completed before generating prose"
+            )
+
+        # Check if prose already exists (optional caching)
+        if session.get("prose_analysis"):
+            logger.info(f"Prose already exists for session {session_id}, regenerating...")
+
+        # Generate prose
+        generator = ProseGenerator()
+        prose = await generator.generate_prose(
+            session_id=session_id,
+            deep_analysis=session["deep_analysis"],
+            confidence_score=session.get("analysis_confidence", 0.8)
+        )
+
+        # Update database
+        db.table("therapy_sessions").update({
+            "prose_analysis": prose.prose_text,
+            "prose_generated_at": prose.generated_at.isoformat()
+        }).eq("id", session_id).execute()
+
+        logger.info(f"✓ Prose analysis saved for session {session_id}")
+
+        return ProseAnalysisResponse(
+            session_id=session_id,
+            prose_text=prose.prose_text,
+            word_count=prose.word_count,
+            paragraph_count=prose.paragraph_count,
+            confidence=prose.confidence_score,
+            generated_at=prose.generated_at
+        )
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Prose generation failed for session {session_id}: {e}")
+        raise HTTPException(status_code=500, detail=f"Prose generation failed: {str(e)}")
 
 
 # ============================================================================
