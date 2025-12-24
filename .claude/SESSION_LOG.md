@@ -4,6 +4,151 @@ Detailed history of all development sessions, architectural decisions, and imple
 
 ---
 
+## 2026-01-03 - Real-Time Granular Session Updates - Planning Phase 📋
+
+**Goal:** Implement per-session real-time updates with loading overlays, fix SSE subprocess isolation bug, optimize polling for granular updates.
+
+**Current Issues Identified:**
+1. **Bulk refresh problem**: Polling refreshes ALL 10 sessions when ANY Wave 1/Wave 2 completion detected
+2. **SessionDetail unnecessary refreshes**: Detail page re-renders even when viewing different session
+3. **No visual feedback**: No per-card loading indicators during analysis completion
+4. **SSE broken**: Events written to subprocess memory never reach FastAPI SSE endpoint
+
+**Research Completed:**
+
+**Frontend Analysis:**
+- ✅ SessionCard component (`frontend/app/patient/components/SessionCard.tsx`)
+  - Has `LoadingOverlay` component (line 378, 562)
+  - Already uses `loadingSessions` Set from context (line 32, 43)
+  - Shows "Analyzing..." when `!session.topics || session.topics.length === 0`
+- ✅ usePatientSessions hook (`frontend/app/patient/lib/usePatientSessions.ts`)
+  - Polling interval: 5 seconds (line 207)
+  - Detects progress by comparing counts: `sessionCountChanged || wave1Changed || wave2Changed`
+  - Calls `refresh()` which fetches ALL sessions from `/api/sessions/`
+- ✅ WaveCompletionBridge (`frontend/app/patient/components/WaveCompletionBridge.tsx`)
+  - Per-session SSE updates already implemented (lines 94-129)
+  - Calls `setSessionLoading(sessionId, true)` + `refresh()` + `setSessionLoading(sessionId, false)`
+- ✅ SessionDetail (`frontend/app/patient/components/SessionDetail.tsx`)
+  - Uses same `loadingSessions` Set (line 32, 43)
+  - Shows LoadingOverlay when `loadingSessions.has(session.id)` (line 245)
+
+**Backend Analysis:**
+- ✅ `/api/demo/status` endpoint (`backend/app/routers/demo.py:427-513`)
+  - Returns per-session `SessionStatus` array with `wave1_complete` and `wave2_complete` flags
+  - Does NOT include actual analysis data (topics, mood_score, prose_analysis)
+  - Calculates overall status based on completion counts
+- ✅ `/api/sessions/` endpoint (`backend/app/routers/sessions.py:138-225`)
+  - Returns full session data including all Wave 1 and Wave 2 fields
+  - No timestamp filtering for "changed since last poll"
+- ✅ Database schema (Supabase migrations 006, 009, 012)
+  - `therapy_sessions` table has timestamps: `topics_extracted_at`, `mood_analyzed_at`, `deep_analyzed_at`, `prose_generated_at`
+  - Indices exist for querying sessions with analysis
+
+**SSE Investigation:**
+- ✅ Frontend SSE hook (`frontend/hooks/use-pipeline-events.ts`)
+  - Connects successfully to `/api/sse/events/{patientId}`
+  - Listens for `event: 'COMPLETE'` + `phase: 'WAVE1'/'WAVE2'`
+  - Triggers `onWave1SessionComplete` / `onWave2SessionComplete` callbacks
+- ✅ Backend SSE endpoint (`backend/app/routers/sse.py`)
+  - Reads from `PipelineLogger._event_queue[patient_id]` in-memory dict
+  - Sends events in SSE format: `data: {json}\n\n`
+- ❌ **Root Cause**: Subprocess isolation bug
+  - Seed scripts run in subprocess via `asyncio.create_subprocess_exec()`
+  - PipelineLogger writes events to subprocess's `_event_queue` (different memory space)
+  - FastAPI SSE endpoint reads from main process's `_event_queue` (empty)
+  - Events never reach frontend
+
+**Production Verification (Railway logs 2026-01-03 05:46):**
+- Wave 2 analysis completes successfully (9.6 minutes for 10 sessions)
+- Sessions are written to Supabase database correctly
+- SSE connections established but no events received
+- Polling fallback works perfectly
+
+**Technical Decisions Made:**
+
+**UX Decision: Hybrid Loading Animation**
+- Spinner duration: 500ms (visible enough to register as "loading")
+- Fade-out: 200ms (smooth transition)
+- Total: ~700ms per session update
+- Reasoning: Long enough to feel "real-time", short enough to not feel slow
+
+**Architecture Decision: Single Plan with 4 Phases**
+- Phase 1: Backend - Enhance `/api/demo/status` for delta data (minimal fields)
+- Phase 2: Frontend - Granular polling updates with per-session loading overlays
+- Phase 3: Backend - Database-backed SSE event queue (fix subprocess isolation)
+- Phase 4: Frontend - SSE integration + feature flags + testing
+
+**Backend Enhancement: Minimal Delta Data Approach**
+- Enhance `/api/demo/status` SessionStatus to include:
+  - `topics`, `mood_score`, `summary` (Wave 1 fields)
+  - `prose_analysis` (Wave 2 field)
+  - `last_wave1_update`, `last_wave2_update` (ISO timestamps)
+  - `changed_since_last_poll` boolean flag
+- Frontend compares new vs old session states using `Map<sessionId, state>`
+- Only trigger loading overlay for sessions that actually changed
+
+**SSE Fix: Database-Backed Event Queue**
+- Create `pipeline_events` table in Supabase
+- PipelineLogger writes events to database (cross-process accessible)
+- SSE endpoint reads from database (filters by `patient_id`, `consumed = false`)
+- Marks events as consumed after sending
+
+**Polling Strategy: Adaptive Intervals**
+- Active analysis phase (Wave 1/Wave 2 in progress): Poll every 1 second
+- Idle phase (waiting for next wave): Poll every 3 seconds
+- Complete phase (`wave2_complete`): Stop polling
+- Configurable via environment variables
+
+**Feature Flags:**
+```bash
+NEXT_PUBLIC_GRANULAR_UPDATES=true          # Enable per-session updates
+NEXT_PUBLIC_SSE_ENABLED=true               # Enable SSE (once fixed)
+NEXT_PUBLIC_POLLING_INTERVAL_ACTIVE=1000   # 1s during analysis
+NEXT_PUBLIC_POLLING_INTERVAL_IDLE=3000     # 3s when idle
+NEXT_PUBLIC_LOADING_OVERLAY_DURATION=500   # 500ms spinner
+NEXT_PUBLIC_LOADING_FADE_DURATION=200      # 200ms fade-out
+NEXT_PUBLIC_DEBUG_POLLING=true             # Verbose logging
+```
+
+**SessionDetail Scroll Preservation:**
+- Save scroll position before update: `scrollTop` of left/right columns
+- Restore after re-render using `useEffect`
+- Animate scroll restoration (smooth)
+- Only update if THAT specific session changed
+
+**Testing Strategy:**
+- Local: Modify seed script to add 3-second delays between sessions
+- Railway: Monitor logs for SSE events, polling requests
+- Manual: Hard refresh → observe individual card loading overlays
+- Automated: Playwright tests for per-session update behavior
+
+**Database Migration:**
+- Supabase migration format: `013_add_pipeline_events_table.sql`
+- Sequential numbering (013)
+- Verify migration runs successfully before committing
+- No rollback migration needed (forward-only migrations)
+
+**PipelineLogger Refactor:**
+- Write events to database instead of in-memory dict
+- Keep in-memory queue as fallback if database write fails
+- Use async database writes (non-blocking)
+- No batching (write immediately for real-time updates)
+
+**Plan Location:**
+- `.claude/plans/2026-01-03-realtime-session-updates.md`
+
+**Next Steps:**
+1. Create comprehensive implementation plan with all 4 phases
+2. Get user approval on plan
+3. Implement Phase 1 (backend delta data)
+4. Implement Phase 2 (frontend granular updates)
+5. Implement Phase 3 (SSE database-backed events)
+6. Implement Phase 4 (SSE integration + testing)
+
+**Status:** 📋 Planning complete, awaiting plan document creation
+
+---
+
 ## 2026-01-01 - Status Endpoint Patient ID Fix ✅
 
 **Goal:** Fix `/api/demo/status` returning `total: 0` despite backend processing sessions.

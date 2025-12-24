@@ -108,32 +108,36 @@ Before creating any new file, ask:
 
 # TherapyBridge - Project State
 
-## Current Focus: Polling Logic Optimized - Full Flow Working ✅
+## Current Focus: Planning Real-Time Granular Session Updates 🔄
 
-**Latest Fixes (Commits 952e574, f0fe777, cd8cf3d):**
-- ✅ Added session count tracking to detect when transcripts finish loading (0 → 10 sessions)
-- ✅ Fixed polling to only refresh when counts actually change (not on every poll)
-- ✅ Fixed polling to continue through `wave1_complete` status until `wave2_complete`
-- ✅ Added graceful timeout handling for sessions endpoint during initialization
+**Current State (as of 2026-01-03):**
+- ✅ Polling logic working - detects Wave 1/Wave 2 completion via count changes
+- ✅ Full flow functional - transcripts load → Wave 1 analysis → Wave 2 prose generation
+- ✅ SSE connects successfully but doesn't receive events (subprocess isolation bug)
+- ⚠️ **Issue**: Polling refreshes ALL sessions when ANY count changes
+- ⚠️ **Issue**: SessionDetail page refreshes even when viewing different session
+- ⚠️ **Issue**: No per-card loading indicators during analysis completion
 
-**Previous Fixes (Commits 9fe5344, e51b642, 2e53cba):**
-- ✅ Fixed `/api/demo/status` endpoint using patient_id instead of user_id
-- ✅ Removed duplicate demo initialization from usePatientSessions hook
-- ✅ Fixed status endpoint returning `wave2_complete` when `session_count == 0`
-- ✅ Removed hard refresh detection from home and sessions pages
-
-**Current Behavior:**
+**Verified Production Behavior (Railway logs 2026-01-03 05:46):**
 1. **Demo Init (0-3s)**: Demo initialized, patient ID stored
 2. **Transcripts Loading (0-30s)**: Sessions endpoint may timeout, polling starts
 3. **Transcripts Complete (~30s)**: Polling detects `sessions: 0 → 10`, loads sessions
-4. **Wave 1 Complete (~60s)**: Polling detects `wave1: 0 → 10`, refreshes with analysis
-5. **Wave 2 Complete (~90s)**: Polling detects `wave2: 0 → 10`, shows deep analysis
+4. **Wave 1 Complete (~60s)**: Polling detects `wave1: 0 → 10`, **refreshes ALL 10 sessions**
+5. **Wave 2 Complete (~9.6 min)**: Polling detects `wave2: 0 → 10`, **refreshes ALL 10 sessions again**
 6. **Polling Stops**: When status reaches `wave2_complete`
 
-**Next Steps:**
-1. Test full initialization flow from hard refresh
-2. Verify Wave 2 analysis completes and UI updates with prose text
-3. Monitor for any remaining edge cases
+**Next Phase: Real-Time Granular Updates**
+- Goal: Individual session cards update with loading overlay only when THAT session completes
+- Approach: Enhance `/api/demo/status` for delta data + frontend per-session state tracking
+- SSE Fix: Database-backed event queue to solve subprocess isolation
+- See implementation plan: `.claude/plans/2026-01-03-realtime-session-updates.md`
+
+**Previous Fixes (Commits 952e574, f0fe777, cd8cf3d, 9fe5344):**
+- ✅ Added session count tracking to detect when transcripts finish loading (0 → 10 sessions)
+- ✅ Fixed polling to only refresh when counts actually change (not on every poll)
+- ✅ Fixed polling to continue through `wave1_complete` status until `wave2_complete`
+- ✅ Fixed `/api/demo/status` endpoint using patient_id instead of user_id
+- ✅ Removed duplicate demo initialization from usePatientSessions hook
 
 **Full Documentation:** See `Project MDs/TherapyBridge.md`
 **Detailed Session History:** See `.claude/SESSION_LOG.md`

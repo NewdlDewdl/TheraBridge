@@ -48,12 +48,31 @@ class DemoResetResponse(BaseModel):
 
 
 class SessionStatus(BaseModel):
-    """Individual session completion status"""
+    """Individual session completion status with full analysis data"""
+    # Existing fields
     session_id: str
     session_date: str
     has_transcript: bool
     wave1_complete: bool
     wave2_complete: bool
+
+    # NEW: Wave 1 analysis fields (nullable until Wave 1 completes)
+    topics: Optional[list[str]] = None
+    mood_score: Optional[float] = None
+    summary: Optional[str] = None
+    technique: Optional[str] = None
+    action_items: Optional[list[str]] = None
+
+    # NEW: Wave 2 analysis fields (nullable until Wave 2 completes)
+    prose_analysis: Optional[str] = None
+    deep_analysis: Optional[dict] = None
+
+    # NEW: Timestamps for change detection
+    last_wave1_update: Optional[str] = None  # ISO timestamp
+    last_wave2_update: Optional[str] = None  # ISO timestamp
+
+    # NEW: Change detection flag
+    changed_since_last_poll: bool = False
 
 
 class DemoStatusResponse(BaseModel):
@@ -449,20 +468,34 @@ async def get_demo_status(
 
     patient_id = patient_response.data["id"]
 
-    # Fetch all sessions with analysis data
-    sessions_response = db.table("therapy_sessions").select(
-        "id, session_date, transcript, topics, mood_score, prose_analysis"
-    ).eq("patient_id", patient_id).order("session_date").execute()
+    # Fetch all sessions with analysis data (enhanced for delta updates)
+    sessions_response = db.table("therapy_sessions").select("""
+        id,
+        session_date,
+        transcript,
+        topics,
+        mood_score,
+        summary,
+        technique,
+        action_items,
+        prose_analysis,
+        deep_analysis,
+        topics_extracted_at,
+        mood_analyzed_at,
+        deep_analyzed_at,
+        prose_generated_at
+    """).eq("patient_id", patient_id).order("session_date").execute()
 
     sessions = sessions_response.data or []
     session_count = len(sessions)
 
-    # Build per-session status
+    # Build per-session status with full analysis data
     session_statuses = []
     wave1_complete_count = 0
     wave2_complete_count = 0
 
     for session in sessions:
+        # Determine Wave 1/Wave 2 completion
         has_transcript = bool(session.get("transcript"))
         wave1_complete = (session.get("topics") is not None or
                          session.get("mood_score") is not None)
@@ -473,12 +506,44 @@ async def get_demo_status(
         if wave2_complete:
             wave2_complete_count += 1
 
+        # Get timestamps (ISO format)
+        last_wave1_update = None
+        if session.get("topics_extracted_at"):
+            last_wave1_update = session["topics_extracted_at"]
+        elif session.get("mood_analyzed_at"):
+            last_wave1_update = session["mood_analyzed_at"]
+
+        last_wave2_update = None
+        if session.get("prose_generated_at"):
+            last_wave2_update = session["prose_generated_at"]
+        elif session.get("deep_analyzed_at"):
+            last_wave2_update = session["deep_analyzed_at"]
+
+        # Build enhanced SessionStatus
         session_statuses.append(SessionStatus(
             session_id=session["id"],
-            session_date=session["session_date"],
+            session_date=session.get("session_date", ""),
             has_transcript=has_transcript,
             wave1_complete=wave1_complete,
-            wave2_complete=wave2_complete
+            wave2_complete=wave2_complete,
+
+            # Wave 1 fields (null if not complete)
+            topics=session.get("topics") if wave1_complete else None,
+            mood_score=session.get("mood_score") if wave1_complete else None,
+            summary=session.get("summary") if wave1_complete else None,
+            technique=session.get("technique") if wave1_complete else None,
+            action_items=session.get("action_items") if wave1_complete else None,
+
+            # Wave 2 fields (null if not complete)
+            prose_analysis=session.get("prose_analysis") if wave2_complete else None,
+            deep_analysis=session.get("deep_analysis") if wave2_complete else None,
+
+            # Timestamps
+            last_wave1_update=last_wave1_update,
+            last_wave2_update=last_wave2_update,
+
+            # Change detection (frontend will override this based on comparison)
+            changed_since_last_poll=False
         ))
 
     # Determine overall analysis status
