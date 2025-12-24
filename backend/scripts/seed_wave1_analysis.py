@@ -390,7 +390,6 @@ async def main(patient_id: str):
 
     logger.info(f"🚀 Starting parallel processing of {len(sessions)} sessions...")
     logger.info(f"Concurrency: {len(sessions)} parallel operations")
-    logger.info()
 
     # Create tasks for all sessions
     tasks = [

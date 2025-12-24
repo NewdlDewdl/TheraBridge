@@ -343,7 +343,7 @@ async def get_demo_status(
 
     # Fetch all sessions with analysis data
     sessions_response = db.table("therapy_sessions").select(
-        "id, session_date, transcript, topics, mood_analysis, deep_analysis"
+        "id, session_date, transcript, topics, mood_score, prose_analysis"
     ).eq("patient_id", patient_id).order("session_date").execute()
 
     sessions = sessions_response.data or []
@@ -357,8 +357,8 @@ async def get_demo_status(
     for session in sessions:
         has_transcript = bool(session.get("transcript"))
         wave1_complete = (session.get("topics") is not None or
-                         session.get("mood_analysis") is not None)
-        wave2_complete = session.get("deep_analysis") is not None
+                         session.get("mood_score") is not None)
+        wave2_complete = session.get("prose_analysis") is not None
 
         if wave1_complete:
             wave1_complete_count += 1
