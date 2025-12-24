@@ -1,10 +1,13 @@
 """
 Pipeline Logger - Granular logging for demo pipeline
 Supports stdout, file output, and SSE event emission
+Updated: 2026-01-03 - Database-backed event queue for cross-process SSE
 """
 
 import logging
 import json
+import os
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any
@@ -101,8 +104,52 @@ class PipelineLogger:
         with open(self.log_file, "a") as f:
             f.write(json.dumps(log_entry) + "\n")
 
-        # Add to event queue for SSE
-        _event_queue[self.patient_id].append(log_entry)
+        # Write to database (with in-memory fallback)
+        self._write_event_to_database(log_entry)
+
+    def _write_event_to_database(self, log_entry: dict):
+        """Write event to database with retry logic and in-memory fallback"""
+        retry_mode = os.getenv("PIPELINE_EVENT_RETRY_MODE", "production")
+        max_retries = 3 if retry_mode == "development" else 0
+
+        success = False
+        for attempt in range(max_retries + 1):
+            try:
+                from app.database import get_supabase
+                db = get_supabase()
+
+                # Insert event into pipeline_events table
+                response = db.table("pipeline_events").insert({
+                    "patient_id": log_entry["patient_id"],
+                    "session_id": log_entry.get("session_id"),
+                    "session_date": log_entry.get("session_date"),
+                    "phase": log_entry["phase"],
+                    "event": log_entry["event"],
+                    "status": log_entry["status"],
+                    "message": "",  # Optional message field
+                    "metadata": log_entry.get("details", {}),
+                    "consumed": False
+                }).execute()
+
+                if response.data:
+                    print(f"[PipelineLogger] ✓ Event logged to DB: {log_entry['phase']} {log_entry['event']}", flush=True)
+                    success = True
+                    break
+                else:
+                    print(f"[PipelineLogger] DB insert returned no data (attempt {attempt + 1}/{max_retries + 1})", flush=True)
+
+            except Exception as e:
+                print(f"[PipelineLogger] DB write error (attempt {attempt + 1}/{max_retries + 1}): {str(e)}", flush=True)
+
+                if attempt < max_retries:
+                    # Exponential backoff: 0.1s, 0.2s, 0.4s
+                    wait_time = 0.1 * (2 ** attempt)
+                    time.sleep(wait_time)
+
+        # Fallback to in-memory queue if database write failed
+        if not success:
+            print(f"[PipelineLogger] ⚠️  Using in-memory fallback for event", flush=True)
+            _event_queue[self.patient_id].append(log_entry)
 
     @staticmethod
     def get_events(patient_id: str) -> list:
