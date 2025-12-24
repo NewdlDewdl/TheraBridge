@@ -291,6 +291,37 @@ python -m pytest  # Run tests
 
 ## Session Log
 
+### 2025-12-29 - Backend Demo Initialization Fixes ✅
+**Fixed critical bugs preventing demo user initialization:**
+
+1. **Logger Bug** (`seed_wave1_analysis.py:393`):
+   - Fixed `logger.info()` call missing required `msg` argument
+   - Was causing TypeError during Wave 1 analysis seeding
+
+2. **Wrong Database Columns** (`demo.py:346`):
+   - Fixed demo status endpoint using non-existent columns
+   - Changed `mood_analysis` → `mood_score` (Wave 1 indicator)
+   - Changed `deep_analysis` → `prose_analysis` (Wave 2 indicator)
+   - Aligned with actual `therapy_sessions` schema
+
+3. **Root Cause**:
+   - Code referenced columns that don't exist in database
+   - Actual schema uses: `mood_score`, `mood_confidence`, `mood_rationale`, `mood_indicators`, `emotional_tone` (Wave 1)
+   - Wave 2 uses: `prose_analysis` (500-750 word patient narrative)
+
+**Files modified:**
+- `backend/scripts/seed_wave1_analysis.py` - Removed empty logger.info()
+- `backend/app/routers/demo.py` - Updated column names in status endpoint
+
+**Fixes errors:**
+- TypeError: Logger.info() missing 1 required positional argument: 'msg'
+- APIError: column therapy_sessions.mood_analysis does not exist
+- APIError: column therapy_sessions.deep_analysis does not exist
+
+**Testing:** Backend should now successfully initialize demo users and return proper status via `/api/demo/status`
+
+---
+
 ### 2025-12-22 - AI-Powered Topic Extraction System ✅
 **Complete topic/metadata extraction system using GPT-4o-mini to analyze therapy transcripts:**
 
