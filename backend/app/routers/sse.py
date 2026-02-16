@@ -13,6 +13,13 @@ import json
 
 router = APIRouter(prefix="/api/sse", tags=["sse"])
 
+@router.options("/events/{patient_id}")
+async def sse_preflight(patient_id: str):
+    """Handle CORS preflight for SSE endpoint"""
+    return {
+        "message": "OK"
+    }
+
 async def event_generator(patient_id: str, request: Request):
     """
     SSE event generator - streams pipeline events from database
@@ -22,12 +29,12 @@ async def event_generator(patient_id: str, request: Request):
 
     Updated: Reads from pipeline_events table to support cross-process communication
     """
-    last_event_id = None
+    last_event_index = 0
+    ping_counter = 0
 
     try:
         # Send initial connection event
         yield f"data: {json.dumps({'event': 'connected', 'patient_id': patient_id})}\n\n"
-        print(f"[SSE] ✓ Connection confirmed by server", flush=True)
 
         while True:
             # Check if client disconnected
@@ -51,40 +58,13 @@ async def event_generator(patient_id: str, request: Request):
                 if last_event_id:
                     query = query.gt("created_at", last_event_id)
 
-                response = query.execute()
-                events = response.data or []
-
-                # Send new events
-                for event in events:
-                    event_data = {
-                        "patient_id": event["patient_id"],
-                        "session_id": event.get("session_id"),
-                        "session_date": event.get("session_date"),
-                        "phase": event["phase"],
-                        "event": event["event"],
-                        "status": event["status"],
-                        "message": event.get("message", ""),
-                        "metadata": event.get("metadata", {})
-                    }
-
-                    yield f"data: {json.dumps(event_data)}\n\n"
-
-                    # Mark event as consumed
-                    db.table("pipeline_events").update({
-                        "consumed": True
-                    }).eq("id", event["id"]).execute()
-
-                    # Update last seen event timestamp
-                    last_event_id = event["created_at"]
-
-                    print(f"[SSE] Sent event to patient {patient_id}: {event['phase']} {event['event']}", flush=True)
-
-                # Keep-alive ping every iteration
-                yield f": keepalive\n\n"
-
-            except Exception as e:
-                print(f"[SSE] Error querying events: {str(e)}", flush=True)
-                # Continue polling despite errors
+                last_event_index = len(events)
+            else:
+                # Send keep-alive ping every 15 seconds to prevent Railway timeout
+                ping_counter += 1
+                if ping_counter >= 30:  # 30 * 0.5s = 15 seconds
+                    yield ": keep-alive\n\n"
+                    ping_counter = 0
 
             await asyncio.sleep(0.5)  # 500ms interval
 

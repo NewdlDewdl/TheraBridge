@@ -44,7 +44,7 @@ export function usePipelineEvents(options: UsePipelineEventsOptions) {
   const [errorType, setErrorType] = useState<'none' | 'patient_not_found' | 'cors' | 'network' | 'unknown'>('none');
   const [events, setEvents] = useState<PipelineEvent[]>([]);
   const eventSourceRef = useRef<EventSource | null>(null);
-  const handleEventRef = useRef<((event: PipelineEvent) => void) | null>(null);
+  const handleEventRef = useRef<(event: PipelineEvent) => void>();
 
   const handleEvent = useCallback(
     (event: PipelineEvent) => {
@@ -143,13 +143,6 @@ export function usePipelineEvents(options: UsePipelineEventsOptions) {
     eventSource.onmessage = (messageEvent) => {
       try {
         const event: PipelineEvent = JSON.parse(messageEvent.data);
-
-        // Ignore initial "connected" event
-        if (event.event === 'connected') {
-          console.log('[SSE] ✓ Connection confirmed by server');
-          return;
-        }
-
         // Use ref to avoid stale closure
         if (handleEventRef.current) {
           handleEventRef.current(event);
@@ -161,38 +154,9 @@ export function usePipelineEvents(options: UsePipelineEventsOptions) {
     };
 
     eventSource.onerror = (error) => {
-      const readyState = eventSource.readyState;
-
-      console.group(`[SSE] Connection Error (patient: ${patientId})`);
-      console.error('Error event:', error);
-      console.log('ReadyState:', readyState, readyState === EventSource.CLOSED ? '(CLOSED)' : readyState === EventSource.CONNECTING ? '(CONNECTING)' : '(OPEN)');
-      console.groupEnd();
-
-      if (readyState === EventSource.CLOSED) {
-        // Connection permanently closed - likely 404 or 403
-        console.error(`[SSE] ✗ Server closed connection - patient ${patientId} may not exist or access denied`);
-        setConnectionError('Patient not found or access denied');
-        setErrorType('patient_not_found');
-        setIsConnected(false);
-
-        // Close connection permanently
-        eventSource.close();
-        eventSourceRef.current = null;
-
-      } else if (readyState === EventSource.CONNECTING) {
-        // Temporary failure, browser will retry
-        console.log('[SSE] Connection lost, retrying...');
-        setConnectionError('Reconnecting...');
-        setErrorType('network');
-        setIsConnected(false);
-
-      } else {
-        // Unknown state
-        console.error('[SSE] ✗ Unknown error state');
-        setConnectionError('Connection failed');
-        setErrorType('unknown');
-        setIsConnected(false);
-      }
+      console.error("SSE connection error:", error);
+      setIsConnected(false);
+      // Don't close - let browser handle reconnection
     };
 
     // Cleanup on unmount or patient ID change
@@ -202,7 +166,7 @@ export function usePipelineEvents(options: UsePipelineEventsOptions) {
       setIsConnected(false);
       setConnectionError(null);
     };
-  }, [enabled, patientId]);
+  }, [enabled, patientId]);  // Removed handleEvent to prevent reconnection loop
 
   return {
     isConnected,
