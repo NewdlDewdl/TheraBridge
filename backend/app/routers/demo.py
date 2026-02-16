@@ -207,7 +207,7 @@ async def populate_session_transcripts_background(patient_id: str):
 
 
 async def run_wave1_analysis_background(patient_id: str):
-    """Background task to run Wave 1 analysis with real-time streaming logs"""
+    """Background task to run Wave 1 analysis"""
     print(f"🚀 Step 2/3: Starting Wave 1 analysis for patient {patient_id}", flush=True)
     logger.info(f"🚀 Starting Wave 1 analysis for patient {patient_id}")
 
@@ -215,35 +215,46 @@ async def run_wave1_analysis_background(patient_id: str):
         script_path = get_script_path("seed_wave1_analysis.py")
         logger.info(f"Running Wave 1 analysis: {sys.executable} {script_path} {patient_id}")
 
-        process = await asyncio.create_subprocess_exec(
-            sys.executable, str(script_path), patient_id,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.STDOUT,
-            env=os.environ.copy()
+        # Resolve absolute path to script
+        script_path = Path(__file__).parent.parent.parent / "scripts" / "seed_wave1_analysis.py"
+
+        logger.info(f"Running Wave 1 analysis: {python_exe} {script_path} {patient_id}")
+
+        # Run Wave 1 script with environment variables
+        result = subprocess.run(
+            [python_exe, str(script_path), patient_id],
+            capture_output=True,
+            text=True,
+            timeout=600,  # 10 minute timeout
+            env=os.environ.copy()  # Pass all environment variables
         )
 
-        register_process(patient_id, "wave1", process)
-
-        success = await stream_subprocess_output(process, "Wave1", timeout_seconds=600)
-
-        if success:
+        if result.returncode == 0:
             print(f"✅ Step 2/3 Complete: Wave 1 analysis complete", flush=True)
             logger.info(f"✅ Wave 1 analysis complete for patient {patient_id}")
+            # Show script output in Railway logs
+            if result.stdout:
+                print(f"[Wave 1 Script Output]:\n{result.stdout}", flush=True)
+            # Mark Wave 1 as complete
             if patient_id not in analysis_status:
                 analysis_status[patient_id] = {}
             analysis_status[patient_id]["wave1_complete"] = True
             analysis_status[patient_id]["wave1_completed_at"] = datetime.now().isoformat()
         else:
-            print(f"❌ Step 2/3 Failed or timed out", flush=True)
-            logger.error(f"❌ Wave 1 analysis failed for patient {patient_id}")
+            print(f"❌ Step 2/3 Failed: {result.stderr}", flush=True)
+            logger.error(f"❌ Wave 1 analysis failed: {result.stderr}")
+            # Show error details in Railway logs
+            if result.stderr:
+                print(f"[Wave 1 Script Error]:\n{result.stderr}", flush=True)
 
+    except subprocess.TimeoutExpired:
+        logger.error(f"❌ Wave 1 analysis timeout for patient {patient_id}")
     except Exception as e:
-        print(f"❌ Wave 1 analysis ERROR: {e}", flush=True)
         logger.error(f"❌ Wave 1 analysis error: {e}")
 
 
 async def run_wave2_analysis_background(patient_id: str):
-    """Background task to run Wave 2 analysis with real-time streaming logs"""
+    """Background task to run Wave 2 analysis (after Wave 1 completes)"""
     print(f"🚀 Step 3/3: Starting Wave 2 analysis for patient {patient_id}", flush=True)
     logger.info(f"🚀 Starting Wave 2 analysis for patient {patient_id}")
 
@@ -251,18 +262,21 @@ async def run_wave2_analysis_background(patient_id: str):
         script_path = get_script_path("seed_wave2_analysis.py")
         logger.info(f"Running Wave 2 analysis: {sys.executable} {script_path} {patient_id}")
 
-        process = await asyncio.create_subprocess_exec(
-            sys.executable, str(script_path), patient_id,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.STDOUT,
-            env=os.environ.copy()
+        # Resolve absolute path to script
+        script_path = Path(__file__).parent.parent.parent / "scripts" / "seed_wave2_analysis.py"
+
+        logger.info(f"Running Wave 2 analysis: {python_exe} {script_path} {patient_id}")
+
+        # Run Wave 2 script with environment variables
+        result = subprocess.run(
+            [python_exe, str(script_path), patient_id],
+            capture_output=True,
+            text=True,
+            timeout=900,  # 15 minute timeout
+            env=os.environ.copy()  # Pass all environment variables
         )
 
-        register_process(patient_id, "wave2", process)
-
-        success = await stream_subprocess_output(process, "Wave2", timeout_seconds=900)
-
-        if success:
+        if result.returncode == 0:
             print(f"✅ Step 3/3 Complete: Wave 2 analysis complete", flush=True)
             logger.info(f"✅ Wave 2 analysis complete for patient {patient_id}")
             if patient_id not in analysis_status:
@@ -270,11 +284,12 @@ async def run_wave2_analysis_background(patient_id: str):
             analysis_status[patient_id]["wave2_complete"] = True
             analysis_status[patient_id]["wave2_completed_at"] = datetime.now().isoformat()
         else:
-            print(f"❌ Step 3/3 Failed or timed out", flush=True)
-            logger.error(f"❌ Wave 2 analysis failed for patient {patient_id}")
+            print(f"❌ Step 3/3 Failed: {result.stderr}", flush=True)
+            logger.error(f"❌ Wave 2 analysis failed: {result.stderr}")
 
+    except subprocess.TimeoutExpired:
+        logger.error(f"❌ Wave 2 analysis timeout for patient {patient_id}")
     except Exception as e:
-        print(f"❌ Wave 2 analysis ERROR: {e}", flush=True)
         logger.error(f"❌ Wave 2 analysis error: {e}")
 
 
